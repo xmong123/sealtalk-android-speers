@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    productFlavors {
+    }
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:support-v4:26.2.1'
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pc_black_t_pic">#22000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="main_color">#FA7C20</color>
+    <color name="orange">#FA8C20</color>
+</resources>

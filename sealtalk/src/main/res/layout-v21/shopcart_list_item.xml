@@ -1,0 +1,188 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="130dip">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dip"
+        android:background="@color/white"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/check_btn"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginTop="@dimen/layoutleftMargin30dp"
+            android:background="@drawable/icon_checkno"
+            android:clickable="false"
+            android:focusableInTouchMode="false" />
+
+        <ImageView
+            android:id="@+id/pic_imgv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginTop="@dimen/margin_space"
+            android:layout_toRightOf="@id/check_btn"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
+            android:src="@drawable/product_default" />
+
+        <TextView
+            android:id="@+id/name_txtv"
+            style="@style/textStyle.Normal.black"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginRight="@dimen/margin_space"
+            android:layout_marginTop="@dimen/margin_space"
+            android:layout_toRightOf="@id/pic_imgv"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="3"
+            android:text="法国 Dancoly丹蔻丽普罗旺斯蜡菊活力再生护发素（800ml）"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/shop_price_txtv"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_space"
+            android:layout_marginTop="@dimen/margin_space"
+            android:layout_toRightOf="@id/name_txtv"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="￥45.00元"
+            android:textColor="@color/moneyTextColor" />
+
+        <ImageView
+            android:id="@+id/shop_del_btn"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/name_txtv"
+            android:layout_marginRight="@dimen/diment32dp"
+            android:src="@drawable/icoshanchu" />
+
+
+        <RelativeLayout
+            android:id="@+id/cart_num_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="26dip"
+            android:layout_below="@+id/name_txtv"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@+id/pic_imgv"
+            android:gravity="left"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cart_minus_btn"
+                android:layout_width="26dip"
+                android:layout_height="26dip"
+                android:background="@drawable/cart_minus_selector"
+                android:clickable="false"
+                android:focusableInTouchMode="false" />
+
+            <EditText
+                android:id="@+id/cart_count_dtxtv"
+                style="@style/textStyle.Normal.black"
+                android:layout_width="40dip"
+                android:layout_height="26dip"
+                android:layout_toRightOf="@id/cart_minus_btn"
+                android:background="@drawable/icon_cart_count"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/cart_plus_btn"
+                android:layout_width="26dip"
+                android:layout_height="26dip"
+                android:layout_toRightOf="@id/cart_count_dtxtv"
+                android:background="@drawable/cart_plus_selector"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/cart_layout_volume"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cart_num_layout"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginRight="@dimen/margin_space"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/pic_imgv"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="160dp"
+                android:layout_height="20dp"
+                android:background="@color/line"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="数量"
+                    android:textColor="#000000"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="优惠价格"
+                    android:textColor="#000000"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="160dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/volume_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="≥10"
+                    android:textColor="#000000"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/volume_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="43.00元"
+                    android:textColor="#000000"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

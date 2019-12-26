@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.AdminMainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_main_title_height"
+        android:background="@color/seal_main_title_bg"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/admintitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="请选择您的行业(可多选)!"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_2"
+        android:gravity="center_horizontal"
+        android:text="请详细填写注册标签!&#32;&#32;&#32;&#32;助您快速找到同业好友!"
+        android:textColor="@color/red_dark" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/admin_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
+

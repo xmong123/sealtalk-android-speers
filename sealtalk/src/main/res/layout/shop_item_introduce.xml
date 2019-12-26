@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/layoutMargin16dp"
+    android:orientation="horizontal"
+    tools:showIn="@layout/fragment_bill_recyclerview_item">
+
+    <ImageView
+        android:src="@drawable/hotview"
+        android:id="@+id/goodImage"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:scaleType="centerCrop"
+         />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/layoutMargin8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/goodTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/elevation8dp"
+            android:ellipsize="marquee"
+            android:maxLines="2"
+            android:text="同行快线书店精装商品"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/mainText14sp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:id="@+id/timeTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:text="付款有效期"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/subMainText" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2020-12-13"
+            android:textColor="@color/textColorDark"
+
+            android:textSize="@dimen/subMainText" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/goodMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="@dimen/elevation8dp"
+            android:text="¥1688.88"
+            android:textColor="@color/moneyTextColor"
+            android:textSize="@dimen/mainText14sp" />
+
+        <TextView
+            android:id="@+id/yiyuqi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:text="未支付"
+            android:layout_gravity="right"
+            android:textColor="@color/main_theme_color"
+            android:textSize="@dimen/mainText14sp" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shop_title_text_bg_garend"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/layoutMargin16dp"
+        android:text="选择还款方式"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mainText14sp" />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bottom_radius"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layoutMargin16dp"
+        android:layout_marginTop="@dimen/layoutMargin16dp"
+        android:background="@drawable/white_bg_radius"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/layoutMargin16dp"
+        android:text="确认付款"
+        android:id="@+id/confim_pay"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/mainText14sp" />
+
+</LinearLayout>

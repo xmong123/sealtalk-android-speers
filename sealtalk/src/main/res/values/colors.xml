@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/main_theme_color</color>
+    <color name="colorPrimaryDark">#0083e0</color>
+    <color name="colorAccent">#0083e0</color>
+    <color name="main_theme_color">#0195ff</color>
+    <color name="soliderColor">#b4b4b4</color>
+
+    <color name="seal_login_text_button_color">#999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dark_white">#E5E5E5</color>
+    <color name="seal_search_title_bar_bg">#0195ff</color>
+    <color name="seal_search_title_bar_et_hite">#8ed0ff</color>
+    <color name="seal_search_title_bar_line">#0083e0</color>
+    <color name="color_gray_text">#939393</color>
+    <color name="color_divider_line">#E5E5E5</color>
+    <color name="seal_select_country_text_color">#4a4a4a</color>
+    <color name="seal_select_country_bg">#f1f1f1</color>
+    <color name="seal_title_bg">#0195ff</color>
+    <color name="seal_bg">#f0f0f6</color>
+    <color name="seal_title_bar_line">#0083e0</color>
+    <color name="text_hint_gray">#e6e6e6</color>>
+
+    <color name="common_divider">#dfdfdd</color>
+    <color name="grayf9">#f9f9f9</color>
+    <color name="gray_gb">#dddddd</color>
+    <color name="grayc4">#c4c4c4</color>
+    <color name="graye3">#e3e7ee</color>
+    <color name="alipay">#00a5ff</color>
+    <color name="gray_e5">#e5e5e5</color>
+
+
+    <color name="color_black_text">#333333</color>
+    <color name="seal_evaluate_dialog_divider">#eceef3</color>
+    <color name="seal_evaluate_dialog_bg">#0e8cea</color>
+    <color name="seal_evaluate_text_color">#3c4d65</color>
+    <color name="seal_evaluate_edittext">#939dab</color>
+
+    <color name="seal_conversation_annouce_bg">#FFF5ED</color>
+    <color name="seal_conversation_annouce_text">#9D5438</color>
+    <color name="seal_new_friends_is_null_text">#999999</color>
+    <color name="seal_new_friends_divider">#dfdfdd</color>
+    <color name="seal_new_friends_name_text">#353535</color>
+    <color name="seal_new_friends_status_text">#999999</color>
+
+    <!--contact-->
+    <color name="seal_contact_content_bg">#0ff</color>
+    <color name="seal_contact_rv_bg">#ebebeb</color>
+    <color name="seal_contact_dialog_text_color">#ffffffff</color>
+    <color name="seal_contact_friend_item_name_bg">#353535</color>
+    <color name="seal_contact_friend_devi_color">#ccc</color>
+
+    <color name="seal_main_title_bg">#0195ff</color>
+    <color name="seal_main_title_more_text_color">#353535</color>
+
+    <color name="seal_setting_item_content">#353535</color>
+    <color name="seal_setting_item_value">#666666</color>
+    <color name="seal_setting_item_divider">#dfdfdd</color>
+    <color name="seal_mime_bg">#ebebeb</color>
+    <color name="seal_userinfo_item_name_text">#353535</color>
+    <color name="seal_mine_about_power_text">#999999</color>
+    <color name="seal_search_name_text_color">#353535</color>
+    <color name="seal_search_description_text_color">#999999</color>
+    <color name="seal_search_devi_color">#f0f0f6</color>
+    <color name="seal_search_show_more_text_color">#7ca1c9</color>
+
+    <color name="seal_userinfo_item_divider">#dfdfdd</color>
+    <color name="seal_update_name_text_color">#999999</color>
+    <color name="seal_update_name_tips">#FF1612</color>
+    <color name="seal_update_name_edit">#353535</color>
+    <color name="seal_dialog_select_picture_btn_text">#333333</color>
+    <color name="seal_dialog_select_picture_divider">#dfdfdd</color>
+    <color name="seal_spannel_color">#0099ff</color>
+
+    <color name="common_dialog_base_line">#E5E5E5</color>
+    <color name="common_dialog_base_text">@color/color_black_text</color>
+    <color name="common_dialog_base_positive">@color/color_black_text</color>
+    <color name="seal_set_account_update_password_tag">#999999</color>
+    <color name="seal_set_account_update_password_value">#dadada</color>
+    <color name="seal_privacy_blacklist_text">#999999</color>
+    <color name="seal_search_empty_text_color">#999999</color>
+
+    <!-- 界面改版使用 -->
+    <color name="text_black">#262626</color>
+    <color name="light_gray">#e2e2e2</color>
+    <color name="text_gray">#939393</color>
+    <color name="text_light_gray">#BDBDBD</color>
+    <color name="text_blue">#368AE8</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="bg_area_dim_white">#F2F2F3</color>
+    <color name="default_main_text">@color/text_black</color>
+    <color name="default_sub_text">@color/text_gray</color>
+    <color name="default_clickable_text">@color/text_blue</color>
+    <color name="default_text_hint_color">@color/text_light_gray</color>
+    <color name="default_main_area_background">@color/bg_area_dim_white</color>
+    <color name="color_list_item_hover">#DFDFDD</color>
+    <color name="seal_forward_message_send">#3595FF</color>
+    <color name="color_tab_indicator_bg">#FAFAFA</color>
+    <color name="color_primary">#3A91F3</color>
+    <color name="color_main_tab">#f9f9f9</color>
+    <color name="seal_user_detail_userinfo_text_color">#999999</color>
+    <color name="seal_group_manager_item_role">@color/text_gray</color>
+    <color name="seal_search_line_color">#DFDFDD</color>
+    <color name="edge_gray">@color/light_gray</color>
+    <!--个人信息-->
+    <color name="seal_account_staccount_edit_hint">#9A9A9A</color>
+
+    <color name="seal_group_notice_item_agree">#3098FC</color>
+    <color name="seal_group_notice_item_time">#9B9B9B</color>
+    <color name="seal_dialog_clean_notice_cancel">#0076FF</color>
+
+    <color name="button_fouces_gray">#f6f6f6</color>
+    <color name="button_bg_gray">#dddcdc</color>//按钮背景灰色
+    <color name="button_bg_grayd">#bbdddcdc</color>//按钮背景灰色
+    <color name="transparent">#00000000</color>
+    <drawable name="color_b">#44aaaaaa</drawable>
+    <drawable name="color_a">#00000000</drawable>
+    <color name="bg_activity">#fff0f2f5</color>
+    <color name="color_light_blue">#00DDB6</color>
+    <color name="txt_color">#48495F</color>
+    <color name="item_bg">#FFFFFF</color>
+    <color name="bg">#F0F0F0</color>
+    <color name="spinner_bg">#333244</color>
+    <color name="new_text_color">#555771</color>
+    <color name="white_text_color">#F0F0F0</color>
+    <color name="gray_color">#4b4b58</color>
+    <color name="hard_color">#48495f</color>
+    <color name="clickspan_color">#00ddb6</color>
+    <color name="dull_blue">#3B4BBF</color>
+    <color name="gray_color1">#e8e8e8</color>
+    <color name="line">#e8e8e8</color>
+
+    <color name="move_line">#f15353</color>//FilterBar 选中颜色
+    <color name="light_red">#f15353</color>//京东红
+    <color name="select_light_red">#f03f3f</color>//京东红:选中背景颜色
+
+    <color name="sub_title">#848689</color>//副标题文本颜色
+    <color name="color_font_gray">#9e9d9d</color>
+    <color name="moneyTextColor">#f00</color>
+    <color name="textColorDark">#6c6c6c</color>
+    <color name="textColorPrimary">#515151</color>
+    <color name="user_fragment_list_bg">#eff4f5</color>
+
+    <color name="home_title_color">#6091f7</color>
+    <color name="home_light_color">#D9E7F7</color>
+    <color name="home_title_color1">#ef9433</color>
+    <color name="home_title_color_back">#ed145b</color>
+    <color name="uncompleted_color">#A3E0D9</color>
+    <color name="uncompleted_text_color">#F8F8F8</color>
+    <color name="colorPrimary_indicator">#6ebdce</color>
+    <color name="filter_text_color">#666666</color>
+    <color name="spec_text_color">#999999</color>
+    <color name="spec_select_text_color">#ff0000</color>
+    <color name="normal_text_color">#454545</color>
+    <color name="dynamic_share_green">#51C332</color>
+    <color name="toast_white">#ffffff</color>
+    <color name="toast_stroke_gray">#99d4d4d4</color>
+
+    <color name="seal_group_detail_clean_tips">#8B8B8B</color>
+    <color name="action_button_pressed_background">#5ebce6</color>
+    <color name="action_button_normal_background">#1e82ca</color>
+    <color name="action_button_disabled_background">#d0d0d0</color>
+    <color name="select_button_pressed_background">#5cb85c</color>
+    <color name="select_button_normal_background">#008b57</color>
+</resources>

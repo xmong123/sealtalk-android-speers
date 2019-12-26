@@ -1,0 +1,1 @@
+include ':sealtalk', ':contactcard', ':recognizer', ':pushpermission', ':circle_lib', ':library', ':photoPicker', ':citypicker'

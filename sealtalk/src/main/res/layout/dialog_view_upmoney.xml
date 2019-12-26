@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="220dp"
+    android:layout_height="130dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shop_title_text_bg_garend"
+        android:padding="30dp"
+        android:text="抱歉 , 您的信用额度不足"
+        android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bottom_radius"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/layoutMargin16dp"
+            android:gravity="center"
+            android:id="@+id/giveUp"
+            android:text="放弃"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/mainText14sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:id="@+id/widthDraw"
+            android:padding="@dimen/layoutMargin16dp"
+            android:text="去提额"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/mainText14sp" />
+
+    </LinearLayout>
+</LinearLayout>

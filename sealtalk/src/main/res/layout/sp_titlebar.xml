@@ -1,0 +1,38 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/titlebar_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="50dip"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/titlebar_normal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/titlebar_back_btn"
+            android:layout_width="12dp"
+            android:layout_height="20dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:background="@drawable/title_back_selector" />
+
+        <TextView
+            android:id="@+id/titlebar_title_txtv"
+            style="@style/textStyle.Medium.black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="商品详情" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/titlebar_line"
+        style="@style/separator_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_gravity="bottom"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+</FrameLayout>

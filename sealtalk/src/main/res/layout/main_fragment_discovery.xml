@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/btn_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="16dip"
+        android:background="?android:selectableItemBackground">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="#e3e3e3" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#e3e3e3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dip"
+            android:layout_marginBottom="1dip"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="64dip"
+            android:text="搜索好友"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/img_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dip"
+            android:src="@drawable/seal_ic_pop_search" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+            android:src="@drawable/em_ic_right_arrow" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/btn_start_chat"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="16dip"
+        android:background="?android:selectableItemBackground">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="#e3e3e3" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#e3e3e3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dip"
+            android:layout_marginBottom="1dip"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="64dip"
+            android:text="@string/seal_main_title_start_chat"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dip"
+            android:src="@drawable/seal_ic_pop_chat" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+            android:src="@drawable/em_ic_right_arrow" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/btn_create_group"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="16dip"
+        android:background="?android:selectableItemBackground">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="#e3e3e3" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#e3e3e3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dip"
+            android:layout_marginBottom="1dip"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="64dip"
+            android:text="@string/seal_main_title_create_group"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/img2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dip"
+            android:src="@drawable/seal_ic_pop_group" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+            android:src="@drawable/em_ic_right_arrow" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/btn_add_friends"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="16dip"
+        android:background="?android:selectableItemBackground">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="#e3e3e3" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#e3e3e3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dip"
+            android:layout_marginBottom="1dip"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="64dip"
+            android:text="@string/seal_main_title_add_friends"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/img_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dip"
+            android:src="@drawable/seal_ic_pop_add" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+            android:src="@drawable/em_ic_right_arrow" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/btn_scan"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="16dip"
+        android:background="?android:selectableItemBackground">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="#e3e3e3" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#e3e3e3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dip"
+            android:layout_marginBottom="1dip"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="64dip"
+            android:text="@string/seal_main_title_scan"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/img_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dip"
+            android:src="@drawable/seal_ic_pop_scaned" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+            android:src="@drawable/em_ic_right_arrow" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/seal_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:text="@string/common_chat_room"
+                android:textColor="@color/color_black_text"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:background="@color/color_divider_line" />
+
+        <LinearLayout
+            android:id="@+id/discovery_ll_chat_room_1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/seal_bg_list_item"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:drawableLeft="@drawable/discovery_ic_chat_room_1"
+                android:drawablePadding="14dp"
+                android:gravity="center_vertical"
+                android:text="@string/discovery_chat_room_one"
+                android:textColor="@color/color_black_text" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:background="@color/color_divider_line" />
+
+        <LinearLayout
+            android:id="@+id/discovery_ll_chat_room_2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/seal_bg_list_item"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:drawableLeft="@drawable/discovery_ic_chat_room_2"
+                android:drawablePadding="14dp"
+                android:gravity="center_vertical"
+                android:text="@string/discovery_chat_room_two"
+                android:textColor="@color/color_black_text" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:background="@color/color_divider_line" />
+
+        <LinearLayout
+            android:id="@+id/discovery_ll_chat_room_3"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/seal_bg_list_item"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:drawableLeft="@drawable/discovery_ic_chat_room_3"
+                android:drawablePadding="14dp"
+                android:gravity="center_vertical"
+                android:text="@string/discovery_chat_room_three"
+                android:textColor="@color/color_black_text" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:background="@color/color_divider_line" />
+
+        <LinearLayout
+            android:id="@+id/discovery_ll_chat_room_4"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/seal_bg_list_item"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
+                android:drawableLeft="@drawable/discovery_ic_chat_room_4"
+                android:drawablePadding="14dp"
+                android:gravity="center_vertical"
+                android:text="@string/discovery_chat_room_four"
+                android:textColor="@color/color_black_text" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

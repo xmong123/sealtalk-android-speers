@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.SPShopDetailActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/container"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/convenientBanner"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:canLoop="true" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:background="@drawable/shop_title_text_bg"
+                android:padding="@dimen/layoutMargin16dp">
+
+                <TextView
+                    android:id="@+id/shopTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="80dp"
+                    android:text="悦诗风吟绿茶精粹萃平衡面霜"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/mainText14sp" />
+
+                <TextView
+                    android:id="@+id/money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="￥8.00元"
+                    android:textColor="@color/moneyTextColor"
+                    android:textSize="@dimen/mainText14sp" />
+
+
+                <TextView
+                    android:maxLines="8"
+                    android:id="@+id/sfhsj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/shopTitle"
+                    android:layout_marginBottom="@dimen/layoutMargin8dp"
+                    android:layout_marginTop="@dimen/layoutMargin8dp"
+                    android:text="商品货号：1029393\n生产地区:韩国\n保质期限:单片无日期，每月直发，确保新鲜\n产品功效:深层滋润、补水保湿\n产品包装:全新小样，无外盒，无塑封\n包装:全新小样，无外盒，无塑封\n产品规格:5ml\n适合肤质:混合性肌肤\n商品重量：8.000克"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/subMainText" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                style="@style/solide8dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/layoutMargin16dp"
+                android:text="商品详情"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/mainText14sp" />
+
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></WebView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btn"
+        style="@style/main_btn_style2"
+        android:text="立即购买" />
+</LinearLayout>

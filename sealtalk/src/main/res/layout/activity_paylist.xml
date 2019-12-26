@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".circle.ui.PayCardCircleActivity">
+
+    <com.yiw.circledemo.widget.EaseTitleBar
+        android:id="@+id/tittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleBarTitle="交易记录" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tittle"
+        android:layout_alignBottom="@id/tittle"
+        android:paddingLeft="12dip"
+        android:paddingRight="12dip"
+        android:src="@drawable/ease_mm_title_back" />
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/payRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tittle">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <com.caesar.rongcloudspeed.widget.MyListView
+                    android:id="@+id/payCircleLv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:divider="@null"
+                    android:dividerHeight="0px"
+                    android:fadingEdge="none"
+                    android:fadingEdgeLength="0dp"
+                    android:focusable="true"
+                    android:background="@color/white"
+                    android:listSelector="@android:color/transparent"
+                    android:transcriptMode="normal" />
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

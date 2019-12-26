@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#000000">
+
+
+    <com.yiw.circledemo.widget.EaseTitleBar
+        android:id="@+id/tittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleBarTitle="预览" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tittle"
+        android:background="#000000">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/vin_img"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

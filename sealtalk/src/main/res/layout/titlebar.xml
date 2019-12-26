@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dip"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/titlebar_layout"
+    android:background="@color/home_title_color">
+
+    <FrameLayout android:id="@+id/titlebar_normal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/titlebar_title_txtv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="购物车"
+            android:textColor="@color/white"
+            android:textSize="@dimen/price_margin"
+            android:gravity="center"/>
+    </FrameLayout>
+
+    <View android:id="@+id/titlebar_line"
+        style="@style/separator_line"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:focusableInTouchMode="true"
+        android:layout_gravity="bottom"/>
+</FrameLayout>
