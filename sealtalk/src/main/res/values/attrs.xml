@@ -84,5 +84,34 @@
         <attr name="matProg_barWidth" format="dimension" />
         <attr name="matProg_linearProgress" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="TranspanentTitleBar">
+        <attr name="msg" format="string" />
+        <attr name="backImage" format="dimension" />
+        <attr name="isShowBack" format="boolean" />
+    </declare-styleable>
 
+    <declare-styleable name="ArrowView">
+        <attr name="titleText" format="string" />
+        <attr name="arrowSrc" format="reference" />
+        <attr name="indicatorShow" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="BorderImageView">
+        <attr name="borderColor" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="horizontalSpacing" format="dimension"/>
+        <attr name="verticalSpacing" format="dimension"/>
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr name="debugDraw" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="FlowLayout_LayoutParams">
+        <attr name="layout_newLine" format="boolean"/>
+        <attr name="layout_horizontalSpacing" format="dimension"/>
+        <attr name="layout_verticalSpacing" format="dimension"/>
+    </declare-styleable>
 </resources>

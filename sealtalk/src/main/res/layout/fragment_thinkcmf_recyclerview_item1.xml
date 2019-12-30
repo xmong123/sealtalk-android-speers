@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_margin="8dp"
+            android:id="@+id/animation1_image"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_margin="8dp"
+            android:textSize="@dimen/layoutMargin16dp"
+            android:layout_below="@+id/animation1_image"
+            android:id="@+id/animation1_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="沪铜主力1907合约早市开于48010元/吨。沪期铜高开低走"/>
+
+        <TextView
+            android:id="@+id/animation1_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2019-05-20 08:20:23"
+            android:textColor="@android:color/darker_gray"
+            android:layout_below="@+id/animation1_title"
+            android:layout_margin="8dp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white_lite"/>
+
+</LinearLayout>

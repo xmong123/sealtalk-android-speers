@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_about_us">
+
+    <TextView
+        android:id="@+id/titleBar"
+        style="@style/title_style"
+        android:layout_gravity="center_vertical"
+        android:text="关于我们"
+        android:textSize="@dimen/quota_icon_size" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/layoutleftMargin16dp"
+        android:src="@drawable/comm_titlebar_back_normal" />
+
+    <TextView
+        android:id="@+id/righttitleItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:padding="@dimen/layoutleftMargin16dp"
+        android:text="发&#8197;布"
+        android:textColor="@color/white"
+        android:textSize="@dimen/bigText16sp"
+        android:visibility="invisible" />
+
+</FrameLayout>
+
+        

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/layoutMargin16dp">
+
+        <TextView
+            android:id="@+id/shopTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="悦诗风吟绿茶精粹萃平衡面霜"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/dp_20" />
+
+        <RatingBar
+            android:id="@+id/rating_bar_spoken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:max="5" />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="￥8.00元"
+            android:textColor="@color/moneyTextColor"
+            android:textSize="@dimen/bigText16sp" />
+
+
+        <TextView
+            android:id="@+id/sfhsj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shopTitle"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:maxLines="8"
+            android:text="课程简介：\n直发，确保新鲜产品功效:深层滋润、补水保湿商品重量：8.000克"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/mainText14sp" />
+
+        <TextView
+            android:id="@+id/sfhsj1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shopTitle"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:maxLines="8"
+            android:text="讲师简介：\n于老师，BIM机电专业学者"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/mainText14sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/user_fragment_list_bg" />
+
+</LinearLayout>

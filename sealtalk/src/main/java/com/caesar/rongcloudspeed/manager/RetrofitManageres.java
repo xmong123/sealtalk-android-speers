@@ -3,10 +3,11 @@ package com.caesar.rongcloudspeed.manager;
 
 import android.content.Context;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import com.caesar.rongcloudspeed.network.Api;
 import com.caesar.rongcloudspeed.interceptors.HttpLoggingInterceptor;
 import com.caesar.rongcloudspeed.interceptors.InternetInterceptor;
-import com.caesar.rongcloudspeed.network.Api;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -24,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by  on 2017/8/30.
  */
 
-public class RetrofitManager {
+public class RetrofitManageres {
 
 
     /**
