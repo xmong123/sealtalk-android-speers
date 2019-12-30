@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="188dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/white"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal">
+
+        <Button
+            android:visibility="invisible"
+            android:id="@+id/post_check_btn"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/margin_space"
+            android:layout_marginTop="@dimen/dp_60"
+            android:background="@drawable/icon_checkno"
+            android:clickable="false"
+            android:focusableInTouchMode="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:layout_toEndOf="@id/post_check_btn"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="【供求信息】"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/post_text01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="出售：其他机械设备"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/post_text02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="批次号：TXS0603129"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/post_text03"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="数量：2000.0吨"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/post_text04"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="价格：1000.00元"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/post_text05"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="提货方式：自提"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/post_text06"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:text="规格：023-653 八千一吨"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/post_text07"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/diment32dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:text="2018-08-02 16:23:20" />
+
+        <ImageView
+            android:id="@+id/post_del_btn"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/diment32dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:src="@drawable/icoshanchu" />
+
+    </RelativeLayout>
+
+    <View
+        style="@style/solide8dp"
+        android:background="@color/user_fragment_list_bg" />
+</LinearLayout>

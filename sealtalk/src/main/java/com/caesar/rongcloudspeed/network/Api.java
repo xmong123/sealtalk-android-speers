@@ -9,9 +9,14 @@ import com.caesar.rongcloudspeed.bean.GoodsCateBean;
 import com.caesar.rongcloudspeed.bean.GoodsListBaseBean;
 import com.caesar.rongcloudspeed.bean.GoodsListCartBean;
 import com.caesar.rongcloudspeed.bean.HomeDataBean;
+import com.caesar.rongcloudspeed.bean.HomeDataUserBean;
+import com.caesar.rongcloudspeed.bean.HomeMainDataBean;
 import com.caesar.rongcloudspeed.bean.LessonCateBean;
 import com.caesar.rongcloudspeed.bean.LessonCategoryBean;
+import com.caesar.rongcloudspeed.bean.NavCategoryBean;
+import com.caesar.rongcloudspeed.bean.PersonCenterBean;
 import com.caesar.rongcloudspeed.bean.PostsArticleBaseBean;
+import com.caesar.rongcloudspeed.bean.QiniuBean;
 import com.caesar.rongcloudspeed.bean.UserListAddressBean;
 import com.caesar.rongcloudspeed.bean.UserOrderBean;
 import com.caesar.rongcloudspeed.data.BaseData;
@@ -344,5 +349,30 @@ public interface Api {
     @POST("index.php?g=user&m=index&a=edit_user_info")
     Call<BaseData> edituserinfo(@Field("user_id") String user_id,@Field("real_name") String real_name,@Field("user_idnumber") String user_idnumber,@Field("user_address") String user_address,@Field("user_friend") String user_friend,@Field("friend_mobile") String friend_mobile,@Field("user_cardphoto") String user_cardphoto);
 
+    @GET("personal_center")
+    Observable<PersonCenterBean> personal_center(@Query("uid") String uid);
+
+    @GET("index.php")
+    Observable<HomeDataUserBean> HomePersonalData(@Query("g") String group, @Query("m") String model, @Query("a") String action, @Query("cid") String cid, @Query("userid") String userid);
+
+    @GET("index.php")
+    Observable<HomeDataBean> ReplayData(@Query("g") String group, @Query("m") String model, @Query("a") String action);
+
+    @GET("index.php")
+    Observable<NavCategoryBean> RequestMenuDate(@Query("g") String group, @Query("m") String model, @Query("a") String action, @Query("parent") String parentID);
+
+    @GET("index.php")
+    Observable<HomeMainDataBean> HomeMainData(@Query("g") String group, @Query("m") String model, @Query("a") String action);
+
+    @GET("index.php")
+    Observable<QiniuBean> getQiniuToken(@Query("g") String group, @Query("m") String model, @Query("a") String action);
+
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=public&a=indexPersonalMessageJson")
+    Observable<HomeDataUserBean> getPersonalMessageData(@Field("userid") String userid);
+
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=article&a=remove_post_json")
+    Observable<CommonResonseBean> RemovePostData(@Field("tid") String tid);
 
 }

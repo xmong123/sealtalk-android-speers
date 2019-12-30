@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/layoutMargin16dp"
+    android:paddingLeft="@dimen/layoutMargin16dp"
+    android:paddingRight="@dimen/layoutMargin16dp"
+    android:paddingTop="@dimen/layoutMargin16dp">
+
+    <LinearLayout
+        android:id="@+id/user_tip_layout01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的钱包"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/mainText14sp" />
+
+
+        <TextView
+            android:id="@+id/baozhengjinmoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:text="1"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/bigText16sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/user_tip_layout02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin16dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的课程"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/mainText14sp" />
+
+
+        <TextView
+            android:id="@+id/yuermoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:text="1"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/bigText16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/user_tip_layout03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin16dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的订单"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/mainText14sp" />
+
+
+        <TextView
+            android:id="@+id/user_commment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:text="1"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/bigText16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/withdrawTv"
+        android:layout_width="66dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_vertical"
+        android:background="@mipmap/withdraw_bg"
+        android:gravity="center"
+        android:text="设置"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mainText14sp" />
+
+</LinearLayout>

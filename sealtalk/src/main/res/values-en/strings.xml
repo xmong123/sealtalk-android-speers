@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">မြန်မာ အက္ခရာ</string>
+    <string name="app_name">QUICK START</string>
     <string name="updatefun_provider_file_authorities">com.caesar.rongcloudspeed.FileProvider</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- login-->
@@ -16,6 +16,7 @@
     <string name="seal_login_confirm">Confirm</string>
     <string name="seal_login_confirm_password">ConfirmPassword</string>
     <string name="product_buy_now">BUY NOW</string>
+    <string name="toast_person_unlogin">LOGIN NOW</string>
 
     <string name="seal_login_toast_name_is_null">Nickname input cannot be empty</string>
     <string name="seal_login_toast_name_contain_spaces">Nickname cannot contain spaces</string>
@@ -35,7 +36,7 @@
     <string name="login_verification_code_error">Verification code is incorrect</string>
     <string name="seal_login_kick_by_other">Your account is logged-in on another device and  you are forced to logout!</string>
 
-    <string name="common_chat_room">房间တွင်  聊天</string>
+    <string name="common_chat_room">ChatRoom</string>
     <string name="discovery_chat_room_one">ChatRoom1</string>
     <string name="discovery_chat_room_two">ChatRoom2</string>
     <string name="discovery_chat_room_three">ChatRoom3</string>
@@ -171,6 +172,7 @@
     <string name="profile_set_display_name">Setting Remarks</string>
     <string name="profile_detail_start_chat">Start Chat</string>
     <string name="profile_start_send_money">Myanmar Credit Transfer</string>
+    <string name="profile_start_send_redpacket">同行快线红包</string>
     <string name="profile_detail_start_voice">Voice Call</string>
     <string name="profile_detail_start_video">Video Call</string>
     <string name="profile_btn_friend_circle_timeline">朋友圈</string>
@@ -212,6 +214,7 @@
     <string name="seal_userinfo_item_user_portrait">User Portrait</string>
     <string name="seal_userinfo_item_user_money">用户余额</string>
     <string name="seal_mine_set_account_change_password">Change Password</string>
+    <string name="seal_mine_set_account_change_paypassword">支付密码修改</string>
     <string name="seal_mine_set_account_privacy">Security and Privacy</string>
     <string name="seal_mine_set_account_new_message_show">New Message Notification</string>
     <string name="seal_mine_set_account_clear_cache">Clear Cache</string>
@@ -219,7 +222,7 @@
     <string name="seal_mine_set_account_push_language">Setting Push To Chinese</string>
     <string name="seal_mine_set_account_push_content">Display Push Content</string>
     <string name="seal_mine_set_account_push_message">Receive Push Message</string>
-    <string name="seal_mine_change_language">ဘာသာစကား</string>
+    <string name="seal_mine_change_language">seal_mine_change_language</string>
     <string name="seal_mine_about_update_log">Update Log </string>
     <string name="seal_mine_about_function_introduce">Feature Introduction</string>
     <string name="seal_mine_about_rongcloud_web">Official Website</string>
@@ -283,9 +286,12 @@
     <string name="msg_reference_file">[file]</string>
 
     <string name="seal_update_password_current_password">Old Password</string>
+    <string name="seal_update_password_current_paypassword">Old Pey Password</string>
     <string name="seal_update_password_password_hint">6-16 characters, case sensitive</string>
     <string name="seal_update_password_confirm_password">Confirm Password</string>
+    <string name="seal_update_password_confirm_paypassword">Confirm Pay Password</string>
     <string name="seal_update_password_new_password">New Password</string>
+    <string name="seal_update_password_new_paypassword">New Pay Password</string>
     <string name="seal_update_password_save">Save</string>
     <string name="seal_update_password_toast_password_not_equal">The confirmed password is inconsistent with the new password</string>
     <string name="seal_update_password_toast_password_old_equal_new">The new password shall be same as the old password</string>
@@ -539,6 +545,8 @@
     <string name="qiniu_x_exParam3_hint">x:exParam3</string>
     <string name="qiniu_return_body_type">ReturnBody类型</string>
     <string name="qiniu_upload">上传</string>
+    <string name="qiniu_upload_success">上传成功</string>
+    <string name="qiniu_upload_failed">上传失败</string>
     <string name="qiniu_cancel">暂停</string>
     <string name="qiniu_select_upload_file">选择文件:</string>
     <string name="qiniu_get_upload_token">申请凭证:</string>

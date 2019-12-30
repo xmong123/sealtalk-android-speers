@@ -16,6 +16,7 @@
 package com.chad.library.adapter.base;
 
 import android.animation.Animator;
+import android.app.AlertDialog;
 import android.content.Context;
 import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
@@ -29,6 +30,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutParams;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,6 +170,29 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
         if (getRecyclerView() == null) {
             throw new IllegalStateException("please bind recyclerView first!");
         }
+    }
+
+    private AlertDialog.Builder builder;
+    public void onShowVIPDialog(final Context context,int icon) {
+        builder = new AlertDialog.Builder(context).setIcon(icon).setTitle("认证会员提示")
+                .setMessage("您还不是认证城库会员，清联系客服（15033370607）后进行操作").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //ToDo: 你想做的事情
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:15033370607"));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+//                        Toast.makeText(getActivity(), "确定按钮", Toast.LENGTH_LONG).show();
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //ToDo: 你想做的事情
+//                        Toast.makeText(getActivity(), "关闭按钮", Toast.LENGTH_LONG).show();
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
     /**

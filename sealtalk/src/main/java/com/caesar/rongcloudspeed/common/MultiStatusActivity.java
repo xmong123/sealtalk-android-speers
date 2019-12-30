@@ -12,7 +12,7 @@ import com.caesar.rongcloudspeed.utils.SPConfirmDialog;
 import com.classic.common.MultipleStatusView;
 import com.wuhenzhizao.titlebar.widget.CommonTitleBar;
 
-public abstract class MultiStatusActivity extends BaseActivity {
+public abstract class MultiStatusActivity extends BaseShopActivity {
 
     protected CommonTitleBar titlebar;
     protected MultipleStatusView multipleStatusView;

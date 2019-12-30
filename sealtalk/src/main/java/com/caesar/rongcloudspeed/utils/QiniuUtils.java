@@ -34,6 +34,9 @@ public class QiniuUtils {
 
     private static String token = "";
     private static String url = "http://qiniu.500-china.com/";
+    public static String watermark = "?watermark/4/text/5Z-O5bqT6LSn5rqQ/font/5b6u6L2v6ZuF6buR/fontsize/1080/fill/I0Y2MEEwQQ==/dissolve/50/rotate/30/uw/256/uh/256/resize/1";
+    public static String watermark1 = "?watermark/4/text/5Z-O5bqT6LSn5rqQ/font/5b6u6L2v6ZuF6buR/fontsize/1024/fill/I0Y2MEEwQQ==/dissolve/50/rotate/30/uw/512/uh/512/resize/2";
+
 
     //生成图片Key
     public static String createImageKey(String phone) {

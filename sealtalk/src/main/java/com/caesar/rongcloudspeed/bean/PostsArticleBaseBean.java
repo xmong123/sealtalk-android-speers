@@ -1,12 +1,10 @@
 package com.caesar.rongcloudspeed.bean;
 
-import com.caesar.rongcloudspeed.data.BaseData;
-
 /**
  * Created by mac on 2018/4/5.
  */
 
-public class PostsArticleBaseBean extends BaseData {
+public class PostsArticleBaseBean {
     public String getTid() {
         return tid;
     }
@@ -184,16 +182,6 @@ public class PostsArticleBaseBean extends BaseData {
 
     private String post_hits;
 
-    public String getPost_like() {
-        return post_like;
-    }
-
-    public void setPost_like(String post_like) {
-        this.post_like = post_like;
-    }
-
-    private String post_like;
-
     public String getPost_price() {
         return post_price;
     }
@@ -203,16 +191,6 @@ public class PostsArticleBaseBean extends BaseData {
     }
 
     private String smeta;
-
-    private String thumb_video;
-
-    public String getThumb_video() {
-        return thumb_video;
-    }
-
-    public void setThumb_video(String thumb_video) {
-        this.thumb_video = thumb_video;
-    }
 
     private String content;
 
