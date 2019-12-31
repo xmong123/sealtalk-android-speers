@@ -22,6 +22,7 @@ import com.caesar.rongcloudspeed.player.PLVideoViewActivity;
 import com.caesar.rongcloudspeed.ui.activity.FullScreenActivity;
 import com.caesar.rongcloudspeed.ui.activity.HomeMoreLessonListActivity;
 import com.caesar.rongcloudspeed.ui.activity.MainActivity;
+import com.caesar.rongcloudspeed.ui.activity.SPSpeerDetailActivity;
 import com.caesar.rongcloudspeed.ui.adapter.BookAdapter;
 import com.caesar.rongcloudspeed.ui.adapter.LessonAdapter;
 import com.caesar.rongcloudspeed.widget.PagerGridLayoutManager;
@@ -69,29 +70,20 @@ public class HomeDiscoveryLessonFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 PostsArticleBaseBean postsArticleBaseBean=dataArray.get( position );
                 String postID=postsArticleBaseBean.getObject_id();
+                String postName=postsArticleBaseBean.getPost_title();
                 String thumbVideoString = postsArticleBaseBean.getThumb_video();
                 if (!(thumbVideoString.startsWith( "http://" )||thumbVideoString.startsWith( "https://" ))) {
                     thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
                 }
-//                Intent intent = new Intent(getActivity(), PLVideoViewActivity.class);
-//                intent.putExtra("videoPath", thumbVideoString);
-//                intent.putExtra("postID" , postID);
-//                intent.putExtra("mediaCodec", AVOptions.MEDIA_CODEC_SW_DECODE);
-//                intent.putExtra("liveStreaming", 1);
-//                intent.putExtra("cache", true);
-//                intent.putExtra("loop", true);
-//                intent.putExtra("video-data-callback", false);
-//                intent.putExtra("audio-data-callback", false);
-//                intent.putExtra("disable-log", false);
-//                startActivity(intent);
-//                if (TbsVideo.canUseTbsPlayer(getActivity())) {
-//                    //直接调用播放接口，传入视频流的url
-//                    TbsVideo.openVideo(getActivity(), thumbVideoString);
-//                }
-                Intent intent = new Intent(getActivity(),
-                        FullScreenActivity.class);
+               Intent intent = new Intent(getActivity(), SPSpeerDetailActivity.class);
                 intent.putExtra("videoPath", thumbVideoString);
+                intent.putExtra("goods_id" , postID);
+                intent.putExtra("goods_name" , postName);
                 startActivity(intent);
+//                Intent intent = new Intent(getActivity(),
+//                        FullScreenActivity.class);
+//                intent.putExtra("videoPath", thumbVideoString);
+//                startActivity(intent);
             }
         });
         // 1.水平分页布局管理器

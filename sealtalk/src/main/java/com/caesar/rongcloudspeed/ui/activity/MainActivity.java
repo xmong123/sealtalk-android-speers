@@ -122,6 +122,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             R.drawable.seal_tab_me_selector
     };
 
+
     /**
      * 各个 Fragment 界面
      */
