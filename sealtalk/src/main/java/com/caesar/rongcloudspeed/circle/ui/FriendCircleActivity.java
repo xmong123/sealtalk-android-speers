@@ -63,7 +63,6 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
     private EditText mEditText;
     private TextView sendTv;
     private ImageView back;
-    private ImageView img_bg;
     private ImageView photo;
     private ImageView add;
     private LoadingDialog dialog;
@@ -85,7 +84,6 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
         mCircleLv = (ListView) findViewById(R.id.circleLv);
         back = (ImageView) findViewById(R.id.back);
         add = (ImageView) findViewById(R.id.add);
-        img_bg = (ImageView) findViewById(R.id.img_bg);
         photo = (ImageView) findViewById(R.id.photo);
         back.setOnClickListener(view -> {
             finish();

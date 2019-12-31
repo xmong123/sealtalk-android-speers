@@ -31,20 +31,14 @@
         android:paddingRight="12dip"
         android:src="@drawable/ease_mm_title_back" />
 
-    <ImageView
-        android:id="@+id/img_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="210dip"
-        android:layout_below="@+id/circle_tittle"
-        android:scaleType="centerCrop"
-        android:src="@drawable/timg_bg"
-        android:visibility="visible" />
+    <include
+        layout="@layout/adapter_circle_item_header" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/mRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/img_bg">
+        android:layout_below="@+id/circle_item_header_layout">
 
         <ScrollView
             android:layout_width="match_parent"
