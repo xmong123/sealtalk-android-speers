@@ -27,7 +27,7 @@ import com.caesar.rongcloudspeed.data.BaseData;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yiw.circledemo.R;
+import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.circle.adapter.CommentAdapter.ICommentItemClickListener;
 import com.yiw.circledemo.bean.ActionItem;
 import com.yiw.circledemo.bean.CircleItem;

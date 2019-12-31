@@ -63,7 +63,6 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
     private EditText mEditText;
     private TextView sendTv;
     private ImageView back;
-    private ImageView photo;
     private ImageView add;
     private LoadingDialog dialog;
     private int mScreenHeight;
@@ -84,7 +83,6 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
         mCircleLv = (ListView) findViewById(R.id.circleLv);
         back = (ImageView) findViewById(R.id.back);
         add = (ImageView) findViewById(R.id.add);
-        photo = (ImageView) findViewById(R.id.photo);
         back.setOnClickListener(view -> {
             finish();
         });
@@ -127,10 +125,6 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
         mAdapter.setCirclePublicCommentController(mCirclePublicCommentController);
         String headImg=UserInfoUtils.getAppUserUrl(this);
         setViewTreeObserver();
-        if (!headImg.startsWith( "http://" )) {
-            headImg = Constant.THINKCMF_PATH + headImg;
-        }
-        Glide.with(this).load(headImg).into(photo);
     }
 
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/circle_item_header_layout"
-    android:layout_below="@+id/circle_tittle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_below="@+id/circle_tittle"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_height="48dp"
             android:layout_margin="10dip"
             android:scaleType="fitCenter"
-            android:src="@drawable/im_pub_no_image" />
+            android:src="@drawable/ic_launcher" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,12 +131,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:paddingTop="5dip"
-                    android:paddingBottom="5dip"
+                    android:background="@mipmap/gradent_btn_bg"
                     android:paddingStart="@dimen/dp_20"
+                    android:paddingTop="5dip"
                     android:paddingEnd="@dimen/dp_20"
+                    android:paddingBottom="5dip"
                     android:text="更多"
-                    android:textColor="@color/red_dark" />
+                    android:textColor="@color/white" />
             </RelativeLayout>
 
 

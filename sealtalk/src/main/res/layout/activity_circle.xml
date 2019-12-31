@@ -64,15 +64,6 @@
                     android:listSelector="@android:color/transparent"
                     android:transcriptMode="normal" />
 
-                <com.caesar.rongcloudspeed.circle.widgets.CircularImage
-                    android:id="@+id/photo"
-                    android:layout_width="70dip"
-                    android:layout_height="70dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dip"
-                    android:layout_marginRight="20dip"
-                    android:src="@drawable/add_friend_ic_wechat" />
-
                 <LinearLayout
                     android:id="@+id/editTextBodyLl"
                     android:layout_width="match_parent"
