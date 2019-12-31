@@ -1,5 +1,6 @@
 package com.caesar.rongcloudspeed.circle.widgets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.yiw.circledemo.spannable.ISpanClick;
  * @Description:
  * @date 16/1/2 18:47
  */
+@SuppressLint("AppCompatCustomView")
 public class FavoriteListView extends TextView{
     private ISpanClick mSpanClickListener;
 

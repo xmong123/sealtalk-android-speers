@@ -5,12 +5,40 @@
     android:layout_height="match_parent"
     tools:context=".circle.ui.FriendCircleActivity">
 
+    <com.yiw.circledemo.widget.EaseTitleBar
+        android:id="@+id/circle_tittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleBarTitle="同行圈" />
+
+    <ImageView
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="50dip"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="12dip"
+        android:paddingRight="12dip"
+        android:src="@drawable/add" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="50dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="12dip"
+        android:paddingRight="12dip"
+        android:src="@drawable/ease_mm_title_back" />
+
     <ImageView
         android:id="@+id/img_bg"
         android:layout_width="wrap_content"
         android:layout_height="210dip"
+        android:layout_below="@+id/circle_tittle"
         android:scaleType="centerCrop"
-        android:src="@drawable/timg_bg" />
+        android:src="@drawable/timg_bg"
+        android:visibility="visible" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/mRefreshLayout"
@@ -27,13 +55,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
                 <com.caesar.rongcloudspeed.widget.MyListView
                     android:id="@+id/circleLv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/img_bg"
-                    android:layout_marginTop="35dip"
+                    android:layout_marginTop="10dip"
                     android:background="@color/white"
                     android:cacheColorHint="@android:color/transparent"
                     android:divider="@null"
@@ -49,7 +75,7 @@
                     android:layout_width="70dip"
                     android:layout_height="70dip"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="170dip"
+                    android:layout_marginTop="10dip"
                     android:layout_marginRight="20dip"
                     android:src="@drawable/add_friend_ic_wechat" />
 
@@ -88,25 +114,5 @@
         </ScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <ImageView
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="50dip"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:paddingLeft="12dip"
-        android:paddingRight="12dip"
-        android:src="@drawable/add" />
-
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="50dip"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="12dip"
-        android:paddingRight="12dip"
-        android:src="@drawable/ease_mm_title_back" />
 
 </RelativeLayout>
