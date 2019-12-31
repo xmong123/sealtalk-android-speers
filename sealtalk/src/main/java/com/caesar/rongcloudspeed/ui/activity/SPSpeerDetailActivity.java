@@ -158,7 +158,7 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
                 }
                 break;
             case R.id.btn:
-                createCarts(goods_id);
+//                createCarts(goods_id);
                 break;
         }
     }
