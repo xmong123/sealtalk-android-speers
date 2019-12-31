@@ -38,6 +38,7 @@ import com.caesar.rongcloudspeed.ui.fragment.MainConversationListFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainDiscoveryFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainMeFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainSealTalkFragment;
+import com.caesar.rongcloudspeed.ui.fragment.UserFragment;
 import com.caesar.rongcloudspeed.ui.view.MainBottomTabGroupView;
 import com.caesar.rongcloudspeed.ui.view.MainBottomTabItem;
 import com.caesar.rongcloudspeed.ui.widget.DragPointView;
@@ -291,7 +292,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         fragments.add(new LessonsVideoFragment());
         fragments.add(new MainSealTalkFragment());
         fragments.add(new BookStoreHomeFragment());
-        fragments.add(new MainMeFragment());
+        fragments.add(new UserFragment());
 
         // ViewPager 的 Adpater
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

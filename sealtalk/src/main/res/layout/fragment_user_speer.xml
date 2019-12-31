@@ -30,7 +30,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    android:background="@mipmap/userbg"
+                    android:background="@mipmap/userbg1"
                     android:padding="20dp">
 
                     <ImageView
@@ -41,18 +41,20 @@
                         android:src="@drawable/ic_launcher" />
 
                     <ImageView
-                        android:layout_marginTop="32dp"
                         android:id="@+id/siv_setting_qrcode"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/qr_code1" />
+                        android:layout_marginTop="32dp"
+                        android:src="@drawable/qr_code" />
 
                     <LinearLayout
+                        android:id="@+id/userHeaderLayout"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="14dp"
+                        android:layout_toStartOf="@+id/siv_setting_qrcode"
                         android:layout_toEndOf="@+id/userHeaderImage"
                         android:orientation="vertical">
 
@@ -61,6 +63,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="戴老师"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/bigText16sp" />
 
                         <TextView
@@ -69,6 +72,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/layoutMargin8dp"
                             android:text="138********20"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/mainText14sp" />
                     </LinearLayout>
 

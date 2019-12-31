@@ -25,6 +25,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.caesar.rongcloudspeed.R;
+import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.data.result.CircleItemResult;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.ui.dialog.LoadingDialog;
@@ -126,10 +127,12 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
         mCirclePublicCommentController = new CirclePublicCommentController(this, mEditTextBody, mEditText, sendTv);
         mCirclePublicCommentController.setListView(mCircleLv);
         mAdapter.setCirclePublicCommentController(mCirclePublicCommentController);
-
+        String headImg=UserInfoUtils.getAppUserUrl(this);
         setViewTreeObserver();
-
-        Glide.with(this).load(UserInfoUtils.getAppUserUrl(this)).into(photo);
+        if (!headImg.startsWith( "http://" )) {
+            headImg = Constant.THINKCMF_PATH + headImg;
+        }
+        Glide.with(this).load(headImg).into(photo);
     }
 
 

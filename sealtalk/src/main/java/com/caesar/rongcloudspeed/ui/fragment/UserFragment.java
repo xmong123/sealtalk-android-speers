@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,11 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
+import com.caesar.rongcloudspeed.common.IntentExtra;
+import com.caesar.rongcloudspeed.model.qrcode.QrCodeDisplayType;
+import com.caesar.rongcloudspeed.ui.activity.AccountSettingActivity;
+import com.caesar.rongcloudspeed.ui.activity.MyAccountActivity;
+import com.caesar.rongcloudspeed.ui.activity.QrCodeDisplayActivity;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -48,6 +54,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.rong.imkit.RongIM;
 
 /**
  */
@@ -84,7 +91,7 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
     @BindView(R.id.withdrawTv)
     TextView withdrawTv;
     @BindView(R.id.userHeaderImage)
-    CircleImageView userHeaderImage;
+    ImageView userHeaderImage;
     @BindView(R.id.redTips)
     TextView redTips;
     @BindView(R.id.teleTv)
@@ -149,12 +156,27 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.myOrderStv, R.id.myInviteCodeStv, R.id.settingStv, R.id.aboutMeStv, R.id.helpStv, R.id.user_tip_layout01, R.id.user_tip_layout02, R.id.user_tip_layout03, R.id.baozhengjinmoney, R.id.yuermoney, R.id.volumeStv, R.id.logoutStv})
+    @OnClick({R.id.userHeaderImage,R.id.siv_setting_qrcode,R.id.userHeaderLayout,R.id.myOrderStv, R.id.myInviteCodeStv, R.id.settingStv, R.id.aboutMeStv, R.id.helpStv, R.id.user_tip_layout01, R.id.user_tip_layout02, R.id.user_tip_layout03, R.id.baozhengjinmoney, R.id.yuermoney, R.id.volumeStv, R.id.logoutStv})
     public void onViewClicked(View view) {
         uidString= UserInfoUtils.getAppUserId( getActivity());
         if (!uidString.equals( "0" )) {
             Bundle extras = new Bundle();
             switch (view.getId()) {
+                case R.id.userHeaderImage:
+                    //我的个人信息
+                    startActivity(new Intent(getActivity(), MyAccountActivity.class));
+                    break;
+                case R.id.userHeaderLayout:
+                    //我的个人信息
+                    startActivity(new Intent(getActivity(), MyAccountActivity.class));
+                    break;
+                case R.id.siv_setting_qrcode:
+                    //我的二维码
+                    Intent qrCodeIntent = new Intent(getActivity(), QrCodeDisplayActivity.class);
+                    qrCodeIntent.putExtra(IntentExtra.STR_TARGET_ID, RongIM.getInstance().getCurrentUserId());
+                    qrCodeIntent.putExtra(IntentExtra.SERIA_QRCODE_DISPLAY_TYPE, QrCodeDisplayType.PRIVATE);
+                    startActivity(qrCodeIntent);
+                    break;
                 case R.id.myOrderStv:
                     //我的出售列表
                     extras.putString("cat_id", "3");
@@ -207,10 +229,8 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
                 case R.id.volumeStv:
                     break;
                 case R.id.logoutStv:
-                    baozhengjinmoney.setText( "0" );
-                    yuermoney.setText( "0" );
-                    user_commment.setText( "0" );
-                    showLoginOutDialog();
+                    startActivity(new Intent(getActivity(), AccountSettingActivity.class));
+//                    showLoginOutDialog();
                     return;
                     default:
                         break;
@@ -294,14 +314,15 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
 
     @OnClick(R.id.withdrawTv)
     public void onViewClicked() {
-        uidString= UserInfoUtils.getAppUserId( getActivity());
-        if (!uidString.equals( "0" )) {
-            ActivityUtils.startActivity(LoginActivity.class);
-        } else {
-            Toast.makeText( getActivity(), getString( R.string.toast_person_unlogin ), Toast.LENGTH_SHORT ).show();
-            Intent loginIntent = new Intent( getActivity(), LoginActivity.class );
-            getActivity().startActivity( loginIntent );
-        }
+        startActivity(new Intent(getActivity(), AccountSettingActivity.class));
+//        uidString= UserInfoUtils.getAppUserId( getActivity());
+//        if (!uidString.equals( "0" )) {
+//            ActivityUtils.startActivity(LoginActivity.class);
+//        } else {
+//            Toast.makeText( getActivity(), getString( R.string.toast_person_unlogin ), Toast.LENGTH_SHORT ).show();
+//            Intent loginIntent = new Intent( getActivity(), LoginActivity.class );
+//            getActivity().startActivity( loginIntent );
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.caesar.rongcloudspeed.circle.ui.FriendCircle1Activity;
 import com.caesar.rongcloudspeed.circle.ui.FriendCircleActivity;
+import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.data.UserInfo;
 import com.caesar.rongcloudspeed.data.result.CircleItemResult;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
@@ -195,6 +196,9 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
         final List<CommentItem> commentsDatas = circleItem.getLast_comments();
         boolean hasFavort = favortDatas.size() != 0 ? true : false;
         boolean hasComment = commentsDatas.size() != 0 ? true : false;
+        if (!headImg.startsWith( "http://" )) {
+            headImg = Constant.THINKCMF_PATH + headImg;
+        }
         ImageLoader.getInstance().displayImage(headImg, holder.headIv);
         holder.nameTv.setText(name);
         holder.timeTv.setText(timeString);
