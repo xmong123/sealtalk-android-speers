@@ -364,10 +364,18 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void toMain(String userId) {
-        Intent intent = new Intent(getActivity(), AdminMainActivity.class);
-        intent.putExtra(IntentExtra.USER_ID, userId);
-        startActivity(intent);
-        getActivity().finish();
+        String userIndustry= UserInfoUtils.getUserIndustry(getActivity());
+        if(userIndustry.equals("0")){
+            Intent intent = new Intent(getActivity(), AdminMainActivity.class);
+            intent.putExtra(IntentExtra.USER_ID, userId);
+            startActivity(intent);
+            getActivity().finish();
+        }else{
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+
     }
 
 
