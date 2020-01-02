@@ -24,7 +24,7 @@
                 android:src="@drawable/votebase"
                 android:id="@+id/convenientBanner"
                 android:layout_width="match_parent"
-                android:layout_height="400dp" />
+                android:layout_height="360dp" />
 
             <!--@drawable/shop_title_text_bg-->
             <FrameLayout
@@ -63,7 +63,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="300dp"
                 android:background="@color/white" />
 
         </LinearLayout>

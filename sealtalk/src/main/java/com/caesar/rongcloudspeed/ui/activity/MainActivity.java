@@ -3,6 +3,7 @@ package com.caesar.rongcloudspeed.ui.activity;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +53,10 @@ import com.caesar.rongcloudspeed.utils.log.SLog;
 
 import com.caesar.rongcloudspeed.utils.UpdateFunGO;
 import com.caesar.rongcloudspeed.config.UpdateKey;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+
 import io.rong.imkit.RongIM;
 
 public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWindowItemClickListener {
@@ -135,7 +141,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         setContentView(R.layout.main_activity_main);
         initView();
         initViewModel();
-        requestPermissions();
+        requestPerssion();
         UpdateKey.API_TOKEN = "ad90d5c3fd0d206b411b8c93e3a21979";
         UpdateKey.APP_ID = "5da6db92b2eb461dfc773c60";
         UpdateFunGO.init(this);
@@ -156,6 +162,33 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
     protected void onStop() {
         super.onStop();
         UpdateFunGO.onStop(this);
+    }
+
+    private void requestPerssion() {
+
+        AndPermission.with( this )
+                .permission( Permission.READ_EXTERNAL_STORAGE,
+                        Permission.WRITE_EXTERNAL_STORAGE,
+                        Permission.CAMERA )
+                .onGranted( new Action() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+                        // TODO what to do.
+                        File externalStorageDirectory = Environment.getExternalStorageDirectory();
+                        File mj = new File( externalStorageDirectory.getAbsolutePath(), "mj" );
+                        if (mj.exists()) {
+                            return;
+                        }
+                    }
+                } ).onDenied( new Action() {
+            @Override
+            public void onAction(List<String> permissions) {
+                // TODO what to do
+                finish();
+            }
+        } )
+                .start();
+
     }
 
     @TargetApi(23)

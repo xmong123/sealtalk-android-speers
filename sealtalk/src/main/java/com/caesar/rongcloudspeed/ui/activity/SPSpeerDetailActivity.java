@@ -79,7 +79,7 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
         goods_name = getIntent().getExtras().getString( "goods_name" );
         thumbVideoString = getIntent().getExtras().getString( "videoPath" );
         initTitleBarView( titlebar, "商品详情" );
-        Glide.with(this).load(thumbVideoString+"?vframe/jpg/offset/1").into(convenientBanner);
+//        Glide.with(this).load(thumbVideoString+"?vframe/jpg/offset/1").into(convenientBanner);
         initView();
         uidString= UserInfoUtils.getAppUserId(this);
     }
