@@ -29,7 +29,7 @@
             android:layout_marginBottom="@dimen/elevation8dp"
             android:ellipsize="marquee"
             android:maxLines="2"
-            android:text="同行快线书店精装商品"
+            android:text="同业快线书店精装商品"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />
         <View

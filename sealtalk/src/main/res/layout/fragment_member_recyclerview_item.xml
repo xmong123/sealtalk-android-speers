@@ -20,14 +20,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/shop_item_introduce" />
+            <include layout="@layout/shop_item_member" />
 
-            <View style="@style/solide0point5dp"
+            <View
+                style="@style/solide0point5dp"
                 android:layout_marginLeft="@dimen/layoutMargin16dp"
-                android:layout_marginRight="@dimen/layoutMargin16dp"
-                />
-
-            <include layout="@layout/shop_btn_two_group" />
+                android:layout_marginRight="@dimen/layoutMargin16dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

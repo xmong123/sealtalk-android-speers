@@ -172,7 +172,7 @@
     <string name="profile_set_display_name">Setting Remarks</string>
     <string name="profile_detail_start_chat">Start Chat</string>
     <string name="profile_start_send_money">Myanmar Credit Transfer</string>
-    <string name="profile_start_send_redpacket">同行快线红包</string>
+    <string name="profile_start_send_redpacket">同业快线红包</string>
     <string name="profile_detail_start_voice">Voice Call</string>
     <string name="profile_detail_start_video">Video Call</string>
     <string name="profile_btn_friend_circle_timeline">朋友圈</string>
@@ -405,8 +405,8 @@
 
     <string name="profile_qrcode_group_tips">Scan the group QR code to join the group immediately</string>
     <string name="profile_qrcode_private_tips">Scan the QR code to add me as a friend</string>
-    <string name="profile_qrcode_private_tips1">扫一扫二维码，同行快线收款码</string>
-    <string name="profile_qrcode_private_tips2">扫一扫二维码，同行快线付款码</string>
+    <string name="profile_qrcode_private_tips1">扫一扫二维码，同业快线收款码</string>
+    <string name="profile_qrcode_private_tips2">扫一扫二维码，同业快线付款码</string>
     <string name="profile_qrcode_save_to_phone">Save the picture</string>
     <string name="profile_qrcode_group_need_verify">The group has enable verification, only allow friends invitation to enter the group</string>
     <string name="profile_qrcode_share_to_sealtalk">Share to SealTalk</string>

@@ -57,8 +57,8 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
     ImageView convenientBanner;
     @BindView(R.id.container)
     LinearLayout container;
-    @BindView(R.id.btn)
-    Button btn;
+    @BindView(R.id.speer_btn)
+    Button speerBtn;
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
     @BindView(R.id.tabLayout)
@@ -149,7 +149,7 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
         return R.layout.activity_shop_speer_detail;
     }
 
-    @OnClick({R.id.convenientBanner, R.id.btn})
+    @OnClick({R.id.convenientBanner, R.id.speer_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.convenientBanner:
@@ -157,8 +157,9 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
                     TbsVideo.openVideo(this, thumbVideoString);
                 }
                 break;
-            case R.id.btn:
-//                createCarts(goods_id);
+            case R.id.speer_btn:
+                Intent loginIntent = new Intent( SPSpeerDetailActivity.this, SpeerOrderActivity.class );
+                startActivity( loginIntent );
                 break;
         }
     }
@@ -168,51 +169,4 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
         super.onDestroy();
     }
 
-    private void createCarts(String goods_id) {
-        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().ajaxAddCart(uidString,goods_id,"1"),
-                new NetworkCallback<BaseData>() {
-                    @Override
-                    public void onSuccess(BaseData data) {
-                        showCartsDialog();
-                        Toast.makeText(SPSpeerDetailActivity.this, "成功加入购物车: " + goods_name, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Toast.makeText(SPSpeerDetailActivity.this, "网络异常", Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
-
-    private void showCartsDialog() {
-        final DialogPlus dialog = DialogPlus.newDialog( this )
-                .setGravity( Gravity.CENTER )
-                .setContentBackgroundResource( android.R.color.transparent )
-                .setContentWidth( ViewGroup.LayoutParams.WRAP_CONTENT )  // or any custom width ie: 300
-                .setContentHeight( ViewGroup.LayoutParams.WRAP_CONTENT )
-                .setContentHolder( new com.orhanobut.dialogplus.ViewHolder( R.layout.cartscreate_dialog_layout ) )
-                .setExpanded( false )  // This will enable the expand feature, (similar to android L share dialog)
-                .create();
-        View holderView = dialog.getHolderView();
-        holderView.findViewById( R.id.mcart_confirm_btn1 ).setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        } );
-        holderView.findViewById( R.id.mcart_confirm_btn2 ).setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                Intent loginIntent = new Intent( SPSpeerDetailActivity.this, SPShopCartActivity.class );
-                startActivity( loginIntent );
-            }
-        } );
-
-        dialog.show();
-
-        dialog.show();
-
-
-    }
 }

@@ -16,10 +16,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:orientation="vertical" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:orientation="vertical" />
 
         <!--@drawable/shop_title_text_bg-->
         <FrameLayout
@@ -54,10 +54,10 @@
 
             <View
                 style="@style/solide0point5dp"
-                android:layout_marginBottom="0.5dp"
                 android:layout_gravity="bottom"
                 android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16" />
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginBottom="0.5dp" />
         </FrameLayout>
 
         <androidx.viewpager.widget.ViewPager

@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:text="同行快线出售图片（可选）" />
+                    android:text="同业快线出售图片（可选）" />
 
                 <com.caesar.rongcloudspeed.common.NoScrollGridView
                     android:id="@+id/post_image_gridview"

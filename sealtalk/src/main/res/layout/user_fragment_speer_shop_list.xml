@@ -17,16 +17,35 @@
             android:id="@+id/shopTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMargin16dp"
             android:text="悦诗风吟绿茶精粹萃平衡面霜"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/dp_20" />
 
-        <RatingBar
-            android:id="@+id/rating_bar_spoken"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:max="5" />
+            android:layout_marginTop="@dimen/layoutMargin16dp"
+            android:layout_marginBottom="@dimen/layoutMargin16dp">
+
+            <TextView
+                android:id="@+id/ratingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评分："
+                android:textColor="@color/textColorPrimary" />
+
+            <RatingBar
+                android:id="@+id/ratingBarStyleIndicator"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/ratingTitle"
+                android:isIndicator="true"
+                android:max="5" />
+
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/money"
@@ -43,8 +62,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/shopTitle"
-            android:layout_marginTop="@dimen/layoutMargin8dp"
-            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/layoutMargin16dp"
+            android:layout_marginBottom="@dimen/layoutMargin16dp"
             android:maxLines="8"
             android:text="课程简介：\n直发，确保新鲜产品功效:深层滋润、补水保湿商品重量：8.000克"
             android:textColor="@color/textColorPrimary"
@@ -55,8 +74,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/shopTitle"
-            android:layout_marginTop="@dimen/layoutMargin8dp"
-            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/layoutMargin16dp"
+            android:layout_marginBottom="@dimen/layoutMargin16dp"
             android:maxLines="8"
             android:text="讲师简介：\n于老师，BIM机电专业学者"
             android:textColor="@color/textColorPrimary"

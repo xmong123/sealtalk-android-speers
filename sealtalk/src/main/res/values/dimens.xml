@@ -485,6 +485,8 @@
 
     <dimen name="home_banner_height">140dip</dimen>
     <dimen name="dp_300">300dip</dimen>
+    <dimen name="dp_360">360dip</dimen>
+    <dimen name="dp_400">400dip</dimen>
     <dimen name="dp_60">60dp</dimen>
 
 </resources>

@@ -102,6 +102,7 @@
                 android:value=".ui.activity.VoteBaseActivity" />
         </activity>
         <activity android:name=".ui.activity.SPShopDetailActivity" />
+        <activity android:name=".ui.activity.SpeerOrderActivity" />
         <activity android:name=".ui.activity.SPSpeerDetailActivity" />
         <activity android:name=".ui.activity.AnimationPersonalActivity" />
         <activity android:name=".ui.activity.AnimationPersonalCommentActivity" />

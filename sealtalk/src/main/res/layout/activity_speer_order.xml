@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/user_fragment_list_bg"
     android:orientation="vertical"
-    tools:context="com.caesar.rongcloudspeed.ui.activity.ConfirmOrderActivity">
+    tools:context="com.caesar.rongcloudspeed.ui.activity.SpeerOrderActivity">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/addAddressCv"
+        android:id="@+id/speer_lesson_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/layoutMargin16dp"
@@ -17,54 +17,67 @@
         android:elevation="@dimen/elevation8dp"
         app:cardCornerRadius="@dimen/card_radius">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layoutMargin16dp"
-
-            android:orientation="vertical">
+            android:layout_marginLeft="@dimen/layoutMargin16dp"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:layout_marginRight="@dimen/layoutMargin16dp"
+            android:layout_marginBottom="@dimen/margin4dp">
 
             <TextView
-                android:id="@+id/userName"
+                android:id="@+id/lesson_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:background="@drawable/btn_red_shape"
+                android:paddingLeft="@dimen/dp_4"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingRight="@dimen/dp_4"
+                android:paddingBottom="@dimen/dp_2"
+                android:text="精品课"
+                android:textColor="@color/white_text_color"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/lesson_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_2"
+                android:layout_toEndOf="@+id/lesson_tag"
                 android:paddingBottom="@dimen/layoutMargin8dp"
-                android:text="请选择收货地址"
+                android:text="BIM(Revit)项目实战应用——机电篇"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/mainText14sp" />
+                android:textSize="@dimen/bigText16sp" />
 
 
             <TextView
-                android:id="@+id/address"
+                android:layout_margin="@dimen/dp_4"
+                android:id="@+id/lesson_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="            "
+                android:layout_below="@+id/lesson_title"
+                android:text="¥1.00"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/mainText14sp" />
+                android:textSize="@dimen/bigText16sp" />
 
-        </LinearLayout>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/member_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin8dp"
+        android:layout_marginRight="@dimen/layoutMargin8dp"
+        android:layout_marginBottom="@dimen/layoutMargin8dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/layoutMargin16dp"
         android:layout_marginLeft="@dimen/layoutMargin16dp"
         android:layout_marginRight="@dimen/layoutMargin16dp"
-        android:background="@color/white"
-        android:elevation="@dimen/elevation8dp"
-        app:cardCornerRadius="@dimen/card_radius">
-
-        <include layout="@layout/shop_item_introduce" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/layoutMargin16dp"
-        android:layout_marginLeft="@dimen/layoutMargin16dp"
-        android:layout_marginRight="@dimen/layoutMargin16dp"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/card_radius">
 
@@ -73,12 +86,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layoutMargin16dp"
-            android:text="使用同业快线额度支付"
+            android:text="使用微信支付"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />
 
         <CheckBox
-            android:id="@+id/userCredit"
+            android:id="@+id/weixin_speer_paybox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
@@ -89,9 +102,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/layoutMargin16dp"
         android:layout_marginLeft="@dimen/layoutMargin16dp"
         android:layout_marginRight="@dimen/layoutMargin16dp"
+        android:layout_marginBottom="@dimen/layoutMargin16dp"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/card_radius">
 
@@ -105,7 +118,7 @@
             android:textSize="@dimen/mainText14sp" />
 
         <CheckBox
-            android:id="@+id/userAliPay"
+            android:id="@+id/alipay_speer_paybox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
@@ -144,15 +157,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layoutMargin16dp"
-        android:layout_marginRight="@dimen/layoutMargin16dp"
         android:layout_marginTop="@dimen/layoutMargin16dp"
+        android:layout_marginRight="@dimen/layoutMargin16dp"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/card_radius">
 
         <LinearLayout
+            android:id="@+id/yanzhengmaEtLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/yanzhengmaEtLl"
             android:orientation="horizontal">
 
 
@@ -170,7 +183,7 @@
 
 
             <TextView
-                android:id="@+id/getVerificationCode"
+                android:id="@+id/getSpeerVerifiCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layoutMargin16dp"
@@ -199,7 +212,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
-            android:text="总额: ¥88.00"
+            android:text="应付金额: ¥ 1.00"
             android:textColor="@color/textColorPrimary" />
 
         <View
@@ -209,7 +222,7 @@
 
 
         <Button
-            android:id="@+id/pay"
+            android:id="@+id/speer_pay"
             style="@style/gradent_btn_style" />
     </LinearLayout>
 </LinearLayout>

@@ -15,22 +15,23 @@
         android:descendantFocusability="blocksDescendants">
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:id="@+id/container"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ImageView
-                android:src="@drawable/votebase"
                 android:id="@+id/convenientBanner"
                 android:layout_width="match_parent"
-                android:layout_height="360dp" />
+                android:layout_height="240dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/votebase" />
 
             <!--@drawable/shop_title_text_bg-->
             <FrameLayout
-                android:layout_marginTop="-20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
                 android:background="@drawable/shop_title_text_bg">
 
                 <com.google.android.material.tabs.TabLayout
@@ -54,16 +55,16 @@
 
                 <View
                     style="@style/solide0point5dp"
-                    android:layout_marginBottom="0.5dp"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="@dimen/dp_16"
-                    android:layout_marginRight="@dimen/dp_16" />
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginBottom="0.5dp" />
             </FrameLayout>
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="@dimen/dp_400"
                 android:background="@color/white" />
 
         </LinearLayout>
@@ -71,7 +72,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/speer_btn"
         style="@style/main_btn_style2"
         android:text="立即购买" />
 </LinearLayout>

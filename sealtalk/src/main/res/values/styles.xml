@@ -175,6 +175,12 @@
         <item name="android:layout_height">0.5dp</item>
     </style>
 
+    <style name="solide0point5dps">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_height">0.5dp</item>
+    </style>
+
     <style name="solide1dp">
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/soliderColor</item>

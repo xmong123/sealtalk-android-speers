@@ -263,20 +263,20 @@ public interface Api {
     Call<UserSumResult> getCodeToUserRID(@Field("user_sum_add") String user_sum_add, @Field("sum_touserID") String sum_touserID, @Field("sum_foruserRID") String sum_foruserRID);
 
 
-    /*同行快线转账发起交易请求*/
+    /*同业快线转账发起交易请求*/
     //@FormUrlEncoded
     @FormUrlEncoded
     @POST("index.php?g=user&m=public&a=transfer_to_username")
     Call<UserSumResult> transferCodeToUserName(@Field("user_sum_add") String user_sum_add, @Field("sum_touserID") String sum_touserID, @Field("sum_foruserName") String sum_foruserName);
 
-    /*同行快线转账发起交易请求*/
+    /*同业快线转账发起交易请求*/
     //@FormUrlEncoded
     @FormUrlEncoded
     @POST("index.php?g=user&m=public&a=transfer_to_userID")
     Call<UserSumResult> transferCodeToUserRID(@Field("user_sum_add") String user_sum_add, @Field("sum_touserID") String sum_touserID, @Field("sum_foruserRID") String sum_foruserRID);
 
 
-    /*同行快线转账确认收款请求*/
+    /*同业快线转账确认收款请求*/
     //@FormUrlEncoded
     @FormUrlEncoded
     @POST("index.php?g=user&m=public&a=transfer_confirm_username")
@@ -319,22 +319,22 @@ public interface Api {
     @POST("index.php?g=user&m=public&a=get_user_paydetail")
     Call<TransferDetailResult> getTransferPayDetailData(@Field("userID") String userID,@Field("payid") String payid);
 
-    /*修改同行快线用户昵称*/
+    /*修改同业快线用户昵称*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=index&a=do_avatar_json")
     Call<BaseData> updatenickname(@Field("userid") String userid, @Field("user_nicename") String nicename, @Field("imgurl") String imgurl);
 
-    /*修改同行快线用户支付密码*/
+    /*修改同业快线用户支付密码*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=index&a=reset_user_paypass")
     Call<BaseData> resetuserpaypass(@Field("userid") String userid, @Field("user_paypass") String user_paypass);
 
-    /*修改同行快线用户登录密码*/
+    /*修改同业快线用户登录密码*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=profile&a=password_post_json")
     Call<BaseData> resetuserpass(@Field("userid") String userid, @Field("password") String password);
 
-    /*同步同行快线用户好友资料*/
+    /*同步同业快线用户好友资料*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=public&a=do_follow_rongcloud_json")
     Call<BaseData> updateFriendShip(@Field("userid") String userid, @Field("follow_uid") String follow_uid);

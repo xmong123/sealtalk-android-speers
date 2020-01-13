@@ -51,7 +51,7 @@ public abstract class MultiStatusActivity extends BaseShopActivity {
     private AlertDialog.Builder builder;
     public void onShowReviewDialog() {
         builder = new AlertDialog.Builder(this).setIcon(R.mipmap.ic_launcher).setTitle("认证会员提示")
-                .setMessage("您还不是认证同行快线会员，请联系客服（15033370607）后进行操作").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setMessage("您还不是认证同业快线会员，请联系客服（15033370607）后进行操作").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //ToDo: 你想做的事情
