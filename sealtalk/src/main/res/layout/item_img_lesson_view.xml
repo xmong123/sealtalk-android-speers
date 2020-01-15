@@ -33,11 +33,11 @@
 
         <TextView
             android:layout_weight="1"
-            android:layout_margin="@dimen/dp_2"
+            android:layout_margin="@dimen/dp_4"
             android:id="@+id/item_title"
             android:textSize="@dimen/sp_12"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/adaptive_38dp"
+            android:layout_height="@dimen/adaptive_20dp"
             android:gravity="center"
             android:text="精品课程BIM教学"
             />

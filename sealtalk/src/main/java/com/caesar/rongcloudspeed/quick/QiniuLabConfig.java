@@ -2,7 +2,7 @@ package com.caesar.rongcloudspeed.quick;
 
 public class QiniuLabConfig {
     public final static String LOG_TAG = "QiniuLab";
-    public static final String TESTSERVER = "http://thinkcmf.91bim.net";
+    public static final String TESTSERVER = "http://speer.500-china.com";
     public final static String REMOTE_SERVICE_SERVER = "http://qiniu.500-china.com";
 
     //quick start

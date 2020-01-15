@@ -9,8 +9,8 @@ import com.caesar.rongcloudspeed.BuildConfig;
 
 public class ApiConfig {
 
-    private static final String TESTSERVER = "http://thinkcmf.91bim.net/";
-    private static final String FORMALSERVER = "http://thinkcmf.91bim.net/";
+    private static final String TESTSERVER = "http://speer.500-china.com/";
+    private static final String FORMALSERVER = "http://speer.500-china.com/";
     public static int CODE_SUCC = 101;
 
     public String getServer() {

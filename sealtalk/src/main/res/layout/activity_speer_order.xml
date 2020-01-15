@@ -20,9 +20,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/layoutMargin16dp"
+            android:layout_marginLeft="@dimen/layoutMargin8dp"
             android:layout_marginTop="@dimen/margin4dp"
-            android:layout_marginRight="@dimen/layoutMargin16dp"
+            android:layout_marginRight="@dimen/layoutMargin8dp"
             android:layout_marginBottom="@dimen/margin4dp">
 
             <TextView
@@ -52,11 +52,11 @@
 
 
             <TextView
-                android:layout_margin="@dimen/dp_4"
                 android:id="@+id/lesson_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lesson_title"
+                android:layout_margin="@dimen/dp_4"
                 android:text="¥1.00"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/bigText16sp" />
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layoutMargin8dp"
         android:layout_marginRight="@dimen/layoutMargin8dp"
-        android:layout_marginBottom="@dimen/layoutMargin8dp"/>
+        android:layout_marginBottom="@dimen/layoutMargin8dp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -126,7 +126,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/protoCv"
+        android:id="@+id/speerProtoBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layoutMargin16dp"
@@ -153,7 +153,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/yanzhengmaCv"
+        android:id="@+id/codeVerifiCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layoutMargin16dp"
@@ -163,14 +163,14 @@
         app:cardCornerRadius="@dimen/card_radius">
 
         <LinearLayout
-            android:id="@+id/yanzhengmaEtLl"
+            android:id="@+id/codeVerifiLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
 
             <EditText
-                android:id="@+id/yanzhengmaEt"
+                android:id="@+id/codeVerifiEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layoutMargin16dp"
@@ -208,12 +208,20 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/countMoneytv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
-            android:text="应付金额: ¥ 1.00"
+            android:text="应付金额:"
             android:textColor="@color/textColorPrimary" />
+
+        <TextView
+            android:id="@+id/speerLessonMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layoutMargin16dp"
+            android:text="¥ 1.00"
+            android:textColor="@color/red_dark"
+            android:textSize="@dimen/dp_20" />
 
         <View
             android:layout_width="0dp"

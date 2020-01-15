@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/memberLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin4dp"
     android:background="@color/white"
     android:orientation="vertical"
-    android:layout_margin="@dimen/margin4dp"
     tools:showIn="@layout/fragment_member_recyclerview_item">
 
     <LinearLayout
@@ -54,7 +55,7 @@
             android:gravity="center_horizontal"
             android:text="新用户专享"
             android:textColor="@color/seal_conversation_annouce_text"
-            android:textSize="@dimen/mainText14sp" />
+            android:textSize="@dimen/subMainText" />
 
     </LinearLayout>
 </LinearLayout>

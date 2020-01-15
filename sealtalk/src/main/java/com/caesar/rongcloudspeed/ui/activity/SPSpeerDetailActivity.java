@@ -159,6 +159,8 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
                 break;
             case R.id.speer_btn:
                 Intent loginIntent = new Intent( SPSpeerDetailActivity.this, SpeerOrderActivity.class );
+                loginIntent.putExtra("goods_id" , goods_id);
+                loginIntent.putExtra("goods_name" , goods_name);
                 startActivity( loginIntent );
                 break;
         }

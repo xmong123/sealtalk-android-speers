@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.adapter.BookShopAdapter;
@@ -53,19 +54,23 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class SpeerOrderActivity extends MultiStatusActivity implements CompoundButton.OnCheckedChangeListener {
 
-
     @BindView(R.id.member_recyclerview)
     RecyclerView memberRecyclerview;
     @BindView(R.id.weixin_speer_paybox)
     CheckBox weixinBox;
     @BindView(R.id.alipay_speer_paybox)
     CheckBox alipayBox;
+    @BindView(R.id.codeVerifiEdit)
+    EditText codeVerifiEdit;
     @BindView(R.id.getSpeerVerifiCode)
     TextView getSpeerVerifiCode;
+    @BindView(R.id.speerLessonMoney)
+    TextView speerLessonMoney;
     private DBManager dbManager;
     private String uidString;
+    private String lesson_price="¥ 1.00";
     private MemberSpeerAdapter memberSpeerAdapter;
-    private List<MemberSpeerBean> memberSpeerBeanList=new ArrayList<MemberSpeerBean>();
+    private List<MemberSpeerBean> memberSpeerBeanList = new ArrayList<MemberSpeerBean>();
     /**
      * 收货地址
      */
@@ -87,21 +92,25 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
         alipayBox.setOnCheckedChangeListener(this);
         initData();
         uidString = UserInfoUtils.getAppUserId(this);
-        memberSpeerAdapter = new MemberSpeerAdapter(this,memberSpeerBeanList);
+        memberSpeerAdapter = new MemberSpeerAdapter(this, memberSpeerBeanList);
         memberSpeerAdapter.openLoadAnimation();
         memberSpeerAdapter.setNotDoAnimationCount(4);
         memberRecyclerview.setLayoutManager(new GridLayoutManager(this, 2));
         memberRecyclerview.setAdapter(memberSpeerAdapter);
-        MemberSpeerBean bean=new MemberSpeerBean();
+        MemberSpeerBean bean = new MemberSpeerBean();
+        bean.setMember_id("1001");
         bean.setMember_title("连续包月");
-        bean.setMember_price("¥ 16.88");
-        MemberSpeerBean bean1=new MemberSpeerBean();
+        bean.setMember_price("16.88");
+        MemberSpeerBean bean1 = new MemberSpeerBean();
+        bean1.setMember_id("1002");
         bean1.setMember_title("月度VIP");
         bean1.setMember_price("¥ 24.88");
-        MemberSpeerBean bean2=new MemberSpeerBean();
+        MemberSpeerBean bean2 = new MemberSpeerBean();
+        bean2.setMember_id("1003");
         bean2.setMember_title("季度VIP");
         bean2.setMember_price("¥ 58.88");
-        MemberSpeerBean bean3=new MemberSpeerBean();
+        MemberSpeerBean bean3 = new MemberSpeerBean();
+        bean3.setMember_id("1004");
         bean3.setMember_title("年度VIP");
         bean3.setMember_price("¥ 218.88");
         memberSpeerBeanList.add(bean);
@@ -109,6 +118,29 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
         memberSpeerBeanList.add(bean2);
         memberSpeerBeanList.add(bean3);
         memberSpeerAdapter.setNewData(memberSpeerBeanList);
+        memberSpeerAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                boolean isFlag = memberSpeerBeanList.get(position).isFlag();
+                String member_id = memberSpeerBeanList.get(position).getMember_id();
+                String member_price = memberSpeerBeanList.get(position).getMember_price();
+                for (int i = 0; i < memberSpeerBeanList.size(); i++) {
+                    if (isFlag) {
+                        memberSpeerBeanList.get(i).setFlag(false);
+                        speerLessonMoney.setText(lesson_price);
+                    } else {
+                        if (i == position) {
+                            memberSpeerBeanList.get(i).setFlag(true);
+                        } else {
+                            memberSpeerBeanList.get(i).setFlag(false);
+                        }
+                        speerLessonMoney.setText(member_price);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+        });
     }
 
     private void initData() {
@@ -117,7 +149,7 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
             @Override
             public void onClick(View v) {
                 final VerificationCodeHelper temp = this;
-                String phone= UserInfoUtils.getPhone(SpeerOrderActivity.this);
+                String phone = UserInfoUtils.getPhone(SpeerOrderActivity.this);
                 RetrofitManager.create()
                         .sendCode(phone)
                         .observeOn(AndroidSchedulers.mainThread())
@@ -148,11 +180,14 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
     }
 
 
-    @OnClick({R.id.protoCv, R.id.speer_pay})
+    @OnClick({R.id.speerProtoBtn, R.id.speer_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.protoCv:
-//                BrowerActivity.openURL(RetrofitManager.server_address + "shop_service", "购物服务协议", true);
+            case R.id.speerProtoBtn:
+                Intent intent=new Intent(this,WebViewActivity.class);
+                intent.putExtra("url", "file:///android_asset/webpage/memaiagree.html");
+                intent.putExtra("title" , "《购物服务协议》");
+                startActivity(intent);
                 break;
             case R.id.speer_pay:
                 if (!alipay && !selfpay) {
