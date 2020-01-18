@@ -54,6 +54,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class SpeerOrderActivity extends MultiStatusActivity implements CompoundButton.OnCheckedChangeListener {
 
+    @BindView(R.id.lesson_title)
+    TextView lessonTitle;
+    @BindView(R.id.lesson_price)
+    TextView lessonPrice;
     @BindView(R.id.member_recyclerview)
     RecyclerView memberRecyclerview;
     @BindView(R.id.weixin_speer_paybox)
@@ -68,18 +72,12 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
     TextView speerLessonMoney;
     private DBManager dbManager;
     private String uidString;
-    private String lesson_price="¥ 1.00";
+    private String lesson_id;
+    private String lesson_name;
+    private String lesson_price;
+    private String thumbVideoString;
     private MemberSpeerAdapter memberSpeerAdapter;
     private List<MemberSpeerBean> memberSpeerBeanList = new ArrayList<MemberSpeerBean>();
-    /**
-     * 收货地址
-     */
-    private AddressItemBean addressitembean = null;
-    /**
-     * 选中的分期数
-     */
-    private FenqiBean.Info defaultInfo = null;
-    //    private ConfirmOrderBean mValue;
     private boolean isRread = true;
 
     @Override
@@ -87,6 +85,10 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
         super.onCreate(savedInstanceState);
         initTitleBarView(titlebar, "确认订单");
         ButterKnife.bind(this);
+        lesson_id = getIntent().getExtras().getString("lesson_id");
+        lesson_name = getIntent().getExtras().getString("lesson_name");
+        lesson_price = "¥ " + getIntent().getExtras().getString("lesson_price");
+        thumbVideoString = getIntent().getExtras().getString( "videoPath" );
         dbManager = new DBManager(this);
         weixinBox.setOnCheckedChangeListener(this);
         alipayBox.setOnCheckedChangeListener(this);
@@ -100,7 +102,7 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
         MemberSpeerBean bean = new MemberSpeerBean();
         bean.setMember_id("1001");
         bean.setMember_title("连续包月");
-        bean.setMember_price("16.88");
+        bean.setMember_price("¥ 16.88");
         MemberSpeerBean bean1 = new MemberSpeerBean();
         bean1.setMember_id("1002");
         bean1.setMember_title("月度VIP");
@@ -141,6 +143,8 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
 
             }
         });
+        lessonTitle.setText(lesson_name);
+        lessonPrice.setText(lesson_price);
     }
 
     private void initData() {
@@ -184,17 +188,14 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.speerProtoBtn:
-                Intent intent=new Intent(this,WebViewActivity.class);
+                Intent intent = new Intent(this, WebViewActivity.class);
                 intent.putExtra("url", "file:///android_asset/webpage/memaiagree.html");
-                intent.putExtra("title" , "《购物服务协议》");
+                intent.putExtra("title", "《购物服务协议》");
                 startActivity(intent);
                 break;
             case R.id.speer_pay:
                 if (!alipay && !selfpay) {
                     ToastUtils.showShort("请选择支付方式");
-                } else if (addressitembean == null) {
-                    ToastUtils.showShort("请先选择收货地址");
-
                 } else if (TextUtils.isEmpty(getSpeerVerifiCode.getText().toString())) {
                     ToastUtils.showShort("请输入验证码");
 
@@ -208,12 +209,22 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
                     if (alipay) {
                         //支付宝支付
                         //拿到支付需要的基本参数
-
+                        Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideoActivity.class);
+                        videoIntent.putExtra("lesson_id", lesson_id);
+                        videoIntent.putExtra("lesson_name", lesson_name);
+                        videoIntent.putExtra("lesson_price", lesson_price);
+                        videoIntent.putExtra("videoPath", thumbVideoString);
+                        startActivity(videoIntent);
 
                     } else if (selfpay) {
                         //立即支付
 //                        prompDialog.showLoading("请等待");
-
+                        Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideoActivity.class);
+                        videoIntent.putExtra("lesson_id", lesson_id);
+                        videoIntent.putExtra("lesson_name", lesson_name);
+                        videoIntent.putExtra("lesson_price", lesson_price);
+                        videoIntent.putExtra("videoPath", thumbVideoString);
+                        startActivity(videoIntent);
 
                     }
 
@@ -229,10 +240,7 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            AddressItemBean addressItem = data.getParcelableExtra("addressItem");
-            String provinceString = dbManager.getAreaName(addressItem.getProvince());
-            String cityString = dbManager.getAreaName(addressItem.getCity());
-            addressitembean = addressItem;
+
         }
     }
 
@@ -243,13 +251,13 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         alipayBox.setOnCheckedChangeListener(null);
         weixinBox.setOnCheckedChangeListener(null);
-        if (buttonView.getId() == R.id.userAliPay) {
+        if (buttonView.getId() == R.id.alipay_speer_paybox) {
             alipay = isChecked;
             if (selfpay) {
                 weixinBox.setChecked(false);
                 selfpay = false;
             }
-        } else if (buttonView.getId() == R.id.userCredit) {
+        } else if (buttonView.getId() == R.id.weixin_speer_paybox) {
             selfpay = isChecked;
             if (alipay) {
                 alipay = false;

@@ -102,6 +102,8 @@
                 android:value=".ui.activity.VoteBaseActivity" />
         </activity>
         <activity android:name=".ui.activity.SPShopDetailActivity" />
+        <activity android:name=".ui.activity.SPLessonDetailActivity" />
+        <activity android:name=".ui.activity.SPLessonVideoActivity" />
         <activity android:name=".ui.activity.SpeerOrderActivity" />
         <activity android:name=".ui.activity.SPSpeerDetailActivity" />
         <activity android:name=".ui.activity.AnimationPersonalActivity" />

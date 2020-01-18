@@ -22,6 +22,7 @@ import com.caesar.rongcloudspeed.player.PLVideoViewActivity;
 import com.caesar.rongcloudspeed.ui.activity.FullScreenActivity;
 import com.caesar.rongcloudspeed.ui.activity.HomeMoreLessonListActivity;
 import com.caesar.rongcloudspeed.ui.activity.MainActivity;
+import com.caesar.rongcloudspeed.ui.activity.SPLessonDetailActivity;
 import com.caesar.rongcloudspeed.ui.activity.SPSpeerDetailActivity;
 import com.caesar.rongcloudspeed.ui.adapter.BookAdapter;
 import com.caesar.rongcloudspeed.ui.adapter.LessonAdapter;
@@ -69,16 +70,18 @@ public class HomeDiscoveryLessonFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 PostsArticleBaseBean postsArticleBaseBean=dataArray.get( position );
-                String postID=postsArticleBaseBean.getObject_id();
-                String postName=postsArticleBaseBean.getPost_title();
+                String lessonID=postsArticleBaseBean.getObject_id();
+                String lessonName=postsArticleBaseBean.getPost_title();
+                String lessonPrice=postsArticleBaseBean.getPost_price();
                 String thumbVideoString = postsArticleBaseBean.getThumb_video();
                 if (!(thumbVideoString.startsWith( "http://" )||thumbVideoString.startsWith( "https://" ))) {
                     thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
                 }
-               Intent intent = new Intent(getActivity(), SPSpeerDetailActivity.class);
+               Intent intent = new Intent(getActivity(), SPLessonDetailActivity.class);
                 intent.putExtra("videoPath", thumbVideoString);
-                intent.putExtra("goods_id" , postID);
-                intent.putExtra("goods_name" , postName);
+                intent.putExtra("lesson_id" , lessonID);
+                intent.putExtra("lesson_name" , lessonName);
+                intent.putExtra("lesson_price" , lessonPrice);
                 startActivity(intent);
 //                Intent intent = new Intent(getActivity(),
 //                        FullScreenActivity.class);

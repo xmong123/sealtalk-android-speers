@@ -15,10 +15,14 @@ import androidx.fragment.app.FragmentManager;
 import com.caesar.rongcloudspeed.ui.dialog.LoadingDialog;
 import com.caesar.rongcloudspeed.utils.ToastUtils;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 
     private LoadingDialog dialog;
     private Handler handler = new Handler();
+    Unbinder unbinder;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         }
 
         View view = inflater.inflate(layoutResId, container, false);
+        unbinder = ButterKnife.bind(this, view);
         onCreateView();
         return view;
     }
@@ -216,6 +221,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void onDestroy() {
         super.onDestroy();
         //移除所有
+        unbinder.unbind();
         handler.removeCallbacksAndMessages(null);
     }
 
