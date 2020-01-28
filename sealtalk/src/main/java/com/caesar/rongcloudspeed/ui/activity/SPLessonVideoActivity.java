@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.MultiStatusActivity;
 import com.caesar.rongcloudspeed.ui.fragment.SPSpeerLeftFragment;
+import com.caesar.rongcloudspeed.ui.fragment.SPSpeerVideoLeftFragment;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.utils.X5WebView;
 import com.google.android.material.tabs.TabLayout;
@@ -99,9 +100,9 @@ public class SPLessonVideoActivity extends MultiStatusActivity {
             @Override
             public Fragment getItem(int position) {
                 if (position == 0) {
-                    fragment = new SPSpeerLeftFragment();
+                    fragment = new SPSpeerVideoLeftFragment();
                 }   else {
-                    fragment = new SPSpeerLeftFragment();
+                    fragment = new SPSpeerVideoLeftFragment();
                 }
                 return fragment;
             }
@@ -115,9 +116,9 @@ public class SPLessonVideoActivity extends MultiStatusActivity {
             @Override
             public CharSequence getPageTitle(int position) {
                 if (position == 0) {
-                    return "简介";
+                    return "系列课程";
                 } else {
-                    return "课表";
+                    return "讨论";
                 }
             }
         });

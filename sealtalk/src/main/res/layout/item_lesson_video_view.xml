@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_gravity="center"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/item_bg"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/item_smeta"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/votebase" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:layout_toRightOf="@+id/item_smeta"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_2"
+                android:text="精品课程BIM教学精品课程BIM教学"
+                android:textSize="@dimen/sp_17" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/lessonMoney"
+                android:layout_marginBottom="@dimen/dp_4">
+
+                <TextView
+                    android:id="@+id/ratingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="评分："
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/sp_12" />
+
+                <RatingBar
+                    android:id="@+id/ratingBarStyleIndicator"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/ratingTitle"
+                    android:isIndicator="true"
+                    android:max="5" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lessonMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="￥8.00元"
+                android:textColor="@color/moneyTextColor"
+                android:textSize="@dimen/bigText16sp" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

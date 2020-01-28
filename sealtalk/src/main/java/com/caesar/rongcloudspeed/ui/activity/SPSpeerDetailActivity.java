@@ -68,6 +68,7 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
     private String goods_id;
     private String thumbVideoString;
     private String goods_name;
+    private String lesson_price;
     private String uidString;
     private Fragment fragment;
 
@@ -77,6 +78,7 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
         ButterKnife.bind( this );
         goods_id = getIntent().getExtras().getString( "goods_id" );
         goods_name = getIntent().getExtras().getString( "goods_name" );
+        lesson_price = getIntent().getExtras().getString( "lesson_price" );
         thumbVideoString = getIntent().getExtras().getString( "videoPath" );
         initTitleBarView( titlebar, "商品详情" );
 //        Glide.with(this).load(thumbVideoString+"?vframe/jpg/offset/1").into(convenientBanner);
@@ -158,10 +160,12 @@ public class SPSpeerDetailActivity extends MultiStatusActivity {
                 }
                 break;
             case R.id.speer_btn:
-                Intent loginIntent = new Intent( SPSpeerDetailActivity.this, SpeerOrderActivity.class );
-                loginIntent.putExtra("goods_id" , goods_id);
-                loginIntent.putExtra("goods_name" , goods_name);
-                startActivity( loginIntent );
+                Intent orderIntent = new Intent( SPSpeerDetailActivity.this, SpeerOrderActivity.class );
+                orderIntent.putExtra("goods_id" , goods_id);
+                orderIntent.putExtra("goods_name" , goods_name);
+                orderIntent.putExtra("lesson_price" , lesson_price);
+                orderIntent.putExtra("videoPath", thumbVideoString);
+                startActivity( orderIntent );
                 break;
         }
     }

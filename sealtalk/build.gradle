@@ -73,6 +73,7 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.just.agentweb:agentweb:4.0.2'
     implementation 'com.yanzhenjie:permission:2.0.0-rc4'
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     api "com.google.zxing:core:3.3.2"
     api 'com.squareup.retrofit2:retrofit:2.5.0'
     api 'com.squareup.retrofit2:converter-gson:2.5.0'

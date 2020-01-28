@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.caesar.rongcloudspeed.R;
@@ -23,6 +24,7 @@ import com.caesar.rongcloudspeed.player.PLVideoViewActivity;
 import com.caesar.rongcloudspeed.ui.activity.SPSpeerDetailActivity;
 import com.caesar.rongcloudspeed.ui.adapter.BookAdapter;
 import com.caesar.rongcloudspeed.ui.adapter.LessonAdapter;
+import com.caesar.rongcloudspeed.ui.adapter.LessonVideoAdapter;
 import com.caesar.rongcloudspeed.ui.adapter.LessonsVideoAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.pili.pldroid.player.AVOptions;
@@ -38,7 +40,7 @@ public class LessonsVideoFragment extends BaseFragment {
     private RecyclerView menuRecyclerView;
     private RecyclerView lessonsRecyclerView;
     private AnimationProAdapter proAdapter;
-    private LessonsVideoAdapter lessonAdapter;
+    private LessonVideoAdapter lessonAdapter;
     private List<LessonCategoryBean> menuArray=new ArrayList<LessonCategoryBean>();
     private List<PostsArticleBaseBean> dataArray=new ArrayList<PostsArticleBaseBean>();
 //    private View headView;
@@ -73,25 +75,30 @@ public class LessonsVideoFragment extends BaseFragment {
             }
         });
 
-        lessonAdapter = new LessonsVideoAdapter(getActivity(),dataArray);
+        lessonAdapter = new LessonVideoAdapter(getActivity(),dataArray);
         lessonAdapter.openLoadAnimation();
         lessonAdapter.setNotDoAnimationCount(4);
-        lessonsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+        lessonsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lessonsRecyclerView.setHasFixedSize(true);
+//        lessonsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         lessonAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 PostsArticleBaseBean postsArticleBaseBean=dataArray.get( position );
-                String postID=postsArticleBaseBean.getObject_id();
-                String postName=postsArticleBaseBean.getPost_title();
+                String lesson_id=postsArticleBaseBean.getObject_id();
+                String lesson_name=postsArticleBaseBean.getPost_title();
+                String lesson_price=postsArticleBaseBean.getPost_price();
                 String thumbVideoString = postsArticleBaseBean.getThumb_video();
                 if (!thumbVideoString.startsWith( "http://" )) {
                     thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
                 }
                 Intent intent = new Intent(getActivity(), SPSpeerDetailActivity.class);
                 intent.putExtra("videoPath", thumbVideoString);
-                intent.putExtra("goods_id" , postID);
-                intent.putExtra("goods_name" , postName);
+                intent.putExtra("lesson_id" , lesson_id);
+                intent.putExtra("lesson_name" , lesson_name);
+                intent.putExtra("lesson_price" , lesson_price);
                 startActivity(intent);
 //                if (TbsVideo.canUseTbsPlayer(getActivity())) {
 //                    TbsVideo.openVideo(getActivity(), thumbVideoString);
