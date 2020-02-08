@@ -14,7 +14,7 @@
         android:layout_marginRight="14dp"
         android:text="朋友圈"
         android:textColor="@color/color_black_text"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <View
         android:layout_width="0dp"
