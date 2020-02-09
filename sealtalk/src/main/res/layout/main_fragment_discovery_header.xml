@@ -19,16 +19,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
                 android:text="推荐好友"
                 android:textColor="@color/color_black_text"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="14dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/layoutMargin8dp"
                 android:text="更多"
                 android:textColor="@color/color_black_text"
                 android:textSize="14sp" />
@@ -38,8 +38,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.25dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
             android:background="@color/color_divider_line" />
 
         <LinearLayout
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
                 android:drawableLeft="@drawable/index_avater"
                 android:drawablePadding="14dp"
                 android:gravity="center_vertical"
@@ -66,8 +66,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.25dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
             android:background="@color/color_divider_line" />
 
         <LinearLayout
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
                 android:drawableLeft="@drawable/index_avater"
                 android:drawablePadding="14dp"
                 android:gravity="center_vertical"
@@ -94,8 +94,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.25dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
             android:background="@color/color_divider_line" />
 
         <LinearLayout
@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
                 android:drawableLeft="@drawable/index_avater"
                 android:drawablePadding="14dp"
                 android:gravity="center_vertical"
@@ -134,17 +134,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
                 android:text="推荐课程"
                 android:textColor="@color/color_black_text"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/lesson_moreBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="14dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/layoutMargin8dp"
                 android:text="更多"
                 android:textColor="@color/color_black_text"
                 android:textSize="14sp" />
@@ -166,16 +166,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
                 android:text="推荐书籍"
                 android:textColor="@color/color_black_text"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="14dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/layoutMargin8dp"
                 android:text="更多"
                 android:textColor="@color/color_black_text"
                 android:textSize="14sp" />

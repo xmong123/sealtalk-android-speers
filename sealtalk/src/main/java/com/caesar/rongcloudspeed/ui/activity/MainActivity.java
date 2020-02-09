@@ -91,11 +91,11 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         /**
          * 书店
          */
-        SHOP(3),
+//        SHOP(3),
         /**
          * 我的
          */
-        ME(4);
+        ME(3);
 
         private int value;
 
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             R.drawable.seal_tab_contact_list_selector,
             R.drawable.seal_tab_find_selector,
             R.drawable.seal_tab_chat_selector,
-            R.drawable.seal_tab_shop_selector,
+//            R.drawable.seal_tab_shop_selector,
             R.drawable.seal_tab_me_selector
     };
 
@@ -267,8 +267,8 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
     private void initTabs() {
         // 初始化 tab
         List<TabItem> items = new ArrayList<>();
-        String[] stringArray = getResources().getStringArray(R.array.tab_names);
-
+        String[] stringArray = getResources().getStringArray(R.array.tab_name);
+//        String[] stringArray = getResources().getStringArray(R.array.tab_names);
         for (Tab tab : Tab.values()) {
             TabItem tabItem = new TabItem();
             tabItem.id = tab.getValue();
@@ -325,7 +325,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         fragments.add(new HomeDiscoveryLessonFragment());
         fragments.add(new LessonsVideoFragment());
         fragments.add(new MainSealTalkFragment());
-        fragments.add(new BookStoreHomeFragment());
+//        fragments.add(new BookStoreHomeFragment());
         fragments.add(new UserFragment());
 
         // ViewPager 的 Adpater

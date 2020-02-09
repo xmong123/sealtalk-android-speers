@@ -85,6 +85,13 @@
         <item>我的</item>
     </string-array>
 
+    <string-array name="tab_name">
+        <item>首页</item>
+        <item>课程</item>
+        <item>聊天</item>
+        <item>我的</item>
+    </string-array>
+
     <string name="friend_circle">朋友圈</string>
     <string name="vote_circle1">歌手大赛</string>
     <string name="vote_circle2">同城信息</string>

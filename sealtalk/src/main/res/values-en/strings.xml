@@ -86,6 +86,13 @@
         <item>Mine</item>
     </string-array>
 
+    <string-array name="tab_name">
+        <item>Session</item>
+        <item>Contact</item>
+        <item>Discovery</item>
+        <item>Mine</item>
+    </string-array>
+
     <string name="friend_circle">FriendCircle</string>
     <string name="vote_circle1">Lission</string>
     <string name="vote_circle2">Lission</string>
