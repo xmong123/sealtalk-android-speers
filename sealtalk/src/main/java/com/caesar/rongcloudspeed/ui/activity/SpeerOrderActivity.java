@@ -145,6 +145,7 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
         });
         lessonTitle.setText(lesson_name);
         lessonPrice.setText(lesson_price);
+        speerLessonMoney.setText(lesson_price);
     }
 
     private void initData() {

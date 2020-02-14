@@ -41,7 +41,7 @@
             android:id="@+id/uiv_selected_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             >
 
         </com.caesar.rongcloudspeed.ui.view.UserInfoItemView>

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.caesar.rongcloudspeed.R;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -45,7 +46,8 @@ public class SPSpeerVideoLeftFragment extends BaseFragment {
         lessonHeadView = getLayoutInflater().inflate(R.layout.left_lesson_video_header, (ViewGroup) lessonVideoRecyclerView.getParent(), false);
         bookHeadView = getLayoutInflater().inflate(R.layout.left_lesson_book_header, (ViewGroup) lessonVideoRecyclerView.getParent(), false);
         leftVideoTL1 = lessonHeadView.findViewById(R.id.left_video_tl_1);
-        leftVideoTL1.setViewPager(null, mTitles);
+        ViewPager viewPager=new ViewPager(getActivity());
+        leftVideoTL1.setViewPager(viewPager, mTitles);
     }
 
     @Override
