@@ -44,6 +44,7 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
     private String thumbVideoString;
     private String lesson_name;
     private String lesson_price;
+    private String lesson_smeta;
     private String uidString;
     private Fragment fragment;
 
@@ -54,6 +55,7 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
         lesson_id = getIntent().getExtras().getString( "lesson_id" );
         lesson_name = getIntent().getExtras().getString( "lesson_name" );
         lesson_price = getIntent().getExtras().getString( "lesson_price" );
+        lesson_smeta = getIntent().getExtras().getString( "lesson_smeta" );
         thumbVideoString = getIntent().getExtras().getString( "videoPath" );
         initTitleBarView( titlebar, "商品详情" );
 //        Glide.with(this).load(thumbVideoString+"?vframe/jpg/offset/1").into(convenientBanner);
@@ -135,10 +137,12 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
                 }
                 break;
             case R.id.speer_btn:
-                Intent orderIntent = new Intent( SPLessonDetailActivity.this, SpeerOrderActivity.class );
+//                Intent orderIntent = new Intent( SPLessonDetailActivity.this, SpeerOrderActivity.class );
+                Intent orderIntent = new Intent( SPLessonDetailActivity.this, SPLessonVideosActivity.class );
                 orderIntent.putExtra("lesson_id" , lesson_id);
                 orderIntent.putExtra("lesson_name" , lesson_name);
                 orderIntent.putExtra("lesson_price" , lesson_price);
+                orderIntent.putExtra("lesson_smeta" , lesson_smeta);
                 orderIntent.putExtra("videoPath", thumbVideoString);
                 startActivity( orderIntent );
                 break;

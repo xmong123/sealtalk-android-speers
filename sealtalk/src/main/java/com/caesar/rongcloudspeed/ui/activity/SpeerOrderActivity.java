@@ -210,7 +210,7 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
                     if (alipay) {
                         //支付宝支付
                         //拿到支付需要的基本参数
-                        Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideoActivity.class);
+                        Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
                         videoIntent.putExtra("lesson_id", lesson_id);
                         videoIntent.putExtra("lesson_name", lesson_name);
                         videoIntent.putExtra("lesson_price", lesson_price);
@@ -220,7 +220,7 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
                     } else if (selfpay) {
                         //立即支付
 //                        prompDialog.showLoading("请等待");
-                        Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideoActivity.class);
+                        Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
                         videoIntent.putExtra("lesson_id", lesson_id);
                         videoIntent.putExtra("lesson_name", lesson_name);
                         videoIntent.putExtra("lesson_price", lesson_price);

@@ -73,6 +73,7 @@ public class HomeDiscoveryLessonFragment extends BaseFragment {
                 String lessonID=postsArticleBaseBean.getObject_id();
                 String lessonName=postsArticleBaseBean.getPost_title();
                 String lessonPrice=postsArticleBaseBean.getPost_price();
+                String lessonSmeta = postsArticleBaseBean.getSmeta();
                 String thumbVideoString = postsArticleBaseBean.getThumb_video();
                 if (!(thumbVideoString.startsWith( "http://" )||thumbVideoString.startsWith( "https://" ))) {
                     thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
@@ -82,6 +83,7 @@ public class HomeDiscoveryLessonFragment extends BaseFragment {
                 intent.putExtra("lesson_id" , lessonID);
                 intent.putExtra("lesson_name" , lessonName);
                 intent.putExtra("lesson_price" , lessonPrice);
+                intent.putExtra("lesson_smeta" , lessonSmeta);
                 startActivity(intent);
 //                Intent intent = new Intent(getActivity(),
 //                        FullScreenActivity.class);

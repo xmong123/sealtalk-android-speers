@@ -484,6 +484,7 @@
     <dimen name="head_corner_35">35dip</dimen>
 
     <dimen name="home_banner_height">140dip</dimen>
+    <dimen name="dp_240">240dip</dimen>
     <dimen name="dp_300">300dip</dimen>
     <dimen name="dp_360">360dip</dimen>
     <dimen name="dp_400">400dip</dimen>
