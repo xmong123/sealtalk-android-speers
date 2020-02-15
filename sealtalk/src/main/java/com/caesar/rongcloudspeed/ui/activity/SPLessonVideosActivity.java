@@ -93,16 +93,18 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
         try {
             JSONObject jsonSmeta = new JSONObject(lesson_smeta);
             thumbString = jsonSmeta.getString("thumb");
-            if (!thumbString.startsWith("http://")) {
-                thumbString = Constant.THINKCMF_PATH + thumbString;
-            }
-            Glide.with(this).load(thumbString).into(lessonPosterImageView);
             JSONArray photoArray = jsonSmeta.getJSONArray("photo");
             if (photoArray != null && photoArray.length() > 0) {
                 videoArray = photoArray;
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        if (thumbString != null &&!thumbString.startsWith("http://")) {
+            thumbString = Constant.THINKCMF_PATH + thumbString;
+        }
+        if (thumbString != null && thumbString.length() > 32) {
+            Glide.with(this).load(thumbString).into(lessonPosterImageView);
         }
         initTitleBarView(titlebar, "课程视频");
         getWindow().setFormat(PixelFormat.TRANSLUCENT);

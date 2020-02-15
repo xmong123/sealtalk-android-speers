@@ -50,7 +50,7 @@ public class MoreLessonesAdapter extends BaseQuickAdapter<PostsArticleBaseBean, 
         if (!thumbString.startsWith("http://")) {
             thumbString = Constant.THINKCMF_PATH + thumbString;
         }
-        if (thumbString != null && thumbString.length() > 32) {
+        if (thumbString.length() > 32) {
             Glide.with(context).load(thumbString).into((ImageView) helper.getView(R.id.lesson_item_smeta));
         } else {
             helper.setImageResource(R.id.lesson_item_smeta, R.drawable.votebase);

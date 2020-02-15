@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * @author yiw
  * @ClassName: FriendCircleActivity
- * @Description: TODO(这里用一句话描述这个类的作用)
+ * @Description: ===TODO(这里用一句话描述这个类的作用)
  * @date 2015-12-28 下午4:21:18
  */
 public class FriendCircle1Activity extends Activity implements SwipeRefreshLayout.OnRefreshListener, HeightComputable {

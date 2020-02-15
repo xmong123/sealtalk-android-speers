@@ -13,12 +13,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.MultiStatusActivity;
+import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.ui.fragment.SPSpeerLeftFragment;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.tencent.smtt.sdk.TbsVideo;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +66,19 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
 //        Glide.with(this).load(thumbVideoString+"?vframe/jpg/offset/1").into(convenientBanner);
         initView();
         uidString= UserInfoUtils.getAppUserId(this);
+        String thumbString = null;
+        try {
+            JSONObject jsonSmeta = new JSONObject(lesson_smeta);
+            thumbString = jsonSmeta.getString("thumb");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (thumbString != null &&!thumbString.startsWith("http://")) {
+            thumbString = Constant.THINKCMF_PATH + thumbString;
+        }
+        if (thumbString != null && thumbString.length() > 32) {
+            Glide.with(this).load(thumbString).into(convenientBanner);
+        }
     }
 
     private void initView() {
