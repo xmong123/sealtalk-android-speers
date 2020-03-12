@@ -193,7 +193,7 @@ public class LoginRegisterFragment extends BaseFragment {
 
                                             listener.onRegisterSuccess(phone,  countryCode, countryName);
                                         }
-                                        startActivityForResult(new Intent(getActivity(), AdminMainActivity.class),REQUEST_CODE_SELECT_CATEGORY);
+//                                        startActivityForResult(new Intent(getActivity(), AdminMainActivity.class),REQUEST_CODE_SELECT_CATEGORY);
                                     }else{
                                         dismissLoadingDialog();
                                         Toast.makeText(getActivity(), baseData.getInfo(), Toast.LENGTH_LONG).show();
@@ -269,7 +269,7 @@ public class LoginRegisterFragment extends BaseFragment {
                             @Override
                             public void onSuccess(SmsCode baseData) {
                                 msgCode=baseData.getCodemsg().trim();
-                              codeEdit.setText(baseData.getCodemsg().trim());
+                                codeEdit.setText(baseData.getCodemsg().trim());
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {

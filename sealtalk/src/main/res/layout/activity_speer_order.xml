@@ -64,14 +64,6 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/member_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layoutMargin8dp"
-        android:layout_marginRight="@dimen/layoutMargin8dp"
-        android:layout_marginBottom="@dimen/layoutMargin8dp" />
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,11 +73,19 @@
         android:background="@color/white"
         app:cardCornerRadius="@dimen/card_radius">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:src="@drawable/pay_wechat" />
+
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layoutMargin16dp"
+            android:layout_marginStart="@dimen/dimen64"
+            android:layout_marginTop="@dimen/layoutMargin16dp"
+            android:layout_marginBottom="@dimen/layoutMargin16dp"
             android:text="使用微信支付"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />
@@ -108,11 +108,19 @@
         android:background="@color/white"
         app:cardCornerRadius="@dimen/card_radius">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:src="@drawable/pay_alipay" />
+
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layoutMargin16dp"
+            android:layout_marginStart="@dimen/dimen64"
+            android:layout_marginTop="@dimen/layoutMargin16dp"
+            android:layout_marginBottom="@dimen/layoutMargin16dp"
             android:text="使用支付宝支付"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />
@@ -127,6 +135,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/speerProtoBtn"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layoutMargin16dp"
@@ -139,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layoutMargin16dp"
-            android:text="购物服务协议"
+            android:text="同行快线普通服务协议"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />
 
@@ -177,8 +186,8 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="请输入验证码"
-                android:maxLines="1"
                 android:inputType="number"
+                android:maxLines="1"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/mainText14sp" />
 

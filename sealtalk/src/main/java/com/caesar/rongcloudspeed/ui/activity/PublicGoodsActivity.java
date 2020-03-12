@@ -74,7 +74,6 @@ public class PublicGoodsActivity extends Activity implements View.OnClickListene
     /**
      * 默认是发布出售
      */
-    private String type = "5";
     public static int CODE_SUCC = 101;
 
     @Override
@@ -89,7 +88,6 @@ public class PublicGoodsActivity extends Activity implements View.OnClickListene
         post_commit_btn=(Button) this.findViewById(R.id.post_commit_btn);
         uidString= UserInfoUtils.getAppUserId( PublicGoodsActivity.this);
         phoneNumber= UserInfoUtils.getPhone( PublicGoodsActivity.this);
-        type=getIntent().getStringExtra( "type" );
         ninePicturesAdapter = new NinePicturesAdapter( PublicGoodsActivity.this, 9, new NinePicturesAdapter.OnClickAddListener() {
             @Override
             public void onClickAdd(int positin) {
@@ -155,11 +153,7 @@ public class PublicGoodsActivity extends Activity implements View.OnClickListene
                             if (pathList.size() > 0) {
                                 upLoadAllFeedBackImg(pathList);
                             }else{
-                                if(type.equals( "1" )){
-                                    ToastUitl.showToastWithImg(getString(R.string.circle_image_empty),R.drawable.ic_warm);
-                                }else{
-                                    handler.sendEmptyMessage( 0 );
-                                }
+                                ToastUitl.showToastWithImg(getString(R.string.circle_image_empty),R.drawable.ic_warm);
                             }
                         }
 
@@ -180,7 +174,7 @@ public class PublicGoodsActivity extends Activity implements View.OnClickListene
                     final ProgressDialog pd = new ProgressDialog( PublicGoodsActivity.this );
                     pd.setMessage( "正在处理，请稍后..." );
                     pd.show();
-                    NetworkUtils.fetchInfo( AppNetworkUtils.initRetrofitApi().AddPostCartArticle(uidString,type,postTitle,phoneNumber,photos_url,postContent),
+                    NetworkUtils.fetchInfo( AppNetworkUtils.initRetrofitApi().AddPostCartArticle(uidString,"42",postTitle,phoneNumber,photos_url,postContent),
                             new NetworkCallback<BaseData>() {
                                 @Override
                                 public void onSuccess(BaseData baseData) {
@@ -319,7 +313,7 @@ public class PublicGoodsActivity extends Activity implements View.OnClickListene
                 // 第一个是否显示相机
                 .needCamera( true )
                 // 最大选择图片数量
-                .maxNum( 9 - ninePicturesAdapter.getPhotoCount() )
+                .maxNum( 1 - ninePicturesAdapter.getPhotoCount() )
                 .build();
         ImgSelActivity.startActivity( this, config, REQUEST_CODE );
     }

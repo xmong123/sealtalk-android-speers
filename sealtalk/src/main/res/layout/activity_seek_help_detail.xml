@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.SeekHelperDetailActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/seek_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:id="@+id/seek_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/seek_convenientBanner"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:canLoop="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-16dp"
+                android:background="@drawable/shop_title_text_bg"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/layoutMargin16dp"
+                android:paddingTop="@dimen/layoutMargin16dp"
+                android:paddingRight="@dimen/layoutMargin16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="温馨提示：该求助信息未经平台核实，请谨慎交易，如涉及资金安全等问题，建议咨询平台监管，详情请致电客服！"
+                    android:textColor="@color/spec_select_text_color"
+                    android:textSize="@dimen/sp_11" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4dp"
+                    android:layout_marginBottom="@dimen/margin4dp">
+
+                    <TextView
+                        android:id="@+id/seek_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="@dimen/layoutMargin8dp"
+                        android:background="@drawable/conbtn_bg"
+                        android:padding="4dp"
+                        android:text="报酬"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:id="@+id/seek_price_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/layoutMargin8dp"
+                        android:layout_toEndOf="@+id/seek_tag"
+                        android:text="￥8.00"
+                        android:textColor="@color/moneyTextColor"
+                        android:textSize="@dimen/sp_18" />
+
+                    <TextView
+                        android:id="@+id/seek_contact_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="@dimen/layoutMargin8dp"
+                        android:background="@drawable/btn_shape"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="@dimen/dp_4"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="@dimen/dp_4"
+                        android:text="联系他"
+                        android:textColor="@color/white_text_color"
+                        android:textSize="@dimen/sp_12"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/seek_title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Revit幕墙设计"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/sp_16" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4dp"
+                    android:layout_marginBottom="@dimen/margin4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/seek_tag1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/layoutMargin8dp"
+                        android:layout_marginRight="@dimen/layoutMargin8dp"
+                        android:layout_marginBottom="@dimen/layoutMargin8dp"
+                        android:background="@drawable/btn_shape_light"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="2dp"
+                        android:text="认证"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/dp_10" />
+
+                    <TextView
+                        android:id="@+id/seek_tag2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/layoutMargin8dp"
+                        android:background="@drawable/btn_shape_light"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="2dp"
+                        android:text="会员"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/dp_10" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                style="@style/solide8dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/layoutMargin16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin4dp"
+                    android:layout_marginBottom="@dimen/margin4dp">
+
+                    <TextView
+                        android:id="@+id/seek_content_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin4dp"
+                        android:lineSpacingExtra="@dimen/margin4dp"
+                        android:text="\u3000\u3000\u3000用空心模型做了个幕墙嵌板，为啥不能用呢？我想让幕墙嵌板没有\n看了下用公制族的幕墙嵌板，直接就四个自适应点，这四个点不能删除。\n想了想，是不是只能用dynamo+自适应？\n有人做过三角形玻璃幕墙吗？"
+                        android:textSize="@dimen/layoutMargin16dp" />
+
+                    <TextView
+                        android:id="@+id/seek_content_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin4dp"
+                        android:background="@color/colorAccent"
+                        android:paddingStart="@dimen/layoutMargin8dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="@dimen/layoutMargin8dp"
+                        android:paddingBottom="2dp"
+                        android:text="详情"
+                        android:textColor="@android:color/white" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                style="@style/solide1dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4dp">
+
+                <TextView
+                    android:id="@+id/seek_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/margin4dp"
+                    android:text="8" />
+
+                <ImageView
+                    android:id="@+id/detail_image10"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/margin4dp"
+                    android:layout_toStartOf="@+id/seek_text1"
+                    android:src="@android:drawable/ic_menu_view" />
+
+                <TextView
+                    android:id="@+id/seek_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/margin4dp"
+                    android:layout_toStartOf="@+id/detail_image10"
+                    android:text="2019-06-30" />
+
+                <ImageView
+                    android:id="@+id/detail_image11"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/margin4dp"
+                    android:layout_toStartOf="@+id/seek_text2"
+                    android:src="@android:drawable/ic_menu_recent_history" />
+
+                <TextView
+                    android:id="@+id/seek_text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/margin4dp"
+                    android:layout_toStartOf="@+id/detail_image11"
+                    android:text="北京市" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin4dp"
+                    android:layout_marginTop="@dimen/margin4dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginBottom="@dimen/margin4dp"
+                    android:layout_toStartOf="@+id/seek_text3"
+                    android:src="@android:drawable/ic_menu_myplaces" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/margin4dp"
+        android:layout_marginBottom="@dimen/margin4dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/seek_btn1"
+            android:layout_width="88dp"
+            android:layout_height="36dp"
+            android:layout_margin="@dimen/layoutMargin16dp"
+            android:background="@mipmap/gradent_btn_bg"
+            android:paddingLeft="12dp"
+            android:paddingTop="2dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="2dp"
+            android:text="帮助确认"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/seek_btn2"
+            android:layout_width="88dp"
+            android:layout_height="36dp"
+            android:layout_margin="@dimen/layoutMargin16dp"
+            android:background="@mipmap/gradent_btn_bg"
+            android:paddingLeft="12dp"
+            android:paddingTop="2dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="2dp"
+            android:text="添加好友"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

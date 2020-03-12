@@ -1,16 +1,20 @@
 package com.caesar.rongcloudspeed.ui.activity;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.caesar.rongcloudspeed.R;
+import com.caesar.rongcloudspeed.adapter.AbsRecycleAdapter;
 import com.caesar.rongcloudspeed.adapter.AdminIndustryAdapter;
 import com.caesar.rongcloudspeed.adapter.AnimationProAdapter;
 import com.caesar.rongcloudspeed.bean.AdminInBean;
@@ -20,10 +24,7 @@ import com.caesar.rongcloudspeed.bean.LessonCategoryBean;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
-import com.caesar.rongcloudspeed.ui.dialog.ClearCacheDialog;
-import com.caesar.rongcloudspeed.ui.dialog.CommonDialog;
-import com.caesar.rongcloudspeed.viewmodel.UserInfoViewModel;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.caesar.rongcloudspeed.ui.adapter.BrandAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,11 @@ import java.util.List;
  */
 public class AdminIndustryActivity extends TitleBaseActivity implements View.OnClickListener {
     private RecyclerView adminIndustryRecyclerView;
-    private AdminIndustryAdapter adminIndustryAdapter;
-    private List<AdminIndustryBean> adminIndustryArray=new ArrayList<AdminIndustryBean>();
+    private BrandAdapter adminIndustryAdapter;
+    private List<AdminIndustryBean> adminIndustryArray = new ArrayList<AdminIndustryBean>();
+    private Button industryConfirmBtn;
+    private String industryIDString;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,16 +48,14 @@ public class AdminIndustryActivity extends TitleBaseActivity implements View.OnC
 
     private void initView() {
         getTitleBar().setTitle("行业分类");
+        industryIDString = getIntent().getStringExtra("industryIDString");
         adminIndustryRecyclerView = findViewById(R.id.adminindustry_recyclerView);
-        adminIndustryAdapter = new AdminIndustryAdapter(adminIndustryArray);
-        adminIndustryRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        adminIndustryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-            }
-        });
-        adminIndustryRecyclerView.setAdapter(adminIndustryAdapter);
+        industryConfirmBtn = findViewById(R.id.industry_confirm);
+        adminIndustryAdapter = new BrandAdapter();
+        adminIndustryAdapter.setChoiceMode(AbsRecycleAdapter.CHOICE_MODE_MULTIPLE);
+        adminIndustryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adminIndustryRecyclerView.setHasFixedSize(true);
+        industryConfirmBtn.setOnClickListener(this);
         loadAdminIndustryData();
     }
 
@@ -62,8 +64,25 @@ public class AdminIndustryActivity extends TitleBaseActivity implements View.OnC
                 new NetworkCallback<AdminInBean>() {
                     @Override
                     public void onSuccess(AdminInBean adminInBean) {
-                        adminIndustryArray=adminInBean.getReferer();
-                        adminIndustryAdapter.setNewData(adminIndustryArray);
+                        adminIndustryArray = adminInBean.getReferer();
+                        AdminIndustryBean baseBean = new AdminIndustryBean(false, "0", "全部行业", "0");
+                        adminIndustryArray.add(baseBean);
+                        adminIndustryAdapter.setData(adminIndustryArray);
+                        adminIndustryRecyclerView.setAdapter(adminIndustryAdapter);
+                        if (industryIDString != null) {
+                            String idArray[] = industryIDString.split(",");
+                            for (int i = 0; i < adminIndustryArray.size(); i++) {
+                                AdminIndustryBean bean = adminIndustryArray.get(i);
+                                String idString = bean.getId();
+                                for (String str : idArray) {
+                                    if (idString.equals(str)) {
+                                        bean.setFlag(true);
+                                        adminIndustryAdapter.setItemChecked(i, true);
+                                    }
+                                }
+                            }
+                        }
+
                     }
 
                     @Override
@@ -76,8 +95,32 @@ public class AdminIndustryActivity extends TitleBaseActivity implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.industry_confirm:
+                SparseBooleanArray mCheckStates = adminIndustryAdapter.getCheckedItemPositions();
+                if (mCheckStates.size() > 0) {
+                    StringBuilder industryIDBuffer = new StringBuilder();
+                    StringBuilder industryNameBuffer = new StringBuilder();
+                    for (int i = 0; i < mCheckStates.size(); i++) {
+                        int key = mCheckStates.keyAt(i);
+                        String industryID = adminIndustryArray.get(key).getId();
+                        String industryName = adminIndustryArray.get(key).getName();
+                        industryIDBuffer.append(industryID + ",");
+                        industryNameBuffer.append(industryName + ",");
+                    }
+                    industryIDBuffer.deleteCharAt(industryIDBuffer.length() - 1);
+                    industryNameBuffer.deleteCharAt(industryNameBuffer.length() - 1);
+                    String industryIDString = industryIDBuffer.toString();
+                    String industryNameString = industryNameBuffer.toString();
+                    getIntent().putExtra("industryIDString", industryIDString);
+                    getIntent().putExtra("industryNameString", industryNameString);
+                    setResult(RESULT_OK, getIntent());
+                    finish();
+                } else {
+                    Toast.makeText(this, "请选择相关行业", Toast.LENGTH_LONG).show();
+                }
+                break;
             default:
-                //DO nothing
+
                 break;
 
         }

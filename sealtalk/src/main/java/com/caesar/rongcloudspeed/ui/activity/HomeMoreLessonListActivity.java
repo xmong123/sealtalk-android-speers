@@ -23,7 +23,6 @@ import com.caesar.rongcloudspeed.model.UserSimpleInfo;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
-import com.caesar.rongcloudspeed.player.PLVideoViewActivity;
 import com.caesar.rongcloudspeed.ui.adapter.BlackListAdapter;
 import com.caesar.rongcloudspeed.ui.adapter.LessonAdapter;
 import com.caesar.rongcloudspeed.utils.ToastUtils;

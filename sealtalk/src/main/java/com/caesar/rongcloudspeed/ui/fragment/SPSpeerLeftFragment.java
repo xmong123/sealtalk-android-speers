@@ -46,9 +46,10 @@ public class SPSpeerLeftFragment extends BaseFragment {
     @BindView(R.id.lessonTeacher)
     TextView lessonTeacher;
     private String lesson_id;
-    private String thumbVideoString;
     private String lesson_name;
     private String lesson_price;
+    private String lesson_content;
+    private String lesson_source;
 
     @Override
     protected int getLayoutResId() {
@@ -60,8 +61,16 @@ public class SPSpeerLeftFragment extends BaseFragment {
         lesson_id = intent.getExtras().getString( "lesson_id" );
         lesson_name = intent.getExtras().getString( "lesson_name" );
         lesson_price = intent.getExtras().getString( "lesson_price" );
+        lesson_content = intent.getExtras().getString( "lesson_content" );
+        lesson_source = intent.getExtras().getString( "lesson_source" );
         lessonTitle.setText(lesson_name);
-        lessonMoney.setText("￥"+lesson_price+"元");
+        if(lesson_price.startsWith("0")){
+            lessonMoney.setText("课程免费");
+        }else{
+            lessonMoney.setText("￥"+lesson_price+"元");
+        }
+        lessonContent.setText("课程简介：\n"+lesson_content);
+        lessonTeacher.setText("讲师简介：\n"+lesson_source);
     }
 
     @Override

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="130dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shop_title_text_bg_garend_white_bgdd"
+        android:padding="28dp"
+        android:text="您提交了订单，请等待系统确认！"
+        android:textColor="@color/textColorPrimary" />
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bottom_radius_white"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/morder_confirm_btn1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:background="@color/red_dark"
+            android:gravity="center"
+            android:text="完成支付"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mainText14sp" />
+
+        <Button
+            android:id="@+id/morder_confirm_btn2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:background="@color/color_gray_text"
+            android:gravity="center"
+            android:text="下次购买"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mainText14sp" />
+
+
+    </LinearLayout>
+</LinearLayout>

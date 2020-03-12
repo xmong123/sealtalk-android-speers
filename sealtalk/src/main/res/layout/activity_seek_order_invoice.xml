@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.SeekInvoiceOrderActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/advert_invoice_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/layoutMargin8dp"
+                android:layout_marginTop="@dimen/margin4dp"
+                android:layout_marginRight="@dimen/layoutMargin8dp"
+                android:layout_marginBottom="@dimen/margin4dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin4dp"
+                    android:text="发票"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/sp_20"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin4dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="发票类型"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/mainText14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layoutMargin16dp"
+                    android:layout_marginTop="@dimen/layoutMargin8dp"
+                    android:layout_marginEnd="@dimen/layoutMargin16dp"
+                    android:layout_marginBottom="@dimen/margin4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="@dimen/layoutMargin8dp"
+                        android:background="@drawable/border_light_red_normal"
+                        android:gravity="center"
+                        android:text="普通发票"
+                        android:textColor="@color/light_red" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="@dimen/layoutMargin8dp"
+                        android:background="@drawable/btn_light_gray_shape"
+                        android:gravity="center"
+                        android:text="增值税发票"
+                        android:textColor="@color/gray" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:text="同行快线启用电子普通发票，与纸质普通发票具备同等法律效力，订单完成后24小时内可在《我的订单》内查看"
+                    android:textColor="@color/color_gray_text"
+                    android:textSize="@dimen/callkit_dimen_size_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin4dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/margin4dp"
+                    android:text="发票抬头"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/mainText14sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <!--@drawable/shop_title_text_bg-->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layoutMargin8dp"
+                android:background="@drawable/shop_title_text_bg">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="个人发票" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="单位发票" />
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <View
+                    style="@style/solide0point5dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginBottom="0.5dp" />
+            </FrameLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_300"
+                android:background="@color/white" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/order_invoice_btn"
+        style="@style/main_btn_style3"
+        android:text="确定" />
+</LinearLayout>

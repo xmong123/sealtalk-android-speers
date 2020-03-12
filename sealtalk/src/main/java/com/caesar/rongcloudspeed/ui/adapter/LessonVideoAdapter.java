@@ -10,6 +10,9 @@ import com.caesar.rongcloudspeed.constants.Constant;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -30,14 +33,20 @@ public class LessonVideoAdapter extends BaseQuickAdapter<PostsArticleBaseBean, B
 
     @Override
     protected void convert(BaseViewHolder helper, PostsArticleBaseBean bean) {
-        String thumbVideoString = bean.getThumb_video();
-        if (!thumbVideoString.startsWith( "http://" )) {
-            thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
+        String thumbString = null;
+        try {
+            JSONObject jsonSmeta = new JSONObject(bean.getSmeta());
+            thumbString = jsonSmeta.getString("thumb");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        if(thumbVideoString!=null&&thumbVideoString.length()>32){
-            Glide.with( context ).load( thumbVideoString+"?vframe/jpg/offset/1" ).into( (ImageView) helper.getView( R.id.item_smeta ) );
-        }else{
-            helper.setImageResource( R.id.item_smeta, R.drawable.votebase );
+        if (thumbString != null &&!thumbString.startsWith("http://")) {
+            thumbString = Constant.THINKCMF_PATH + thumbString;
+        }
+        if (thumbString != null && thumbString.length() > 32) {
+            Glide.with(context).load(thumbString).into((ImageView) helper.getView(R.id.item_smeta));
+        } else {
+            helper.setImageResource(R.id.item_smeta, R.drawable.votebase);
         }
         String titleString = bean.getPost_title();
 

@@ -11,22 +11,22 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:padding="@dimen/layoutMargin16dp">
+        android:padding="@dimen/layoutMargin8dp">
 
         <TextView
             android:id="@+id/lessonTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin16dp"
-            android:text="悦诗风吟绿茶精粹萃平衡面霜"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:text="建筑信息模型"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/dp_20" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin16dp"
-            android:layout_marginBottom="@dimen/layoutMargin16dp">
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp">
 
             <TextView
                 android:id="@+id/ratingTitle"
@@ -60,10 +60,10 @@
             android:id="@+id/lessonContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin16dp"
-            android:layout_marginBottom="@dimen/layoutMargin16dp"
-            android:maxLines="8"
-            android:text="课程简介：\n直发，确保新鲜产品功效:深层滋润、补水保湿商品重量：8.000克"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:maxLines="12"
+            android:text="课程简介：\n建筑信息模型（Building Information Modeling）是建筑学、工程学及土木工程的新工具。建筑信息模型或建筑资讯模型一词由Autodesk所创的。"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />
 
@@ -71,9 +71,9 @@
             android:id="@+id/lessonTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin16dp"
-            android:layout_marginBottom="@dimen/layoutMargin16dp"
-            android:maxLines="8"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:maxLines="5"
             android:text="讲师简介：\n于老师，BIM机电专业学者"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />

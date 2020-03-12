@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/advertBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:layout_marginRight="@dimen/adaptive_64dp">
+
+        <ImageView
+            android:id="@+id/advertImageIv"
+            android:layout_width="match_parent"
+            android:layout_height="180dip"
+            android:padding="@dimen/dp_3"
+            android:scaleType="centerCrop"
+            android:src="@drawable/im_aio_image_fail_round" />
+
+        <ImageView
+            android:id="@+id/advertPlayerImageIv"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_centerInParent="true"
+            android:src="@drawable/video_player"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</LinearLayout>

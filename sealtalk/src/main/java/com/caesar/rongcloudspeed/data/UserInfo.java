@@ -1,5 +1,7 @@
 package com.caesar.rongcloudspeed.data;
 
+import java.util.List;
+
 public class UserInfo {
 
     private String id;
@@ -13,6 +15,15 @@ public class UserInfo {
     private String user_profession;
     private String user_soft;
     private String user_type;
+    private List<UserOrder> user_orders;
+
+    public List<UserOrder> getUser_orders() {
+        return user_orders;
+    }
+
+    public void setUser_orders(List<UserOrder> user_orders) {
+        this.user_orders = user_orders;
+    }
 
     public String getUser_paypass() {
         return user_paypass;

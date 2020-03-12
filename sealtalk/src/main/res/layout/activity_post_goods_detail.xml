@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.caesar.rongcloudspeed.ui.activity.PublicGoodsActivity">
+    tools:context="com.caesar.rongcloudspeed.ui.activity.PublicSeekActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:background="@color/home_title_color"
+        android:background="@color/colorAccent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -18,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="22dp"
             android:gravity="center_horizontal"
-            android:text="信息发布"
+            android:text="发布求助"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -32,7 +33,6 @@
             android:paddingEnd="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_5"
             android:src="@drawable/ic_arrow_back" />
-
 
     </RelativeLayout>
 
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:text="同业快线出售图片（可选）" />
+                    android:text="同行快线求助图片（可选）" />
 
                 <com.caesar.rongcloudspeed.common.NoScrollGridView
                     android:id="@+id/post_image_gridview"
@@ -96,7 +96,7 @@
                     android:layout_marginStart="@dimen/layoutMargin8dp"
                     android:layout_marginTop="2dp"
                     android:layout_weight="2"
-                    android:text="标题" />
+                    android:text="求助标题" />
 
                 <EditText
                     android:id="@+id/post_edit_title"
@@ -104,9 +104,135 @@
                     android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:hint="请输入信息标题" />
+                    android:hint="请输入求助主题" />
 
             </LinearLayout>
+
+            <View
+                style="@style/solide1dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layoutMargin8dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="3"
+                    android:text="求助薪酬" />
+
+                <EditText
+                    android:id="@+id/post_edit_price"
+                    style="@style/autho_et_style"
+                    android:layout_margin="2dp"
+                    android:layout_weight="3"
+                    android:background="@color/white"
+                    android:hint="价格可议"
+                    android:inputType="numberDecimal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:text="元" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/solide1dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/post_industy_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:layout_weight="4"
+                    android:text="求助行业" />
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/post_industy_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_toEndOf="@+id/post_industy_text"
+                    android:layout_weight="1"
+                    app:sDividerLineType="none"
+                    app:sRightIconRes="@mipmap/arrow_right_red"
+                    app:sRightTextString="请选择行业" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/solide1dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/post_profession_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:layout_weight="4"
+                    android:text="求助专业" />
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/post_profession_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_toEndOf="@+id/post_profession_text"
+                    app:sDividerLineType="none"
+                    app:sRightIconRes="@mipmap/arrow_right_red"
+                    app:sRightTextString="请选择专业" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/solide1dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/post_soft_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:layout_weight="4"
+                    android:text="求助软件" />
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/post_soft_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_toEndOf="@+id/post_soft_text"
+                    android:layout_weight="1"
+                    app:sDividerLineType="none"
+                    app:sRightIconRes="@mipmap/arrow_right_red"
+                    app:sRightTextString="请选择软件" />
+
+            </RelativeLayout>
 
             <View
                 style="@style/solide1dp"
@@ -162,7 +288,7 @@
                     android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:hint="请输入您信息的真实情况，包括标题，详情等" />
+                    android:hint="请输入您求助的真实情况，包括问题，详情等" />
 
             </LinearLayout>
 

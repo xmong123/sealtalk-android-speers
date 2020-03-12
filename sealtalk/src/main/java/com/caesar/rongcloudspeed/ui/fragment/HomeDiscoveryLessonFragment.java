@@ -44,9 +44,9 @@ public class HomeDiscoveryLessonFragment extends BaseFragment {
     private LessonAdapter lessonAdapter;
     private BookAdapter bookAdapter;
     private View headView;
-//    private PagerGridLayoutManager layoutManager;
-    private List<PostsArticleBaseBean> dataArray=new ArrayList<PostsArticleBaseBean>();
-    private List<PostsArticleBaseBean> bookArray=new ArrayList<PostsArticleBaseBean>();
+    //    private PagerGridLayoutManager layoutManager;
+    private List<PostsArticleBaseBean> dataArray = new ArrayList<PostsArticleBaseBean>();
+    private List<PostsArticleBaseBean> bookArray = new ArrayList<PostsArticleBaseBean>();
     private Button lesson_moreBtn;
 
     @Override
@@ -62,28 +62,32 @@ public class HomeDiscoveryLessonFragment extends BaseFragment {
         lesson_moreBtn = headView.findViewById(R.id.lesson_moreBtn);
         lesson_moreBtn.setOnClickListener(this);
 
-        lessonAdapter = new LessonAdapter(getActivity(),dataArray);
+        lessonAdapter = new LessonAdapter(getActivity(), dataArray);
         lessonAdapter.openLoadAnimation();
         lessonAdapter.setNotDoAnimationCount(4);
 //        lessonRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         lessonAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                PostsArticleBaseBean postsArticleBaseBean=dataArray.get( position );
-                String lessonID=postsArticleBaseBean.getObject_id();
-                String lessonName=postsArticleBaseBean.getPost_title();
-                String lessonPrice=postsArticleBaseBean.getPost_price();
+                PostsArticleBaseBean postsArticleBaseBean = dataArray.get(position);
+                String lessonID = postsArticleBaseBean.getObject_id();
+                String lessonName = postsArticleBaseBean.getPost_title();
+                String lessonContent = postsArticleBaseBean.getPost_excerpt();
+                String lessonSource = postsArticleBaseBean.getPost_source();
+                String lessonPrice = postsArticleBaseBean.getPost_price();
                 String lessonSmeta = postsArticleBaseBean.getSmeta();
                 String thumbVideoString = postsArticleBaseBean.getThumb_video();
-                if (!(thumbVideoString.startsWith( "http://" )||thumbVideoString.startsWith( "https://" ))) {
+                if (!(thumbVideoString.startsWith("http://") || thumbVideoString.startsWith("https://"))) {
                     thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
                 }
-               Intent intent = new Intent(getActivity(), SPLessonDetailActivity.class);
+                Intent intent = new Intent(getActivity(), SPLessonDetailActivity.class);
                 intent.putExtra("videoPath", thumbVideoString);
-                intent.putExtra("lesson_id" , lessonID);
-                intent.putExtra("lesson_name" , lessonName);
-                intent.putExtra("lesson_price" , lessonPrice);
-                intent.putExtra("lesson_smeta" , lessonSmeta);
+                intent.putExtra("lesson_id", lessonID);
+                intent.putExtra("lesson_name", lessonName);
+                intent.putExtra("lesson_price", lessonPrice);
+                intent.putExtra("lesson_smeta", lessonSmeta);
+                intent.putExtra("lesson_content", lessonContent);
+                intent.putExtra("lesson_source", lessonSource);
                 startActivity(intent);
 //                Intent intent = new Intent(getActivity(),
 //                        FullScreenActivity.class);
@@ -102,7 +106,7 @@ public class HomeDiscoveryLessonFragment extends BaseFragment {
 //        pageSnapHelper.attachToRecyclerView(lessonRecyclerView);
         lessonRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         lessonRecyclerView.setAdapter(lessonAdapter);
-        bookAdapter = new BookAdapter(getActivity(),dataArray);
+        bookAdapter = new BookAdapter(getActivity(), dataArray);
         bookAdapter.openLoadAnimation();
         bookAdapter.setNotDoAnimationCount(4);
         homeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -117,8 +121,8 @@ public class HomeDiscoveryLessonFragment extends BaseFragment {
                 new NetworkCallback<HomeDataBean>() {
                     @Override
                     public void onSuccess(HomeDataBean homeDataBean) {
-                        dataArray=homeDataBean.getReferer().getPosts();
-                        bookArray=homeDataBean.getReferer().getPosts();
+                        dataArray = homeDataBean.getReferer().getPosts();
+                        bookArray = homeDataBean.getReferer().getPosts();
                         lessonAdapter.setNewData(dataArray);
                         bookAdapter.setNewData(bookArray);
                         dismissLoadingDialog();

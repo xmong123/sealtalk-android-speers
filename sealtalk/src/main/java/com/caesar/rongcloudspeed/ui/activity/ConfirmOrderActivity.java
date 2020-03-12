@@ -192,7 +192,7 @@ public class ConfirmOrderActivity extends MultiStatusActivity implements Compoun
 
                 break;
             case R.id.protoCv:
-//                BrowerActivity.openURL(RetrofitManager.server_address + "shop_service", "购物服务协议", true);
+//                BrowerActivity.openURL(RetrofitManager.server_address + "shop_service", "同行快线普通服务协议", true);
                 break;
             case R.id.pay:
                 if (!alipay && !selfpay) {
@@ -206,7 +206,7 @@ public class ConfirmOrderActivity extends MultiStatusActivity implements Compoun
                 } else {
 
                     if (!isRread) {
-                        ToastUtils.showShort("请阅读并同意购物服务协议");
+                        ToastUtils.showShort("请阅读并同意同行快线普通服务协议");
                         return;
                     }
 

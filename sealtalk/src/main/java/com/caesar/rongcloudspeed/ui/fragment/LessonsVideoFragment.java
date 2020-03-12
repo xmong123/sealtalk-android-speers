@@ -90,6 +90,9 @@ public class LessonsVideoFragment extends BaseFragment {
                 String lesson_id=postsArticleBaseBean.getObject_id();
                 String lesson_name=postsArticleBaseBean.getPost_title();
                 String lesson_price=postsArticleBaseBean.getPost_price();
+                String lessonSource = postsArticleBaseBean.getPost_source();
+                String lessonSmeta = postsArticleBaseBean.getSmeta();
+                String lessonContent = postsArticleBaseBean.getPost_excerpt();
                 String thumbVideoString = postsArticleBaseBean.getThumb_video();
                 if (!thumbVideoString.startsWith( "http://" )) {
                     thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
@@ -99,6 +102,9 @@ public class LessonsVideoFragment extends BaseFragment {
                 intent.putExtra("lesson_id" , lesson_id);
                 intent.putExtra("lesson_name" , lesson_name);
                 intent.putExtra("lesson_price" , lesson_price);
+                intent.putExtra("lesson_smeta", lessonSmeta);
+                intent.putExtra("lesson_content", lessonContent);
+                intent.putExtra("lesson_source", lessonSource);
                 startActivity(intent);
 //                if (TbsVideo.canUseTbsPlayer(getActivity())) {
 //                    TbsVideo.openVideo(getActivity(), thumbVideoString);

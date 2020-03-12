@@ -4,40 +4,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_padding"
     android:paddingLeft="@dimen/activity_horizontal_padding"
-    android:paddingRight="@dimen/activity_horizontal_padding"
     android:paddingTop="@dimen/activity_vertical_padding"
+    android:paddingRight="@dimen/activity_horizontal_padding"
+    android:paddingBottom="@dimen/activity_vertical_padding"
     tools:context="com.caesar.rongcloudspeed.quick.QuickStartVideoExampleActivity">
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/block_vertical_margin"
-        android:layout_marginTop="@dimen/block_vertical_margin"
-        android:background="@drawable/select_button_selector"
-        android:onClick="selectUploadFile"
-        android:text="@string/qiniu_select_file"
-        android:textColor="#fff"></Button>
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/quick_start_video_upload_button"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频标题:" />
+
+        <com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText
+            android:id="@+id/vote_post_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rc_ed_public_service_search_selector"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="发布视频标题"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColorHint="@color/red_trans" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/block_vertical_margin"
-        android:layout_marginTop="@dimen/block_vertical_margin"
-        android:background="@drawable/action_button_selector"
-        android:onClick="uploadFile"
-        android:text="@string/qiniu_upload"
-        android:textColor="#fff" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频描述:" />
+
+        <com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText
+            android:id="@+id/vote_post_excerpt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rc_ed_public_service_search_selector"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="发布视频详细描述介绍"
+            android:maxLength="20"
+            android:maxLines="3"
+            android:textColorHint="@color/red_trans" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/quick_start_pili_videoview_fixed_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.pili.pldroid.player.widget.PLVideoView
+                android:id="@+id/quick_start_video_play_pldplayer"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/block_vertical_margin"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/block_vertical_margin"
+            android:layout_weight="1"
+            android:background="@drawable/select_button_selector"
+            android:onClick="selectUploadFile"
+            android:text="@string/qiniu_select_file"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/quick_start_video_upload_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/block_vertical_margin"
+            android:layout_weight="1"
+            android:background="@drawable/action_button_selector"
+            android:onClick="uploadFile"
+            android:text="@string/qiniu_upload"
+            android:textColor="#fff" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/quick_start_video_upload_status_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/block_vertical_margin"
         android:layout_marginTop="@dimen/block_vertical_margin"
+        android:layout_marginBottom="@dimen/block_vertical_margin"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频内容一般不超过10秒，不超过10MB"
+            android:textColor="@color/red_dark" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -71,31 +148,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:id="@+id/quick_start_pili_videoview_fixed_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.pili.pldroid.player.widget.PLVideoView
-                android:id="@+id/quick_start_video_play_pldplayer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/quick_start_video_pid_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="true" />
+            android:editable="true"
+            tools:ignore="Deprecated" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,29 +189,6 @@
                 android:visibility="invisible" />
         </LinearLayout>
 
-        <com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText
-            android:id="@+id/vote_post_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rc_ed_public_service_search_selector"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:hint="发布投票标题"
-            android:maxLength="20"
-            android:maxLines="1"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-
-        <Button
-            android:id="@+id/quick_start_video_post_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/block_vertical_margin"
-            android:layout_marginTop="@dimen/block_vertical_margin"
-            android:background="@drawable/action_button_selector"
-            android:onClick="postArticle"
-            android:text="@string/common_publish"
-            android:textColor="#fff" />
     </LinearLayout>
 
     <LinearLayout
@@ -168,5 +207,15 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/quick_start_video_post_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/block_vertical_margin"
+        android:layout_marginBottom="@dimen/block_vertical_margin"
+        android:background="@drawable/action_button_selector"
+        android:onClick="postArticle"
+        android:text="@string/common_publish"
+        android:textColor="#fff" />
 
 </LinearLayout>

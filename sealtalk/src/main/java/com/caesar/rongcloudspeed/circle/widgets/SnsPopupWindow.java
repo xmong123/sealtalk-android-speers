@@ -17,7 +17,7 @@ import com.yiw.circledemo.utils.DensityUtil;
 import java.util.ArrayList;
 
 /**
- * 朋友圈点赞评论的popupwindow
+ * 同行圈点赞评论的popupwindow
  *
  * @author wei.yi
  */

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/item_bg"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin4dp"
+            android:layout_marginEnd="@dimen/layoutMargin32dp"
+            android:layout_marginBottom="@dimen/margin4dp"
+            android:layout_toRightOf="@+id/advert_item_header"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/advert_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4dp"
+                android:singleLine="true"
+                android:text="腾讯社交广告是腾讯公司核心广告业务,承载了微信、QQ、QQ空间等领先社交平台,及其他精品应用丰富的广告场景."
+                android:textColor="@color/color_8290AF"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/advert_item_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin4dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="腾讯社交广告是腾讯公司核心广告业务,承载了微信、QQ、QQ空间等领先社交平台,及其他精品应用丰富的广告场景,致力于帮助企业实现精准广告投放..."
+                android:textColor="@color/color_aeaeae"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/advert_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_margin="@dimen/margin4dp"
+                android:background="@color/line"
+                android:scaleType="centerCrop"
+                android:src="@drawable/votebase1" />
+
+        </LinearLayout>
+
+        <com.caesar.rongcloudspeed.circle.widgets.CircularImage
+            android:id="@+id/advert_item_header"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/head_img_1" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

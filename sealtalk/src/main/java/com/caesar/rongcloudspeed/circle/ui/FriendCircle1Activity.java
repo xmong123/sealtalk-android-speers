@@ -1,5 +1,6 @@
 package com.caesar.rongcloudspeed.circle.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -71,6 +72,7 @@ public class FriendCircle1Activity extends Activity implements SwipeRefreshLayou
         loadData();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initView() {
         mCircleLv = (ListView) findViewById(R.id.circleLv);
         back = (ImageView) findViewById(R.id.back);
@@ -79,16 +81,13 @@ public class FriendCircle1Activity extends Activity implements SwipeRefreshLayou
         back.setOnClickListener(view -> {
             finish();
         });
-        mCircleLv.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (mEditTextBody.getVisibility() == View.VISIBLE) {
-                    mEditTextBody.setVisibility(View.GONE);
-                    CommonUtils.hideSoftInput(FriendCircle1Activity.this, mEditText);
-                    return true;
-                }
-                return false;
+        mCircleLv.setOnTouchListener((v, event) -> {
+            if (mEditTextBody.getVisibility() == View.VISIBLE) {
+                mEditTextBody.setVisibility(View.GONE);
+                CommonUtils.hideSoftInput(FriendCircle1Activity.this, mEditText);
+                return true;
             }
+            return false;
         });
 //        mSwipeRefreshLayout.setOnRefreshListener(this);
 //        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,

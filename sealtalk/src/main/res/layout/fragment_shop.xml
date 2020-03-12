@@ -1,0 +1,128 @@
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:srlAccentColor="@color/colorPrimary"
+    app:srlPrimaryColor="@color/white"
+    >
+
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="296dp"
+            android:background="@mipmap/shop_bg"
+            app:elevation="0dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <TextView
+                    android:id="@+id/billTitle"
+                    style="@style/title_style"
+                    android:text="当前额度(元)" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/half_round">
+
+                    <TextView
+                        android:id="@+id/money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/titleBarHeight"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/layoutMargin16dp"
+                        android:gravity="center_vertical"
+                        android:text="****"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/titleTextSize16sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/increaseiCredit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="@dimen/layoutMargin16dp"
+                    android:background="@drawable/text_border_lin"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/layoutMargin16dp"
+                    android:paddingRight="@dimen/layoutMargin16dp"
+                    android:text="提高额度"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/mainText14sp" />
+
+
+            </LinearLayout>
+
+            <!-- <ImageView
+                 android:layout_width="match_parent"
+                 android:layout_height="230dp"
+                  />-->
+
+            <View
+                android:id="@+id/titleBar"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:background="#00ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/shop_title_text_bg"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/text_bottom_line"
+                    android:gravity="center_vertical"
+                    android:text="同行圈"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/titleTextSize16sp" />
+
+
+            </LinearLayout>
+
+            <!--
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="?attr/colorPrimary"
+                        app:tabIndicatorColor="@color/colorAccent"
+                        app:tabIndicatorHeight="4dp"
+                        app:tabSelectedTextColor="#000"
+                        app:tabTextColor="#fff" />
+            -->
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-50dp"
+            android:background="@color/white"
+            android:paddingTop="@dimen/layoutMargin16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

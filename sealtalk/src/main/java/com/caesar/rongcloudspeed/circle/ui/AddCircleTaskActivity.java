@@ -120,7 +120,9 @@ public class AddCircleTaskActivity extends BaseActivity {
             try {
                 ArrayList<String> list = data.getStringArrayListExtra("photos");
                 for (int position = 0; position < list.size(); position++) {
-                    byte[] img = BastiGallery.Bitmap2Bytes(BastiGallery.getimage(list.get(position)));
+                    String srcPath=list.get(position);
+                    Log.d("srcPath",srcPath);
+                    byte[] img = BastiGallery.Bitmap2Bytes(BastiGallery.getimage(srcPath));
                     HolderImg holderImg = new HolderImg();
                     holderImg.setUrl("file://".concat(list.get(position)));
                     holderImg.setBytes(img);
@@ -199,7 +201,7 @@ public class AddCircleTaskActivity extends BaseActivity {
     private void upLoadFeedBackImg(byte[] img, final int indexP) {
         QiniuUtils.getUploadManagerInstance();
         int positionP=indexP+1;
-        Log.d("图片上传大小提示TAG","img"+positionP+"size:"+String.valueOf(img.length));
+        Log.d("图片上传大小提示TAG","img"+positionP+"size:"+img.length);
         //已经上传过的不上传
         QiniuUtils.uploadImg(this, img, QiniuUtils.createImageKey(UserInfoUtils.getPhone(this)), new UpLoadImgCallback() {
             @Override
@@ -251,15 +253,16 @@ public class AddCircleTaskActivity extends BaseActivity {
     private String[] images;
 
     private void updateFriendCircle(String content) {
-        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updateFriendCircle(
-                UserInfoUtils.getAppUserId(this), content, images),
+        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().uploadFriendCircle(
+                UserInfoUtils.getAppUserId(this),"41", content, images),
                 new NetworkCallback<BaseData>() {
                     @Override
                     public void onSuccess(BaseData baseData) {
                         showProgressBar(false);
-                        if (!NetworkResultUtils.isSuccess(baseData)) {
+                        if (NetworkResultUtils.isSuccess(baseData)) {
+                            showInfo("上传成功");
+                        }else{
                             showInfo("上传失败");
-                            return;
                         }
                         finish();
                     }

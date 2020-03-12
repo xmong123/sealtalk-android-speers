@@ -31,14 +31,9 @@ import com.caesar.rongcloudspeed.runtimepermissions.PermissionsManager;
 import com.caesar.rongcloudspeed.runtimepermissions.PermissionsResultAction;
 import com.caesar.rongcloudspeed.ui.BaseActivity;
 import com.caesar.rongcloudspeed.ui.dialog.MorePopWindow;
-import com.caesar.rongcloudspeed.ui.fragment.BookStoreHomeFragment;
-import com.caesar.rongcloudspeed.ui.fragment.HomeDiscoveryLessonFragment;
+import com.caesar.rongcloudspeed.ui.fragment.HomeSpeerLessonFragment;
 import com.caesar.rongcloudspeed.ui.fragment.LessonsVideoFragment;
-import com.caesar.rongcloudspeed.ui.fragment.MainContactsListFragment;
-import com.caesar.rongcloudspeed.ui.fragment.HomeDiscoveryFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainConversationListFragment;
-import com.caesar.rongcloudspeed.ui.fragment.MainDiscoveryFragment;
-import com.caesar.rongcloudspeed.ui.fragment.MainMeFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainSealTalkFragment;
 import com.caesar.rongcloudspeed.ui.fragment.UserFragment;
 import com.caesar.rongcloudspeed.ui.view.MainBottomTabGroupView;
@@ -57,6 +52,7 @@ import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 
+import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 
 public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWindowItemClickListener {
@@ -139,6 +135,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_main);
+        ButterKnife.bind(this);
         initView();
         initViewModel();
         requestPerssion();
@@ -322,7 +319,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
      * 初始化 initFragmentViewPager
      */
     private void initFragmentViewPager() {
-        fragments.add(new HomeDiscoveryLessonFragment());
+        fragments.add(new HomeSpeerLessonFragment());
         fragments.add(new LessonsVideoFragment());
         fragments.add(new MainSealTalkFragment());
 //        fragments.add(new BookStoreHomeFragment());
@@ -497,4 +494,8 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         startActivity(intent);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

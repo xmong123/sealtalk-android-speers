@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="14dp"
-        android:text="朋友圈"
+        android:text="同行圈"
         android:textColor="@color/color_black_text"
         android:textSize="14sp" />
 

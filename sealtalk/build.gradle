@@ -7,8 +7,8 @@ android {
         applicationId "com.caesar.rongcloudspeed"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 109
-        versionName "1.0.9"
+        versionCode 111
+        versionName "1.1.1"
         //TODO 第二步 设置jniLibs
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
@@ -110,6 +110,8 @@ dependencies {
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     api 'cn.rongcloud.sdk:call_lib:2.9.22'
     api 'cn.rongcloud.sdk:call_kit:2.9.22'
+    implementation 'fm.jiecao:jiecaovideoplayer:5.8.1'
+
 
     api project(path: ':library')
     api project(path: ':circle_lib')
@@ -118,4 +120,5 @@ dependencies {
     api project(path: ':pushpermission')
     api project(path: ':photoPicker')
     api project(path: ':citypicker')
+    api project(path: ':picture_library')
 }

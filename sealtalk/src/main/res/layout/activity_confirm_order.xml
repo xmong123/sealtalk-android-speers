@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layoutMargin16dp"
-            android:text="使用同业快线额度支付"
+            android:text="使用同行快线额度支付"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />
 
@@ -126,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layoutMargin16dp"
-            android:text="购物服务协议"
+            android:text="同行快线普通服务协议"
             android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/mainText14sp" />
 

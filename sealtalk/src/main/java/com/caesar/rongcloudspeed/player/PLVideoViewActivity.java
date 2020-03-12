@@ -1,22 +1,34 @@
 package com.caesar.rongcloudspeed.player;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.data.BaseData;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
+import com.caesar.rongcloudspeed.ui.activity.SPLessonVideosActivity;
+import com.caesar.rongcloudspeed.ui.activity.SpeerOrderActivity;
 import com.caesar.rongcloudspeed.ui.activity.WebViewActivity;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.utils.Utils;
+import com.caesar.rongcloudspeed.utils.log.SLog;
+import com.caesar.rongcloudspeed.viewmodel.LoginViewModel;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLOnAudioFrameListener;
 import com.pili.pldroid.player.PLOnBufferingUpdateListener;
@@ -26,6 +38,9 @@ import com.pili.pldroid.player.PLOnInfoListener;
 import com.pili.pldroid.player.PLOnVideoFrameListener;
 import com.pili.pldroid.player.PLOnVideoSizeChangedListener;
 import com.pili.pldroid.player.widget.PLVideoView;
+import com.tencent.smtt.sdk.TbsVideo;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -34,12 +49,44 @@ import java.util.Arrays;
 public class PLVideoViewActivity extends VideoPlayerBaseActivity {
 
     private static final String TAG = PLVideoViewActivity.class.getSimpleName();
-
+    private static final int REQUEST_MEMBER_VIP = 1;
     private PLVideoView mVideoView;
     private int mDisplayAspectRatio = PLVideoView.ASPECT_RATIO_FIT_PARENT;
     private TextView mStatInfoTextView;
     private MediaController mMediaController;
     private boolean mIsLiveStreaming;
+    private String lessonVideoString;
+    private String lesson_id;
+    private String lesson_name;
+    private String lesson_price;
+    private String lesson_smeta;
+    private CountDownTimer countDownTimer = new CountDownTimer(15 * 1000, 1000) {
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int count = Math.round(millisUntilFinished / 1000);
+            if (count > 0) {
+                timeShowTitle.setText(String.valueOf(count));
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            timeShowTitle.setText("0");
+        }
+    };
+
+    private void startCodeCountDown() {
+        countDownTimer.cancel();
+        countDownTimer.start();
+    }
+
+    private void stopCodeCountDown() {
+        countDownTimer.cancel();
+    }
+
+    private TextView timeShowTitle;
+    private LinearLayout vipShowLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +94,13 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         setContentView(R.layout.activity_pl_video_view);
         String videoPath = getIntent().getStringExtra("videoPath");
         mIsLiveStreaming = getIntent().getIntExtra("liveStreaming", 1) == 1;
-        String postID = getIntent().getStringExtra("postID");
-        String userid= UserInfoUtils.getAppUserId(this);
+        lessonVideoString = getIntent().getExtras().getString("lessonVideoString");
+        lesson_id = getIntent().getExtras().getString("lesson_id");
+        lesson_name = getIntent().getExtras().getString("lesson_name");
+        lesson_price = getIntent().getExtras().getString("lesson_price");
+        lesson_smeta = getIntent().getExtras().getString("lesson_smeta");
+//        String postID = getIntent().getStringExtra("postID");
+        String userid = UserInfoUtils.getAppUserId(this);
         mVideoView = findViewById(R.id.VideoView);
 
         View loadingView = findViewById(R.id.LoadingView);
@@ -57,7 +109,20 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         View mCoverView = findViewById(R.id.CoverView);
         mVideoView.setCoverView(mCoverView);
 
+        timeShowTitle = findViewById(R.id.timeShowTitle);
+        vipShowLayout = findViewById(R.id.vipShowLayout);
         mStatInfoTextView = findViewById(R.id.StatInfoTextView);
+
+        vipShowLayout.setOnClickListener(view -> {
+            Intent orderIntent = new Intent(PLVideoViewActivity.this, SpeerOrderActivity.class);
+            orderIntent.putExtra("lesson_id", lesson_id);
+            orderIntent.putExtra("lesson_name", lesson_name);
+            orderIntent.putExtra("lesson_price", lesson_price);
+            orderIntent.putExtra("lesson_smeta", lesson_smeta);
+            orderIntent.putExtra("videoPath", lessonVideoString);
+            orderIntent.setAction("PLVideo");
+            startActivityForResult(orderIntent, REQUEST_MEMBER_VIP);
+        });
 
         // 1 -> hw codec enable, 0 -> disable [recommended]
         int codec = getIntent().getIntExtra("mediaCodec", AVOptions.MEDIA_CODEC_SW_DECODE);
@@ -90,6 +155,7 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         mVideoView.setAVOptions(options);
 
         // Set some listeners
+        mVideoView.setOnPreparedListener(i -> startCodeCountDown());
         mVideoView.setOnInfoListener(mOnInfoListener);
         mVideoView.setOnVideoSizeChangedListener(mOnVideoSizeChangedListener);
         mVideoView.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
@@ -105,6 +171,25 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         mMediaController = new MediaController(this, !mIsLiveStreaming, mIsLiveStreaming);
         mMediaController.setOnClickSpeedAdjustListener(mOnClickSpeedAdjustListener);
         mVideoView.setMediaController(mMediaController);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_MEMBER_VIP:
+                    if (lessonVideoString != null && TbsVideo.canUseTbsPlayer(PLVideoViewActivity.this)) {
+                        TbsVideo.openVideo(PLVideoViewActivity.this, lessonVideoString);
+                        finish();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
     }
 
     @Override
@@ -241,11 +326,16 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         @Override
         public void onCompletion() {
             Log.i(TAG, "Play Completed !");
+            stopCodeCountDown();
             Utils.showToastTips(PLVideoViewActivity.this, "Play Completed !");
             if (!mIsLiveStreaming) {
                 mMediaController.refreshProgress();
             }
             //finish();
+            if (lessonVideoString != null && TbsVideo.canUseTbsPlayer(PLVideoViewActivity.this)) {
+                TbsVideo.openVideo(PLVideoViewActivity.this, lessonVideoString);
+                finish();
+            }
         }
     };
 

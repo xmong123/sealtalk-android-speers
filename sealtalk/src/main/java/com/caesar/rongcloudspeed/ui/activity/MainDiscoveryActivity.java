@@ -49,16 +49,17 @@ public class MainDiscoveryActivity extends BaseActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.btn_public_04:
-                intent = new Intent(this, PublicGoodsActivity.class);
+                intent = new Intent(this, PublicSeekActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_public_05:
-                intent = new Intent(this, PublicGoodsActivity.class);
+                intent = new Intent(this, PublicAdvertActivity.class);
                 startActivity(intent);
                 break;
             default:
                 break;
         }
+        finish();
     }
 
 }

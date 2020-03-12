@@ -30,7 +30,7 @@ public class RetrofitManager {
     /**
      * 主机地址
      */
-    public static String server_address = "http://thinkcmf.yx2588.com/";
+    public static String server_address = "http://thinkcmf.91bim.net/";
     private static OkHttpClient client;
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());

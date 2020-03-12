@@ -3,6 +3,8 @@ package com.caesar.rongcloudspeed.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Set;
+
 /**
  * Created by mathum on 2017-09-26.
  */
@@ -21,6 +23,7 @@ public class UserInfoUtils {
     public static final String UserName = "username";
     public static final String NickName = "nickname";
     public static final String UserSum = "usersum";
+    public static final String UserType = "usertype";
     public static final String UserIndustry = "UserIndustry";
     public static final String UserProfession = "UserProfession";
     public static final String UserSoft = "UserSoft";
@@ -28,6 +31,7 @@ public class UserInfoUtils {
     public static final String KeyLoginState = "KeyLoginState";
     public static final String AppUserId = "AppUserId";    //id
     public static final String AppUserUrl = "AppUserUrl";   //用户头像
+    public static final String AppUserOrder = "AppUserOrder";
     public static final String UserFriendNum = "UserFriendNum";
     public static final String UserFocusNum = "UserFocusNum";
     public static final String UserPostNum = "UserPostNum";
@@ -272,6 +276,20 @@ public class UserInfoUtils {
         editor.commit();
     }
 
+    public static void setAppUserOrder(Set<String> appUserOrder, Context context) {
+        initUserSp(context);
+        SharedPreferences.Editor editor = userSp.edit();
+        editor.putStringSet(AppUserOrder, appUserOrder);
+        editor.commit();
+    }
+
+    //获取个人课程订单
+    public static Set<String> getAppUserOrder(Context context) {
+        initUserSp(context);
+        Set<String> appUserOrder = userSp.getStringSet(AppUserOrder, null);
+        return appUserOrder;
+    }
+
     public static String getAuthToken(Context context) {
         initUserSp(context);
         String token = userSp.getString(KeyAuthToken, "");
@@ -287,7 +305,7 @@ public class UserInfoUtils {
 
     public static String getPhone(Context context) {
         initUserSp(context);
-        String token = userSp.getString(KeyPhone, "");
+        String token = userSp.getString(KeyPhone, "15358801339");
         return token;
     }
 
@@ -348,6 +366,13 @@ public class UserInfoUtils {
         editor.commit();
     }
 
+    public static void setUserType(String userType, Context context) {
+        initUserSp(context);
+        SharedPreferences.Editor editor = userSp.edit();
+        editor.putString(UserType, userType);
+        editor.commit();
+    }
+
     public static void setPayPassWord(String payPassWord, Context context) {
         initUserSp(context);
         SharedPreferences.Editor editor = userSp.edit();
@@ -372,6 +397,13 @@ public class UserInfoUtils {
         String usersum = userSp.getString(UserSum, "0.00");
         return usersum;
     }
+
+    public static String getUserType(Context context) {
+        initUserSp(context);
+        String usertype = userSp.getString(UserType, "0");
+        return usertype;
+    }
+
     public static String getPayPassWord(Context context) {
         initUserSp(context);
         String usersum = userSp.getString(PayPassWord, "");
@@ -385,11 +417,12 @@ public class UserInfoUtils {
         setUserName("", context);
         setNikeName("", context);
         setUserSum("", context);
+        setUserType("", context);
         setPhone("", context);
         setPayPassWord("", context);
         setAppUserId("0", context);
         setAppUserUrl("", context);
-
+        setAppUserOrder(null,context);
     }
 
 

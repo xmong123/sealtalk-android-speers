@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/user_fragment_list_bg"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.SeekHelperOrderActivity"
+    tools:ignore="MissingDefaultResource">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/speer_seek_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layoutMargin16dp"
+        android:background="@color/white"
+        android:elevation="@dimen/elevation8dp"
+        app:cardCornerRadius="@dimen/card_radius"
+        tools:targetApi="lollipop">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:layout_marginRight="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/margin4dp">
+
+            <TextView
+                android:id="@+id/seek_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:background="@drawable/btn_red_shape"
+                android:paddingLeft="@dimen/dp_4"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingRight="@dimen/dp_4"
+                android:paddingBottom="@dimen/dp_2"
+                android:text="求助"
+                android:textColor="@color/white_text_color"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/seek_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_2"
+                android:layout_toEndOf="@+id/seek_tag"
+                android:paddingBottom="@dimen/layoutMargin8dp"
+                android:text="Revit幕墙嵌板无法设计成三角形"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/bigText16sp" />
+
+            <TextView
+                android:id="@+id/seek_price_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seek_title_text"
+                android:layout_margin="@dimen/dp_4"
+                android:text="支付金额:"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/bigText16sp" />
+
+            <TextView
+                android:id="@+id/seek_price_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seek_title_text"
+                android:layout_margin="@dimen/dp_4"
+                android:layout_toEndOf="@+id/seek_price_tag"
+                android:text="¥10.00"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/bigText16sp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin16dp"
+        android:layout_marginRight="@dimen/layoutMargin16dp"
+        android:layout_marginBottom="@dimen/layoutMargin16dp"
+        android:background="@color/white"
+        android:elevation="@dimen/elevation8dp"
+        app:cardCornerRadius="@dimen/card_radius"
+        tools:targetApi="lollipop">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:layout_marginRight="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/margin4dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/seek_troduce_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4dp"
+                android:text="求助信息发布费用说明："
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/bigText16sp" />
+
+            <TextView
+                android:id="@+id/seek_troduce_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin4dp"
+                android:layout_marginEnd="@dimen/margin4dp"
+                android:text="求助信息发布费用为人民币10元/次。"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/bigText16sp" />
+
+            <TextView
+                android:id="@+id/seek_troduce_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4dp"
+                android:text="潜在用户数量："
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/bigText16sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin16dp"
+        android:layout_marginRight="@dimen/layoutMargin16dp"
+        android:layout_marginBottom="@dimen/layoutMargin16dp"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/card_radius">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:src="@drawable/pay_wechat" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen64"
+            android:layout_marginTop="@dimen/layoutMargin16dp"
+            android:layout_marginBottom="@dimen/layoutMargin16dp"
+            android:text="使用微信支付"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/mainText14sp" />
+
+        <CheckBox
+            android:id="@+id/weixin_speer_paybox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="@dimen/layoutMargin16dp" />
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin16dp"
+        android:layout_marginRight="@dimen/layoutMargin16dp"
+        android:layout_marginBottom="@dimen/layoutMargin16dp"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/card_radius">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:src="@drawable/pay_alipay" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen64"
+            android:layout_marginTop="@dimen/layoutMargin16dp"
+            android:layout_marginBottom="@dimen/layoutMargin16dp"
+            android:text="使用支付宝支付"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/mainText14sp" />
+
+        <CheckBox
+            android:id="@+id/alipay_speer_paybox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="@dimen/layoutMargin16dp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin16dp"
+        android:layout_marginRight="@dimen/layoutMargin16dp"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/card_radius">
+
+        <LinearLayout
+            android:id="@+id/seek_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:layout_marginRight="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/margin4dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4dp"
+                android:text="帮助报酬费用说明："
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/bigText16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin4dp"
+                android:layout_marginEnd="@dimen/margin4dp"
+                android:text="经求助者与帮助者确认求助完成，帮助者即可向求助者收取报酬。报酬金额、支付方式、支付时间，由双方协商决定，同行快线不做任何干涉。双方产生的任何纠纷，与同行快线无关。"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/mainText14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/advert_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:layout_marginRight="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/margin4dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4dp"
+                android:text="发票"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/bigText16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/normal_invoice_btn"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:background="@drawable/border_light_red_normal"
+                    android:text="普通发票"
+                    android:textColor="@color/light_red" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/value_invoice_btn"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:background="@drawable/border_light_red_normal"
+                    android:text="增值税发票"
+                    android:textColor="@color/light_red" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/seekProtoBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin16dp"
+        android:layout_marginTop="@dimen/layoutMargin16dp"
+        android:layout_marginRight="@dimen/layoutMargin16dp"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/card_radius">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin16dp"
+            android:text="同行快线平台服务协议"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/mainText14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="@dimen/layoutMargin16dp"
+            android:src="@mipmap/arrow_right" />
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/codeVerifiCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMargin16dp"
+        android:layout_marginTop="@dimen/layoutMargin16dp"
+        android:layout_marginRight="@dimen/layoutMargin16dp"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/card_radius">
+
+        <LinearLayout
+            android:id="@+id/codeVerifiLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/codeVerifiEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutMargin16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/mainText14sp" />
+
+
+            <TextView
+                android:id="@+id/getSpeerVerifiCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutMargin16dp"
+                android:text="获取验证码"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/mainText14sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:text="应付金额:"
+            android:textColor="@color/textColorPrimary" />
+
+        <TextView
+            android:id="@+id/speerSeekMoneyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layoutMargin16dp"
+            android:text="¥ 10.00"
+            android:textColor="@color/red_dark"
+            android:textSize="@dimen/dp_20" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+
+        <Button
+            android:id="@+id/speer_pay"
+            style="@style/gradent_btn_style" />
+    </LinearLayout>
+</LinearLayout>

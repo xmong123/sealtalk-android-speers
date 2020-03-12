@@ -221,7 +221,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void onDestroy() {
         super.onDestroy();
         //移除所有
-        unbinder.unbind();
+//        unbinder.unbind();
         handler.removeCallbacksAndMessages(null);
     }
 

@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="温馨提示：该货源未经平台核实，请谨慎交易，如涉及资金安全等问题，建议货款走平台监管，详情请致电客服！"
+                    android:text="温馨提示：该求助信息未经平台核实，请谨慎交易，如涉及资金安全等问题，建议咨询平台监管，详情请致电客服！"
                     android:textColor="@color/spec_select_text_color"
                     android:textSize="@dimen/sp_12" />
 
@@ -89,7 +89,7 @@
                     android:id="@+id/detail_text4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="工地毛料"
+                    android:text="Revit幕墙设计"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/sp_16" />
 

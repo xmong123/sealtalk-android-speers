@@ -38,36 +38,14 @@ public class AnimationAdapter2 extends BaseQuickAdapter<PostsArticleBaseBean, Ba
     private String type;
     String user_type = SPUtils.getInstance().getString( "user_type", "0" );
 
-    public AnimationAdapter2(Context context, List data) {
-        super( (data.size() > 5) ? R.layout.fragment_thinkcmf_recyclerview_item3 : R.layout.fragment_thinkcmf_recyclerview_item2, data );
-        this.context = context;
-    }
-
     public AnimationAdapter2(Context context, List data, String type) {
-        super( (type.equals( "3" )) ? R.layout.fragment_thinkcmf_recyclerview_item2 : R.layout.fragment_thinkcmf_recyclerview_item3, data );
+        super( R.layout.fragment_thinkcmf_recyclerview_item2 , data );
         this.context = context;
         this.type = type;
     }
 
-    ClickableSpan clickableSpan = new ClickableSpan() {
-        @Override
-        public void onClick(View widget) {
-            ToastUtils.showShortToast( "事件触发了 landscapes and nedes" );
-        }
-
-        @Override
-        public void updateDrawState(TextPaint ds) {
-            ds.setColor( Utils.getContext().getResources().getColor( R.color.clickspan_color ) );
-            ds.setUnderlineText( true );
-        }
-    };
-
     @Override
     protected void convert(BaseViewHolder helper, PostsArticleBaseBean bean) {
-        String avatar = bean.getPost_avatar();
-        if (!avatar.startsWith( "http://" )) {
-            avatar = Constant.THINKCMF_PATH + avatar;
-        }
         String thumbString = null;
         try {
             JSONObject jsonSmeta = new JSONObject( bean.getSmeta() );

@@ -144,7 +144,7 @@
     <dimen name="adaptive_30sp">25sp</dimen>
 
 
-    <!--朋友圈尺寸定义-->
+    <!--同行圈尺寸定义-->
     <dimen name="item_avatar">48dp</dimen>
     <dimen name="item_padding">16dp</dimen>
 </resources>

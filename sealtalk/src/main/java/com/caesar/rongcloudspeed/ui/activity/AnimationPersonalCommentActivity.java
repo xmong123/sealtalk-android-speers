@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.caesar.rongcloudspeed.bean.HomeSeekListBean;
+import com.caesar.rongcloudspeed.bean.PostsSeekBaseBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import com.caesar.rongcloudspeed.R;

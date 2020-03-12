@@ -6,7 +6,9 @@ import android.util.Log;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.blankj.utilcode.util.Utils;
 import com.caesar.rongcloudspeed.manager.RetrofitManager;
+import com.caesar.rongcloudspeed.utils.QiniuUtils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -41,7 +43,7 @@ public class SealApp extends MultiDexApplication {
         Fresco.initialize(this);
         // 初始化 bugly BUG 统计
         //CrashReport.initCrashReport(getApplicationContext());
-
+        Utils.init(this);
         ErrorCode.init(this);
 
         /*
@@ -84,6 +86,7 @@ public class SealApp extends MultiDexApplication {
 
         //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(), cb);
+        QiniuUtils.getUploadManagerInstance();
     }
 
     public static SealApp getApplication(){

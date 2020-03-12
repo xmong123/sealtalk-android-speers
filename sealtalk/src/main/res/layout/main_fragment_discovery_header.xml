@@ -119,6 +119,7 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,8 +155,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lesson_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            />
+            android:layout_height="240dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -13,15 +13,18 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caesar.rongcloudspeed.circle.ui.FriendCircle1Activity;
 import com.caesar.rongcloudspeed.circle.ui.FriendCircleActivity;
+import com.caesar.rongcloudspeed.circle.ui.ImagePagerActivity;
 import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.data.UserInfo;
 import com.caesar.rongcloudspeed.data.result.CircleItemResult;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
+import com.caesar.rongcloudspeed.ui.activity.ImageViewPreviewActivity;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.data.BaseData;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
@@ -29,6 +32,8 @@ import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.circle.adapter.CommentAdapter.ICommentItemClickListener;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.tencent.smtt.sdk.TbsVideo;
 import com.yiw.circledemo.bean.ActionItem;
 import com.yiw.circledemo.bean.CircleItem;
 import com.yiw.circledemo.bean.CommentItem;
@@ -46,6 +51,9 @@ import com.caesar.rongcloudspeed.circle.widgets.MultiImageView;
 import com.caesar.rongcloudspeed.circle.widgets.SnsPopupWindow;
 import com.caesar.rongcloudspeed.circle.widgets.dialog.CommentDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,13 +65,17 @@ import java.util.List;
  */
 public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
     private static final int ITEM_VIEW_TYPE_DEFAULT = 0;
-    private static final int ITEM_VIEW_TYPE_URL = 1;
-    private static final int ITEM_VIEW_TYPE_IMAGE = 2;
-    String userid= "1";
+    private static final int ITEM_VIEW_TYPE_IMAGE = 1;
+    private static final int ITEM_VIEW_TYPE_URL = 2;
+    private static final int ITEM_VIEW_TYPE_VIDEO = 3;
+    private static final int ITEM_VIEW_TYPE_ADVERT = 4;
+    String userid = "1";
 
-    private static final String ITEM_TYPE_URL = "1";
-    private static final String ITEM_TYPE_IMAGE = "2";
-    private static final int ITEM_VIEW_TYPE_COUNT = 3;
+    private static final String ITEM_TYPE_IMAGE = "1";
+    private static final String ITEM_TYPE_URL = "2";
+    private static final String ITEM_TYPE_VIDEO = "3";
+    private static final String ITEM_TYPE_ADVERT = "4";
+    private static final int ITEM_VIEW_TYPE_COUNT = 5;
 
     private Context mContext;
     private CirclePresenter mPresenter;
@@ -88,22 +100,26 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
 
     public CircleAdapter(Context context) {
         mContext = context;
-        userid= UserInfoUtils.getAppUserId(mContext);
+        userid = UserInfoUtils.getAppUserId(mContext);
         mPresenter = new CirclePresenter(this);
     }
 
     @Override
     public int getItemViewType(int position) {
+        int itemType;
+        CircleItem item = datas.get(position);
+        if (ITEM_TYPE_URL.equals(item.getPost_type())) {
+            itemType = ITEM_VIEW_TYPE_URL;
+        } else if (ITEM_TYPE_IMAGE.equals(item.getPost_type())) {
+            itemType = ITEM_VIEW_TYPE_IMAGE;
+        } else if (ITEM_TYPE_VIDEO.equals(item.getPost_type())) {
+            itemType = ITEM_VIEW_TYPE_VIDEO;
+        } else if (ITEM_TYPE_ADVERT.equals(item.getPost_type())) {
+            itemType = ITEM_VIEW_TYPE_ADVERT;
+        } else {
+            itemType = ITEM_VIEW_TYPE_DEFAULT;
+        }
 //        int itemType = ITEM_VIEW_TYPE_IMAGE;
-//        CircleItem item = datas.get(position);
-//        if (ITEM_TYPE_URL.equals(item.getType())) {
-//            itemType = ITEM_VIEW_TYPE_URL;
-//        } else if (ITEM_TYPE_IMAGE.equals(item.getType())) {
-//            itemType = ITEM_VIEW_TYPE_IMAGE;
-//        } else {
-//            itemType = ITEM_VIEW_TYPE_DEFAULT;
-//        }
-        int itemType = ITEM_VIEW_TYPE_IMAGE;
         return itemType;
     }
 
@@ -130,7 +146,7 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         int itemViewType = getItemViewType(position);
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.adapter_circle_item, null);
@@ -154,6 +170,26 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
                         holder.multiImageView = multiImageView;
                     }
                     break;
+                case ITEM_VIEW_TYPE_VIDEO:// 视频view
+                    linkOrImgViewStub.setLayoutResource(R.layout.viewstub_videobody);
+                    linkOrImgViewStub.inflate();
+                    RelativeLayout videoBodyView = (RelativeLayout) convertView.findViewById(R.id.videoBody);
+                    if (videoBodyView != null) {
+                        holder.videoBody = videoBodyView;
+                        holder.videoImageIv = (ImageView) convertView.findViewById(R.id.videoImageIv);
+                        holder.videoplayerImageIv = (ImageView) convertView.findViewById(R.id.videoplayerImageIv);
+                    }
+                    break;
+                case ITEM_VIEW_TYPE_ADVERT:// 广告view
+                    linkOrImgViewStub.setLayoutResource(R.layout.viewstub_advertbody);
+                    linkOrImgViewStub.inflate();
+                    RelativeLayout advertBodyView = (RelativeLayout) convertView.findViewById(R.id.advertBody);
+                    if (advertBodyView != null) {
+                        holder.advertBody = advertBodyView;
+                        holder.advertImageIv = (ImageView) convertView.findViewById(R.id.advertImageIv);
+                        holder.advertPlayerImageIv = (ImageView) convertView.findViewById(R.id.advertPlayerImageIv);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -163,6 +199,7 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
 
             holder.contentTv = (TextView) convertView.findViewById(R.id.contentTv);
             holder.urlTipTv = (TextView) convertView.findViewById(R.id.urlTipTv);
+            holder.tagTipTv = (TextView) convertView.findViewById(R.id.tagTipTv);
             holder.timeTv = (TextView) convertView.findViewById(R.id.timeTv);
             holder.deleteBtn = (TextView) convertView.findViewById(R.id.deleteBtn);
             holder.snsBtn = (ImageView) convertView.findViewById(R.id.snsBtn);
@@ -196,7 +233,7 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
         final List<CommentItem> commentsDatas = circleItem.getLast_comments();
         boolean hasFavort = favortDatas.size() != 0 ? true : false;
         boolean hasComment = commentsDatas.size() != 0 ? true : false;
-        if (!headImg.startsWith( "http://" )) {
+        if (!headImg.startsWith("http://")) {
             headImg = Constant.THINKCMF_PATH + headImg;
         }
         ImageLoader.getInstance().displayImage(headImg, holder.headIv);
@@ -206,7 +243,7 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
         holder.contentTv.setVisibility(TextUtils.isEmpty(content) ? View.GONE : View.VISIBLE);
 
         if (authorID.equals(userid)) {
-            Log.d("authorID:",authorID+",userid,:"+userid);
+            Log.d("authorID:", authorID + ",userid,:" + userid);
             holder.deleteBtn.setVisibility(View.VISIBLE);
         } else {
             holder.deleteBtn.setVisibility(View.GONE);
@@ -222,8 +259,8 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
             @Override
             public void onClick(View v) {
                 //删除
-                Intent intent=new Intent(mContext, FriendCircle1Activity.class);
-                intent.putExtra("userid",authorID);
+                Intent intent = new Intent(mContext, FriendCircle1Activity.class);
+                intent.putExtra("userid", authorID);
                 mContext.startActivity(intent);
             }
         });
@@ -331,7 +368,7 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
 //                holder.urlTipTv.setVisibility(View.VISIBLE);
                 break;
             case ITEM_VIEW_TYPE_IMAGE:// 处理图片
-                final List<String> photos = circleItem.getPhotos_urls();
+                List<String> photos = circleItem.getPhotos_urls();
                 if (photos != null && photos.size() > 0) {
                     holder.multiImageView.setVisibility(View.VISIBLE);
                     holder.multiImageView.setList(photos);
@@ -341,6 +378,96 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
                 } else {
                     holder.multiImageView.setVisibility(View.GONE);
                 }
+//                if (circleItem.getTerm_id().equals("43")) {
+//                    holder.tagTipTv.setText("求助");
+//                    holder.tagTipTv.setVisibility(View.VISIBLE);
+//                    holder.tagTipTv.setTextColor(mContext.getResources().getColor(R.color.light_red));
+//                    holder.tagTipTv.setBackground(mContext.getResources().getDrawable(R.drawable.border_light_red));
+//                } else if (circleItem.getTerm_id().equals("42")) {
+//                    holder.tagTipTv.setText("广告");
+//                    holder.tagTipTv.setVisibility(View.VISIBLE);
+//                    if(authorID.equals(userid)){
+//                        holder.tagTipTv.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+//                        holder.tagTipTv.setBackground(mContext.getResources().getDrawable(R.drawable.border_color_accent));
+//                    }else{
+//                        holder.tagTipTv.setTextColor(mContext.getResources().getColor(R.color.light_red));
+//                        holder.tagTipTv.setBackground(mContext.getResources().getDrawable(R.drawable.border_light_red));
+//                    }
+//                } else {
+//                    holder.tagTipTv.setVisibility(View.INVISIBLE);
+//                }
+                break;
+            case ITEM_VIEW_TYPE_ADVERT:// 处理广告
+                photos = circleItem.getPhotos_urls();
+                String thumbString = circleItem.getThumb_video();
+                holder.tagTipTv.setText("广告");
+                holder.tagTipTv.setVisibility(View.VISIBLE);
+                if (authorID.equals(userid)) {
+                    holder.tagTipTv.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+                    holder.tagTipTv.setBackground(mContext.getResources().getDrawable(R.drawable.border_color_accent));
+                } else {
+                    holder.tagTipTv.setTextColor(mContext.getResources().getColor(R.color.light_red));
+                    holder.tagTipTv.setBackground(mContext.getResources().getDrawable(R.drawable.border_light_red));
+                }
+                if (thumbString != null && thumbString.length() > 32) {
+                    ImageLoader.getInstance().displayImage(thumbString + "?vframe/jpg/offset/1", holder.advertImageIv);
+                    holder.advertPlayerImageIv.setVisibility(View.VISIBLE);
+                    String finalThumbString = thumbString;
+                    holder.advertImageIv.setOnClickListener(view -> {
+                        if (TbsVideo.canUseTbsPlayer(mContext)) {
+                            TbsVideo.openVideo(mContext, finalThumbString);
+                        }
+                    });
+                    holder.advertPlayerImageIv.setOnClickListener(view -> {
+                        if (TbsVideo.canUseTbsPlayer(mContext)) {
+                            TbsVideo.openVideo(mContext, finalThumbString);
+                        }
+                    });
+                } else {
+                    if (photos != null && photos.size() > 0) {
+                        String advertString = photos.get(0);
+                        ImageLoader.getInstance().displayImage(advertString, holder.advertImageIv);
+                        if (imageListener != null) {
+                            holder.advertImageIv.setOnClickListener(view -> {
+                                Intent intent = new Intent(mContext, ImageViewPreviewActivity.class);
+                                intent.putExtra("imgurls", advertString);
+                                mContext.startActivity(intent);
+                            });
+                        }
+                    } else {
+                        holder.advertBody.setVisibility(View.GONE);
+                    }
+                }
+                break;
+            case ITEM_VIEW_TYPE_VIDEO:// 处理视频
+                String smetaString = circleItem.getSmeta();
+                String videoString = null;
+                try {
+                    JSONObject jsonSmeta = new JSONObject(smetaString);
+                    videoString = jsonSmeta.getString("thumb");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (videoString != null && !videoString.startsWith("http://")) {
+                    videoString = Constant.THINKCMF_PATH + videoString;
+                }
+                if (videoString != null && videoString.length() > 32) {
+                    ImageLoader.getInstance().displayImage(videoString + "?vframe/jpg/offset/1", holder.videoImageIv);
+                    holder.videoplayerImageIv.setVisibility(View.VISIBLE);
+                    String finalThumbString = videoString;
+                    holder.videoImageIv.setOnClickListener(view -> {
+                        if (TbsVideo.canUseTbsPlayer(mContext)) {
+                            TbsVideo.openVideo(mContext, finalThumbString);
+                        }
+                    });
+                    holder.videoplayerImageIv.setOnClickListener(view -> {
+                        if (TbsVideo.canUseTbsPlayer(mContext)) {
+                            TbsVideo.openVideo(mContext, finalThumbString);
+                        }
+                    });
+                }
+                holder.videoBody.setVisibility(View.VISIBLE);
+                holder.videoImageIv.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
@@ -356,6 +483,7 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
         public CircularImage headIv;
         public TextView nameTv;
         public TextView urlTipTv;
+        public TextView tagTipTv;
         /**
          * 动态的内容
          */
@@ -369,6 +497,8 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
         public FavoriteListView favortListTv;
 
         public LinearLayout urlBody;
+        public RelativeLayout videoBody;
+        public RelativeLayout advertBody;
         public LinearLayout digCommentBody;
         public View digLine;
 
@@ -380,6 +510,10 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
          * 链接的图片
          */
         public ImageView urlImageIv;
+        public ImageView videoImageIv;
+        public ImageView advertImageIv;
+        public ImageView videoplayerImageIv;
+        public ImageView advertPlayerImageIv;
         /**
          * 链接的标题
          */

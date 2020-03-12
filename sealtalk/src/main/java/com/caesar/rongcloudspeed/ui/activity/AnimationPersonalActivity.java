@@ -59,13 +59,6 @@ public class AnimationPersonalActivity extends MultiStatusActivity {
                             animationAdapter1.openLoadAnimation();
                             animationAdapter1.setNotDoAnimationCount(3);
                             recyclerview_anomation1.setLayoutManager(new GridLayoutManager(AnimationPersonalActivity.this, 1));
-
-                            animationAdapter1.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-                                @Override
-                                public void onLoadMoreRequested() {
-
-                                }
-                            });
                             animationAdapter1.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

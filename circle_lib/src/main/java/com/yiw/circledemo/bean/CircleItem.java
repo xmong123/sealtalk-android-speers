@@ -14,6 +14,43 @@ public class CircleItem extends BaseBean {
     private String post_title;
     private List<String> photos_urls;
     private String post_like;
+    private String smeta;
+    private String post_type;
+    private String thumb_video;
+
+    public String getThumb_video() {
+        return thumb_video;
+    }
+
+    public void setThumb_video(String thumb_video) {
+        this.thumb_video = thumb_video;
+    }
+
+    public String getTerm_id() {
+        return term_id;
+    }
+
+    public void setTerm_id(String term_id) {
+        this.term_id = term_id;
+    }
+
+    private String term_id;
+
+    public String getPost_type() {
+        return post_type;
+    }
+
+    public void setPost_type(String post_type) {
+        this.post_type = post_type;
+    }
+
+    public String getSmeta() {
+        return smeta;
+    }
+
+    public void setSmeta(String smeta) {
+        this.smeta = smeta;
+    }
 
     public String getPost_date() {
         return post_date;

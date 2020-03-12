@@ -130,6 +130,8 @@
     <color name="dull_blue">#3B4BBF</color>
     <color name="gray_color1">#e8e8e8</color>
     <color name="line">#e8e8e8</color>
+
+    <color name="prink">#F0DDDA</color><!--桃红色 -->
     <color name="cornsilk">#FFF8DC</color><!--米绸色 -->
     <color name="beige">#F5F5DC</color><!--米色 -->
     <color name="wheat">#F5DEB3</color><!--浅黄色 -->
@@ -139,6 +141,7 @@
     <color name="move_line">#f15353</color>//FilterBar 选中颜色
     <color name="light_red">#f15353</color>//京东红
     <color name="select_light_red">#f03f3f</color>//京东红:选中背景颜色
+    <color name="olive">#808000</color>
 
     <color name="sub_title">#848689</color>//副标题文本颜色
     <color name="color_font_gray">#9e9d9d</color>
@@ -163,9 +166,27 @@
     <color name="toast_stroke_gray">#99d4d4d4</color>
 
     <color name="seal_group_detail_clean_tips">#8B8B8B</color>
+    <color name="action_layout_pressed_background">#D9E9F4</color>
     <color name="action_button_pressed_background">#5ebce6</color>
     <color name="action_button_normal_background">#1e82ca</color>
     <color name="action_button_disabled_background">#d0d0d0</color>
     <color name="select_button_pressed_background">#5cb85c</color>
     <color name="select_button_normal_background">#008b57</color>
+
+
+    <color name="app_color_grey">#393a3e</color>
+    <color name="app_color_black">#000000</color>
+    <color name="app_color_f6">#f6f6f6</color>
+    <color name="app_color_fa">#fafafa</color>
+    <color name="app_color_divider">#B6B6B6</color>
+    <color name="app_color_c51">#f94c51</color>
+    <color name="app_color_green">#43c117</color>
+    <color name="app_color_53575e">#53575e</color>
+    <color name="app_color_transparent">#00000000</color>
+    <color name="app_color_white">#FFFFFF</color>
+    <color name="app_color_blue">#7D7DFF</color>
+    <color name="app_color_9b">#9b9b9b</color>
+    <color name="app_color_e0ff6100">#E0FF6100</color>
+    <color name="app_color_red">#FF0000</color>
+    <color name="red_dark">#e54141</color>
 </resources>

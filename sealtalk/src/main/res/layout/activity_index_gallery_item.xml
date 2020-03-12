@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_index_gallery_item_layout"
     android:layout_width="@dimen/seal_search_item_height"
     android:layout_height="@dimen/seal_search_item_height"
     android:layout_margin="@dimen/layoutMargin4dp"
-    android:background="@color/color_bg"
+    android:background="@drawable/item_layout_background"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -14,6 +15,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="1"
+        android:textColor="@drawable/item_text_color"
         android:textSize="@dimen/sp_20" />
 
 </LinearLayout>

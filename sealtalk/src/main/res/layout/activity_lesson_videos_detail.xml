@@ -45,12 +45,12 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp">
+                android:layout_height="200dp">
 
                 <ImageView
                     android:id="@+id/lessonPosterImageView"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="200dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/votebase" />
 
@@ -64,8 +64,19 @@
                     android:text="精品课程BIM教学"
                     android:textColor="@color/white" />
 
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/detail_text_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:background="@drawable/btn_shape_light"
+                    android:padding="4dp"
+                    android:text="已购买"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible" />
 
+            </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lesson_videos_recyclerView"

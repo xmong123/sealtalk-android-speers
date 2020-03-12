@@ -47,7 +47,7 @@
             android:ellipsize="end"
             android:textColor="@color/default_sub_text"
             android:textSize="16dp"
-            tools:text="同业快线号：sealtalk" />
+            tools:text="同行快线号：sealtalk" />
 
     </LinearLayout>
 

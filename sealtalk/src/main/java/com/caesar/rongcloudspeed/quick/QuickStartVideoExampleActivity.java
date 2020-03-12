@@ -33,6 +33,7 @@ import com.caesar.rongcloudspeed.utils.QiniuUtils;
 import com.caesar.rongcloudspeed.utils.Tools;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.pili.pldroid.player.AVOptions;
+import com.pili.pldroid.player.PLOnCompletionListener;
 import com.pili.pldroid.player.PLOnPreparedListener;
 import com.pili.pldroid.player.widget.PLVideoView;
 import com.qiniu.android.common.ServiceAddress;
@@ -78,6 +79,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
     private Button loadPfopVideo1Button;
     private Button loadPfopVideo2Button;
     private ClearWriteEditText votePostEdit;
+    private ClearWriteEditText excerptPostEdit;
 
     public QuickStartVideoExampleActivity() {
         this.context = this;
@@ -99,6 +101,17 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                 .findViewById(R.id.quick_start_video_upload_file_length_textview);
         this.uploadPercentageTextView = (TextView) this
                 .findViewById(R.id.quick_start_video_upload_percentage_textview);
+        this.uploadStatusLayout.setVisibility(LinearLayout.INVISIBLE);this.uploadProgressBar = (ProgressBar) this
+                .findViewById(R.id.quick_start_video_upload_progressbar);
+        this.uploadProgressBar.setMax(100);
+        this.uploadStatusLayout = (LinearLayout) this
+                .findViewById(R.id.quick_start_video_upload_status_layout);
+        this.uploadSpeedTextView = (TextView) this
+                .findViewById(R.id.quick_start_video_upload_speed_textview);
+        this.uploadFileLengthTextView = (TextView) this
+                .findViewById(R.id.quick_start_video_upload_file_length_textview);
+        this.uploadPercentageTextView = (TextView) this
+                .findViewById(R.id.quick_start_video_upload_percentage_textview);
         this.uploadStatusLayout.setVisibility(LinearLayout.INVISIBLE);
         this.uploadResultVideoView = (PLVideoView)
                 this.findViewById(R.id.quick_start_video_play_pldplayer);
@@ -108,6 +121,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
         this.loadPfopVideo1Button = (Button) this.findViewById(R.id.quick_start_load_video_button_1);
         this.loadPfopVideo2Button = (Button) this.findViewById(R.id.quick_start_load_video_button_2);
         this.votePostEdit = (ClearWriteEditText) this.findViewById(R.id.vote_post_title);
+        this.excerptPostEdit = (ClearWriteEditText) this.findViewById(R.id.vote_post_excerpt);
     }
 
     private void initLayout() {
@@ -153,12 +167,8 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                             mAVOptions.setInteger(AVOptions.KEY_LOG_LEVEL, 0);
                             videoView.setAVOptions(mAVOptions);
                             videoView.setVideoURI(Uri.parse(path));
-                            videoView.setOnPreparedListener(new PLOnPreparedListener() {
-                                @Override
-                                public void onPrepared(int i) {
-                                    videoView.start();
-                                }
-                            });
+                            videoView.setOnPreparedListener(i -> videoView.start());
+//                            videoView.setOnCompletionListener(() -> videoView.start());
                         } catch (Exception e) {
                             Toast.makeText(
                                     context,
@@ -200,7 +210,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                         persistentIdTextView.setText(videoUrl);
                     }
                 });
-                Log.d("视频上传大小提示TAG",videoUrl);
+                Log.d("视频上传大小提示TAG", videoUrl);
             }
 
             @Override
@@ -215,30 +225,31 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
 
     public void postArticle(View view) {
         String voteTitle = votePostEdit.getText().toString().trim();
+        String excerptString = excerptPostEdit.getText().toString().trim();
         if (TextUtils.isEmpty(voteTitle)) {
             showToast("投票标题不能为囧");
             votePostEdit.setShakeAnimation();
             return;
+        }
+        if (TextUtils.isEmpty(excerptString)) {
+            excerptString = voteTitle;
         }
         if (this.postFilePath == null) {
             Toast.makeText(
                     context,
                     "请先上传视频文件再发布",
                     Toast.LENGTH_LONG).show();
-        }else {
+        } else {
             showLoadingDialog(R.string.seal_loading_dialog_logining);
             NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().addVoteArticle(
-                    UserInfoUtils.getAppUserId(this), "4", voteTitle, this.postFilePath),
+                    UserInfoUtils.getAppUserId(this), "44", "3", voteTitle, excerptString, this.postFilePath),
                     new NetworkCallback<BaseData>() {
                         @Override
                         public void onSuccess(BaseData baseData) {
-                            if (!NetworkResultUtils.isSuccess(baseData)) {
-                                dismissLoadingDialog(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showToast(R.string.qiniu_upload_success);
-                                    }
-                                });
+                            if (NetworkResultUtils.isSuccess(baseData)) {
+                                dismissLoadingDialog(() -> showToast(R.string.qiniu_upload_success));
+                            } else {
+                                dismissLoadingDialog(() -> showToast(R.string.qiniu_upload_failed));
                             }
                             finish();
                         }
@@ -269,17 +280,9 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(resp.body().string());
                     String uploadToken = jsonObject.getString("url");
 
-                    upload(uploadToken, QiniuLabConfig.REMOTE_SERVICE_SERVER);
+                    uploadData(uploadToken, QiniuLabConfig.REMOTE_SERVICE_SERVER);
                 } catch (Exception e) {
-                    AsyncRun.run(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(
-                                    context,
-                                    context.getString(R.string.qiniu_get_upload_token_failed),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    AsyncRun.run(() -> showToast(R.string.qiniu_get_upload_token_failed));
                 } finally {
                     if (resp != null) {
                         resp.body().close();
@@ -302,7 +305,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
         return new Zone(up, upBackup);
     }
 
-    private void upload(final String uploadToken, final String domain) {
+    private void uploadData(final String uploadToken, final String domain) {
         if (this.uploadManager == null) {
             Configuration config = new Configuration.Builder()
                     .chunkSize(1024 * 1024)        // 分片上传时，每片的大小。 默认256K
@@ -374,7 +377,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                                     }
                                 });
                                 final String videoUrl = domain + "/" + fileKey;
-                                postFilePath=videoUrl;
+                                postFilePath = videoUrl;
 //                                final PLVideoView videoView = uploadResultVideoView;
 //
 //                                videoView.setVideoURI(Uri.parse(videoUrl));

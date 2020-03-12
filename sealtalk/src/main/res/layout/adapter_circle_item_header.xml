@@ -3,9 +3,9 @@
     android:id="@+id/circle_item_header_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_below="@+id/circle_tittle"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,11 +28,15 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/circle_header_lesson"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/dp_2"
+                android:background="@color/seal_bg"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingBottom="@dimen/dp_3">
 
                 <TextView
                     android:id="@+id/nameTv1"
@@ -41,26 +45,30 @@
                     android:singleLine="true"
                     android:text="最新课程！"
                     android:textColor="@color/red_dark"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/urlTipTv1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginLeft="@dimen/dp_2"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="《机电管线支吊架安装BIM》上线！"
                     android:textColor="@color/color_232323"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/circle_header_demand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/dp_2"
+                android:background="@color/seal_bg"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingBottom="@dimen/dp_3">
 
                 <TextView
                     android:id="@+id/nameTv2"
@@ -69,26 +77,31 @@
                     android:singleLine="true"
                     android:text="最新求助！"
                     android:textColor="@color/red_dark"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/urlTipTv2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginLeft="@dimen/dp_2"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="Revit幕墙问题，100元酬劳！"
                     android:textColor="@color/color_232323"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/circle_header_book"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/dp_2"
+                android:background="@color/seal_bg"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingBottom="@dimen/dp_3"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/nameTv3"
@@ -97,23 +110,24 @@
                     android:singleLine="true"
                     android:text="最新书籍！"
                     android:textColor="@color/red_dark"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/urlTipTv3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginLeft="@dimen/dp_2"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="《装配式建筑BIM设计》上架！"
                     android:textColor="@color/color_232323"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5">
 
                 <TextView
                     android:id="@+id/contentTv"
@@ -122,22 +136,18 @@
                     android:layout_centerVertical="true"
                     android:text="59分钟前"
                     android:textColor="@color/color_aeaeae"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
                 <!-- 不同的地方 -->
 
                 <Button
-                    android:id="@+id/circleBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/circleMoreBtn"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_30"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/gradent_btn_bg"
-                    android:paddingStart="@dimen/dp_20"
-                    android:paddingTop="5dip"
-                    android:paddingEnd="@dimen/dp_20"
-                    android:paddingBottom="5dip"
+                    android:background="@drawable/seal_new_friend_add_friend_selector"
                     android:text="更多"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/light_red" />
             </RelativeLayout>
 
 

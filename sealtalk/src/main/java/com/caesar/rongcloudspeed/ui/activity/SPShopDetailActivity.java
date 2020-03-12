@@ -267,9 +267,5 @@ public class SPShopDetailActivity extends MultiStatusActivity {
         } );
 
         dialog.show();
-
-        dialog.show();
-
-
     }
 }

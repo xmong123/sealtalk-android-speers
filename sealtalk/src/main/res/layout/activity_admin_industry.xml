@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -16,12 +15,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/adminindustry_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+    <Button
+        android:id="@+id/industry_confirm"
+        style="@style/autho_btn_style"
+        android:layout_alignParentBottom="true"
+        android:text="@string/common_confirm" />
 
-
-</LinearLayout>
+</RelativeLayout>
 

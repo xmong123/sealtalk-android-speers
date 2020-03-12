@@ -22,6 +22,15 @@ public class PostsArticleBaseBean extends BaseData {
     private String post_authorname;
     private String post_avatar;
     private String post_keywords;
+    private String post_type;
+
+    public String getPost_type() {
+        return post_type;
+    }
+
+    public void setPost_type(String post_type) {
+        this.post_type = post_type;
+    }
 
     public String getTerm_id() {
         return term_id;

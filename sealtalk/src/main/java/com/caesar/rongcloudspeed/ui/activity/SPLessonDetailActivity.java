@@ -25,6 +25,8 @@ import com.tencent.smtt.sdk.TbsVideo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Set;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,20 +54,24 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
     private String lesson_smeta;
     private String uidString;
     private Fragment fragment;
+    private Set<String> orderSet;
+    private boolean isBuy = false;
+    private String userType = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        ButterKnife.bind( this );
-        lesson_id = getIntent().getExtras().getString( "lesson_id" );
-        lesson_name = getIntent().getExtras().getString( "lesson_name" );
-        lesson_price = getIntent().getExtras().getString( "lesson_price" );
-        lesson_smeta = getIntent().getExtras().getString( "lesson_smeta" );
-        thumbVideoString = getIntent().getExtras().getString( "videoPath" );
-        initTitleBarView( titlebar, "商品详情" );
+        super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
+        lesson_id = getIntent().getExtras().getString("lesson_id");
+        lesson_name = getIntent().getExtras().getString("lesson_name");
+        lesson_price = getIntent().getExtras().getString("lesson_price");
+        lesson_smeta = getIntent().getExtras().getString("lesson_smeta");
+        thumbVideoString = getIntent().getExtras().getString("videoPath");
+        initTitleBarView(titlebar, "课程详情");
 //        Glide.with(this).load(thumbVideoString+"?vframe/jpg/offset/1").into(convenientBanner);
         initView();
-        uidString= UserInfoUtils.getAppUserId(this);
+        uidString = UserInfoUtils.getAppUserId(this);
+        orderSet = UserInfoUtils.getAppUserOrder(this);
         String thumbString = null;
         try {
             JSONObject jsonSmeta = new JSONObject(lesson_smeta);
@@ -73,12 +79,32 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (thumbString != null &&!thumbString.startsWith("http://")) {
+        if (thumbString != null && !thumbString.startsWith("http://")) {
             thumbString = Constant.THINKCMF_PATH + thumbString;
         }
         if (thumbString != null && thumbString.length() > 32) {
             Glide.with(this).load(thumbString).into(convenientBanner);
         }
+        userType = UserInfoUtils.getUserType(this);
+        if (userType.equals("6")) {
+            speerBtn.setText("进入课程");
+            isBuy = true;
+        } else {
+            if (orderSet != null && orderSet.size() > 0) {
+                for (String str : orderSet) {
+                    if (str.equals(lesson_id)) {
+                        speerBtn.setText("进入课程");
+                        isBuy = true;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userType = UserInfoUtils.getUserType(this);
     }
 
     private void initView() {
@@ -93,7 +119,7 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
             public Fragment getItem(int position) {
                 if (position == 0) {
                     fragment = new SPSpeerLeftFragment();
-                }   else {
+                } else {
                     fragment = new SPSpeerLeftFragment();
                 }
                 return fragment;
@@ -150,19 +176,30 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.convenientBanner:
-                if (TbsVideo.canUseTbsPlayer(this)) {
-                    TbsVideo.openVideo(this, thumbVideoString);
-                }
+//                if (TbsVideo.canUseTbsPlayer(this)) {
+//                    TbsVideo.openVideo(this, thumbVideoString);
+//                }
                 break;
             case R.id.speer_btn:
-//                Intent orderIntent = new Intent( SPLessonDetailActivity.this, SpeerOrderActivity.class );
-                Intent orderIntent = new Intent( SPLessonDetailActivity.this, SPLessonVideosActivity.class );
-                orderIntent.putExtra("lesson_id" , lesson_id);
-                orderIntent.putExtra("lesson_name" , lesson_name);
-                orderIntent.putExtra("lesson_price" , lesson_price);
-                orderIntent.putExtra("lesson_smeta" , lesson_smeta);
-                orderIntent.putExtra("videoPath", thumbVideoString);
-                startActivity( orderIntent );
+                if (isBuy) {
+                    Intent lessonsIntent = new Intent(SPLessonDetailActivity.this, SPLessonVideosActivity.class);
+                    lessonsIntent.putExtra("lesson_status", isBuy);
+                    lessonsIntent.putExtra("lesson_id", lesson_id);
+                    lessonsIntent.putExtra("lesson_name", lesson_name);
+                    lessonsIntent.putExtra("lesson_price", lesson_price);
+                    lessonsIntent.putExtra("lesson_smeta", lesson_smeta);
+                    lessonsIntent.putExtra("videoPath", thumbVideoString);
+                    startActivity(lessonsIntent);
+                } else {
+                    Intent orderIntent = new Intent(SPLessonDetailActivity.this, SpeerOrderActivity.class);
+                    orderIntent.putExtra("lesson_id", lesson_id);
+                    orderIntent.putExtra("lesson_name", lesson_name);
+                    orderIntent.putExtra("lesson_price", lesson_price);
+                    orderIntent.putExtra("lesson_smeta", lesson_smeta);
+                    orderIntent.putExtra("videoPath", thumbVideoString);
+                    startActivity(orderIntent);
+                }
+
                 break;
         }
     }

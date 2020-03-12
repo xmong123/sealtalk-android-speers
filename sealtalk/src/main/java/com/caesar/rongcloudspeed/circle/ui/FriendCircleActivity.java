@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,11 +24,17 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.constants.Constant;
+import com.caesar.rongcloudspeed.data.result.CircleHeaderResult;
 import com.caesar.rongcloudspeed.data.result.CircleItemResult;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
+import com.caesar.rongcloudspeed.ui.activity.MainDiscoveryActivity;
+import com.caesar.rongcloudspeed.ui.activity.SPLessonDetailActivity;
+import com.caesar.rongcloudspeed.ui.activity.SectionMessageActivity;
+import com.caesar.rongcloudspeed.ui.activity.SeekHelperDetailActivity;
 import com.caesar.rongcloudspeed.ui.dialog.LoadingDialog;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.data.BaseData;
@@ -35,6 +42,7 @@ import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.caesar.rongcloudspeed.circle.adapter.CircleAdapter;
+import com.yiw.circledemo.bean.CircleHeaderItem;
 import com.yiw.circledemo.bean.CircleItem;
 import com.caesar.rongcloudspeed.circle.contral.CirclePublicCommentController;
 import com.yiw.circledemo.listener.SwipeListViewOnScrollListener;
@@ -68,6 +76,14 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
     private int mScreenHeight;
     private int mEditTextBodyHeight;
     private CirclePublicCommentController mCirclePublicCommentController;
+    private LinearLayout circle_header_lesson;
+    private LinearLayout circle_header_demand;
+    private LinearLayout circle_header_book;
+    private Button circleMoreBtn;
+    private TextView urlTipTv1;
+    private TextView urlTipTv2;
+    private CircleHeaderItem headerItem1;
+    private CircleHeaderItem headerItem2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +91,7 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
         setContentView(R.layout.activity_circle);
         initView();
         loadData();
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -87,7 +104,7 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
             finish();
         });
         add.setOnClickListener(view -> {
-            Intent intent = new Intent(this, AddCircleTaskActivity.class);
+            Intent intent = new Intent(this, MainDiscoveryActivity.class);
             startActivity(intent);
         });
         mCircleLv.setOnScrollListener(new SwipeListViewOnScrollListener(mSwipeRefreshLayout));
@@ -106,14 +123,11 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
         mAdapter = new CircleAdapter(this);
-        mAdapter.setOnMultiImageItemClickListener(new MultiImageView.OnItemClickListener() {
-            @Override
-            public void onItemClick(ViewGroup parent, View view, int position) {
-                MultiImageView multiImageView = (MultiImageView) parent;
-                ImagePagerActivity.imageSize = new ImageSize(view.getWidth(), view.getHeight());
-                Log.d("view.getWidth():",String.valueOf(view.getWidth())+",view.getHeight():"+String.valueOf(view.getHeight()));
-                ImagePagerActivity.startImagePagerActivity(FriendCircleActivity.this, multiImageView.getImagesList(), position);
-            }
+        mAdapter.setOnMultiImageItemClickListener((parent, view, position) -> {
+            MultiImageView multiImageView = (MultiImageView) parent;
+            ImagePagerActivity.imageSize = new ImageSize(view.getWidth(), view.getHeight());
+            Log.d("view.getWidth():", String.valueOf(view.getWidth()) + ",view.getHeight():" + String.valueOf(view.getHeight()));
+            ImagePagerActivity.startImagePagerActivity(FriendCircleActivity.this, multiImageView.getImagesList(), position);
         });
         mCircleLv.setAdapter(mAdapter);
         mEditTextBody = (LinearLayout) findViewById(R.id.editTextBodyLl);
@@ -123,8 +137,59 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
         mCirclePublicCommentController = new CirclePublicCommentController(this, mEditTextBody, mEditText, sendTv);
         mCirclePublicCommentController.setListView(mCircleLv);
         mAdapter.setCirclePublicCommentController(mCirclePublicCommentController);
-        String headImg=UserInfoUtils.getAppUserUrl(this);
         setViewTreeObserver();
+
+        circle_header_lesson = (LinearLayout) findViewById(R.id.circle_header_lesson);
+        circle_header_demand = (LinearLayout) findViewById(R.id.circle_header_demand);
+        circle_header_book = (LinearLayout) findViewById(R.id.circle_header_book);
+        circleMoreBtn = (Button) findViewById(R.id.circleMoreBtn);
+        urlTipTv1 = (TextView) findViewById(R.id.urlTipTv1);
+        urlTipTv2 = (TextView) findViewById(R.id.urlTipTv2);
+
+        circle_header_lesson.setOnClickListener(view -> {
+            String lessonID = headerItem1.getObject_id();
+            String lessonName = headerItem1.getPost_title();
+            String lessonPrice = headerItem1.getPost_price();
+            String lessonSmeta = headerItem1.getSmeta();
+            String lessonContent = headerItem1.getPost_excerpt();
+            String lessonSource = headerItem1.getPost_source();
+            Intent intent = new Intent(FriendCircleActivity.this, SPLessonDetailActivity.class);
+            intent.putExtra("lesson_id", lessonID);
+            intent.putExtra("lesson_name", lessonName);
+            intent.putExtra("lesson_price", lessonPrice);
+            intent.putExtra("lesson_smeta", lessonSmeta);
+            intent.putExtra("lesson_content", lessonContent);
+            intent.putExtra("lesson_source", lessonSource);
+            startActivity(intent);
+        });
+
+        circle_header_demand.setOnClickListener(view -> {
+            String seekID = headerItem2.getObject_id();
+            String seekTitle = headerItem2.getPost_title();
+            String seekPrice = headerItem2.getPost_price();
+            String seekContent = headerItem2.getPost_excerpt();
+            String seekDate = headerItem2.getPost_date();
+            String photos_urls = headerItem2.getPhotos_urls();
+            Intent intent = new Intent(FriendCircleActivity.this, SeekHelperDetailActivity.class);
+            intent.putExtra("seek_id", seekID);
+            intent.putExtra("seek_title", seekTitle);
+            intent.putExtra("seek_date", seekDate);
+            intent.putExtra("seek_price", seekPrice);
+            intent.putExtra("seek_content", seekContent);
+            intent.putExtra("photos_urls", photos_urls);
+            startActivity(intent);
+        });
+
+        circle_header_book.setOnClickListener(view -> {
+
+        });
+
+        circleMoreBtn.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("headerItem1", headerItem1);
+            bundle.putSerializable("headerItem2", headerItem2);
+            ActivityUtils.startActivity(bundle, FriendCircleActivity.this, SectionMessageActivity.class);
+        });
     }
 
 
@@ -169,12 +234,12 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
     private void loadData() {
         showLoadingDialog("");
         List<CircleItem> datas = new ArrayList<>();
-        String userid= UserInfoUtils.getAppUserId(this);
+        String userid = UserInfoUtils.getAppUserId(this);
         NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().fetchFriendCircle(userid),
                 new NetworkCallback<CircleItemResult>() {
                     @Override
                     public void onSuccess(CircleItemResult circleItemResult) {
-                        if(circleItemResult!=null&&circleItemResult.getReferer()!=null){
+                        if (circleItemResult != null && circleItemResult.getReferer() != null) {
                             mAdapter.setDatas(circleItemResult.getReferer().getPosts());
                             mAdapter.notifyDataSetChanged();
                         }
@@ -184,6 +249,31 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
                     @Override
                     public void onFailure(Throwable t) {
                         dismissLoadingDialog();
+                        Toast.makeText(FriendCircleActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+                    }
+                });
+        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().headerFriendCircle(),
+                new NetworkCallback<CircleHeaderResult>() {
+                    @Override
+                    public void onSuccess(CircleHeaderResult circleHeaderResult) {
+                        if (circleHeaderResult != null && circleHeaderResult.getReferer() != null) {
+                            List<CircleHeaderItem> circleList = circleHeaderResult.getReferer();
+                            for (CircleHeaderItem item : circleList) {
+                                String termString = item.getTerm_id();
+                                if (termString.equals("43")) {
+                                    headerItem2 = item;
+                                    urlTipTv2.setText(item.getPost_title());
+                                } else {
+                                    headerItem1 = item;
+                                    urlTipTv1.setText(item.getPost_title());
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Log.e("Throwable", String.valueOf(t));
                         Toast.makeText(FriendCircleActivity.this, "网络异常", Toast.LENGTH_LONG).show();
                     }
                 });

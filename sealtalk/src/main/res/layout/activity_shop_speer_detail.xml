@@ -43,13 +43,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="简介" />
+                        android:text="简介"
+                        app:tabBackground="@android:color/transparent" />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="课表" />
+                        android:text="课表"
+                        app:tabBackground="@android:color/transparent" />
 
                 </com.google.android.material.tabs.TabLayout>
 
@@ -64,7 +66,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_400"
+                android:layout_height="@dimen/dp_480"
                 android:background="@color/white" />
 
         </LinearLayout>

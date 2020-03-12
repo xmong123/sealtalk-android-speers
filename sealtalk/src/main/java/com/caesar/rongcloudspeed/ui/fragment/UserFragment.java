@@ -1,6 +1,5 @@
 package com.caesar.rongcloudspeed.ui.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,35 +12,32 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allen.library.CircleImageView;
 import com.allen.library.SuperTextView;
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
+import com.caesar.rongcloudspeed.circle.ui.FriendCircle1Activity;
 import com.caesar.rongcloudspeed.common.IntentExtra;
 import com.caesar.rongcloudspeed.model.qrcode.QrCodeDisplayType;
 import com.caesar.rongcloudspeed.ui.activity.AccountSettingActivity;
+import com.caesar.rongcloudspeed.ui.activity.AnimationPaltSeekActivity;
+import com.caesar.rongcloudspeed.ui.activity.AnimationPersonalTagActivity;
 import com.caesar.rongcloudspeed.ui.activity.MyAccountActivity;
+import com.caesar.rongcloudspeed.ui.activity.PersonalAdvertListActivity;
+import com.caesar.rongcloudspeed.ui.activity.PersonalSeekListActivity;
 import com.caesar.rongcloudspeed.ui.activity.QrCodeDisplayActivity;
+import com.caesar.rongcloudspeed.utils.ToastUtils;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import com.caesar.rongcloudspeed.ui.activity.AnimationPersonalActivity;
-import com.caesar.rongcloudspeed.ui.activity.AnimationPersonalCommentActivity;
-import com.caesar.rongcloudspeed.ui.activity.AnimationPersonalFavouriteActivity;
-import com.caesar.rongcloudspeed.ui.activity.AnimationPersonalSellerActivity;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import com.caesar.rongcloudspeed.R;
-import com.caesar.rongcloudspeed.ui.activity.AboutUsActivity;
 import com.caesar.rongcloudspeed.ui.activity.LoginActivity;
-import com.caesar.rongcloudspeed.ui.activity.WebActivity;
 import com.caesar.rongcloudspeed.bean.EventBusBaseBean;
 import com.caesar.rongcloudspeed.bean.PersonCenterBean;
 import com.caesar.rongcloudspeed.constants.Constant;
@@ -94,6 +90,8 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
     ImageView userHeaderImage;
     @BindView(R.id.redTips)
     TextView redTips;
+    @BindView(R.id.nameTv)
+    TextView nameTv;
     @BindView(R.id.teleTv)
     TextView teleTv;
     @BindView(R.id.refreshLayout)
@@ -178,53 +176,36 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
                     startActivity(qrCodeIntent);
                     break;
                 case R.id.myOrderStv:
-                    //我的出售列表
-                    extras.putString("cat_id", "3");
-                    extras.putString("type", "indexPersonalJson");
-                    extras.putString("titleString", "我的出售列表");
-                    ActivityUtils.startActivity( extras, AnimationPersonalSellerActivity.class);
+                    //同行求助
+                    startActivity(new Intent(getActivity(), PersonalSeekListActivity.class));
                     break;
                 case R.id.myInviteCodeStv:
-                    extras.putString("cat_id", "4");
-                    extras.putString("type", "indexPersonalJson");
-                    extras.putString("titleString", "我的求购列表");
-                    ActivityUtils.startActivity( extras, AnimationPersonalSellerActivity.class);
-                    //我的评价
+                    //我的标签
+                    startActivity(new Intent(getActivity(), AnimationPersonalTagActivity.class));
                     break;
                 case R.id.settingStv:
-                    //我的收藏
+                    //我的动态
+                    startActivity(new Intent(getActivity(), PersonalAdvertListActivity.class));
                     break;
                 case R.id.aboutMeStv:
-                    //浏览记录
-                    extras.putString("cat_id", "1,2,5,7,8,9,10,11,12,13,14,15");
-                    extras.putString("type", "indexPersonalHitsJson");
-                    extras.putString("titleString", "浏览记录");
-                    ActivityUtils.startActivity( extras, AnimationPersonalActivity.class);
+                    //我的相册
+                    Intent intent=new Intent(getActivity(), FriendCircle1Activity.class);
+                    intent.putExtra("userid",uidString);
+                    startActivity(intent);
+                    ToastUtils.showToast("我的相册");
                     break;
                 case R.id.helpStv:
-                    //我的报价
-                    extras.putString("cat_id", "3");
-                    extras.putString("type", "indexPersonalCommentJson");
-                    extras.putString("titleString", "我的报价记录");
-                    ActivityUtils.startActivity( extras, AnimationPersonalCommentActivity.class);
+                    //我的视频
+                    ToastUtils.showToast("我的视频");
                     break;
-                case R.id.user_tip_layout01://我的头条关注
-                    extras.putString("cat_id", "5");
-                    extras.putString("type", "indexPersonalFavoriteJson");
-                    extras.putString("titleString", "头条关注");
-                    ActivityUtils.startActivity( extras, AnimationPersonalActivity.class);
+                case R.id.user_tip_layout01://我的钱包
+                    ToastUtils.showToast("我的钱包");
                     break;
-                case R.id.user_tip_layout02://我的关注货源
-                    extras.putString("cat_id", "3");
-                    extras.putString("type", "indexPersonalFavoriteJson");
-                    extras.putString("titleString", "货源关注");
-                    ActivityUtils.startActivity( extras, AnimationPersonalFavouriteActivity.class);
+                case R.id.user_tip_layout02://我的课程
+                    ToastUtils.showToast("我的课程");
                     break;
-                case R.id.user_tip_layout03://我的关注车源
-                    extras.putString("cat_id", "4");
-                    extras.putString("type", "indexPersonalFavoriteJson");
-                    extras.putString("titleString", "车源关注");
-                    ActivityUtils.startActivity( extras, AnimationPersonalFavouriteActivity.class);
+                case R.id.user_tip_layout03://我的订单
+                    ToastUtils.showToast("我的订单");
                     break;
                 case R.id.volumeStv:
                     break;
@@ -248,7 +229,12 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
         uidString= UserInfoUtils.getAppUserId( getActivity());
         if (!uidString.equals( "0" )) {
             logoutStv.setVisibility( View.VISIBLE );
-            teleTv.setText( UserInfoUtils.getNickName( getActivity() ) );
+            nameTv.setText( UserInfoUtils.getNickName( getActivity() ) );
+            String phonenum=UserInfoUtils.getPhone( getActivity() );
+            if(phonenum.length()>10){
+                phonenum = phonenum.substring(0, 3) + "****" + phonenum.substring(7, 11);
+            }
+            teleTv.setText( phonenum );
             String userAvatarString=UserInfoUtils.getAppUserUrl( getActivity() );
             if(userAvatarString.length()>32&&!userAvatarString.startsWith( "avatar" )){
                 Glide.with( UserFragment.this ).load( userAvatarString ).into( userHeaderImage );

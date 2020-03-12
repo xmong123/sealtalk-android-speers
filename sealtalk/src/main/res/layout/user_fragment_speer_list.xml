@@ -19,7 +19,7 @@
             android:paddingRight="@dimen/layoutMargin16dp"
             app:sDividerLineType="bottom"
             app:sLeftIconRes="@mipmap/commodity"
-            app:sLeftTextString="我的求助"
+            app:sLeftTextString="同行求助"
             app:sRightIconRes="@mipmap/arrow_right_red" />
 
         <TextView
@@ -46,7 +46,7 @@
         android:paddingRight="@dimen/layoutMargin16dp"
         app:sDividerLineType="bottom"
         app:sLeftIconRes="@mipmap/personal_order_canceled_icon"
-        app:sLeftTextString="我的广告"
+        app:sLeftTextString="我的标签"
         app:sRightIconRes="@mipmap/arrow_right_red" />
 
     <com.allen.library.SuperTextView
@@ -57,7 +57,7 @@
         android:paddingRight="@dimen/layoutMargin16dp"
         app:sDividerLineType="bottom"
         app:sLeftIconRes="@mipmap/recommended"
-        app:sLeftTextString="我的动态"
+        app:sLeftTextString="我的广告"
         app:sRightIconRes="@mipmap/arrow_right_red" />
 
     <com.allen.library.SuperTextView

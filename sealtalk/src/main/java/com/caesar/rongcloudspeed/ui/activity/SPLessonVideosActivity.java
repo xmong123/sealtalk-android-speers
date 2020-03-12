@@ -6,22 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.caesar.rongcloudspeed.R;
@@ -33,18 +25,11 @@ import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
-import com.caesar.rongcloudspeed.ui.adapter.HorizontalScrollViewAdapter;
-import com.caesar.rongcloudspeed.ui.adapter.LessonAdapter;
-import com.caesar.rongcloudspeed.ui.fragment.SPSpeerVideoLeftFragment;
+import com.caesar.rongcloudspeed.player.PLVideoViewActivity;
 import com.caesar.rongcloudspeed.utils.ToastUtils;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
-import com.caesar.rongcloudspeed.utils.X5WebView;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.android.material.tabs.TabLayout;
+import com.pili.pldroid.player.AVOptions;
 import com.tencent.smtt.sdk.TbsVideo;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,17 +41,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
-
 public class SPLessonVideosActivity extends MultiStatusActivity {
+
+    private static final String TAG = "SPLessonVideosActivity";
 
     @BindView(R.id.lessonPosterImageView)
     ImageView lessonPosterImageView;
     @BindView(R.id.lesson_video_title)
     TextView lesson_video_title;
+    @BindView(R.id.detail_text_tag)
+    TextView detail_text_tag;
     @BindView(R.id.lesson_videos_recyclerView)
     RecyclerView lesson_videos_recyclerView;
     private String lesson_id;
+    private boolean lesson_status;
     private String lessonVideoString;
     private String lesson_name;
     private String lesson_price;
@@ -80,12 +68,18 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
     private List<PostsArticleBaseBean> dataArray = new ArrayList<PostsArticleBaseBean>();
     private String thumbString = null;
     private JSONArray videoArray = null;
+    private String userType = "2";
+    private List<LinearLayout> linearLayouts = new ArrayList<LinearLayout>();
+    private List<TextView> textViews = new ArrayList<TextView>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+//        this.initLayout();
+        userType = UserInfoUtils.getUserType(this);
         lesson_id = getIntent().getExtras().getString("lesson_id");
+        lesson_status = getIntent().getExtras().getBoolean("lesson_status");
         lesson_name = getIntent().getExtras().getString("lesson_name");
         lesson_price = getIntent().getExtras().getString("lesson_price");
         lesson_smeta = getIntent().getExtras().getString("lesson_smeta");
@@ -100,7 +94,7 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (thumbString != null &&!thumbString.startsWith("http://")) {
+        if (thumbString != null && !thumbString.startsWith("http://")) {
             thumbString = Constant.THINKCMF_PATH + thumbString;
         }
         if (thumbString != null && thumbString.length() > 32) {
@@ -114,40 +108,53 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
         lesson_selected_contact_container = (LinearLayout) lessonHeadView.findViewById(R.id.lesson_selected_contact_container);
         mInflater = LayoutInflater.from(this);
         if (videoArray != null && videoArray.length() > 0) {
+            linearLayouts = new ArrayList<LinearLayout>();
+            textViews = new ArrayList<TextView>();
             for (int i = 0; i < videoArray.length(); i++) {
                 //InputStream is = getAssets().open(galleryDirectoryName + "/" + imageName);
                 //final Bitmap bitmap = BitmapFactory.decodeStream(is);
 
                 View view = mInflater.inflate(R.layout.activity_index_gallery_item,
                         lesson_selected_contact_container, false);
+                LinearLayout layout = (LinearLayout) view.findViewById(R.id.id_index_gallery_item_layout);
                 TextView txt = (TextView) view.findViewById(R.id.id_index_gallery_item_text);
                 txt.setText(String.valueOf(i + 1));
                 int finalI = i;
-                int finalI1 = i;
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        try {
-                            JSONObject photoObj = videoArray.getJSONObject(finalI1);
-                            String urlString = photoObj.getString("url");
-                            String altString = photoObj.getString("alt");
-//                            if (TbsVideo.canUseTbsPlayer(SPLessonVideosActivity.this)) {
-//                                TbsVideo.openVideo(SPLessonVideosActivity.this, thumbVideoString);
-//                            }
-                            if (!urlString.startsWith("http://")) {
-                                urlString = Constant.THINKCMF_PATH + urlString;
-                            }
-                            lessonVideoString=urlString;
-                            Glide.with(SPLessonVideosActivity.this).load(urlString + "?vframe/jpg/offset/1").into(lessonPosterImageView);
-                            lesson_video_title.setText(altString);
-                            ToastUtils.showToast(altString, Toast.LENGTH_LONG);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                String urlString = lessonVideoString;
+                String altString = lesson_name;
+                try {
+                    JSONObject photoObj = videoArray.getJSONObject(finalI);
+                    urlString = photoObj.getString("url");
+                    altString = photoObj.getString("alt");
+                    if (!urlString.startsWith("http://")) {
+                        urlString = Constant.THINKCMF_PATH + urlString;
                     }
-                });
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (i == 0) {
+                    txt.setEnabled(false);
+                    layout.setEnabled(false);
+                    lessonVideoString = urlString;
+                    Glide.with(SPLessonVideosActivity.this).load(lessonVideoString + "?vframe/jpg/offset/1").into(lessonPosterImageView);
+                }
+                String finalUrlString = urlString;
+                String finalAltString = altString;
+                view.setOnClickListener(view1 -> {
+                    for (int j = 0; j < linearLayouts.size(); j++) {
+                        TextView text = (TextView) textViews.get(j);
+                        LinearLayout layouts = (LinearLayout) linearLayouts.get(j);
+                        text.setEnabled(finalI != j);
+                        layouts.setEnabled(finalI != j);
+                    }
+                    lessonVideoString = finalUrlString;
+                    Glide.with(SPLessonVideosActivity.this).load(finalUrlString + "?vframe/jpg/offset/1").into(lessonPosterImageView);
+                    lesson_video_title.setText(finalAltString);
+                    ToastUtils.showToast(finalAltString, Toast.LENGTH_LONG);
+                });
+                textViews.add(txt);
+                linearLayouts.add(layout);
                 lesson_selected_contact_container.addView(view);
             }
         } else {
@@ -155,69 +162,90 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
                     lesson_selected_contact_container, false);
             TextView txt = (TextView) view.findViewById(R.id.id_index_gallery_item_text);
             txt.setText(String.valueOf(1));
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ToastUtils.showToast(String.valueOf(1));
-                }
-            });
-
+            view.setOnClickListener(view12 -> ToastUtils.showToast(String.valueOf(1)));
             lesson_selected_contact_container.addView(view);
         }
 
         lesson_more_btn = lessonHeadView.findViewById(R.id.lesson_more_btn);
-        lesson_more_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.showToast("More");
-            }
-        });
+        lesson_more_btn.setOnClickListener(view -> ToastUtils.showToast("More"));
 
-        lessonPosterImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(SPLessonVideosActivity.this,
-//                        FullScreenActivity.class);
-//                intent.putExtra("videoPath", lessonVideoString);
-//                startActivity(intent);
+        lessonPosterImageView.setOnClickListener(view -> {
+            if (userType.equals("6")) {
                 if (TbsVideo.canUseTbsPlayer(SPLessonVideosActivity.this)) {
-                                TbsVideo.openVideo(SPLessonVideosActivity.this, lessonVideoString);
-                            }
+                    TbsVideo.openVideo(SPLessonVideosActivity.this, lessonVideoString);
+                }
+            } else {
+                Intent intent = new Intent(this, PLVideoViewActivity.class);
+                intent.putExtra("videoPath", "http://qiniu.500-china.com/banner/acc777cc-c689-46f2-859f-77caa425629a.mp4");
+                intent.putExtra("lessonVideoString", lessonVideoString);
+                intent.putExtra("mediaCodec", AVOptions.MEDIA_CODEC_SW_DECODE);
+                intent.putExtra("liveStreaming", 1);
+                intent.putExtra("cache", false);
+                intent.putExtra("loop", false);
+                intent.putExtra("video-data-callback", false);
+                intent.putExtra("audio-data-callback", false);
+                intent.putExtra("disable-log", false);
+                intent.putExtra("lesson_id", lesson_id);
+                intent.putExtra("lesson_name", lesson_name);
+                intent.putExtra("lesson_price", lesson_price);
+                intent.putExtra("lesson_smeta", lesson_smeta);
+                startActivity(intent);
             }
+
         });
 
         moreLessonesAdapter = new MoreLessonesAdapter(this, dataArray);
         moreLessonesAdapter.openLoadAnimation();
         moreLessonesAdapter.setNotDoAnimationCount(4);
 //        lessonRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        moreLessonesAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                PostsArticleBaseBean postsArticleBaseBean = dataArray.get(position);
-                String lessonID = postsArticleBaseBean.getObject_id();
-                String lessonName = postsArticleBaseBean.getPost_title();
-                String lessonPrice = postsArticleBaseBean.getPost_price();
-                String thumbVideoString = postsArticleBaseBean.getThumb_video();
-                if (!(thumbVideoString.startsWith("http://") || thumbVideoString.startsWith("https://"))) {
-                    thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
-                }
-                Intent intent = new Intent(SPLessonVideosActivity.this, SPLessonDetailActivity.class);
-                intent.putExtra("videoPath", thumbVideoString);
-                intent.putExtra("lesson_id", lessonID);
-                intent.putExtra("lesson_name", lessonName);
-                intent.putExtra("lesson_price", lessonPrice);
-                startActivity(intent);
-//                Intent intent = new Intent(getActivity(),
-//                        FullScreenActivity.class);
-//                intent.putExtra("videoPath", thumbVideoString);
-//                startActivity(intent);
+        moreLessonesAdapter.setOnItemClickListener((adapter, view, position) -> {
+            PostsArticleBaseBean postsArticleBaseBean = dataArray.get(position);
+            String lessonID = postsArticleBaseBean.getObject_id();
+            String lessonName = postsArticleBaseBean.getPost_title();
+            String lessonPrice = postsArticleBaseBean.getPost_price();
+            String lessonContent = postsArticleBaseBean.getPost_excerpt();
+            String lessonSmeta = postsArticleBaseBean.getSmeta();
+            String lessonSource = postsArticleBaseBean.getPost_source();
+            String thumbVideoString = postsArticleBaseBean.getThumb_video();
+            if (!(thumbVideoString.startsWith("http://") || thumbVideoString.startsWith("https://"))) {
+                thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
             }
+            Intent intent = new Intent(SPLessonVideosActivity.this, SPLessonDetailActivity.class);
+            intent.putExtra("videoPath", thumbVideoString);
+            intent.putExtra("lesson_id", lessonID);
+            intent.putExtra("lesson_name", lessonName);
+            intent.putExtra("lesson_price", lessonPrice);
+            intent.putExtra("lesson_smeta", lessonSmeta);
+            intent.putExtra("lesson_content", lessonContent);
+            intent.putExtra("lesson_source", lessonSource);
+            startActivity(intent);
         });
         lesson_videos_recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         moreLessonesAdapter.addHeaderView(lessonHeadView);
         lesson_videos_recyclerView.setAdapter(moreLessonesAdapter);
         loadMoreLessonesData();
         lesson_video_title.setText(lesson_name);
+        if (userType.equals("6")) {
+            detail_text_tag.setText("VIP会员");
+            detail_text_tag.setVisibility(View.VISIBLE);
+        } else {
+            if (lesson_status) {
+                detail_text_tag.setText("已购买");
+                detail_text_tag.setVisibility(View.VISIBLE);
+            } else {
+                detail_text_tag.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userType = UserInfoUtils.getUserType(this);
+        if (userType.equals("6")) {
+            detail_text_tag.setText("VIP会员");
+            detail_text_tag.setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadMoreLessonesData() {

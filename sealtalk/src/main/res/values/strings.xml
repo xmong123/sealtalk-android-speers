@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">同业快线</string>
+    <string name="app_name">同行快线</string>
     <string name="updatefun_provider_file_authorities">com.caesar.rongcloudspeed.FileProvider</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- login-->
@@ -92,7 +92,7 @@
         <item>我的</item>
     </string-array>
 
-    <string name="friend_circle">朋友圈</string>
+    <string name="friend_circle">同行圈</string>
     <string name="vote_circle1">歌手大赛</string>
     <string name="vote_circle2">同城信息</string>
     <string name="vote_circle3">交通出行</string>
@@ -150,7 +150,7 @@
     <string name="seal_main_mine_setting_language">多语言</string>
     <string name="seal_main_mine_my_wallet">我的钱包</string>
     <string name="seal_main_mine_feedback">意见反馈</string>
-    <string name="seal_main_mine_about">关于 同业快线</string>
+    <string name="seal_main_mine_about">关于 同行快线</string>
     <string name="seal_main_mine_customer_xn">小能客服</string>
     <string name="seal_main_mine_online_custom_service">在线客服</string>
     <string name="seal_userinfo_item_user_portrait">用户头像</string>
@@ -168,7 +168,7 @@
     <string name="seal_mine_about_update_log">更新日志</string>
     <string name="seal_mine_about_function_introduce">功能介绍</string>
     <string name="seal_mine_about_rongcloud_web">官方网站</string>
-    <string name="seal_mine_about_seal_talk_version">同业快线 版本</string>
+    <string name="seal_mine_about_seal_talk_version">同行快线 版本</string>
     <string name="seal_mine_about_sdk_version">SDK 版本</string>
     <string name="seal_mine_about_close_debug_mode">关闭 debug 模式</string>
     <string name="seal_mine_about_user_online_status">设置用户在线状态</string>
@@ -216,11 +216,11 @@
     <string name="profile_confirm_dismiss_group">确认解散群组?</string>
     <string name="profile_set_display_name">设置备注</string>
     <string name="profile_detail_start_chat">发起聊天</string>
-    <string name="profile_start_send_money">同业快线转账</string>
-    <string name="profile_start_send_redpacket">同业快线红包</string>
+    <string name="profile_start_send_money">同行快线转账</string>
+    <string name="profile_start_send_redpacket">同行快线红包</string>
     <string name="profile_detail_start_voice">语音通话</string>
     <string name="profile_detail_start_video">视频聊天</string>
-    <string name="profile_btn_friend_circle_timeline">朋友圈</string>
+    <string name="profile_btn_friend_circle_timeline">同行圈</string>
     <string name="profile_detail_add_friend">加为好友</string>
     <string name="profile_detail_join_the_blacklist">加入黑名单</string>
     <string name="profile_detail_remove_from_blacklist">移除黑名单</string>
@@ -245,23 +245,23 @@
     <string name="common_set_failed">设置失败</string>
     <string name="seal_mine_my_account_portrait">头像</string>
     <string name="seal_mine_my_account_nickname">昵称</string>
-    <string name="seal_st_account_content_format">同业快线 号：%s</string>
+    <string name="seal_st_account_content_format">同行快线 号：%s</string>
 
     <!--stAccount-->
-    <string name="seal_mine_my_account_sknumber">同业快线 号</string>
+    <string name="seal_mine_my_account_sknumber">同行快线 号</string>
     <string name="seal_mine_my_account_notset">未设置</string>
     <string name="seal_update_staccout_edittext_hint">以字母开头，6-20个字母、数字、下划线或减号</string>
-    <string name="seal_update_staccout_red_tips">同业快线 号仅支持以字母开头，6-20个字母、数字、下划线或减号</string>
-    <string name="seal_update_staccout_exit">同业快线 账号已存在，请重新设置</string>
-    <string name="seal_update_staccount_tips">1.同业快线 号是账号的唯一凭证，只能设置一次。\n2.设置 同业快线 账号以后，可通过搜索 同业快线 号来添加您的好友</string>
+    <string name="seal_update_staccout_red_tips">同行快线 号仅支持以字母开头，6-20个字母、数字、下划线或减号</string>
+    <string name="seal_update_staccout_exit">同行快线 账号已存在，请重新设置</string>
+    <string name="seal_update_staccount_tips">1.同行快线 号是账号的唯一凭证，只能设置一次。\n2.设置 同行快线 账号以后，可通过搜索 同行快线 号来添加您的好友</string>
     <string name="seal_update_staccount_edit_digist">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-</string>
-    <string name="seal_update_staccount_title">设置 同业快线 号</string>
+    <string name="seal_update_staccount_title">设置 同行快线 号</string>
     <string name="seal_update_staccount_save">保存</string>
-    <string name="seal_staccount_dialog_title">确定 同业快线 号</string>
-    <string name="seal_staccount_dialog_title_format_error">设置 同业快线 账号失败</string>
-    <string name="seal_staccount_dialog_content">你确定将 同业快线 号设置为 @ 吗？确定后将不可修改</string>
-    <string name="seal_staccount_set_success">同业快线 号设置成功</string>
-    <string name="seal_phone_or_sealtalk_account">手机号/同业快线 号</string>>
+    <string name="seal_staccount_dialog_title">确定 同行快线 号</string>
+    <string name="seal_staccount_dialog_title_format_error">设置 同行快线 账号失败</string>
+    <string name="seal_staccount_dialog_content">你确定将 同行快线 号设置为 @ 吗？确定后将不可修改</string>
+    <string name="seal_staccount_set_success">同行快线 号设置成功</string>
+    <string name="seal_phone_or_sealtalk_account">手机号/同行快线 号</string>>
 
     <!--gender-->
     <string name="seal_mine_my_account_gender">性别</string>
@@ -271,7 +271,7 @@
     <string name="seal_gender_set_success">设置成功</string>
     <string name="seal_gender_set_fail">设置失败</string>
 
-    <string name="seal_mine_my_account_st_account">同业快线 号</string>
+    <string name="seal_mine_my_account_st_account">同行快线 号</string>
     <string name="seal_mine_my_account_phone_number">手机号</string>
     <string name="seal_mine_my_account">"个人账号"</string>
     <string name="seal_select_group_member">选择群组成员</string>
@@ -312,7 +312,7 @@
     <string name="seal_privacy_blacklist_is_empty">黑名单为空</string>
     <string name="seal_privacy_blacklist">黑名单</string>
     <string name="seal_privacy_search_phone">允许通过手机号搜索到我</string>
-    <string name="seal_privacy_search_st_account">允许通过 同业快线 号搜索到我</string>
+    <string name="seal_privacy_search_st_account">允许通过 同行快线 号搜索到我</string>
     <string name="seal_privacy_friend_verify">加我为好友时需要验证</string>
     <string name="seal_privacy_group_verify">允许被直接添加至群聊</string>
 
@@ -339,7 +339,7 @@
     <string name="seal_public_account_information">公众号信息</string>
     <string name="seal_member_mention_all_member">所有人</string>
     <string name="seal_search_phone_number">搜索手机号，如：(86)137XXXXX</string>
-    <string name="seal_search_phone_numeber_and_account">手机号/同业快线 号</string>
+    <string name="seal_search_phone_numeber_and_account">手机号/同行快线 号</string>
     <string name="seal_add_friend">加为好友</string>
     <string name="seal_add_text">加好友信息...</string>
     <string name="seal_account_not_exist">用户不存在</string>
@@ -360,16 +360,16 @@
     <string name="new_friend_invite_phone_friend">邀请手机联系人</string>
 
     <string name="new_friend_request_permission_title">手机通讯录匹配</string>
-    <string name="new_friend_read_contact_dialog_title">“同业快线” 想访问您的通讯录</string>
-    <string name="new_friend_read_contact_dialog_content">请允许同业快线获取您的通讯录，完成手机通讯录至服务器匹配朋友，同业快线不会保存您的通讯录</string>
+    <string name="new_friend_read_contact_dialog_title">“同行快线” 想访问您的通讯录</string>
+    <string name="new_friend_read_contact_dialog_content">请允许同行快线获取您的通讯录，完成手机通讯录至服务器匹配朋友，同行快线不会保存您的通讯录</string>
     <string name="new_friend_no_permission_read_contact">无法获取通讯录信息</string>
     <string name="new_friend_to_setting_accept_contact_permission">请进入“设置”，允许本 App 获取通讯录</string>
     <string name="common_enter_setting">进入设置</string>
     <string name="new_friend_no_permission_can_not_to_setting">无法跳转到设置界面，请您手动进行设置</string>
 
     <string name="wx_share_invite_friend_title">融云全球互联网通信云</string>
-    <string name="wx_share_invite_friend_content">加我为好友，一起用 同业快线 聊天 ！</string>
-    <string name="sms_share_invite_friend_content_format">嗨~ 我正在使用 同业快线，一款专为同好量身打造的聊天应用，快来试试吧！下载地址：%s</string>
+    <string name="wx_share_invite_friend_content">加我为好友，一起用 同行快线 聊天 ！</string>
+    <string name="sms_share_invite_friend_content_format">嗨~ 我正在使用 同行快线，一款专为同好量身打造的聊天应用，快来试试吧！下载地址：%s</string>
 
     <string name="zxing_msg_camera_framework_bug">对不起，Android摄像头遇到问题，您需要重启设备</string>
     <string name="zxing_distinguish_picture">识别图中二维码</string>
@@ -415,15 +415,15 @@
 
     <string name="profile_qrcode_group_tips">扫一扫群二维码，立刻加入该群</string>
     <string name="profile_qrcode_private_tips">扫一扫二维码，加我为好友</string>
-    <string name="profile_qrcode_private_tips1">扫一扫二维码，同业快线收款码</string>
-    <string name="profile_qrcode_private_tips2">扫一扫二维码，同业快线付款码</string>
+    <string name="profile_qrcode_private_tips1">扫一扫二维码，同行快线收款码</string>
+    <string name="profile_qrcode_private_tips2">扫一扫二维码，同行快线付款码</string>
     <string name="profile_qrcode_group_need_verify">该群已开启进群认证，只能好友邀请进群</string>
-    <string name="profile_qrcode_share_to_sealtalk">分享至 同业快线</string>
+    <string name="profile_qrcode_share_to_sealtalk">分享至 同行快线</string>
     <string name="profile_qrcode_share_to_wechat">分享至微信</string>
     <string name="profile_qrcode_save_to_phone">保存到手机</string>
     <string name="profile_group_qrcode">群二维码</string>
     <string name="seal_main_mine_qrcode">我的二维码</string>
-    <string name="seal_main_mine_translate">同业快线转账</string>
+    <string name="seal_main_mine_translate">同行快线转账</string>
     <string name="seal_main_mine_paylist">交易记录</string>
     <string name="profile_join_group">加入该群</string>
     <string name="profile_delete_from_contact">删除联系人</string>
@@ -445,7 +445,7 @@
     <string name="seal_qrcode_jump_without_login">无用户信息，请先注册</string>
     <string name="seal_mine_about_toast_app_downloading">正在后台下载...</string>
     <string name="seal_mine_about_notifi_loading">正在下载新版本</string>
-    <string name="seal_mine_about_notifi_title">同业快线 新版本下载</string>
+    <string name="seal_mine_about_notifi_title">同行快线 新版本下载</string>
     <string name="seal_group_manager_toast_remove_manager_success">删除成功</string>
     <string name="seal_group_manager_toast_remove_manager_failed">删除失败</string>
     <string name="seal_loading_dialog_logining">登录中</string>
@@ -571,6 +571,7 @@
     <string name="qiniu_get_public_video_playlist_failed">获取公开视频播放列表失败!</string>
     <string name="qiniu_image_view">图片浏览</string>
     <string name="check_pfop_result">查询转码结果</string>
+    <string name="check_pfop_results">查询结果</string>
     <string name="load_video1">加载视频1</string>
     <string name="load_video2">加载视频2</string>
     <string name="title_activity_capture_image">CaptureImageActivity</string>

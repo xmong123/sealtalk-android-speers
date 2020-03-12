@@ -25,6 +25,7 @@ import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.ErrorCode;
 import com.caesar.rongcloudspeed.common.IntentExtra;
 import com.caesar.rongcloudspeed.data.UserInfo;
+import com.caesar.rongcloudspeed.data.UserOrder;
 import com.caesar.rongcloudspeed.data.result.UserInfoResult;
 import com.caesar.rongcloudspeed.model.CountryInfo;
 import com.caesar.rongcloudspeed.model.RegisterResult;
@@ -44,6 +45,11 @@ import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.utils.log.SLog;
 import com.caesar.rongcloudspeed.viewmodel.LoginViewModel;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class LoginFragment extends BaseFragment {
     private static final int REQUEST_CODE_SELECT_COUNTRY = 1000;
@@ -114,8 +120,8 @@ public class LoginFragment extends BaseFragment {
                     dismissLoadingDialog(new Runnable() {
                         @Override
                         public void run() {
-                            if(resource.code==11000){
-                                resourceCode=11000;
+                            if (resource.code == 11000) {
+                                resourceCode = 11000;
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -124,8 +130,8 @@ public class LoginFragment extends BaseFragment {
                                     }
                                 });
                                 showToast("服务器更新升级，清稍后...");
-                            }else if(resource.code==11001){
-                                resourceCode=11001;
+                            } else if (resource.code == 11001) {
+                                resourceCode = 11001;
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -134,8 +140,8 @@ public class LoginFragment extends BaseFragment {
                                     }
                                 });
                                 showToast("服务器更新升级，密码重置清稍后...");
-                            }else{
-                                showToast(resource.message+"....");
+                            } else {
+                                showToast(resource.message + "....");
                             }
 
                         }
@@ -183,7 +189,7 @@ public class LoginFragment extends BaseFragment {
                     dismissLoadingDialog(new Runnable() {
                         @Override
                         public void run() {
-                            showToast(resource.message+"..");
+                            showToast(resource.message + "..");
                         }
                     });
                 } else {
@@ -195,7 +201,7 @@ public class LoginFragment extends BaseFragment {
         loginViewModel.getRegisterLoginResult().observe(this, new Observer<Resource<RegisterResult>>() {
             @Override
             public void onChanged(Resource<RegisterResult> resource) {
-                if(resource.status == Status.SUCCESS){
+                if (resource.status == Status.SUCCESS) {
 
                     dismissLoadingDialog(new Runnable() {
                         @Override
@@ -210,14 +216,14 @@ public class LoginFragment extends BaseFragment {
                         }
                     });
 
-                } else if(resource.status == Status.ERROR){
+                } else if (resource.status == Status.ERROR) {
                     int code = resource.code;
                     SLog.d("ss_register", "register failed = " + code);
 
                     dismissLoadingDialog(new Runnable() {
                         @Override
                         public void run() {
-                            showToast(resource.message+".");
+                            showToast(resource.message + ".");
                         }
                     });
 
@@ -254,9 +260,9 @@ public class LoginFragment extends BaseFragment {
                     passwordEdit.setShakeAnimation();
                     return;
                 }
-                if(TextUtils.isEmpty(countryCodeStr)){
+                if (TextUtils.isEmpty(countryCodeStr)) {
                     countryCodeStr = "86";
-                }else if(countryCodeStr.startsWith("+")){
+                } else if (countryCodeStr.startsWith("+")) {
                     countryCodeStr = countryCodeStr.substring(1);
                 }
                 if (!AccountValidatorUtil.isMobile(phoneStr)) {
@@ -264,7 +270,7 @@ public class LoginFragment extends BaseFragment {
                     return;
                 }
                 String finalCountryCodeStr = countryCodeStr;
-                NetworkUtils.fetchInfo( AppNetworkUtils.initRetrofitApi().login(phoneStr, passwordStr),
+                NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().login(phoneStr, passwordStr),
                         new NetworkCallback<UserInfoResult>() {
                             @Override
                             public void onSuccess(UserInfoResult baseData) {
@@ -277,19 +283,28 @@ public class LoginFragment extends BaseFragment {
                                             UserInfoUtils.setUserName(userInfo.getUser_login(), getActivity());
                                             UserInfoUtils.setNikeName(userInfo.getUser_nicename(), getActivity());
                                             UserInfoUtils.setUserSum(userInfo.getUser_sum(), getActivity());
+                                            UserInfoUtils.setUserType(userInfo.getUser_type(), getActivity());
                                             UserInfoUtils.setUserIndustry(userInfo.getUser_industry(), getActivity());
                                             UserInfoUtils.setUserProfession(userInfo.getUser_profession(), getActivity());
                                             UserInfoUtils.setUserSoft(userInfo.getUser_soft(), getActivity());
                                             UserInfoUtils.setPhone(userInfo.getMobile(), getActivity());
                                             UserInfoUtils.setPayPassWord(userInfo.getUser_paypass(), getActivity());
                                             UserInfoUtils.setAppUserUrl(userInfo.getAvatar(), getActivity());
-                                            phoneString=phoneStr;
-                                            passwordString=passwordStr;
-                                            userNameString=userInfo.getUser_nicename();
+                                            List<UserOrder> userOrderList = userInfo.getUser_orders();
+                                            if (userOrderList != null && userOrderList.size() > 0) {
+                                                Set<String> set=new HashSet<>();
+                                                for(UserOrder order:userOrderList){
+                                                    set.add(order.getGoods_id());
+                                                }
+                                                UserInfoUtils.setAppUserOrder(set,getActivity());
+                                            }
+                                            phoneString = phoneStr;
+                                            passwordString = passwordStr;
+                                            userNameString = userInfo.getUser_nicename();
                                             login(finalCountryCodeStr, phoneStr, passwordStr);
                                         }
                                     });
-                                }else{
+                                } else {
                                     Toast.makeText(getActivity(), baseData.getInfo(), Toast.LENGTH_LONG).show();
                                 }
 
@@ -341,7 +356,8 @@ public class LoginFragment extends BaseFragment {
 
     /**
      * 请求发送验证码
-     * @param phoneCode 国家地区的手机区号
+     *
+     * @param phoneCode   国家地区的手机区号
      * @param phoneNumber 手机号
      */
     private void sendCode(String phoneCode, String phoneNumber) {
@@ -350,6 +366,7 @@ public class LoginFragment extends BaseFragment {
 
     /**
      * 重写设置密码
+     *
      * @param countryCode
      * @param phoneNumber
      * @param shortMsgCode
@@ -359,22 +376,22 @@ public class LoginFragment extends BaseFragment {
         loginViewModel.resetLoginPassword(countryCode, phoneNumber, shortMsgCode, password);
     }
 
-    private void registerLogin(String phoneCode, String phoneNumber, String shortMsgCode, String  nickName, String password) {
+    private void registerLogin(String phoneCode, String phoneNumber, String shortMsgCode, String nickName, String password) {
         loginViewModel.registerLogin(phoneCode, phoneNumber, shortMsgCode, nickName, password);
     }
 
     private void toMain(String userId) {
-        String userIndustry= UserInfoUtils.getUserIndustry(getActivity());
-        if(userIndustry.equals("0")){
-            Intent intent = new Intent(getActivity(), AdminMainActivity.class);
-            intent.putExtra(IntentExtra.USER_ID, userId);
-            startActivity(intent);
-            getActivity().finish();
-        }else{
+        String userIndustry = UserInfoUtils.getUserIndustry(getActivity());
+//        if (userIndustry.equals("0")) {
+//            Intent intent = new Intent(getActivity(), AdminMainActivity.class);
+//            intent.putExtra(IntentExtra.USER_ID, userId);
+//            startActivity(intent);
+//            getActivity().finish();
+//        } else {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             getActivity().finish();
-        }
+//        }
 
     }
 
@@ -391,6 +408,7 @@ public class LoginFragment extends BaseFragment {
 
     /**
      * 设置上参数
+     *
      * @param phone
      * @param region
      * @param countryName

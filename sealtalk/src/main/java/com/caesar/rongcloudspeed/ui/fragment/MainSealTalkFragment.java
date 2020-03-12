@@ -63,8 +63,8 @@ public class MainSealTalkFragment extends Fragment {
     }
 
     private void initView() {
-        tabLayout=getActivity().findViewById(R.id.tabLayout);
-        viewPager=getActivity().findViewById(R.id.viewPager);
+        tabLayout = getActivity().findViewById(R.id.tabLayout);
+        viewPager = getActivity().findViewById(R.id.viewPager);
         //tab的字体选择器,默认黑色,选择时红色
         int colorprimary = getResources().getColor(R.color.colorAccent);
         tabLayout.setTabTextColors(getResources().getColor(R.color.textColorDark), colorprimary);
@@ -132,44 +132,6 @@ public class MainSealTalkFragment extends Fragment {
 
         tabLayout.setupWithViewPager(viewPager);
 
-//        tabLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                setIndicator(tabLayout, 2, 2);
-//            }
-//        });
-    }
-
-
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
     }
 
     @Override
