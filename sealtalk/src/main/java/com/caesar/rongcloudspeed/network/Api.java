@@ -20,6 +20,7 @@ import com.caesar.rongcloudspeed.bean.PersonalTagBean;
 import com.caesar.rongcloudspeed.bean.PostsArticleBaseBean;
 import com.caesar.rongcloudspeed.bean.QiniuBean;
 import com.caesar.rongcloudspeed.bean.SectionMessageDataBean;
+import com.caesar.rongcloudspeed.bean.SectionPersonalAlbumDataBean;
 import com.caesar.rongcloudspeed.bean.UserListAddressBean;
 import com.caesar.rongcloudspeed.bean.UserOrderBean;
 import com.caesar.rongcloudspeed.data.BaseData;
@@ -272,6 +273,11 @@ public interface Api {
     @FormUrlEncoded
     @POST("index.php?g=portal&m=list&a=indexJsonSectionMessage")
     Observable<SectionMessageDataBean> SectionMessageQuery(@Field("cid") String cid, @Field("query_date") String query_date);
+
+    /*获取系统消息*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=indexMinePhotoJsonSection")
+    Observable<SectionPersonalAlbumDataBean> getSectionPersonalPhoto(@Field("userid") String cid, @Field("query_date") String query_date);
 
     /*获取用户地址清单*/
     @FormUrlEncoded

@@ -23,6 +23,7 @@ import com.caesar.rongcloudspeed.ui.activity.AnimationPaltSeekActivity;
 import com.caesar.rongcloudspeed.ui.activity.AnimationPersonalTagActivity;
 import com.caesar.rongcloudspeed.ui.activity.MyAccountActivity;
 import com.caesar.rongcloudspeed.ui.activity.PersonalAdvertListActivity;
+import com.caesar.rongcloudspeed.ui.activity.PersonalAlbumSectionActivity;
 import com.caesar.rongcloudspeed.ui.activity.PersonalSeekListActivity;
 import com.caesar.rongcloudspeed.ui.activity.QrCodeDisplayActivity;
 import com.caesar.rongcloudspeed.utils.ToastUtils;
@@ -189,10 +190,7 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
                     break;
                 case R.id.aboutMeStv:
                     //我的相册
-                    Intent intent=new Intent(getActivity(), FriendCircle1Activity.class);
-                    intent.putExtra("userid",uidString);
-                    startActivity(intent);
-                    ToastUtils.showToast("我的相册");
+                    startActivity(new Intent(getActivity(), PersonalAlbumSectionActivity.class));
                     break;
                 case R.id.helpStv:
                     //我的视频

@@ -393,14 +393,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectSingleFriendActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.SelectGroupMemberActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.SelectFriendExcluedGroupActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PersonalAlbumSectionActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectForwardCreateChatActivity"
             android:screenOrientation="portrait" />
