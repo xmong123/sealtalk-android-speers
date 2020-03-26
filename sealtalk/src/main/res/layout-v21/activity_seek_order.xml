@@ -53,26 +53,39 @@
                 android:textSize="@dimen/bigText16sp" />
 
             <TextView
-                android:id="@+id/seek_price_tag"
+                android:id="@+id/seek_troduce_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/seek_title_text"
-                android:layout_margin="@dimen/dp_4"
-                android:text="支付金额:"
-                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="@dimen/margin4dp"
+                android:layout_marginEnd="@dimen/margin4dp"
+                android:text="发布求助费用说明：基本信息费用"
+                android:textColor="@color/light_red"
                 android:textSize="@dimen/bigText16sp" />
 
             <TextView
-                android:id="@+id/seek_price_text"
+                android:id="@+id/seek_troduce_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/seek_title_text"
-                android:layout_margin="@dimen/dp_4"
-                android:layout_toEndOf="@+id/seek_price_tag"
-                android:text="¥10.00"
+                android:layout_below="@+id/seek_troduce_text"
+                android:layout_marginStart="@dimen/margin4dp"
+                android:layout_marginEnd="@dimen/margin4dp"
+                android:text="基本信息费用，每次人民币10元；"
                 android:textColor="@color/red_dark"
-                android:textSize="@dimen/bigText16sp" />
+                android:textSize="@dimen/bigText16sp"
+                android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/seek_troduce_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seek_troduce_message"
+                android:layout_marginStart="@dimen/margin4dp"
+                android:layout_marginEnd="@dimen/margin4dp"
+                android:text="分类用户推送费用0.05元/人/次。"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/bigText16sp"
+                android:visibility="gone" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -97,32 +110,25 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/seek_troduce_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin4dp"
-                android:text="求助信息发布费用说明："
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/bigText16sp" />
-
-            <TextView
-                android:id="@+id/seek_troduce_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin4dp"
-                android:layout_marginEnd="@dimen/margin4dp"
-                android:text="求助信息发布费用为人民币10元/次。"
-                android:textColor="@color/red_dark"
-                android:textSize="@dimen/bigText16sp" />
-
-            <TextView
                 android:id="@+id/seek_troduce_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin4dp"
                 android:text="潜在用户数量："
-                android:textColor="@color/textColorPrimary"
+                android:textColor="@color/light_red"
+                android:textSize="@dimen/bigText16sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/seek_price_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seek_title_text"
+                android:layout_margin="@dimen/dp_4"
+                android:text="支付费用,&#8197;共计:&#8197;¥&#8197;10.00"
+                android:textColor="@color/light_red"
                 android:textSize="@dimen/bigText16sp" />
+
 
         </LinearLayout>
 
@@ -324,6 +330,7 @@
         android:layout_marginTop="@dimen/layoutMargin16dp"
         android:layout_marginRight="@dimen/layoutMargin16dp"
         android:background="@color/white"
+        android:visibility="gone"
         app:cardCornerRadius="@dimen/card_radius">
 
         <LinearLayout

@@ -1,9 +1,12 @@
 package com.caesar.rongcloudspeed.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.Set;
+
+import static com.caesar.rongcloudspeed.quick.QiniuLabConfig.ADVERT_SERVICE_VIDEO;
 
 /**
  * Created by mathum on 2017-09-26.
@@ -14,6 +17,7 @@ public class UserInfoUtils {
             userSp = context.getSharedPreferences(FileName, Context.MODE_PRIVATE);
         }
     }
+
     private static SharedPreferences userSp;
 
     public static final String FileName = "UserInfo";
@@ -31,7 +35,8 @@ public class UserInfoUtils {
     public static final String KeyLoginState = "KeyLoginState";
     public static final String AppUserId = "AppUserId";    //id
     public static final String AppUserUrl = "AppUserUrl";   //用户头像
-    public static final String AppUserOrder = "AppUserOrder";
+    public static final String AppUserLessones = "AppUserLessones";//用户已经购买的课程
+    public static final String AppUserOrderSum = "AppUserOrderSum";//用户订单数
     public static final String UserFriendNum = "UserFriendNum";
     public static final String UserFocusNum = "UserFocusNum";
     public static final String UserPostNum = "UserPostNum";
@@ -51,6 +56,10 @@ public class UserInfoUtils {
     public static final String UserInfoData4 = "UserInfoData4";
     public static final String UserInfoData5 = "UserInfoData5";
     public static final String UserInfoData6 = "UserInfoData6";
+
+    public static final String WechatInfoData = "WechatInfoData";
+    public static final String AdvertVideoUrl = "AdvertVideoUrl";
+    public static final String AdvertVideoList = "AdvertVideoList";
 
     //首次发布任务
     public static boolean getAPPTeamTask(Context context) {
@@ -262,6 +271,20 @@ public class UserInfoUtils {
         editor.commit();
     }
 
+    //获取个人订单
+    public static String getAppUserOrderSum(Context context) {
+        initUserSp(context);
+        String appUserOrderSum = userSp.getString(AppUserOrderSum, "");
+        return appUserOrderSum;
+    }
+
+    public static void setAppUserOrderSum(String appUserOrderSum, Context context) {
+        initUserSp(context);
+        SharedPreferences.Editor editor = userSp.edit();
+        editor.putString(AppUserOrderSum, appUserOrderSum);
+        editor.commit();
+    }
+
     //个人头像信息
     public static String getAppUserUrl(Context context) {
         initUserSp(context);
@@ -276,18 +299,18 @@ public class UserInfoUtils {
         editor.commit();
     }
 
-    public static void setAppUserOrder(Set<String> appUserOrder, Context context) {
+    public static void setAppUserLessones(Set<String> appUserLessones, Context context) {
         initUserSp(context);
         SharedPreferences.Editor editor = userSp.edit();
-        editor.putStringSet(AppUserOrder, appUserOrder);
+        editor.putStringSet(AppUserLessones, appUserLessones);
         editor.commit();
     }
 
     //获取个人课程订单
-    public static Set<String> getAppUserOrder(Context context) {
+    public static Set<String> getAppUserLessones(Context context) {
         initUserSp(context);
-        Set<String> appUserOrder = userSp.getStringSet(AppUserOrder, null);
-        return appUserOrder;
+        Set<String> appUserLessones = userSp.getStringSet(AppUserLessones, null);
+        return appUserLessones;
     }
 
     public static String getAuthToken(Context context) {
@@ -422,7 +445,7 @@ public class UserInfoUtils {
         setPayPassWord("", context);
         setAppUserId("0", context);
         setAppUserUrl("", context);
-        setAppUserOrder(null,context);
+        setAppUserLessones(null, context);
     }
 
 
@@ -431,30 +454,78 @@ public class UserInfoUtils {
         String usersum = userSp.getString(UserInfoData1, "");
         return usersum;
     }
+
     public static String getUserInfoData2(Context context) {
         initUserSp(context);
         String usersum = userSp.getString(UserInfoData2, "");
         return usersum;
     }
+
     public static String getUserInfoData3(Context context) {
         initUserSp(context);
         String usersum = userSp.getString(UserInfoData3, "");
         return usersum;
     }
+
     public static String getUserInfoData4(Context context) {
         initUserSp(context);
         String usersum = userSp.getString(UserInfoData4, "");
         return usersum;
     }
+
     public static String getUserInfoData5(Context context) {
         initUserSp(context);
         String usersum = userSp.getString(UserInfoData5, "");
         return usersum;
     }
+
     public static String getUserInfoData6(Context context) {
         initUserSp(context);
         String usersum = userSp.getString(UserInfoData6, "");
         return usersum;
+    }
+
+    public static boolean getWechatInfoData(Context context) {
+        initUserSp(context);
+        boolean isWeChatPay = userSp.getBoolean(WechatInfoData, false);
+        return isWeChatPay;
+    }
+
+    public static String getAdvertVideoUrl(Context context) {
+        initUserSp(context);
+        String advertVideoUrl = userSp.getString(AdvertVideoUrl, "");
+        if (!advertVideoUrl.endsWith(".mp4")) {
+            advertVideoUrl = ADVERT_SERVICE_VIDEO;
+        }
+        return advertVideoUrl;
+    }
+
+    public static Set<String> getAdvertVideoList(Context context) {
+        initUserSp(context);
+        Set<String> advertVideoList= userSp.getStringSet(AdvertVideoList, null);
+        return advertVideoList;
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public static void setAdvertVideoList(Set<String> advertVideoList, Context context) {
+        initUserSp(context);
+        SharedPreferences.Editor editor = userSp.edit();
+        editor.putStringSet(AdvertVideoList, advertVideoList);
+        editor.commit();
+    }
+
+    public static void setAdvertVideoUrl(String advertVideoUrl, Context context) {
+        initUserSp(context);
+        SharedPreferences.Editor editor = userSp.edit();
+        editor.putString(AdvertVideoUrl, advertVideoUrl);
+        editor.commit();
+    }
+
+    public static void setWechatInfoData(boolean isWeChatPay, Context context) {
+        initUserSp(context);
+        SharedPreferences.Editor editor = userSp.edit();
+        editor.putBoolean(WechatInfoData, isWeChatPay);
+        editor.commit();
     }
 
     public static void setUserInfoData1(String userInfoData1, Context context) {
@@ -463,30 +534,35 @@ public class UserInfoUtils {
         editor.putString(UserInfoData1, userInfoData1);
         editor.commit();
     }
+
     public static void setUserInfoData2(String userInfoData2, Context context) {
         initUserSp(context);
         SharedPreferences.Editor editor = userSp.edit();
         editor.putString(UserInfoData1, userInfoData2);
         editor.commit();
     }
+
     public static void setUserInfoData3(String userInfoData3, Context context) {
         initUserSp(context);
         SharedPreferences.Editor editor = userSp.edit();
         editor.putString(UserInfoData1, userInfoData3);
         editor.commit();
     }
+
     public static void setUserInfoData4(String userInfoData4, Context context) {
         initUserSp(context);
         SharedPreferences.Editor editor = userSp.edit();
         editor.putString(UserInfoData1, userInfoData4);
         editor.commit();
     }
+
     public static void setUserInfoData5(String userInfoData5, Context context) {
         initUserSp(context);
         SharedPreferences.Editor editor = userSp.edit();
         editor.putString(UserInfoData1, userInfoData5);
         editor.commit();
     }
+
     public static void setUserInfoData6(String userInfoData6, Context context) {
         initUserSp(context);
         SharedPreferences.Editor editor = userSp.edit();

@@ -1,34 +1,24 @@
 package com.caesar.rongcloudspeed.player;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.caesar.rongcloudspeed.R;
-import com.caesar.rongcloudspeed.data.BaseData;
-import com.caesar.rongcloudspeed.network.AppNetworkUtils;
-import com.caesar.rongcloudspeed.network.NetworkCallback;
-import com.caesar.rongcloudspeed.network.NetworkUtils;
-import com.caesar.rongcloudspeed.ui.activity.SPLessonVideosActivity;
-import com.caesar.rongcloudspeed.ui.activity.SpeerOrderActivity;
-import com.caesar.rongcloudspeed.ui.activity.WebViewActivity;
+import com.caesar.rongcloudspeed.ui.activity.SpeerOrderOtherActivity;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.utils.Utils;
-import com.caesar.rongcloudspeed.utils.log.SLog;
-import com.caesar.rongcloudspeed.viewmodel.LoginViewModel;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLOnAudioFrameListener;
 import com.pili.pldroid.player.PLOnBufferingUpdateListener;
@@ -40,7 +30,6 @@ import com.pili.pldroid.player.PLOnVideoSizeChangedListener;
 import com.pili.pldroid.player.widget.PLVideoView;
 import com.tencent.smtt.sdk.TbsVideo;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -60,19 +49,35 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
     private String lesson_name;
     private String lesson_price;
     private String lesson_smeta;
-    private CountDownTimer countDownTimer = new CountDownTimer(15 * 1000, 1000) {
+    private long uploadFileDuration;
+    private CountDownTimer countDownTimer;
 
+    @SuppressLint("HandlerLeak")
+    private Handler countHandler = new Handler() {
         @Override
-        public void onTick(long millisUntilFinished) {
-            int count = Math.round(millisUntilFinished / 1000);
-            if (count > 0) {
-                timeShowTitle.setText(String.valueOf(count));
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    countDownTimer = new CountDownTimer(uploadFileDuration, 1000) {
+
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            int count = Math.round(millisUntilFinished / 1000);
+                            if (count > 0) {
+                                timeShowTitle.setText(String.valueOf(count));
+                            }
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            timeShowTitle.setText("0");
+                        }
+                    };
+                    countDownTimer.cancel();
+                    countDownTimer.start();
+                    break;
             }
-        }
-
-        @Override
-        public void onFinish() {
-            timeShowTitle.setText("0");
         }
     };
 
@@ -114,14 +119,8 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         mStatInfoTextView = findViewById(R.id.StatInfoTextView);
 
         vipShowLayout.setOnClickListener(view -> {
-            Intent orderIntent = new Intent(PLVideoViewActivity.this, SpeerOrderActivity.class);
-            orderIntent.putExtra("lesson_id", lesson_id);
-            orderIntent.putExtra("lesson_name", lesson_name);
-            orderIntent.putExtra("lesson_price", lesson_price);
-            orderIntent.putExtra("lesson_smeta", lesson_smeta);
-            orderIntent.putExtra("videoPath", lessonVideoString);
-            orderIntent.setAction("PLVideo");
-            startActivityForResult(orderIntent, REQUEST_MEMBER_VIP);
+//            Intent orderIntent = new Intent(PLVideoViewActivity.this, SpeerOrderOtherActivity.class);
+//            startActivityForResult(orderIntent, REQUEST_MEMBER_VIP);
         });
 
         // 1 -> hw codec enable, 0 -> disable [recommended]
@@ -155,7 +154,11 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         mVideoView.setAVOptions(options);
 
         // Set some listeners
-        mVideoView.setOnPreparedListener(i -> startCodeCountDown());
+        mVideoView.setOnPreparedListener(i -> {
+                    uploadFileDuration = mVideoView.getDuration();
+                    countHandler.sendEmptyMessage(0);
+                }
+        );
         mVideoView.setOnInfoListener(mOnInfoListener);
         mVideoView.setOnVideoSizeChangedListener(mOnVideoSizeChangedListener);
         mVideoView.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
@@ -245,7 +248,7 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
                 case PLOnInfoListener.MEDIA_INFO_BUFFERING_END:
                     break;
                 case PLOnInfoListener.MEDIA_INFO_VIDEO_RENDERING_START:
-                    Utils.showToastTips(PLVideoViewActivity.this, "first video render time: " + extra + "ms");
+//                    Utils.showToastTips(PLVideoViewActivity.this, "first video render time: " + extra + "ms");
                     Log.i(TAG, "Response: " + mVideoView.getResponseInfo());
                     break;
                 case PLOnInfoListener.MEDIA_INFO_AUDIO_RENDERING_START:
@@ -327,7 +330,7 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         public void onCompletion() {
             Log.i(TAG, "Play Completed !");
             stopCodeCountDown();
-            Utils.showToastTips(PLVideoViewActivity.this, "Play Completed !");
+//            Utils.showToastTips(PLVideoViewActivity.this, "Play Completed !");
             if (!mIsLiveStreaming) {
                 mMediaController.refreshProgress();
             }

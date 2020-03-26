@@ -15,33 +15,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="视频标题:" />
-
         <com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText
             android:id="@+id/vote_post_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rc_ed_public_service_search_selector"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:hint="发布视频标题"
             android:maxLength="20"
-            android:maxLines="1"
-            android:textColorHint="@color/red_trans" />
+            android:maxLines="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="视频描述:" />
 
         <com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText
             android:id="@+id/vote_post_excerpt"
@@ -52,13 +41,13 @@
             android:focusableInTouchMode="true"
             android:hint="发布视频详细描述介绍"
             android:maxLength="20"
-            android:maxLines="3"
-            android:textColorHint="@color/red_trans" />
+            android:maxLines="3" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/quick_start_pili_videoview_fixed_layout"
@@ -71,6 +60,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/quick_start_video_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/block_vertical_margin"
+            android:gravity="right"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -111,9 +108,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="视频内容一般不超过10秒，不超过10MB"
+            android:layout_marginStart="@dimen/block_vertical_margin"
+            android:text="视频内容一般不超过30秒，不超过15MB"
             android:textColor="@color/red_dark" />
 
         <RelativeLayout

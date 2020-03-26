@@ -18,6 +18,7 @@
         android:textSize="14sp" />
 
     <View
+        android:visibility="invisible"
         android:id="@+id/btn_search_view"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -28,6 +29,7 @@
         android:background="@drawable/btn_light_gray_shape" />
 
     <ImageButton
+        android:visibility="invisible"
         android:id="@+id/btn_search"
         android:layout_width="@dimen/adaptive_44dp"
         android:layout_height="match_parent"

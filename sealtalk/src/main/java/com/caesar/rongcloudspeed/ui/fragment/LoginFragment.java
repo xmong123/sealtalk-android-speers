@@ -290,13 +290,14 @@ public class LoginFragment extends BaseFragment {
                                             UserInfoUtils.setPhone(userInfo.getMobile(), getActivity());
                                             UserInfoUtils.setPayPassWord(userInfo.getUser_paypass(), getActivity());
                                             UserInfoUtils.setAppUserUrl(userInfo.getAvatar(), getActivity());
+                                            UserInfoUtils.setAppUserOrderSum(userInfo.getOrderCount(),getActivity());
                                             List<UserOrder> userOrderList = userInfo.getUser_orders();
                                             if (userOrderList != null && userOrderList.size() > 0) {
                                                 Set<String> set=new HashSet<>();
                                                 for(UserOrder order:userOrderList){
                                                     set.add(order.getGoods_id());
                                                 }
-                                                UserInfoUtils.setAppUserOrder(set,getActivity());
+                                                UserInfoUtils.setAppUserLessones(set,getActivity());
                                             }
                                             phoneString = phoneStr;
                                             passwordString = passwordStr;

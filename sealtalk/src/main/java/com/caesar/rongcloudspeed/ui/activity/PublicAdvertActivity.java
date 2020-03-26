@@ -467,13 +467,13 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                 }
                 break;
             case R.id.post_industy_btn:
-                startActivityForResult(new Intent(this, AdminIndustryActivity.class), REQUEST_CODE_SELECT_INDUSTRY);
+                startActivityForResult(new Intent(this, IndustrySelectActivity.class), REQUEST_CODE_SELECT_INDUSTRY);
                 break;
             case R.id.post_profession_btn:
-                startActivityForResult(new Intent(this, AdminProfessionActivity.class), REQUEST_CODE_SELECT_PROFESSION);
+                startActivityForResult(new Intent(this, ProfessionSelectActivity.class), REQUEST_CODE_SELECT_PROFESSION);
                 break;
             case R.id.post_soft_btn:
-                startActivityForResult(new Intent(this, AdminSoftActivity.class), REQUEST_CODE_SELECT_SOFT);
+                startActivityForResult(new Intent(this, SoftSelectActivity.class), REQUEST_CODE_SELECT_SOFT);
                 break;
             case R.id.post_commit_btn:
                 postTitle = post_edit_title.getText().toString();

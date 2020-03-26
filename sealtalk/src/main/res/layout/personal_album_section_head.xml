@@ -7,11 +7,9 @@
 
     <TextView
         android:id="@+id/album_header"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="left|center"
-        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:textColor="@color/txt_color"
         android:textSize="@dimen/bigText16sp" />
 

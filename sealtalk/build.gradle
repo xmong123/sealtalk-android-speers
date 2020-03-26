@@ -1,14 +1,28 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
+
+    signingConfigs {
+        config {
+            keyAlias 'caesarxu'
+            keyPassword '87892505'
+            storeFile file('./android_keystore')
+            storePassword '87892505'
+        }
+        release {
+            keyAlias 'caesarxu'
+            keyPassword '87892505'
+            storeFile file('./android_keystore')
+            storePassword '87892505'
+        }
+    }
     defaultConfig {
         applicationId "com.caesar.rongcloudspeed"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 111
-        versionName "1.1.1"
+        versionCode 114
+        versionName "1.1.4"
         //TODO 第二步 设置jniLibs
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
@@ -20,9 +34,11 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.release
         }
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -74,7 +90,7 @@ dependencies {
     implementation 'com.just.agentweb:agentweb:4.0.2'
     implementation 'com.yanzhenjie:permission:2.0.0-rc4'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
-    api "com.google.zxing:core:3.3.2"
+    api 'com.google.zxing:core:3.3.2'
     api 'com.squareup.retrofit2:retrofit:2.5.0'
     api 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'androidx.annotation:annotation:1.1.0'
@@ -88,7 +104,7 @@ dependencies {
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-//    implementation 'com.qiniu:qiniu-android-sdk:7.3.15'
+    //    implementation 'com.qiniu:qiniu-android-sdk:7.3.15'
     api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     api 'com.facebook.fresco:fresco:0.11.0'
     api 'cn.rongcloud.sdk:im_kit:2.9.22'
@@ -111,8 +127,6 @@ dependencies {
     api 'cn.rongcloud.sdk:call_lib:2.9.22'
     api 'cn.rongcloud.sdk:call_kit:2.9.22'
     implementation 'fm.jiecao:jiecaovideoplayer:5.8.1'
-
-
     api project(path: ':library')
     api project(path: ':circle_lib')
     api project(path: ':contactcard')
@@ -121,4 +135,5 @@ dependencies {
     api project(path: ':photoPicker')
     api project(path: ':citypicker')
     api project(path: ':picture_library')
+    api 'com.tencent.tbs.tbssdk:sdk:43697'
 }

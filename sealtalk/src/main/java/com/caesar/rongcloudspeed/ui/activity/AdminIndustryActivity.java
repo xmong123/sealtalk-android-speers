@@ -101,20 +101,27 @@ public class AdminIndustryActivity extends TitleBaseActivity implements View.OnC
                     StringBuilder industryIDBuffer = new StringBuilder();
                     StringBuilder industryNameBuffer = new StringBuilder();
                     for (int i = 0; i < mCheckStates.size(); i++) {
-                        int key = mCheckStates.keyAt(i);
-                        String industryID = adminIndustryArray.get(key).getId();
-                        String industryName = adminIndustryArray.get(key).getName();
-                        industryIDBuffer.append(industryID + ",");
-                        industryNameBuffer.append(industryName + ",");
+                        if (mCheckStates.valueAt(i)) {
+                            int key = mCheckStates.keyAt(i);
+                            String industryID = adminIndustryArray.get(key).getId();
+                            String industryName = adminIndustryArray.get(key).getName();
+                            industryIDBuffer.append(industryID + ",");
+                            industryNameBuffer.append(industryName + ",");
+                        }
                     }
-                    industryIDBuffer.deleteCharAt(industryIDBuffer.length() - 1);
-                    industryNameBuffer.deleteCharAt(industryNameBuffer.length() - 1);
-                    String industryIDString = industryIDBuffer.toString();
-                    String industryNameString = industryNameBuffer.toString();
-                    getIntent().putExtra("industryIDString", industryIDString);
-                    getIntent().putExtra("industryNameString", industryNameString);
-                    setResult(RESULT_OK, getIntent());
-                    finish();
+                    if (industryIDBuffer.length() > 0) {
+                        industryIDBuffer.deleteCharAt(industryIDBuffer.length() - 1);
+                        industryNameBuffer.deleteCharAt(industryNameBuffer.length() - 1);
+                        String industryIDString = industryIDBuffer.toString();
+                        String industryNameString = industryNameBuffer.toString();
+                        getIntent().putExtra("industryIDString", industryIDString);
+                        getIntent().putExtra("industryNameString", industryNameString);
+                        setResult(RESULT_OK, getIntent());
+                        finish();
+                    } else {
+                        Toast.makeText(this, "请选择相关行业", Toast.LENGTH_LONG).show();
+                    }
+
                 } else {
                     Toast.makeText(this, "请选择相关行业", Toast.LENGTH_LONG).show();
                 }

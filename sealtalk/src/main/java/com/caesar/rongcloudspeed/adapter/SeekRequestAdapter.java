@@ -66,7 +66,7 @@ public class SeekRequestAdapter extends BaseQuickAdapter<PostsSeekBaseBean, Base
         String dataString = bean.getPost_date();
         helper.setText( R.id.tweetText1,  "全国-所有地区 | " + dataString );
         String priceString = bean.getPost_price();
-        if (priceString.startsWith( "0" )) {
+        if (priceString.startsWith( "0.0" )) {
             priceString = "面议";
         }
         helper.setText( R.id.tweetText2, priceString );

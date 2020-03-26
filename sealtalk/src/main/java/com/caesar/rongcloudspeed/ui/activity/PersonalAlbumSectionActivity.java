@@ -19,13 +19,17 @@ import com.caesar.rongcloudspeed.adapter.MessageSectionAdapter;
 import com.caesar.rongcloudspeed.bean.PersonalPhotoBean;
 import com.caesar.rongcloudspeed.bean.SectionAlbumBean;
 import com.caesar.rongcloudspeed.bean.SectionPersonalAlbumDataBean;
+import com.caesar.rongcloudspeed.circle.ui.ImagePagerActivity;
+import com.caesar.rongcloudspeed.circle.widgets.MultiImageView;
 import com.caesar.rongcloudspeed.common.MultiStatusActivity;
 import com.caesar.rongcloudspeed.constants.Constant;
+import com.caesar.rongcloudspeed.decoration.GridSectionAverageGapItemDecoration;
 import com.caesar.rongcloudspeed.entity.AlbumSectionEntity;
 import com.caesar.rongcloudspeed.manager.RetrofitManager;
 import com.caesar.rongcloudspeed.oberver.CommonObserver;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -45,16 +49,14 @@ public class PersonalAlbumSectionActivity extends MultiStatusActivity implements
     private List<AlbumSectionEntity> sectionEntityList = new ArrayList<>();
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.recyclerview_message_view)
-    RecyclerView recyclerview_message_view;
+    @BindView(R.id.recyclerview_album_view)
+    RecyclerView recyclerview_album_view;
     private AlbumSectionAdapter sectionAdapter;
-    private CircleHeaderItem headerItem1;
-    private CircleHeaderItem headerItem2;
     private String uidString;
 
     @Override
     public int getContentView() {
-        return R.layout.activity_factory_mesage_list;
+        return R.layout.activity_personal_album_list;
     }
 
     @Override
@@ -72,34 +74,21 @@ public class PersonalAlbumSectionActivity extends MultiStatusActivity implements
         refreshLayout.setEnableLoadmore(false);
         refreshLayout.setEnableRefresh(true);
         refreshLayout.setOnRefreshListener(this);
-        recyclerview_message_view.setLayoutManager(new GridLayoutManager(this,4));
-//        headView = getLayoutInflater().inflate(R.layout.factory_extension_view, (ViewGroup) recyclerview_message_view.getParent(), false);
+        recyclerview_album_view.setLayoutManager(new GridLayoutManager(this,4));
 
-//        recyclerview_message_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        sectionAdapter = new AlbumSectionAdapter(this,R.layout.fragment_album_recyclerview_item, R.layout.personal_album_section_head, sectionEntityList);
 
-//        mRecyclerView.addItemDecoration(new GridSectionAverageGapItemDecoration(10,10,20,15));
-
-        sectionAdapter = new AlbumSectionAdapter(R.layout.fragment_album_recyclerview_item, R.layout.personal_album_section_head, sectionEntityList);
-
-        sectionAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                AlbumSectionEntity mySection = sectionEntityList.get(position);
-                if (mySection.isHeader) {
-                    Toast.makeText(PersonalAlbumSectionActivity.this, mySection.header, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(PersonalAlbumSectionActivity.this, mySection.t.getTitle(), Toast.LENGTH_LONG).show();
-                }
+        sectionAdapter.setOnItemClickListener((adapter, view, position) -> {
+            AlbumSectionEntity mySection = sectionEntityList.get(position);
+            if (mySection.isHeader) {
+                Toast.makeText(PersonalAlbumSectionActivity.this, mySection.header, Toast.LENGTH_LONG).show();
+            } else {
+//                Toast.makeText(PersonalAlbumSectionActivity.this, mySection.t.getTitle(), Toast.LENGTH_LONG).show();
+                ImagePagerActivity.imageSize = new ImageSize(view.getWidth(), view.getHeight());
+                ImagePagerActivity.startImagePagerActivity(PersonalAlbumSectionActivity.this, mySection.getImagesList(), mySection.getSectionNO());
             }
         });
-        sectionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(PersonalAlbumSectionActivity.this, "onItemChildClick" + position, Toast.LENGTH_LONG).show();
-            }
-        });
-        recyclerview_message_view.setAdapter(sectionAdapter);
-//        sectionAdapter.addHeaderView(headView);
+        recyclerview_album_view.setAdapter(sectionAdapter);
     }
 
     private void loadMPersonalAlbumData() {
@@ -117,9 +106,17 @@ public class PersonalAlbumSectionActivity extends MultiStatusActivity implements
                                 for (SectionAlbumBean albumBean : albumBeanList) {
                                     sectionEntityList.add(new AlbumSectionEntity(true, albumBean.getQuery_date(), false));
                                     List<PersonalPhotoBean> photoArray = albumBean.getPost_array();
+                                    List<String> lists=new ArrayList<>();
+                                    for(PersonalPhotoBean personalPhotoBean:photoArray){
+                                        lists.add(personalPhotoBean.getImage());
+                                    }
                                     if (photoArray != null && photoArray.size() > 0) {
-                                        for (PersonalPhotoBean photoBean : photoArray) {
-                                            sectionEntityList.add(new AlbumSectionEntity(photoBean));
+                                        for (int i=0;i<photoArray.size();i++) {
+                                            PersonalPhotoBean photoBean=photoArray.get(i);
+                                            AlbumSectionEntity sectionEntity=new AlbumSectionEntity(photoBean);
+                                            sectionEntity.setSectionNO(i);
+                                            sectionEntity.setImagesList(lists);
+                                            sectionEntityList.add(sectionEntity);
                                         }
                                     }
                                 }
@@ -133,19 +130,11 @@ public class PersonalAlbumSectionActivity extends MultiStatusActivity implements
     @Override
     public void onPause() {
         super.onPause();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        Log.i("Info", "onResult:" + requestCode + " onResult:" + resultCode);
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

@@ -20,15 +20,11 @@ import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
-import com.caesar.rongcloudspeed.player.PLVideoViewActivity;
-import com.caesar.rongcloudspeed.ui.activity.SPSpeerDetailActivity;
-import com.caesar.rongcloudspeed.ui.adapter.BookAdapter;
-import com.caesar.rongcloudspeed.ui.adapter.LessonAdapter;
+import com.caesar.rongcloudspeed.ui.activity.SPLessonDetailActivity;
 import com.caesar.rongcloudspeed.ui.adapter.LessonVideoAdapter;
-import com.caesar.rongcloudspeed.ui.adapter.LessonsVideoAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.pili.pldroid.player.AVOptions;
-import com.tencent.smtt.sdk.TbsVideo;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +32,15 @@ import java.util.List;
 /**
  * 主界面子界面-发现界面
  */
-public class LessonsVideoFragment extends BaseFragment {
+public class LessonsVideoFragment extends BaseFragment implements OnRefreshListener {
     private RecyclerView menuRecyclerView;
     private RecyclerView lessonsRecyclerView;
     private AnimationProAdapter proAdapter;
     private LessonVideoAdapter lessonAdapter;
-    private List<LessonCategoryBean> menuArray=new ArrayList<LessonCategoryBean>();
-    private List<PostsArticleBaseBean> dataArray=new ArrayList<PostsArticleBaseBean>();
-//    private View headView;
-    private String catid="4";
-    LessonCategoryBean categoryBean=new LessonCategoryBean(true,"4","全部课程","0");
+    private List<LessonCategoryBean> menuArray = new ArrayList<LessonCategoryBean>();
+    private List<PostsArticleBaseBean> dataArray = new ArrayList<PostsArticleBaseBean>();
+    private String catid = "4";
+    LessonCategoryBean categoryBean = new LessonCategoryBean(true, "4", "全部课程", "0");
 
     @Override
     protected int getLayoutResId() {
@@ -62,12 +57,12 @@ public class LessonsVideoFragment extends BaseFragment {
         proAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                catid=menuArray.get(position).getTerm_id();
+                catid = menuArray.get(position).getTerm_id();
                 for (int i = 0; i < menuArray.size(); i++) {
                     if (i == position) {
-                        menuArray.get( i ).setFlag( true );
+                        menuArray.get(i).setFlag(true);
                     } else {
-                        menuArray.get( i ).setFlag( false );
+                        menuArray.get(i).setFlag(false);
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -75,43 +70,35 @@ public class LessonsVideoFragment extends BaseFragment {
             }
         });
 
-        lessonAdapter = new LessonVideoAdapter(getActivity(),dataArray);
+        lessonAdapter = new LessonVideoAdapter(getActivity(), dataArray);
         lessonAdapter.openLoadAnimation();
         lessonAdapter.setNotDoAnimationCount(4);
 
         lessonsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         lessonsRecyclerView.setHasFixedSize(true);
-//        lessonsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        lessonAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                PostsArticleBaseBean postsArticleBaseBean=dataArray.get( position );
-                String lesson_id=postsArticleBaseBean.getObject_id();
-                String lesson_name=postsArticleBaseBean.getPost_title();
-                String lesson_price=postsArticleBaseBean.getPost_price();
-                String lessonSource = postsArticleBaseBean.getPost_source();
-                String lessonSmeta = postsArticleBaseBean.getSmeta();
-                String lessonContent = postsArticleBaseBean.getPost_excerpt();
-                String thumbVideoString = postsArticleBaseBean.getThumb_video();
-                if (!thumbVideoString.startsWith( "http://" )) {
-                    thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
-                }
-                Intent intent = new Intent(getActivity(), SPSpeerDetailActivity.class);
-                intent.putExtra("videoPath", thumbVideoString);
-                intent.putExtra("lesson_id" , lesson_id);
-                intent.putExtra("lesson_name" , lesson_name);
-                intent.putExtra("lesson_price" , lesson_price);
-                intent.putExtra("lesson_smeta", lessonSmeta);
-                intent.putExtra("lesson_content", lessonContent);
-                intent.putExtra("lesson_source", lessonSource);
-                startActivity(intent);
-//                if (TbsVideo.canUseTbsPlayer(getActivity())) {
-//                    TbsVideo.openVideo(getActivity(), thumbVideoString);
-//                }
+        lessonAdapter.setOnItemClickListener((adapter, view, position) -> {
+            PostsArticleBaseBean postsArticleBaseBean = dataArray.get(position);
+            String lesson_id = postsArticleBaseBean.getObject_id();
+            String lesson_name = postsArticleBaseBean.getPost_title();
+            String lesson_price = postsArticleBaseBean.getPost_price();
+            String lessonSource = postsArticleBaseBean.getPost_source();
+            String lessonSmeta = postsArticleBaseBean.getSmeta();
+            String lessonContent = postsArticleBaseBean.getPost_excerpt();
+            String thumbVideoString = postsArticleBaseBean.getThumb_video();
+            if (!thumbVideoString.startsWith("http://")) {
+                thumbVideoString = Constant.THINKCMF_PATH + thumbVideoString;
             }
+            Intent intent1 = new Intent(getActivity(), SPLessonDetailActivity.class);
+            intent1.putExtra("videoPath", thumbVideoString);
+            intent1.putExtra("lesson_id", lesson_id);
+            intent1.putExtra("lesson_name", lesson_name);
+            intent1.putExtra("lesson_price", lesson_price);
+            intent1.putExtra("lesson_smeta", lessonSmeta);
+            intent1.putExtra("lesson_content", lessonContent);
+            intent1.putExtra("lesson_source", lessonSource);
+            startActivity(intent1);
         });
-//        lessonAdapter.addHeaderView(headView);
         menuRecyclerView.setAdapter(proAdapter);
         lessonsRecyclerView.setAdapter(lessonAdapter);
         loadMenuData();
@@ -123,7 +110,7 @@ public class LessonsVideoFragment extends BaseFragment {
                 new NetworkCallback<LessonCateBean>() {
                     @Override
                     public void onSuccess(LessonCateBean lessonCateBean) {
-                        menuArray=new ArrayList<LessonCategoryBean>();
+                        menuArray = new ArrayList<LessonCategoryBean>();
                         menuArray.add(categoryBean);
                         menuArray.addAll(lessonCateBean.getReferer());
                         proAdapter.setNewData(menuArray);
@@ -142,7 +129,7 @@ public class LessonsVideoFragment extends BaseFragment {
                 new NetworkCallback<HomeDataBean>() {
                     @Override
                     public void onSuccess(HomeDataBean homeDataBean) {
-                        dataArray=homeDataBean.getReferer().getPosts();
+                        dataArray = homeDataBean.getReferer().getPosts();
                         lessonAdapter.setNewData(dataArray);
                         dismissLoadingDialog();
                     }
@@ -161,10 +148,7 @@ public class LessonsVideoFragment extends BaseFragment {
     }
 
     @Override
-    protected void onClick(View v, int id) {
-        switch (id) {
-            default:
-                break;
-        }
+    public void onRefresh(RefreshLayout refreshlayout) {
+        loadData();
     }
 }

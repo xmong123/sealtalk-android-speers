@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:layout_weight="1"
-            android:background="@color/red_dark"
+            android:background="@color/colorAccent"
             android:gravity="center"
             android:text="完成支付"
             android:textColor="@color/white"

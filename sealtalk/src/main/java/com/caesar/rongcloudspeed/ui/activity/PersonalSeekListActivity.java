@@ -13,7 +13,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.BaseShopActivity;
-import com.caesar.rongcloudspeed.ui.fragment.LessonsVideoFragment;
 import com.caesar.rongcloudspeed.ui.fragment.PersonalSeekHelperFragment;
 import com.caesar.rongcloudspeed.view.TranspanentTitleBar;
 import com.google.android.material.tabs.TabLayout;

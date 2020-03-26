@@ -35,6 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.caesar.rongcloudspeed.constants.Constant.CODE_SUCC;
@@ -53,6 +54,8 @@ public class PersonalAdvertFragment extends RxFragment implements OnRefreshListe
     private String uidString;
     private UserAdvertPlayerAdapter userAdvertAdapter;
     private List<PostsSeekBaseBean> advertList = new ArrayList<PostsSeekBaseBean>();
+    private View notDataView;
+    private View errorView;
 
     public static PersonalAdvertFragment newInstance(int param1, String param2) {
         PersonalAdvertFragment fragment = new PersonalAdvertFragment();
@@ -97,13 +100,20 @@ public class PersonalAdvertFragment extends RxFragment implements OnRefreshListe
                     public void onSuccess(HomeSeekListBean value) {
                         if (value.getCode() == CODE_SUCC) {
                             advertList = value.getReferer();
-                            userAdvertAdapter.setNewData(advertList);
+                            if (advertList.size() > 0) {
+                                userAdvertAdapter.setNewData(advertList);
+                            } else {
+                                userAdvertAdapter.setEmptyView(notDataView);
+                            }
+                        } else {
+                            userAdvertAdapter.setEmptyView(notDataView);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
+                        userAdvertAdapter.setEmptyView(errorView);
                         Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
                     }
                 });
@@ -113,7 +123,10 @@ public class PersonalAdvertFragment extends RxFragment implements OnRefreshListe
         userAdvertAdapter = new UserAdvertPlayerAdapter(getActivity(), advertList, tag);
         userAdvertAdapter.setNotDoAnimationCount(3);
         userSeekRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        userAdvertAdapter.setEmptyView(R.layout.custom_loading_view, (ViewGroup) userSeekRecyclerview.getParent());
         userSeekRecyclerview.setAdapter(userAdvertAdapter);
+        notDataView = getLayoutInflater().inflate(R.layout.custom_empty_view, (ViewGroup) userSeekRecyclerview.getParent(), false);
+        errorView = getLayoutInflater().inflate(R.layout.custom_error_view, (ViewGroup) userSeekRecyclerview.getParent(), false);
         userAdvertAdapter.loadMoreEnd();
     }
 
@@ -126,4 +139,5 @@ public class PersonalAdvertFragment extends RxFragment implements OnRefreshListe
     public void onResume() {
         super.onResume();
     }
+
 }

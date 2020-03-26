@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
@@ -75,9 +76,20 @@ public class PersonalAdvertListActivity extends BaseShopActivity implements View
             }
         });
         tabLayout.setupWithViewPager(viewPager);
+    }
 
-//        tabLayout.post(() -> setIndicator(tabLayout, 60, 60));
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override

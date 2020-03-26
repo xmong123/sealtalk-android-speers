@@ -21,6 +21,7 @@ import com.caesar.rongcloudspeed.model.Status;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
+import com.caesar.rongcloudspeed.utils.ToastUtils;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.viewmodel.UserInfoViewModel;
 
@@ -33,12 +34,13 @@ public class UpdatePasswordActivity extends TitleBaseActivity {
     private EditText confirmPasswordEt;
     private Button updateBtn;
     private UserInfoViewModel userViewModel;
+    private String uidString;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_password);
-
+        uidString = UserInfoUtils.getAppUserId(this);
         initView();
         initViewModel();
     }
@@ -63,14 +65,14 @@ public class UpdatePasswordActivity extends TitleBaseActivity {
 
                 if (oldPassword.equals(newPassword)) {
                     showToast(R.string.seal_update_password_toast_password_old_equal_new);
-                    return ;
+                    return;
                 }
 
                 if (!confirmPassword.equals(newPassword)) {
                     showToast(R.string.seal_update_password_toast_password_not_equal);
-                    return ;
+                    return;
                 }
-                changePassword(oldPassword,newPassword);
+                changePassword(oldPassword, newPassword);
             }
         });
 
@@ -160,22 +162,24 @@ public class UpdatePasswordActivity extends TitleBaseActivity {
             public void onChanged(Resource<Result> resultResource) {
                 // TODO 提示
                 if (resultResource.status == Status.SUCCESS) {
-                    finish();
-                } else  if (resultResource.status == Status.ERROR) {
-
+                    showToast("密码修改成功");
+                } else if (resultResource.status == Status.ERROR) {
+                    showToast("密码修改失败");
                 }
+                finish();
             }
         });
     }
 
     /**
      * 修改密码
+     *
      * @param oldPassword
      * @param newPassword
      */
     private void changePassword(String oldPassword, String newPassword) {
 
-        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().resetuserpass(UserInfoUtils.getAppUserId(this), newPassword),
+        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().resetuserpass(uidString, newPassword),
                 new NetworkCallback<BaseData>() {
                     @Override
                     public void onSuccess(BaseData circleItemResult) {

@@ -34,9 +34,10 @@ public class AdminPerfesssionFragment extends BaseFragment implements OnRefreshL
     private RegisterNextStepListener listener;
     private RecyclerView adminIndustryRecyclerView;
     private BrandAdapter adapter;
-    private List<AdminIndustryBean> adminIndustryArray=new ArrayList<AdminIndustryBean>();
+    private List<AdminIndustryBean> adminIndustryArray = new ArrayList<AdminIndustryBean>();
     private SmartRefreshLayout refreshLayout;
     private static final String TAG = "AdminPerfesssionFragment";
+
     @Override
     protected int getLayoutResId() {
         return R.layout.admin_fragment_perfesssion;
@@ -45,7 +46,7 @@ public class AdminPerfesssionFragment extends BaseFragment implements OnRefreshL
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
         findView(R.id.nextPerfesssionStep, true);
-        refreshLayout=getActivity().findViewById(R.id.refreshLayout);
+        refreshLayout = getActivity().findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(this);
         adminIndustryRecyclerView = getActivity().findViewById(R.id.adminperfesssion_recyclerView);
         adminIndustryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -61,7 +62,7 @@ public class AdminPerfesssionFragment extends BaseFragment implements OnRefreshL
                 new NetworkCallback<AdminInBean>() {
                     @Override
                     public void onSuccess(AdminInBean adminInBean) {
-                        adminIndustryArray=adminInBean.getReferer();
+                        adminIndustryArray = adminInBean.getReferer();
                         adapter.setData(adminIndustryArray);
                         adminIndustryRecyclerView.setAdapter(adapter);
                         refreshLayout.finishRefresh(true);
@@ -70,7 +71,7 @@ public class AdminPerfesssionFragment extends BaseFragment implements OnRefreshL
                     @SuppressLint("LongLogTag")
                     @Override
                     public void onFailure(Throwable t) {
-                        Log.d(TAG,String.valueOf(t));
+                        Log.d(TAG, String.valueOf(t));
                         Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -89,20 +90,27 @@ public class AdminPerfesssionFragment extends BaseFragment implements OnRefreshL
     protected void onClick(View v, int id) {
         switch (id) {
             case R.id.nextPerfesssionStep:
-                SparseBooleanArray mCheckStates=adapter.getCheckedItemPositions();
-                if(mCheckStates.size()>0){
+                SparseBooleanArray mCheckStates = adapter.getCheckedItemPositions();
+                if (mCheckStates.size() > 0) {
                     StringBuffer stringBuffer = new StringBuffer();
-                    for(int i=0;i<mCheckStates.size();i++){
-                        int key = mCheckStates.keyAt(i);
-                        String industryID=adminIndustryArray.get(key).getId();
-                        stringBuffer.append(industryID+",");
+                    for (int i = 0; i < mCheckStates.size(); i++) {
+                        if (mCheckStates.valueAt(i)) {
+                            int key = mCheckStates.keyAt(i);
+                            String industryID = adminIndustryArray.get(key).getId();
+                            stringBuffer.append(industryID + ",");
+                        }
                     }
-                    stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                    String industryString = stringBuffer.toString();
-                    if(listener!=null){
-                        listener.onNextStep(industryString);
+                    if (stringBuffer.length() > 0) {
+                        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                        String industryString = stringBuffer.toString();
+                        if (listener != null) {
+                            listener.onNextStep(industryString);
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "请选择相关专业", Toast.LENGTH_LONG).show();
                     }
-                }else{
+
+                } else {
                     Toast.makeText(getActivity(), "请选择相关专业", Toast.LENGTH_LONG).show();
                 }
                 break;

@@ -39,8 +39,8 @@
                 android:id="@+id/profile_tv_detail_display_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:maxLength="16"
                 android:maxLines="1"
                 android:textColor="@color/color_black_text"
@@ -77,16 +77,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="visible"
-        >
+        tools:visibility="visible">
 
         <com.caesar.rongcloudspeed.ui.view.SettingItemView
             android:id="@+id/profile_siv_detail_alias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_content="@string/profile_set_display_name"
             android:layout_marginTop="@dimen/seal_user_detail_item_margin"
-            >
+            app:item_content="@string/profile_set_display_name">
 
         </com.caesar.rongcloudspeed.ui.view.SettingItemView>
 
@@ -94,10 +92,9 @@
             android:id="@+id/profile_siv_detail_blacklist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_divider="true"
-            app:item_content="@string/profile_detail_join_the_blacklist"
             android:layout_marginTop="@dimen/seal_user_detail_item_margin"
-            >
+            app:item_content="@string/profile_detail_join_the_blacklist"
+            app:item_divider="true">
 
         </com.caesar.rongcloudspeed.ui.view.SettingItemView>
 
@@ -105,8 +102,7 @@
             android:id="@+id/profile_siv_detail_delete_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_content="@string/profile_delete_from_contact"
-            >
+            app:item_content="@string/profile_delete_from_contact">
 
         </com.caesar.rongcloudspeed.ui.view.SettingItemView>
 
@@ -125,8 +121,7 @@
             style="@style/seal_profile_user_detail_btn"
             android:background="@drawable/profile_btn_contact_blue_selector"
             android:text="@string/profile_detail_start_chat"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
         <!--CallKit start-->
         <Button
@@ -135,7 +130,7 @@
             android:background="@drawable/profile_btn_contact_white_selector"
             android:text="@string/profile_detail_start_voice"
             android:textColor="@color/color_black_text"
-            />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/profile_btn_detail_start_video"
@@ -143,15 +138,14 @@
             android:background="@drawable/profile_btn_contact_white_selector"
             android:text="@string/profile_detail_start_video"
             android:textColor="@color/color_black_text"
-            />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/profile_btn_friend_circle_timeline"
             style="@style/seal_profile_user_detail_btn"
             android:background="@drawable/profile_btn_contact_white_selector"
             android:text="@string/profile_btn_friend_circle_timeline"
-            android:textColor="@color/color_black_text"
-            />
+            android:textColor="@color/color_black_text" />
         <!--CallKit end-->
     </LinearLayout>
 

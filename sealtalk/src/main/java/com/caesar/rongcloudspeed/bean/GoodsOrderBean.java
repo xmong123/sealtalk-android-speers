@@ -6,6 +6,7 @@ package com.caesar.rongcloudspeed.bean;
 
 public class GoodsOrderBean  {
 
+    private String order_id;
     private String order_sn;
     private String user_id;
     private String consignee;
@@ -21,6 +22,32 @@ public class GoodsOrderBean  {
     private String add_time;
     private String pay_status;
     private String pay_name;
+    private String user_note;
+    private String order_type;
+
+    public String getOrder_type() {
+        return order_type;
+    }
+
+    public void setOrder_type(String order_type) {
+        this.order_type = order_type;
+    }
+
+    public String getUser_note() {
+        return user_note;
+    }
+
+    public void setUser_note(String user_note) {
+        this.user_note = user_note;
+    }
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
+    }
 
     public String getOrder_sn() {
         return order_sn;

@@ -11,11 +11,20 @@ public class UserInfo {
     private String birthday;
     private String mobile;
     private String user_sum;
+    private String orderCount;
     private String user_industry;
     private String user_profession;
     private String user_soft;
     private String user_type;
     private List<UserOrder> user_orders;
+
+    public String getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(String orderCount) {
+        this.orderCount = orderCount;
+    }
 
     public List<UserOrder> getUser_orders() {
         return user_orders;

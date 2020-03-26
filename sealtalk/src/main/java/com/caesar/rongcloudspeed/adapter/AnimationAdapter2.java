@@ -67,7 +67,7 @@ public class AnimationAdapter2 extends BaseQuickAdapter<PostsArticleBaseBean, Ba
         String dataString = bean.getPost_date().substring( 0, 10 );
         helper.setText( R.id.tweetText1, bean.getPost_area() + " | " + dataString );
         String priceString = bean.getPost_price();
-        if (priceString.startsWith( "0" )) {
+        if (priceString.startsWith( "0.0" )) {
             priceString = "面议";
         }
         helper.setText( R.id.tweetText2, priceString );

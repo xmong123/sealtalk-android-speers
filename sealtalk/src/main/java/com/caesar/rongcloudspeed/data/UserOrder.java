@@ -6,6 +6,7 @@ public class UserOrder {
     private String order_sn;
     private String goods_id;
     private String goods_name;
+    private String goods_price;
     private String consignee;
     private String pay_status;
 
@@ -63,5 +64,13 @@ public class UserOrder {
 
     public void setPay_status(String pay_status) {
         this.pay_status = pay_status;
+    }
+
+    public String getGoods_price() {
+        return goods_price;
+    }
+
+    public void setGoods_price(String goods_price) {
+        this.goods_price = goods_price;
     }
 }

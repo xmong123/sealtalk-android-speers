@@ -4,28 +4,34 @@ package com.caesar.rongcloudspeed.network;
 import com.caesar.rongcloudspeed.bean.AddressBean;
 import com.caesar.rongcloudspeed.bean.AddressDefaultBean;
 import com.caesar.rongcloudspeed.bean.AdminInBean;
+import com.caesar.rongcloudspeed.bean.AppAdvertVideoBean;
+import com.caesar.rongcloudspeed.bean.AppPeopleBaseBean;
 import com.caesar.rongcloudspeed.bean.CommonResonseBean;
 import com.caesar.rongcloudspeed.bean.GoodsCateBean;
 import com.caesar.rongcloudspeed.bean.GoodsListBaseBean;
 import com.caesar.rongcloudspeed.bean.GoodsListCartBean;
+import com.caesar.rongcloudspeed.bean.GoodsOrderBaseBean;
 import com.caesar.rongcloudspeed.bean.HomeDataBean;
 import com.caesar.rongcloudspeed.bean.HomeDataUserBean;
 import com.caesar.rongcloudspeed.bean.HomeMainDataBean;
 import com.caesar.rongcloudspeed.bean.HomeSeekListBean;
 import com.caesar.rongcloudspeed.bean.LessonCateBean;
-import com.caesar.rongcloudspeed.bean.LessonCategoryBean;
 import com.caesar.rongcloudspeed.bean.NavCategoryBean;
 import com.caesar.rongcloudspeed.bean.PersonCenterBean;
+import com.caesar.rongcloudspeed.bean.PersonalInvoiceBean;
+import com.caesar.rongcloudspeed.bean.PersonalMessageBean;
 import com.caesar.rongcloudspeed.bean.PersonalTagBean;
-import com.caesar.rongcloudspeed.bean.PostsArticleBaseBean;
 import com.caesar.rongcloudspeed.bean.QiniuBean;
 import com.caesar.rongcloudspeed.bean.SectionMessageDataBean;
 import com.caesar.rongcloudspeed.bean.SectionPersonalAlbumDataBean;
+import com.caesar.rongcloudspeed.bean.UserLessonOrderListBean;
 import com.caesar.rongcloudspeed.bean.UserListAddressBean;
 import com.caesar.rongcloudspeed.bean.UserOrderBean;
+import com.caesar.rongcloudspeed.bean.UserOrderListBean;
+import com.caesar.rongcloudspeed.bean.WechatPayBaseBean;
+import com.caesar.rongcloudspeed.bean.WechatPayCommonBean;
 import com.caesar.rongcloudspeed.data.BaseData;
 import com.caesar.rongcloudspeed.data.Qiniu;
-import com.caesar.rongcloudspeed.data.UserInfo;
 import com.caesar.rongcloudspeed.data.result.CircleHeaderResult;
 import com.caesar.rongcloudspeed.data.result.CircleItemResult;
 import com.caesar.rongcloudspeed.data.result.CircleItemResult1;
@@ -37,17 +43,12 @@ import com.caesar.rongcloudspeed.data.result.UserInfoResult;
 import com.caesar.rongcloudspeed.data.result.UserPayListResult;
 import com.caesar.rongcloudspeed.data.result.UserSumResult;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -159,14 +160,12 @@ public interface Api {
     /*购买APP课程*/
     @FormUrlEncoded
     @POST("index.php?g=goods&m=cart&a=cart_lesson_order")
-    Call<BaseData> cartLessonOrder(@Field("user_id") String user_id,@Field("lesson_id") String lesson_id,@Field("stotal_price") String stotal_price,@Field("pay_code") String pay_code,@Field("order_type") String order_type);
-
+    Call<GoodsOrderBaseBean> cartLessonOrder(@Field("user_id") String user_id, @Field("lesson_id") String lesson_id, @Field("stotal_price") String stotal_price, @Field("pay_code") String pay_code, @Field("order_type") String order_type, @Field("user_note") String user_note);
 
     /*求助支付订单*/
     @FormUrlEncoded
     @POST("index.php?g=goods&m=cart&a=cart_lesson_order")
-    Call<BaseData> cartSeekOrder(@Field("user_id") String user_id,@Field("lesson_id") String lesson_id,@Field("stotal_price") String stotal_price,@Field("pay_code") String pay_code,@Field("order_type") String order_type);
-
+    Call<GoodsOrderBaseBean> cartSeekOrder(@Field("user_id") String user_id,@Field("lesson_id") String lesson_id,@Field("stotal_price") String stotal_price,@Field("pay_code") String pay_code,@Field("order_type") String order_type, @Field("user_note") String user_note);
 
     /*获取购物车清单*/
     @FormUrlEncoded
@@ -387,7 +386,7 @@ public interface Api {
 
     /*修改同行快线用户登录密码*/
     @FormUrlEncoded
-    @POST("index.php?g=user&m=profile&a=password_post_json")
+    @POST("index.php?g=user&m=index&a=password_post_json")
     Call<BaseData> resetuserpass(@Field("userid") String userid, @Field("password") String password);
 
     /*同步同行快线用户好友资料*/
@@ -405,8 +404,9 @@ public interface Api {
     @POST("index.php?g=user&m=index&a=edit_user_info")
     Call<BaseData> edituserinfo(@Field("user_id") String user_id,@Field("real_name") String real_name,@Field("user_idnumber") String user_idnumber,@Field("user_address") String user_address,@Field("user_friend") String user_friend,@Field("friend_mobile") String friend_mobile,@Field("user_cardphoto") String user_cardphoto);
 
-    @GET("personal_center")
-    Observable<PersonCenterBean> personal_center(@Query("uid") String uid);
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=getPersonalMessage")
+    Observable<PersonalMessageBean> personal_center(@Field("user_id") String user_id);
 
     @GET("index.php")
     Observable<HomeDataUserBean> HomePersonalData(@Query("g") String group, @Query("m") String model, @Query("a") String action, @Query("cid") String cid, @Query("userid") String userid);
@@ -453,5 +453,53 @@ public interface Api {
     @FormUrlEncoded
     @POST("index.php?g=portal&m=list&a=indexSeekListJson")
     Observable<HomeSeekListBean> indexAvertkListJson(@Field("userid") String userid,@Field("cid") String cid,@Field("tag") String tag);
+
+    /*获取用户增值税资质资料*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=get_user_invoice")
+    Observable<PersonalInvoiceBean> getUserInvoiceData(@Field("user_id") String user_id);
+
+    /*获取用户增值税资质资料*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=edit_user_invoice")
+    Observable<CommonResonseBean> editUserInvoiceData(@Field("user_id") String user_id,@Field("invoice_name") String invoice_name,@Field("invoice_identifi") String invoice_identifi,@Field("invoice_address") String user_address,@Field("invoice_phone") String user_friend,@Field("invoice_bank") String invoice_bank,@Field("invoice_account") String invoice_account);
+
+    /*获取APP支付签名资质*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=getWechatSign")
+    Call<WechatPayBaseBean> WechatAppPaySign(@Field("user_id") String user_id, @Field("out_trade_no") String out_trade_no, @Field("total_fee") String total_fee, @Field("body") String body);
+
+    /*获取APP支付签名资质*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=getWechatSign")
+    Observable<WechatPayCommonBean> getWechatAppPay(@Field("user_id") String user_id, @Field("out_trade_no") String out_trade_no, @Field("total_fee") String total_fee, @Field("body") String body);
+
+    /*获取用户订单列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=myorderjson")
+    Observable<UserOrderListBean> getUserOrderJson(@Field("user_id") String user_id,@Field("order_type") String order_type);
+
+    /*获取用户订单列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=getAppAdvertVideo")
+    Call<AppAdvertVideoBean> getAppAdvertVideo(@Field("user_id") String user_id);
+
+    /*获取推荐用户*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=getAppRecommendMan")
+    Call<AppPeopleBaseBean> getAppRecommendMan(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=do_favorite_json")
+    Observable<CommonResonseBean> DoFavorite(@Field("uid") String uid, @Field("title") String title, @Field("table") String table, @Field("object_id") String id);
+
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=do_favorite_json")
+    Observable<CommonResonseBean> DoFavoriteMobile(@Field("uid") String uid, @Field("title") String title, @Field("table") String table, @Field("object_id") String id, @Field("description") String description);
+
+    /*获取用户购买课程列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=getUserOrderLesson")
+    Observable<UserLessonOrderListBean> getUserOrderLesson(@Field("user_id") String user_id, @Field("order_type") String order_type);
 
 }

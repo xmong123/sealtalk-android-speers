@@ -84,11 +84,13 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
     private TextView urlTipTv2;
     private CircleHeaderItem headerItem1;
     private CircleHeaderItem headerItem2;
+    private String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circle);
+        userid = UserInfoUtils.getAppUserId(this);
         initView();
         loadData();
 
@@ -234,7 +236,6 @@ public class FriendCircleActivity extends FragmentActivity implements SwipeRefre
     private void loadData() {
         showLoadingDialog("");
         List<CircleItem> datas = new ArrayList<>();
-        String userid = UserInfoUtils.getAppUserId(this);
         NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().fetchFriendCircle(userid),
                 new NetworkCallback<CircleItemResult>() {
                     @Override

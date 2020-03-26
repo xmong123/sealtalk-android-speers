@@ -64,7 +64,7 @@ public class SPSpeerLeftFragment extends BaseFragment {
         lesson_content = intent.getExtras().getString( "lesson_content" );
         lesson_source = intent.getExtras().getString( "lesson_source" );
         lessonTitle.setText(lesson_name);
-        if(lesson_price.startsWith("0")){
+        if(lesson_price.startsWith( "0.0" )){
             lessonMoney.setText("课程免费");
         }else{
             lessonMoney.setText("￥"+lesson_price+"元");

@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backImage="@mipmap/back"
-            app:msg="我&#8197;的&#8197;动&#8197;态" />
+            app:msg="我&#8197;的&#8197;广&#8197;告" />
 
         <!--@drawable/shop_title_text_bg-->
         <FrameLayout

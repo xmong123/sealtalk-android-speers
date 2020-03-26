@@ -59,7 +59,7 @@ public class MainDiscoveryActivity extends BaseActivity implements View.OnClickL
             default:
                 break;
         }
-        finish();
+
     }
 
 }

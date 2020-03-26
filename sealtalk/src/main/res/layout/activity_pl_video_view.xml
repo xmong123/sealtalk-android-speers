@@ -68,7 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:text="VIP可关闭广告"
+            android:text="优质广告欣赏"
             android:gravity="center"
             android:textColor="@color/forumgold"/>
     </LinearLayout>

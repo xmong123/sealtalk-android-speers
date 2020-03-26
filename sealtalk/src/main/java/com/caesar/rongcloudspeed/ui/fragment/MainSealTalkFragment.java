@@ -71,10 +71,9 @@ public class MainSealTalkFragment extends Fragment {
         //tab的下划线颜色,默认是粉红色
         tabLayout.setSelectedTabIndicatorColor(colorprimary);
         tabLayout.setTabMode(MODE_FIXED);
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager(),0) {
             @Override
             public Fragment getItem(int position) {
-//                orderListsFragment = OrderListsFragment.newInstance(position + 1, "");
                 if (position == 0) {
                     sealtalkFragment = new MainConversationListFragment();
                 } else if (position == 1) {

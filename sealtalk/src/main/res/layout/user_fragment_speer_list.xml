@@ -23,7 +23,7 @@
             app:sRightIconRes="@mipmap/arrow_right_red" />
 
         <TextView
-            android:visibility="visible"
+            android:id="@+id/redTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
@@ -33,9 +33,9 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="1"
-            android:id="@+id/redTips"
             android:textColor="@color/white"
-            android:textSize="@dimen/subMainText" />
+            android:textSize="@dimen/subMainText"
+            android:visibility="invisible" />
     </FrameLayout>
 
     <com.allen.library.SuperTextView
@@ -84,11 +84,11 @@
 
     <com.allen.library.SuperTextView
         android:id="@+id/volumeStv"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commonBangHeight"
         android:paddingLeft="@dimen/layoutMargin16dp"
         android:paddingRight="@dimen/layoutMargin16dp"
+        android:visibility="gone"
         app:sDividerLineType="bottom"
         app:sLeftIconRes="@mipmap/personal_order_returned_icon"
         app:sLeftTextString="我的收藏"
@@ -96,14 +96,14 @@
 
     <com.allen.library.SuperTextView
         android:id="@+id/logoutStv"
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commonBangHeight"
         android:paddingLeft="@dimen/layoutMargin16dp"
         android:paddingRight="@dimen/layoutMargin16dp"
+        android:visibility="visible"
         app:sDividerLineType="bottom"
         app:sLeftIconRes="@mipmap/settingup"
-        app:sLeftTextString="系统设置"
+        app:sLeftTextString="退出登陆"
         app:sRightIconRes="@mipmap/arrow_right_red" />
 
     <View

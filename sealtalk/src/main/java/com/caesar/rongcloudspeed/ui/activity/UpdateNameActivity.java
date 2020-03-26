@@ -25,12 +25,13 @@ public class UpdateNameActivity extends TitleBaseActivity {
 
     private ClearWriteEditText updateNameCet;
     private UserInfoViewModel userInfoViewModel;
+    private String uidString;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_name);
-
+        uidString = UserInfoUtils.getAppUserId(this);
         initView();
         initViewModel();
     }
@@ -41,7 +42,7 @@ public class UpdateNameActivity extends TitleBaseActivity {
     private void initView() {
 
         getTitleBar().setTitle(R.string.seal_update_name);
-        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_update_name_save_update),new View.OnClickListener() {
+        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_update_name_save_update), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String newName = updateNameCet.getText().toString().trim();
@@ -68,7 +69,7 @@ public class UpdateNameActivity extends TitleBaseActivity {
             @Override
             public void onChanged(Resource<UserInfo> resource) {
                 if (resource.data != null) {
-                    String name = TextUtils.isEmpty(resource.data.getName())? "" : resource.data.getName();
+                    String name = TextUtils.isEmpty(resource.data.getName()) ? "" : resource.data.getName();
                     updateNameCet.setText(name);
                     updateNameCet.setSelection(name.length());
                 }
@@ -81,11 +82,11 @@ public class UpdateNameActivity extends TitleBaseActivity {
             public void onChanged(Resource<Result> resultResource) {
                 if (resultResource.status == Status.SUCCESS) {
                     showToast(R.string.seal_update_name_toast_nick_name_change_success);
-                    String userid= UserInfoUtils.getAppUserId(UpdateNameActivity.this);
-                    String nicename= String.valueOf(updateNameCet.getText());
-                    String imgurl= UserInfoUtils.getAppUserUrl(UpdateNameActivity.this);
+
+                    String nicename = String.valueOf(updateNameCet.getText());
+                    String imgurl = UserInfoUtils.getAppUserUrl(UpdateNameActivity.this);
                     UserInfoUtils.setNikeName(nicename, UpdateNameActivity.this);
-                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updatenickname(userid,nicename,imgurl),
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updatenickname(uidString, nicename, imgurl),
                             new NetworkCallback<BaseData>() {
                                 @Override
                                 public void onSuccess(BaseData baseData) {
@@ -108,6 +109,7 @@ public class UpdateNameActivity extends TitleBaseActivity {
 
     /**
      * 更新name
+     *
      * @param newName
      */
     private void updateName(String newName) {

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:id="@+id/album_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/white">
+
+        <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+            android:id="@+id/album_item_video"
+            android:layout_width="match_parent"
+            android:layout_height="160dp" />
+
+        <ImageView
+            android:id="@+id/album_item_avatar"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/album_item_video"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/album_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/album_item_video"
+            android:layout_toStartOf="@+id/album_item_time"
+            android:layout_toEndOf="@+id/album_item_avatar"
+            android:gravity="left|center_vertical"
+            android:maxLines="2"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/mainText14sp"
+            tools:text="腾讯社交广告是腾讯公司核心广告业务" />
+
+        <TextView
+            android:id="@+id/album_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/album_item_video"
+            android:layout_alignTop="@+id/iv_logo"
+            android:layout_alignBottom="@+id/iv_logo"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="right|bottom"
+            android:padding="5dp"
+            android:textSize="@dimen/sp_12"
+            tools:text="2020-02-02" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

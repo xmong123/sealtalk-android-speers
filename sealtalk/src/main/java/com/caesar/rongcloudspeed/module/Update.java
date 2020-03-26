@@ -20,7 +20,7 @@ import java.net.URL;
 public class Update extends Thread {
 
     private String result;
-    private String url = "http://api.fir.im/apps/latest/" + UpdateKey.APP_ID
+    private String url = "http://api.jappstore.com/apps/latest/" + UpdateKey.APP_ID
             + "?api_token=" + UpdateKey.API_TOKEN;
 
     public void run() {

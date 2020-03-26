@@ -151,13 +151,13 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.post_industy_btn:
-                startActivityForResult(new Intent(this, AdminIndustryActivity.class), REQUEST_CODE_SELECT_INDUSTRY);
+                startActivityForResult(new Intent(this, IndustrySelectActivity.class), REQUEST_CODE_SELECT_INDUSTRY);
                 break;
             case R.id.post_profession_btn:
-                startActivityForResult(new Intent(this, AdminProfessionActivity.class), REQUEST_CODE_SELECT_PROFESSION);
+                startActivityForResult(new Intent(this, ProfessionSelectActivity.class), REQUEST_CODE_SELECT_PROFESSION);
                 break;
             case R.id.post_soft_btn:
-                startActivityForResult(new Intent(this, AdminSoftActivity.class), REQUEST_CODE_SELECT_SOFT);
+                startActivityForResult(new Intent(this, SoftSelectActivity.class), REQUEST_CODE_SELECT_SOFT);
                 break;
             case R.id.post_commit_btn:
                 postTitle = post_edit_title.getText().toString();
@@ -195,7 +195,7 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
 //                                            upLoadAllFeedBackImg(pathList);
                                             Intent intent=new Intent(PublicSeekActivity.this,SeekHelperOrderActivity.class);
                                             intent.putExtra("seek_name",postTitle);
-                                            intent.putExtra("seek_price",postPrice);
+                                            intent.putExtra("seek_price","10");
                                             intent.putExtra("seek_type","3");
                                             intent.putExtra("industryIDString", industryIDString);
                                             intent.putExtra("professionIDString", professionIDString);

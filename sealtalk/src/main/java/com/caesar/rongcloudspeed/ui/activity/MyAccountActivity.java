@@ -28,6 +28,8 @@ import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.viewmodel.UserInfoViewModel;
 import com.caesar.rongcloudspeed.utils.log.SLog;
 
+import static com.caesar.rongcloudspeed.constants.Constant.CODE_SUCC;
+
 /**
  * 我的账号
  */
@@ -55,7 +57,6 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
      */
     private void initView() {
         getTitleBar().setTitle(R.string.seal_mine_my_account);
-
         userInfoUiv = findViewById(R.id.uiv_userinfo);
         userInfoUiv.setOnClickListener(this);
         nicknameSiv = findViewById(R.id.siv_nickname);
@@ -117,7 +118,12 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
                             new NetworkCallback<BaseData>() {
                                 @Override
                                 public void onSuccess(BaseData baseData) {
-                                    showToast(R.string.profile_update_synchro_success);
+                                    if(baseData.getCode()==CODE_SUCC){
+                                        showToast(R.string.profile_update_synchro_success);
+                                    }else{
+                                        showToast(baseData.getInfo());
+                                    }
+
                                 }
 
                                 @Override

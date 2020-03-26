@@ -24,8 +24,8 @@ import io.rong.imkit.RongIM;
 
 public class WXManager {
     private static final String TAG = "WXManager";
-    private static final String APP_ID = "替换为您的微信开放平台 AppId";
-
+    public static final String APP_ID = "wx87a9e4787773477d";
+    public static final String BUGLY_ID = "8ee2b870c9";
     /**
      * 分享图片缩略图大小
      */

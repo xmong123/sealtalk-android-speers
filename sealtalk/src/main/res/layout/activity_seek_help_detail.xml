@@ -93,10 +93,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Revit幕墙设计"
+                    android:layout_marginBottom="@dimen/layoutMargin8dp"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/sp_16" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin4dp"

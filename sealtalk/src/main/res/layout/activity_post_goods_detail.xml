@@ -124,7 +124,7 @@
                     android:layout_marginStart="@dimen/layoutMargin8dp"
                     android:layout_marginTop="2dp"
                     android:layout_weight="3"
-                    android:text="求助薪酬" />
+                    android:text="求助报酬" />
 
                 <EditText
                     android:id="@+id/post_edit_price"
@@ -166,7 +166,8 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/post_industy_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/titleBarHeight"
                     android:layout_toEndOf="@+id/post_industy_text"
                     android:layout_weight="1"
                     app:sDividerLineType="none"
@@ -196,7 +197,8 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/post_profession_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/titleBarHeight"
                     android:layout_toEndOf="@+id/post_profession_text"
                     app:sDividerLineType="none"
                     app:sRightIconRes="@mipmap/arrow_right_red"
@@ -225,7 +227,8 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/post_soft_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/titleBarHeight"
                     android:layout_toEndOf="@+id/post_soft_text"
                     android:layout_weight="1"
                     app:sDividerLineType="none"

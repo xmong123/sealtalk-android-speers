@@ -83,7 +83,7 @@ public class SeekHelperDetailActivity extends MultiStatusActivity {
         seek_title = getIntent().getStringExtra("seek_title");
         seek_content = getIntent().getStringExtra("seek_content");
         seek_price = getIntent().getStringExtra("seek_price");
-        if (seek_price.startsWith("0")) {
+        if (seek_price.startsWith( "0.0" )) {
             seek_price = "价格可议";
         }
         seek_date = getIntent().getStringExtra("seek_date");

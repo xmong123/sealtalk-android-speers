@@ -33,9 +33,10 @@ public class AdminSoftFragment extends BaseFragment implements OnRefreshListener
     private RegisterNextStepListener listener;
     private RecyclerView adminIndustryRecyclerView;
     private BrandAdapter adapter;
-    private List<AdminIndustryBean> adminIndustryArray=new ArrayList<AdminIndustryBean>();
+    private List<AdminIndustryBean> adminIndustryArray = new ArrayList<AdminIndustryBean>();
     private SmartRefreshLayout refreshLayout;
     private static final String TAG = "AdminSoftFragment";
+
     @Override
     protected int getLayoutResId() {
         return R.layout.admin_fragment_soft;
@@ -44,7 +45,7 @@ public class AdminSoftFragment extends BaseFragment implements OnRefreshListener
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
         findView(R.id.nextSoftStep, true);
-        refreshLayout=getActivity().findViewById(R.id.refreshLayout);
+        refreshLayout = getActivity().findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(this);
         adminIndustryRecyclerView = getActivity().findViewById(R.id.adminsoft_recyclerView);
         adminIndustryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -60,7 +61,7 @@ public class AdminSoftFragment extends BaseFragment implements OnRefreshListener
                 new NetworkCallback<AdminInBean>() {
                     @Override
                     public void onSuccess(AdminInBean adminInBean) {
-                        adminIndustryArray=adminInBean.getReferer();
+                        adminIndustryArray = adminInBean.getReferer();
                         adapter.setData(adminIndustryArray);
                         adminIndustryRecyclerView.setAdapter(adapter);
                         refreshLayout.finishRefresh(true);
@@ -68,7 +69,7 @@ public class AdminSoftFragment extends BaseFragment implements OnRefreshListener
 
                     @Override
                     public void onFailure(Throwable t) {
-                        Log.d(TAG,String.valueOf(t));
+                        Log.d(TAG, String.valueOf(t));
                         Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -87,20 +88,27 @@ public class AdminSoftFragment extends BaseFragment implements OnRefreshListener
     protected void onClick(View v, int id) {
         switch (id) {
             case R.id.nextSoftStep:
-                SparseBooleanArray mCheckStates=adapter.getCheckedItemPositions();
-                if(mCheckStates.size()>0){
+                SparseBooleanArray mCheckStates = adapter.getCheckedItemPositions();
+                if (mCheckStates.size() > 0) {
                     StringBuffer stringBuffer = new StringBuffer();
-                    for(int i=0;i<mCheckStates.size();i++){
-                        int key = mCheckStates.keyAt(i);
-                        String industryID=adminIndustryArray.get(key).getId();
-                        stringBuffer.append(industryID+",");
+                    for (int i = 0; i < mCheckStates.size(); i++) {
+                        if (mCheckStates.valueAt(i)) {
+                            int key = mCheckStates.keyAt(i);
+                            String industryID = adminIndustryArray.get(key).getId();
+                            stringBuffer.append(industryID + ",");
+                        }
                     }
-                    stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                    String industryString = stringBuffer.toString();
-                    if(listener!=null){
-                        listener.onNextStep(industryString);
+                    if (stringBuffer.length() > 0) {
+                        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                        String industryString = stringBuffer.toString();
+                        if (listener != null) {
+                            listener.onNextStep(industryString);
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "请选择相关软件", Toast.LENGTH_LONG).show();
                     }
-                }else{
+
+                } else {
                     Toast.makeText(getActivity(), "请选择相关软件", Toast.LENGTH_LONG).show();
                 }
                 break;

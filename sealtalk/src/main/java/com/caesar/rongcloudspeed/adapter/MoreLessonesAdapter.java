@@ -46,7 +46,6 @@ public class MoreLessonesAdapter extends BaseQuickAdapter<PostsArticleBaseBean, 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String priceString = "¥ " + shop_price;
         if (!thumbString.startsWith("http://")) {
             thumbString = Constant.THINKCMF_PATH + thumbString;
         }
@@ -56,6 +55,11 @@ public class MoreLessonesAdapter extends BaseQuickAdapter<PostsArticleBaseBean, 
             helper.setImageResource(R.id.lesson_item_smeta, R.drawable.votebase);
         }
         helper.setText(R.id.lesson_item_title, shop_title);
-        helper.setText(R.id.lesson_item_price, priceString);
+        if (shop_price.startsWith( "0.0" )) {
+            helper.setText(R.id.lesson_item_price, "免费");
+        } else {
+            helper.setText(R.id.lesson_item_price, "¥" + shop_price);
+        }
+
     }
 }

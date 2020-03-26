@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,18 +24,22 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.adapter.BookShopAdapter;
 import com.caesar.rongcloudspeed.adapter.MemberSpeerAdapter;
+import com.caesar.rongcloudspeed.alipaysdk.PayResult;
 import com.caesar.rongcloudspeed.bean.AddressDefaultBean;
 import com.caesar.rongcloudspeed.bean.AddressItemBean;
 import com.caesar.rongcloudspeed.bean.CommonResonseBean;
 import com.caesar.rongcloudspeed.bean.FenqiBean;
 import com.caesar.rongcloudspeed.bean.GoodsDetailBean;
+import com.caesar.rongcloudspeed.bean.GoodsOrderBaseBean;
 import com.caesar.rongcloudspeed.bean.MemberSpeerBean;
 import com.caesar.rongcloudspeed.bean.UserOrderBean;
+import com.caesar.rongcloudspeed.bean.WechatPayBaseBean;
 import com.caesar.rongcloudspeed.common.MultiStatusActivity;
 import com.caesar.rongcloudspeed.common.VerificationCodeHelper;
 import com.caesar.rongcloudspeed.data.BaseData;
@@ -45,21 +50,32 @@ import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.caesar.rongcloudspeed.oberver.CommonObserver;
 import com.caesar.rongcloudspeed.ui.dialog.PayPassDialog;
 import com.caesar.rongcloudspeed.ui.dialog.PayPassView;
+import com.caesar.rongcloudspeed.util.OrderInfoUtil2_0;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zaaach.citypicker.db.DBManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static com.caesar.rongcloudspeed.constants.Constant.CODE_SUCC;
+import static com.caesar.rongcloudspeed.quick.QiniuLabConfig.ALIAPPID;
+import static com.caesar.rongcloudspeed.quick.QiniuLabConfig.RSA2_PRIVATE;
+import static com.caesar.rongcloudspeed.quick.QiniuLabConfig.RSA_PRIVATE;
+import static com.caesar.rongcloudspeed.quick.QiniuLabConfig.WXAPPID;
 
 public class SpeerOrderActivity extends MultiStatusActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -77,7 +93,6 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
     TextView getSpeerVerifiCode;
     @BindView(R.id.speerLessonMoney)
     TextView speerLessonMoney;
-    private DBManager dbManager;
     private String uidString;
     private String lesson_id;
     private String lesson_name;
@@ -85,31 +100,31 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
     private String lesson_smeta;
     private String thumbVideoString;
     private boolean isRread = true;
-    private String actionString = null;
     private String pay_code = "alipay";
     private String order_type = "2";
-    private String stotal_price;
+    private IWXAPI api;
+    private String out_trade_no;
+    private float totalPrice = 10.00f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitleBarView(titlebar, "确认订单");
         ButterKnife.bind(this);
-        actionString = getIntent().getAction();
         lesson_id = getIntent().getExtras().getString("lesson_id");
         lesson_name = getIntent().getExtras().getString("lesson_name");
         lesson_price = getIntent().getExtras().getString("lesson_price");
         lesson_smeta = getIntent().getExtras().getString("lesson_smeta");
         thumbVideoString = getIntent().getExtras().getString("videoPath");
-        dbManager = new DBManager(this);
+        totalPrice = Float.valueOf(lesson_price) * 100f;
         weixinBox.setOnCheckedChangeListener(this);
         alipayBox.setOnCheckedChangeListener(this);
         initData();
         uidString = UserInfoUtils.getAppUserId(this);
         lessonTitle.setText(lesson_name);
         lessonPrice.setText("¥ " + lesson_price);
-        stotal_price = lesson_price;
-        speerLessonMoney.setText("¥ " + stotal_price);
+        speerLessonMoney.setText("¥ " + lesson_price);
+        api = WXAPIFactory.createWXAPI(this, WXAPPID);
     }
 
     private void initData() {
@@ -145,18 +160,25 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
 
     @SuppressLint("HandlerLeak")
     Handler purchaseHandler = new Handler() {
+        String priceString = String.valueOf((int) totalPrice);
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
                     prompDialog.showLoading("请等待");
-                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().cartLessonOrder(uidString, lesson_id, stotal_price, pay_code, order_type),
-                            new NetworkCallback<BaseData>() {
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().cartLessonOrder(uidString, lesson_id, lesson_price, pay_code, order_type, lesson_name),
+                            new NetworkCallback<GoodsOrderBaseBean>() {
                                 @Override
-                                public void onSuccess(BaseData data) {
+                                public void onSuccess(GoodsOrderBaseBean goodsOrderBaseBean) {
                                     prompDialog.dismiss();
                                     Toast.makeText(SpeerOrderActivity.this, "您提交了订单，请等待系统确认", Toast.LENGTH_SHORT).show();
-                                    showPayDialog();
+                                    if (goodsOrderBaseBean.getCode() == CODE_SUCC) {
+                                        out_trade_no = goodsOrderBaseBean.getReferer().getOrder_sn();
+                                        showPayDialog();
+                                    } else {
+                                        Toast.makeText(SpeerOrderActivity.this, "网络繁忙,请稍侯再试...", Toast.LENGTH_LONG).show();
+                                    }
+
                                 }
 
                                 @Override
@@ -166,6 +188,89 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
                                 }
                             });
 
+                    break;
+
+                case 1:
+                    prompDialog.showLoading("请等待");
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().WechatAppPaySign(uidString, out_trade_no, priceString, lesson_name),
+                            new NetworkCallback<WechatPayBaseBean>() {
+                                @Override
+                                public void onSuccess(WechatPayBaseBean baseBean) {
+                                    prompDialog.dismiss();
+                                    Toast.makeText(SpeerOrderActivity.this, "您正在发起支付，请稍后...", Toast.LENGTH_SHORT).show();
+                                    WechatPayBaseBean.WechatPayBean wechatPayBean = baseBean.getReferer();
+                                    PayReq req = new PayReq();
+                                    req.appId = wechatPayBean.getAppid();
+                                    req.partnerId = wechatPayBean.getPartnerid();
+                                    req.prepayId = wechatPayBean.getPrepayid();
+                                    req.nonceStr = wechatPayBean.getNoncestr();
+                                    req.timeStamp = wechatPayBean.getTimestamp();
+                                    req.packageValue = "Sign=WXPay";
+                                    req.sign = wechatPayBean.getSign();
+                                    req.extData = "app data"; // optional
+                                    // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                                    api.sendReq(req);
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    prompDialog.dismiss();
+                                    Toast.makeText(SpeerOrderActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                    break;
+                case 2:
+                    if(uidString.equals("2")){
+                        priceString="0.01";
+                    }
+                    final String orderInfo = OrderInfoUtil2_0.payV2TradeNoParam(out_trade_no,lesson_name,lesson_price);
+                    final Runnable payRunnable = () -> {
+                        PayTask alipay = new PayTask(SpeerOrderActivity.this);
+                        Map<String, String> result = alipay.payV2(orderInfo, true);
+                        Log.i("msp", result.toString());
+                        Message msg1 = new Message();
+                        msg1.what = 3;
+                        msg1.obj = result;
+                        purchaseHandler.sendMessage(msg1);
+                    };
+
+                    // 必须异步调用
+                    Thread payThread = new Thread(payRunnable);
+                    payThread.start();
+                    break;
+
+                case 3:
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    Log.d("SpeerOrderActivity",resultInfo);
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        showAlert(SpeerOrderActivity.this, getString(R.string.pay_success));
+                        Set<String> set = UserInfoUtils.getAppUserLessones(SpeerOrderActivity.this);
+                        if (set == null) {
+                            set = new HashSet<>();
+                        }
+                        set.add(lesson_id);
+                        UserInfoUtils.setAppUserLessones(set, SpeerOrderActivity.this);
+                        Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
+                        videoIntent.putExtra("lesson_status", true);
+                        videoIntent.putExtra("lesson_id", lesson_id);
+                        videoIntent.putExtra("lesson_name", lesson_name);
+                        videoIntent.putExtra("lesson_price", lesson_price);
+                        videoIntent.putExtra("lesson_smeta", lesson_smeta);
+                        videoIntent.putExtra("videoPath", thumbVideoString);
+                        startActivity(videoIntent);
+                        finish();
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        showAlert(SpeerOrderActivity.this, getString(R.string.pay_failed));
+                    }
                     break;
                 default:
                     break;
@@ -187,40 +292,17 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if (order_type.equals("6")) {
-                    UserInfoUtils.setUserType("6", SpeerOrderActivity.this);
+                if (wechatpay) {
+                    purchaseHandler.sendEmptyMessage(1);
                 } else {
-                    Set<String> set = UserInfoUtils.getAppUserOrder(SpeerOrderActivity.this);
-                    if (set == null) {
-                        set = new HashSet<>();
-                    }
-                    set.add(lesson_id);
-                    UserInfoUtils.setAppUserOrder(set, SpeerOrderActivity.this);
+                    purchaseHandler.sendEmptyMessage(2);
                 }
-                Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
-                videoIntent.putExtra("lesson_status", true);
-                videoIntent.putExtra("lesson_id", lesson_id);
-                videoIntent.putExtra("lesson_name", lesson_name);
-                videoIntent.putExtra("lesson_price", lesson_price);
-                videoIntent.putExtra("lesson_smeta", lesson_smeta);
-                videoIntent.putExtra("videoPath", thumbVideoString);
-                startActivity(videoIntent);
-                finish();
             }
         });
         holderView.findViewById(R.id.morder_confirm_btn2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
-                videoIntent.putExtra("lesson_status", false);
-                videoIntent.putExtra("lesson_id", lesson_id);
-                videoIntent.putExtra("lesson_name", lesson_name);
-                videoIntent.putExtra("lesson_price", lesson_price);
-                videoIntent.putExtra("lesson_smeta", lesson_smeta);
-                videoIntent.putExtra("videoPath", thumbVideoString);
-                startActivity(videoIntent);
-                finish();
             }
         });
 
@@ -238,7 +320,7 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
         switch (view.getId()) {
             case R.id.speerProtoBtn:
                 Intent intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra("url", "file:///android_asset/webpage/memaiagree.html");
+                intent.putExtra("url", "file:///android_asset/webpage/speer_agree.html");
                 intent.putExtra("title", "《同行快线普通服务协议》");
                 startActivity(intent);
                 break;
@@ -255,31 +337,10 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
                         return;
                     }
 
-                    if (alipay) {
-                        //支付宝支付
-                        //拿到支付需要的基本参数
-                        if (actionString != null) {
-                            finish();
-                        } else {
-                            purchaseHandler.sendEmptyMessage(0);
-                        }
-
-                    } else if (wechatpay) {
-                        //立即支付
-
-                        if (actionString != null) {
-                            finish();
-                        } else {
-                            purchaseHandler.sendEmptyMessage(0);
-//                            Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
-//                            videoIntent.putExtra("lesson_id", lesson_id);
-//                            videoIntent.putExtra("lesson_name", lesson_name);
-//                            videoIntent.putExtra("lesson_price", lesson_price);
-//                            videoIntent.putExtra("lesson_smeta", lesson_smeta);
-//                            videoIntent.putExtra("videoPath", thumbVideoString);
-//                            startActivity(videoIntent);
-                        }
-
+                    if (alipay || wechatpay) {
+                        purchaseHandler.sendEmptyMessage(0);
+                    } else {
+                        ToastUtils.showShort("请选择支付方式");
                     }
 
                 }
@@ -289,12 +350,51 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uidString = UserInfoUtils.getAppUserId(this);
+        boolean isWechatPay = UserInfoUtils.getWechatInfoData(this);
+        if (isWechatPay) {
+            Set<String> set = UserInfoUtils.getAppUserLessones(SpeerOrderActivity.this);
+            if (set == null) {
+                set = new HashSet<>();
+            }
+            set.add(lesson_id);
+            UserInfoUtils.setAppUserLessones(set, SpeerOrderActivity.this);
+            UserInfoUtils.setWechatInfoData(false, this);
+            Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
+            videoIntent.putExtra("lesson_status", true);
+            videoIntent.putExtra("lesson_id", lesson_id);
+            videoIntent.putExtra("lesson_name", lesson_name);
+            videoIntent.putExtra("lesson_price", lesson_price);
+            videoIntent.putExtra("lesson_smeta", lesson_smeta);
+            videoIntent.putExtra("videoPath", thumbVideoString);
+            startActivity(videoIntent);
+            finish();
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-
+        Log.d("TAG", "requestCode:" + requestCode + ", resultCode =>>> " + resultCode);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            Set<String> set = UserInfoUtils.getAppUserLessones(SpeerOrderActivity.this);
+            if (set == null) {
+                set = new HashSet<>();
+            }
+            set.add(lesson_id);
+            UserInfoUtils.setAppUserLessones(set, SpeerOrderActivity.this);
+            Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
+            videoIntent.putExtra("lesson_status", true);
+            videoIntent.putExtra("lesson_id", lesson_id);
+            videoIntent.putExtra("lesson_name", lesson_name);
+            videoIntent.putExtra("lesson_price", lesson_price);
+            videoIntent.putExtra("lesson_smeta", lesson_smeta);
+            videoIntent.putExtra("videoPath", thumbVideoString);
+            startActivity(videoIntent);
+            finish();
         }
     }
 

@@ -3,12 +3,14 @@ package com.caesar.rongcloudspeed;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
 import com.caesar.rongcloudspeed.manager.RetrofitManager;
 import com.caesar.rongcloudspeed.utils.QiniuUtils;
+import com.caesar.rongcloudspeed.utils.ToastUtils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -23,18 +25,22 @@ import com.caesar.rongcloudspeed.contact.PhoneContactManager;
 import com.caesar.rongcloudspeed.im.IMManager;
 import com.caesar.rongcloudspeed.utils.SearchUtils;
 import com.caesar.rongcloudspeed.wx.WXManager;
+import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 
 import java.io.File;
+import java.util.HashMap;
 
 import io.rong.imlib.ipc.RongExceptionHandler;
 
+import static com.caesar.rongcloudspeed.wx.WXManager.APP_ID;
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class SealApp extends MultiDexApplication {
     private static SealApp appInstance;
     public final static String DEFAULT_SAVE_IMAGE_PATH = Environment.getExternalStorageDirectory() + File.separator + "CircleDemo" + File.separator + "Images"
             + File.separator;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -42,7 +48,7 @@ public class SealApp extends MultiDexApplication {
         appInstance = this;
         Fresco.initialize(this);
         // 初始化 bugly BUG 统计
-        //CrashReport.initCrashReport(getApplicationContext());
+//        CrashReport.initCrashReport(getApplicationContext(), WXAPPID, false);
         Utils.init(this);
         ErrorCode.init(this);
 
@@ -76,24 +82,26 @@ public class SealApp extends MultiDexApplication {
             public void onViewInitFinished(boolean b) {
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
                 Log.d("app", " onViewInitFinished is " + b);
+//                Toast.makeText(getApplicationContext(), b?"x5内核加载成功":"x5内核加载失败",Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCoreInitFinished() {
+                Log.d("X5","onCoreInitFinished");
                 // TODO Auto-generated method stub
             }
         };
-
-        //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(), cb);
         QiniuUtils.getUploadManagerInstance();
     }
 
-    public static SealApp getApplication(){
+    public static SealApp getApplication() {
         return appInstance;
     }
 
-    /** 初始化imageLoader */
+    /**
+     * 初始化imageLoader
+     */
     private void initImageLoader() {
         DisplayImageOptions options = new DisplayImageOptions.Builder().showImageForEmptyUri(com.yiw.circledemo.R.color.bg_no_photo)
                 .showImageOnFail(com.yiw.circledemo.R.color.bg_no_photo).showImageOnLoading(com.yiw.circledemo.R.color.bg_no_photo).cacheInMemory(true)
@@ -112,8 +120,7 @@ public class SealApp extends MultiDexApplication {
         ImageLoader.getInstance().init(imageconfig);
     }
 
-    public static SealApp getInstance()
-    {
+    public static SealApp getInstance() {
         if (appInstance == null) {
             appInstance = new SealApp();
         }

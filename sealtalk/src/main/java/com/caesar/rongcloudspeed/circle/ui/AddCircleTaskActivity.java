@@ -1,10 +1,16 @@
 package com.caesar.rongcloudspeed.circle.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.GridLayoutManager;
+
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -48,12 +54,12 @@ public class AddCircleTaskActivity extends BaseActivity {
     RecyclerView rvPhoto;
     private ImageView back;
     private TextView put;
-    private int groupId;
     private List<HolderImg> holderImgList;
     private AddImgAdapter adapter;
     private int selectImgPosition = 0;
     private List<String> urlList;
-
+    private String contentString;
+    private String[] images;
 
     @Override
     protected int provideContentView() {
@@ -82,10 +88,68 @@ public class AddCircleTaskActivity extends BaseActivity {
             finish();
         });
         put.setOnClickListener(view -> {
-            uploadImg();
+            contentString = edContent.getText().toString();
+            if (TextUtils.isEmpty(contentString)) {
+                showInfo("内容不能为空！");
+            } else {
+                if (TextUtils.isEmpty(holderImgList.get(0).getUrl())) {
+                    if(contentString.length()>12){
+                        showProgressBar(Config.upload);
+                        addCircleHandler.sendEmptyMessage(1);
+                    }else{
+                        showInfo("无图片描述建议12个字符以上！");
+                    }
+                } else {
+                    addCircleHandler.sendEmptyMessage(0);
+                }
+            }
         });
 
     }
+
+    @SuppressLint("HandlerLeak")
+    Handler addCircleHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    showProgressBar(Config.upload);
+                    images = new String[holderImgList.size()];
+                    for (int i = 0; i < holderImgList.size(); i++) {
+                        HolderImg holderImg = holderImgList.get(i);
+                        images[i] = holderImg.getUrl();
+                        if (!TextUtils.isEmpty(holderImg.getUrl())) {
+                            upLoadFeedBackImg(holderImg.getBytes(), i);
+                        }
+                    }
+                    break;
+                case 1:
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().uploadFriendCircle(
+                            UserInfoUtils.getAppUserId(AddCircleTaskActivity.this), "41", contentString, images),
+                            new NetworkCallback<BaseData>() {
+                                @Override
+                                public void onSuccess(BaseData baseData) {
+                                    showProgressBar(false);
+                                    if (NetworkResultUtils.isSuccess(baseData)) {
+                                        showInfo("上传成功");
+                                    } else {
+                                        showInfo("上传失败");
+                                    }
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    showProgressBar(false);
+                                    Toast.makeText(AddCircleTaskActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
 
     private void initAdapter() {
@@ -120,8 +184,8 @@ public class AddCircleTaskActivity extends BaseActivity {
             try {
                 ArrayList<String> list = data.getStringArrayListExtra("photos");
                 for (int position = 0; position < list.size(); position++) {
-                    String srcPath=list.get(position);
-                    Log.d("srcPath",srcPath);
+                    String srcPath = list.get(position);
+                    Log.d("srcPath", srcPath);
                     byte[] img = BastiGallery.Bitmap2Bytes(BastiGallery.getimage(srcPath));
                     HolderImg holderImg = new HolderImg();
                     holderImg.setUrl("file://".concat(list.get(position)));
@@ -142,12 +206,12 @@ public class AddCircleTaskActivity extends BaseActivity {
             String url = BastiGallery.getmCurrentPhotoPath();
             String fileName = BastiGallery.getPathFromCamera(data, url);
             byte[] img = BastiGallery.Bitmap2Bytes(BastiGallery.getimage(fileName));
-            long length=img.length/1024;//读出图片的kb大小
-            if(length>128){
+            long length = img.length / 1024;//读出图片的kb大小
+            if (length > 128) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);//如
-                img=baos.toByteArray();
+                img = baos.toByteArray();
             }
             holderImgList.get(selectImgPosition).setUrl("file://".concat(fileName));
             holderImgList.get(selectImgPosition).setBytes(img);
@@ -174,34 +238,15 @@ public class AddCircleTaskActivity extends BaseActivity {
 
     private void initData() {
         urlList = new ArrayList<>();
-        for(int i=0;i<9;i++){
+        for (int i = 0; i < 9; i++) {
             urlList.add("");
-        }
-        groupId = getIntent().getIntExtra("groupId", 0);
-    }
-
-
-    private void uploadImg() {
-        if (TextUtils.isEmpty(holderImgList.get(0).getUrl()) && checkInputValid()) {
-            showProgressBar(Config.upload);
-            updateFriendCircle(edContent.getText().toString().trim());
-        } else {
-            showProgressBar(Config.upload);
-            images = new String[holderImgList.size()];
-            for (int i = 0; i < holderImgList.size(); i++) {
-                HolderImg holderImg = holderImgList.get(i);
-                images[i] = holderImg.getUrl();
-                if (!TextUtils.isEmpty(holderImg.getUrl())) {
-                    upLoadFeedBackImg(holderImg.getBytes(), i);
-                }
-            }
         }
     }
 
     private void upLoadFeedBackImg(byte[] img, final int indexP) {
         QiniuUtils.getUploadManagerInstance();
-        int positionP=indexP+1;
-        Log.d("图片上传大小提示TAG","img"+positionP+"size:"+img.length);
+        int positionP = indexP + 1;
+        Log.d("图片上传大小提示TAG", "img" + positionP + "size:" + img.length);
         //已经上传过的不上传
         QiniuUtils.uploadImg(this, img, QiniuUtils.createImageKey(UserInfoUtils.getPhone(this)), new UpLoadImgCallback() {
             @Override
@@ -209,15 +254,15 @@ public class AddCircleTaskActivity extends BaseActivity {
                 holderImgList.get(indexP).setHasUpload(true);
                 holderImgList.get(indexP).setUrl(imgUrl);
                 urlList.set(indexP, imgUrl);
-                if (allImgUploadSuccess() && checkInputValid()) {
-                    updateFriendCircle(edContent.getText().toString().trim());
+                if (allImgUploadSuccess()) {
+                    addCircleHandler.sendEmptyMessage(1);
                 }
             }
 
             @Override
             public void onFailure() {
                 showProgressBar(false);
-                showInfo("第"+positionP+"图片上传失败，请重试");
+                showInfo("第" + positionP + "图片上传失败，请重试");
             }
         });
     }
@@ -236,43 +281,9 @@ public class AddCircleTaskActivity extends BaseActivity {
         return true;
     }
 
-
-    private boolean checkInputValid() {
-        if (TextUtils.isEmpty(edContent.getText().toString().trim())) {
-            showInfo("内容不能为空！");
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public void onBackPressed() {
         finish();
-    }
-
-    private String[] images;
-
-    private void updateFriendCircle(String content) {
-        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().uploadFriendCircle(
-                UserInfoUtils.getAppUserId(this),"41", content, images),
-                new NetworkCallback<BaseData>() {
-                    @Override
-                    public void onSuccess(BaseData baseData) {
-                        showProgressBar(false);
-                        if (NetworkResultUtils.isSuccess(baseData)) {
-                            showInfo("上传成功");
-                        }else{
-                            showInfo("上传失败");
-                        }
-                        finish();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        showProgressBar(false);
-                        Toast.makeText(AddCircleTaskActivity.this, "网络异常", Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 
 }

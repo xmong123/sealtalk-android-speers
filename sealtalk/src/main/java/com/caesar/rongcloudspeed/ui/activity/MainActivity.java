@@ -1,13 +1,17 @@
 package com.caesar.rongcloudspeed.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,15 +22,22 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.caesar.rongcloudspeed.R;
+import com.caesar.rongcloudspeed.bean.AppAdvertVideoBean;
+import com.caesar.rongcloudspeed.bean.WechatPayBaseBean;
 import com.caesar.rongcloudspeed.circle.ui.FriendCircleActivity;
 import com.caesar.rongcloudspeed.common.IntentExtra;
 import com.caesar.rongcloudspeed.db.model.FriendShipInfo;
 import com.caesar.rongcloudspeed.model.Resource;
 import com.caesar.rongcloudspeed.model.Status;
 import com.caesar.rongcloudspeed.model.VersionInfo;
+import com.caesar.rongcloudspeed.network.AppNetworkUtils;
+import com.caesar.rongcloudspeed.network.NetworkCallback;
+import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.caesar.rongcloudspeed.runtimepermissions.PermissionsManager;
 import com.caesar.rongcloudspeed.runtimepermissions.PermissionsResultAction;
 import com.caesar.rongcloudspeed.ui.BaseActivity;
@@ -34,6 +45,7 @@ import com.caesar.rongcloudspeed.ui.dialog.MorePopWindow;
 import com.caesar.rongcloudspeed.ui.fragment.HomeSpeerLessonFragment;
 import com.caesar.rongcloudspeed.ui.fragment.LessonsVideoFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainConversationListFragment;
+import com.caesar.rongcloudspeed.ui.fragment.MainNpmTalkFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainSealTalkFragment;
 import com.caesar.rongcloudspeed.ui.fragment.UserFragment;
 import com.caesar.rongcloudspeed.ui.view.MainBottomTabGroupView;
@@ -55,6 +67,8 @@ import com.yanzhenjie.permission.Permission;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 
+import static com.caesar.rongcloudspeed.constants.Constant.CODE_SUCC;
+
 public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWindowItemClickListener {
     public static final String PARAMS_TAB_INDEX = "tab_index";
     private static final int REQUEST_START_CHAT = 0;
@@ -67,6 +81,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
     private ImageView ivMore;
     private AppViewModel appViewModel;
     public MainViewModel mainViewModel;
+    private String uidString;
 
     /**
      * tab 项枚举
@@ -84,10 +99,6 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
          * 发现
          */
         CHAT(2),
-        /**
-         * 书店
-         */
-//        SHOP(3),
         /**
          * 我的
          */
@@ -120,7 +131,6 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             R.drawable.seal_tab_contact_list_selector,
             R.drawable.seal_tab_find_selector,
             R.drawable.seal_tab_chat_selector,
-//            R.drawable.seal_tab_shop_selector,
             R.drawable.seal_tab_me_selector
     };
 
@@ -142,7 +152,43 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         UpdateKey.API_TOKEN = "ad90d5c3fd0d206b411b8c93e3a21979";
         UpdateKey.APP_ID = "5da6db92b2eb461dfc773c60";
         UpdateFunGO.init(this);
+        uidString = UserInfoUtils.getAppUserId(this);
+        advertVideoHandler.sendEmptyMessageDelayed(0, 2000);
     }
+
+    @SuppressLint("HandlerLeak")
+    Handler advertVideoHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().getAppAdvertVideo(uidString),
+                            new NetworkCallback<AppAdvertVideoBean>() {
+                                @Override
+                                public void onSuccess(AppAdvertVideoBean baseBean) {
+                                    if (baseBean.getCode() == CODE_SUCC) {
+                                        List<AppAdvertVideoBean.AdvertVideoBean> slide_pic = baseBean.getReferer();
+                                        Set<String>set=new HashSet<>();
+                                        for (AppAdvertVideoBean.AdvertVideoBean advertVideoBean : slide_pic) {
+                                            String slideUrlString = advertVideoBean.getSlide_pic();
+                                            if (slideUrlString.endsWith(".mp4")) {
+                                                set.add(slideUrlString);
+                                            }
+                                        }
+                                        UserInfoUtils.setAdvertVideoList(set,MainActivity.this);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+
+                                }
+                            });
+
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -163,27 +209,27 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
 
     private void requestPerssion() {
 
-        AndPermission.with( this )
-                .permission( Permission.READ_EXTERNAL_STORAGE,
+        AndPermission.with(this)
+                .permission(Permission.READ_EXTERNAL_STORAGE,
                         Permission.WRITE_EXTERNAL_STORAGE,
-                        Permission.CAMERA )
-                .onGranted( new Action() {
+                        Permission.CAMERA)
+                .onGranted(new Action() {
                     @Override
                     public void onAction(List<String> permissions) {
                         // TODO what to do.
                         File externalStorageDirectory = Environment.getExternalStorageDirectory();
-                        File mj = new File( externalStorageDirectory.getAbsolutePath(), "mj" );
+                        File mj = new File(externalStorageDirectory.getAbsolutePath(), "mj");
                         if (mj.exists()) {
                             return;
                         }
                     }
-                } ).onDenied( new Action() {
+                }).onDenied(new Action() {
             @Override
             public void onAction(List<String> permissions) {
                 // TODO what to do
                 finish();
             }
-        } )
+        })
                 .start();
 
     }
@@ -228,7 +274,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             }
         });
 
-        // title
+        // title MainDiscoveryActivity
 //        findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -317,12 +363,12 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
 
     /**
      * 初始化 initFragmentViewPager
+     * fragments.add(new BookStoreHomeFragment());
      */
     private void initFragmentViewPager() {
         fragments.add(new HomeSpeerLessonFragment());
         fragments.add(new LessonsVideoFragment());
-        fragments.add(new MainSealTalkFragment());
-//        fragments.add(new BookStoreHomeFragment());
+        fragments.add(new MainNpmTalkFragment());
         fragments.add(new UserFragment());
 
         // ViewPager 的 Adpater
@@ -399,7 +445,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         mainViewModel.getNewFriendNum().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer count) {
-                MainBottomTabItem chatTab = tabGroupView.getView(Tab.LESSONS.getValue());
+                MainBottomTabItem chatTab = tabGroupView.getView(Tab.CHAT.getValue());
                 if (count > 0) {
                     chatTab.setRedVisibility(View.VISIBLE);
                 } else {
@@ -418,9 +464,9 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             }
         });
 
-        String userIndustry= UserInfoUtils.getUserIndustry(this);
-        if(userIndustry.equals("0")){
-            startActivityForResult(new Intent(this, AdminMainActivity.class),REQUEST_CODE_SELECT_CATEGORY);
+        String userIndustry = UserInfoUtils.getUserIndustry(this);
+        if (userIndustry.equals("0")) {
+            startActivityForResult(new Intent(this, AdminMainActivity.class), REQUEST_CODE_SELECT_CATEGORY);
         }
     }
 

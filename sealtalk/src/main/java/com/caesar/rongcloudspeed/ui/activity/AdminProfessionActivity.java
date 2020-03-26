@@ -41,9 +41,9 @@ public class AdminProfessionActivity extends TitleBaseActivity implements View.O
 
     private void initView() {
         getTitleBar().setTitle("专业分类");
-        professionIDString=getIntent().getStringExtra("professionIDString");
+        professionIDString = getIntent().getStringExtra("professionIDString");
         adminIndustryRecyclerView = findViewById(R.id.adminindustry_recyclerView);
-        industryConfirmBtn=findViewById(R.id.industry_confirm);
+        industryConfirmBtn = findViewById(R.id.industry_confirm);
         adminIndustryAdapter = new BrandAdapter();
         adminIndustryAdapter.setChoiceMode(AbsRecycleAdapter.CHOICE_MODE_MULTIPLE);
         adminIndustryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,7 +58,7 @@ public class AdminProfessionActivity extends TitleBaseActivity implements View.O
                     @Override
                     public void onSuccess(AdminInBean adminInBean) {
                         adminIndustryArray = adminInBean.getReferer();
-                        AdminIndustryBean baseBean=new AdminIndustryBean(false,"0","全部专业","0");
+                        AdminIndustryBean baseBean = new AdminIndustryBean(false, "0", "全部专业", "0");
                         adminIndustryArray.add(baseBean);
                         adminIndustryAdapter.setData(adminIndustryArray);
                         adminIndustryRecyclerView.setAdapter(adminIndustryAdapter);
@@ -88,26 +88,33 @@ public class AdminProfessionActivity extends TitleBaseActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.industry_confirm:
-                SparseBooleanArray mCheckStates=adminIndustryAdapter.getCheckedItemPositions();
-                if(mCheckStates.size()>0){
+                SparseBooleanArray mCheckStates = adminIndustryAdapter.getCheckedItemPositions();
+                if (mCheckStates.size() > 0) {
                     StringBuffer industryIDBuffer = new StringBuffer();
                     StringBuffer industryNameBuffer = new StringBuffer();
-                    for(int i=0;i<mCheckStates.size();i++){
-                        int key = mCheckStates.keyAt(i);
-                        String industryID=adminIndustryArray.get(key).getId();
-                        String industryName=adminIndustryArray.get(key).getName();
-                        industryIDBuffer.append(industryID+",");
-                        industryNameBuffer.append(industryName+",");
+                    for (int i = 0; i < mCheckStates.size(); i++) {
+                        if (mCheckStates.valueAt(i)) {
+                            int key = mCheckStates.keyAt(i);
+                            String industryID = adminIndustryArray.get(key).getId();
+                            String industryName = adminIndustryArray.get(key).getName();
+                            industryIDBuffer.append(industryID + ",");
+                            industryNameBuffer.append(industryName + ",");
+                        }
                     }
-                    industryIDBuffer.deleteCharAt(industryIDBuffer.length() - 1);
-                    industryNameBuffer.deleteCharAt(industryNameBuffer.length() - 1);
-                    String professionIDString = industryIDBuffer.toString();
-                    String professionNameString = industryNameBuffer.toString();
-                    getIntent().putExtra("professionIDString",professionIDString);
-                    getIntent().putExtra("professionNameString",professionNameString);
-                    setResult(RESULT_OK, getIntent());
-                    finish();
-                }else{
+                    if (industryIDBuffer.length() > 0) {
+                        industryIDBuffer.deleteCharAt(industryIDBuffer.length() - 1);
+                        industryNameBuffer.deleteCharAt(industryNameBuffer.length() - 1);
+                        String professionIDString = industryIDBuffer.toString();
+                        String professionNameString = industryNameBuffer.toString();
+                        getIntent().putExtra("professionIDString", professionIDString);
+                        getIntent().putExtra("professionNameString", professionNameString);
+                        setResult(RESULT_OK, getIntent());
+                        finish();
+                    } else {
+                        Toast.makeText(this, "请选择相关专业", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
                     Toast.makeText(this, "请选择相关专业", Toast.LENGTH_LONG).show();
                 }
                 break;

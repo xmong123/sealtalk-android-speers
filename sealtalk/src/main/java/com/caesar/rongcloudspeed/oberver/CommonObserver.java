@@ -47,7 +47,7 @@ public abstract class CommonObserver<T extends CommonResonseBean> implements Obs
 
         if (value.getCode() != 101) {
             if (value != null && !TextUtils.isEmpty(value.getInfo())) {
-                ToastUtils.showShort(value.getInfo());
+//                ToastUtils.showShort(value.getInfo());
             }
         }
         onSuccess(value);

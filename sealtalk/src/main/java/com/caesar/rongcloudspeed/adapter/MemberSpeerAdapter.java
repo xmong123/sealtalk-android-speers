@@ -35,7 +35,7 @@ public class MemberSpeerAdapter extends BaseQuickAdapter<MemberSpeerBean, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, MemberSpeerBean bean) {
         String member_title=bean.getMember_title();
-        String member_price=bean.getMember_price();
+        String member_price="¥ "+bean.getMember_price();
         Spannable sp = new SpannableString(member_price);
         sp.setSpan(new AbsoluteSizeSpan(18, true), 0, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         sp.setSpan(new AbsoluteSizeSpan(24, true), 2, 5, Spannable.SPAN_INCLUSIVE_INCLUSIVE);

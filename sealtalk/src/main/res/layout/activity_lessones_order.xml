@@ -46,7 +46,7 @@
                 android:layout_margin="@dimen/dp_2"
                 android:layout_toEndOf="@+id/lesson_tag"
                 android:paddingBottom="@dimen/layoutMargin8dp"
-                android:text="BIM(Revit)项目实战应用——机电篇"
+                android:text="同行快线《连续包月》VIP服务费"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/bigText16sp" />
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lesson_title"
                 android:layout_margin="@dimen/dp_4"
-                android:text="¥1.00"
+                android:text="¥16.88"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/bigText16sp" />
 
@@ -176,6 +176,7 @@
         android:layout_marginTop="@dimen/layoutMargin16dp"
         android:layout_marginRight="@dimen/layoutMargin16dp"
         android:background="@color/white"
+        android:visibility="gone"
         app:cardCornerRadius="@dimen/card_radius">
 
         <LinearLayout

@@ -59,7 +59,7 @@ public class UserSeekHelperAdapter extends BaseQuickAdapter<PostsSeekBaseBean, B
         String dataString = bean.getPost_date();
         helper.setText( R.id.seekHelperText,  "全国-所有地区 | " + dataString );
         String priceString = bean.getPost_price();
-        if (priceString.startsWith( "0" )) {
+        if (priceString.startsWith( "0.0" )) {
             priceString = "面议";
         }
         helper.setText( R.id.seekHelperSub, priceString );

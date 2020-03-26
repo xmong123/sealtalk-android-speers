@@ -49,7 +49,12 @@ public class LessonVideoAdapter extends BaseQuickAdapter<PostsArticleBaseBean, B
             helper.setImageResource(R.id.item_smeta, R.drawable.votebase);
         }
         String titleString = bean.getPost_title();
-
+        String priceString = bean.getPost_price();
+        if(priceString.startsWith( "0.0" )){
+            helper.setText( R.id.lessonMoney, "课程免费" );
+        }else{
+            helper.setText( R.id.lessonMoney, "￥"+priceString+"元" );
+        }
         helper.setText( R.id.item_title, titleString );
     }
 }

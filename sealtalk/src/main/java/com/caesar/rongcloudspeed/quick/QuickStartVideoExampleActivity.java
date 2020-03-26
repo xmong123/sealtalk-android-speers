@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.caesar.rongcloudspeed.callback.UpLoadImgCallback;
 import com.caesar.rongcloudspeed.circle.ui.AddCircleTaskActivity;
 import com.caesar.rongcloudspeed.data.BaseData;
@@ -34,6 +35,7 @@ import com.caesar.rongcloudspeed.utils.Tools;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLOnCompletionListener;
+import com.pili.pldroid.player.PLOnInfoListener;
 import com.pili.pldroid.player.PLOnPreparedListener;
 import com.pili.pldroid.player.widget.PLVideoView;
 import com.qiniu.android.common.ServiceAddress;
@@ -59,6 +61,8 @@ import okhttp3.Response;
 
 public class QuickStartVideoExampleActivity extends BaseActivity {
 
+    private static final String TAG = QuickStartVideoExampleActivity.class.getSimpleName();
+
     private static final int REQUEST_CODE = 8090;
     private QuickStartVideoExampleActivity context;
     private LinearLayout uploadStatusLayout;
@@ -71,6 +75,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
     private UploadManager uploadManager;
     private long uploadLastTimePoint;
     private long uploadLastOffset;
+    private long uploadFileDuration;
     private long uploadFileLength;
     private String uploadFilePath;
     private String postFilePath;
@@ -80,6 +85,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
     private Button loadPfopVideo2Button;
     private ClearWriteEditText votePostEdit;
     private ClearWriteEditText excerptPostEdit;
+    private TextView quickStartVideoTip;
 
     public QuickStartVideoExampleActivity() {
         this.context = this;
@@ -101,20 +107,10 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                 .findViewById(R.id.quick_start_video_upload_file_length_textview);
         this.uploadPercentageTextView = (TextView) this
                 .findViewById(R.id.quick_start_video_upload_percentage_textview);
-        this.uploadStatusLayout.setVisibility(LinearLayout.INVISIBLE);this.uploadProgressBar = (ProgressBar) this
-                .findViewById(R.id.quick_start_video_upload_progressbar);
-        this.uploadProgressBar.setMax(100);
-        this.uploadStatusLayout = (LinearLayout) this
-                .findViewById(R.id.quick_start_video_upload_status_layout);
-        this.uploadSpeedTextView = (TextView) this
-                .findViewById(R.id.quick_start_video_upload_speed_textview);
-        this.uploadFileLengthTextView = (TextView) this
-                .findViewById(R.id.quick_start_video_upload_file_length_textview);
-        this.uploadPercentageTextView = (TextView) this
-                .findViewById(R.id.quick_start_video_upload_percentage_textview);
         this.uploadStatusLayout.setVisibility(LinearLayout.INVISIBLE);
         this.uploadResultVideoView = (PLVideoView)
                 this.findViewById(R.id.quick_start_video_play_pldplayer);
+        this.quickStartVideoTip = (TextView) this.findViewById(R.id.quick_start_video_tip);
         this.persistentIdTextView = (TextView) this.findViewById(R.id.quick_start_video_pid_textview);
         this.pfopResult1TextView = (TextView) this.findViewById(R.id.quick_start_video1_textview);
         this.pfopResult2TextView = (TextView) this.findViewById(R.id.quick_start_video2_textview);
@@ -122,6 +118,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
         this.loadPfopVideo2Button = (Button) this.findViewById(R.id.quick_start_load_video_button_2);
         this.votePostEdit = (ClearWriteEditText) this.findViewById(R.id.vote_post_title);
         this.excerptPostEdit = (ClearWriteEditText) this.findViewById(R.id.vote_post_excerpt);
+        quickStartVideoTip.setVisibility(View.GONE);
     }
 
     private void initLayout() {
@@ -145,35 +142,58 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        uploadResultVideoView.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        uploadResultVideoView.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        uploadResultVideoView.stopPlayback();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE:
                 // If the file selection was successful
                 if (resultCode == RESULT_OK) {
                     if (data != null) {
+                        uploadResultVideoView.stopPlayback();
                         // Get the URI of the selected file
                         final Uri uri = data.getData();
                         try {
                             // Get the file path from the URI
-                            final String path = FileUtils.getPath(this, uri);
-                            this.uploadFilePath = path;
-                            final PLVideoView videoView = uploadResultVideoView;
+                            uploadFilePath = FileUtils.getPath(this, uri);
+                            File uploadFile = new File(uploadFilePath);
+                            uploadFileLength = uploadFile.length();
                             AVOptions mAVOptions = new AVOptions();
                             mAVOptions.setInteger(AVOptions.KEY_PREPARE_TIMEOUT, 10 * 1000);
-                            // 1 -> hw codec enable, 0 -> disable [recommended]
                             mAVOptions.setInteger(AVOptions.KEY_MEDIACODEC, 0);
                             mAVOptions.setInteger(AVOptions.KEY_LIVE_STREAMING, 1);
                             mAVOptions.setString(AVOptions.KEY_CACHE_DIR, Config.DEFAULT_CACHE_DIR);
                             mAVOptions.setInteger(AVOptions.KEY_LOG_LEVEL, 0);
-                            videoView.setAVOptions(mAVOptions);
-                            videoView.setVideoURI(Uri.parse(path));
-                            videoView.setOnPreparedListener(i -> videoView.start());
-//                            videoView.setOnCompletionListener(() -> videoView.start());
+                            uploadResultVideoView.setAVOptions(mAVOptions);
+                            uploadResultVideoView.setVideoPath(uploadFilePath);
+                            uploadResultVideoView.setOnPreparedListener(i -> {
+                                uploadFileDuration=uploadResultVideoView.getDuration();
+                                Log.i(TAG, "onVideoSizeChanged: time = " + uploadFileDuration);
+                                quickStartVideoTip.setVisibility(View.VISIBLE);
+                                quickStartVideoTip.setText("当前视频大小:"+Tools.formatSize(uploadFileLength)+"MB,时常"+uploadFileDuration/1000+"s");
+                                uploadResultVideoView.start();
+                            });
                         } catch (Exception e) {
                             Toast.makeText(
                                     context,
                                     context.getString(R.string.qiniu_get_upload_file_failed),
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -194,7 +214,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                 Toast.makeText(
                         context,
                         context.getString(R.string.qiniu_upload_success),
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
                 final PLVideoView videoView = uploadResultVideoView;
 
                 videoView.setVideoURI(Uri.parse(videoUrl));
@@ -218,7 +238,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                 Toast.makeText(
                         context,
                         context.getString(R.string.qiniu_upload_failed),
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -238,7 +258,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
             Toast.makeText(
                     context,
                     "请先上传视频文件再发布",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
         } else {
             showLoadingDialog(R.string.seal_loading_dialog_logining);
             NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().addVoteArticle(
@@ -256,40 +276,52 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
 
                         @Override
                         public void onFailure(Throwable t) {
-                            Toast.makeText(QuickStartVideoExampleActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+                            Toast.makeText(QuickStartVideoExampleActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
     }
 
     public void uploadFile(View view) {
-        if (this.uploadFilePath == null) {
-            return;
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final OkHttpClient httpClient = new OkHttpClient();
-                Request req = new Request.Builder().url(QiniuLabConfig.makeUrl(
-                        QiniuLabConfig.TESTSERVER,
-                        QiniuLabConfig.QUICK_START_VIDEO_DEMO_PATH)).method("GET", null).build();
+        if (this.uploadFilePath != null) {
+            if (uploadFileLength <= 15 * 1024*1024&&uploadFileDuration<=30 * 1000) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final OkHttpClient httpClient = new OkHttpClient();
+                        Request req = new Request.Builder().url(QiniuLabConfig.makeUrl(
+                                QiniuLabConfig.TESTSERVER,
+                                QiniuLabConfig.QUICK_START_VIDEO_DEMO_PATH)).method("GET", null).build();
 
-                Response resp = null;
-                try {
-                    resp = httpClient.newCall(req).execute();
-                    JSONObject jsonObject = new JSONObject(resp.body().string());
-                    String uploadToken = jsonObject.getString("url");
-
-                    uploadData(uploadToken, QiniuLabConfig.REMOTE_SERVICE_SERVER);
-                } catch (Exception e) {
-                    AsyncRun.run(() -> showToast(R.string.qiniu_get_upload_token_failed));
-                } finally {
-                    if (resp != null) {
-                        resp.body().close();
+                        Response resp = null;
+                        try {
+                            resp = httpClient.newCall(req).execute();
+                            JSONObject jsonObject = new JSONObject(resp.body().string());
+                            String uploadToken = jsonObject.getString("url");
+                            uploadData(uploadToken, QiniuLabConfig.REMOTE_SERVICE_SERVER);
+                        } catch (Exception e) {
+                            AsyncRun.run(() -> showToast(R.string.qiniu_get_upload_token_failed));
+                        } finally {
+                            if (resp != null) {
+                                resp.body().close();
+                            }
+                        }
                     }
-                }
+                }).start();
+            } else {
+                Toast.makeText(
+                        context,
+                        "视频内容一般不超过10秒，不超过10MB",
+                        Toast.LENGTH_SHORT).show();
             }
-        }).start();
+
+        } else {
+            Toast.makeText(
+                    context,
+                    "请选择上传视频",
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**
@@ -318,8 +350,6 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                     .build();
             this.uploadManager = new UploadManager(config);
         }
-
-        File uploadFile = new File(this.uploadFilePath);
         UploadOptions uploadOptions = new UploadOptions(null, null, false,
                 new UpProgressHandler() {
                     @Override
@@ -328,8 +358,6 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                     }
                 }, null);
         final long startTime = System.currentTimeMillis();
-        final long fileLength = uploadFile.length();
-        this.uploadFileLength = fileLength;
         this.uploadLastTimePoint = startTime;
         this.uploadLastOffset = 0;
         // prepare status
@@ -343,11 +371,11 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
 
                 uploadPercentageTextView.setText("0 %");
                 uploadSpeedTextView.setText("0 KB/s");
-                uploadFileLengthTextView.setText(Tools.formatSize(fileLength));
+                uploadFileLengthTextView.setText(Tools.formatSize(uploadFileLength));
                 uploadStatusLayout.setVisibility(LinearLayout.VISIBLE);
             }
         });
-
+        File uploadFile = new File(this.uploadFilePath);
         this.uploadManager.put(uploadFile, null, uploadToken,
                 new UpCompletionHandler() {
                     @Override
@@ -378,37 +406,18 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                                 });
                                 final String videoUrl = domain + "/" + fileKey;
                                 postFilePath = videoUrl;
-//                                final PLVideoView videoView = uploadResultVideoView;
-//
-//                                videoView.setVideoURI(Uri.parse(videoUrl));
-//                                videoView.setOnPreparedListener(new PLOnPreparedListener() {
-//                                    @Override
-//                                    public void onPrepared(int i) {
-//                                        videoView.start();
-//                                    }
-//                                });
-//                                Intent intent = new Intent(QuickStartVideoExampleActivity.this, PLMediaPlayerActivity.class);
-//                                intent.putExtra("videoPath", uploadFilePath);
-//                                intent.putExtra("mediaCodec", AVOptions.MEDIA_CODEC_AUTO);
-//                                intent.putExtra("liveStreaming", 0);
-//                                intent.putExtra("cache", true);
-//                                intent.putExtra("loop", false);
-//                                intent.putExtra("video-data-callback", false);
-//                                intent.putExtra("audio-data-callback", false);
-//                                intent.putExtra("disable-log", false);
-//                                startActivity(intent);
                             } catch (JSONException e) {
                                 Toast.makeText(
                                         context,
                                         context.getString(R.string.qiniu_upload_file_response_parse_error),
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_SHORT).show();
                                 Log.e(QiniuLabConfig.LOG_TAG, e.getMessage());
                             }
                         } else {
                             Toast.makeText(
                                     context,
                                     context.getString(R.string.qiniu_upload_file_failed),
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                             Log.e(QiniuLabConfig.LOG_TAG, respInfo.toString());
                         }
                     }
@@ -497,7 +506,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                         AsyncRun.run(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(context, "no results", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "no results", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -506,7 +515,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                     AsyncRun.run(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(context, "pfop query failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "pfop query failed", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

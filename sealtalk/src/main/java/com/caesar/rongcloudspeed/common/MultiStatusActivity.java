@@ -1,6 +1,7 @@
 package com.caesar.rongcloudspeed.common;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.ui.BaseActivity;
@@ -23,6 +25,33 @@ public abstract class MultiStatusActivity extends BaseShopActivity {
 
     protected CommonTitleBar titlebar;
     protected MultipleStatusView multipleStatusView;
+
+    protected static void showAlert(Context ctx, String info) {
+        showAlert(ctx, info, null);
+    }
+
+    private static void showAlert(Context ctx, String info, DialogInterface.OnDismissListener onDismiss) {
+        new AlertDialog.Builder(ctx)
+                .setMessage(info)
+                .setPositiveButton(R.string.confirm, null)
+                .setOnDismissListener(onDismiss)
+                .show();
+    }
+
+    private static void showToast(Context ctx, String msg) {
+        Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
+    }
+
+    private static String bundleToString(Bundle bundle) {
+        if (bundle == null) {
+            return "null";
+        }
+        final StringBuilder sb = new StringBuilder();
+        for (String key: bundle.keySet()) {
+            sb.append(key).append("=>").append(bundle.get(key)).append("\n");
+        }
+        return sb.toString();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

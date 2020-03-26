@@ -22,10 +22,11 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.adapter.MemberSpeerAdapter;
 import com.caesar.rongcloudspeed.bean.CommonResonseBean;
+import com.caesar.rongcloudspeed.bean.GoodsOrderBaseBean;
 import com.caesar.rongcloudspeed.bean.MemberSpeerBean;
+import com.caesar.rongcloudspeed.bean.WechatPayBaseBean;
 import com.caesar.rongcloudspeed.common.MultiStatusActivity;
 import com.caesar.rongcloudspeed.common.VerificationCodeHelper;
-import com.caesar.rongcloudspeed.data.BaseData;
 import com.caesar.rongcloudspeed.manager.RetrofitManager;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
@@ -34,17 +35,19 @@ import com.caesar.rongcloudspeed.oberver.CommonObserver;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
-import com.zaaach.citypicker.db.DBManager;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static com.caesar.rongcloudspeed.wx.WXManager.APP_ID;
 
 public class SpeerOrderOtherActivity extends MultiStatusActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -64,33 +67,22 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
     TextView getSpeerVerifiCode;
     @BindView(R.id.speerLessonMoney)
     TextView speerLessonMoney;
-    private DBManager dbManager;
     private String uidString;
-    private String lesson_id;
-    private String lesson_name;
-    private String lesson_price;
-    private String lesson_smeta;
-    private String thumbVideoString;
+    private String payPriceString = "16.88";
+    private String payNameString = "《连续包月》VIP服务费";
     private MemberSpeerAdapter memberSpeerAdapter;
     private List<MemberSpeerBean> memberSpeerBeanList = new ArrayList<MemberSpeerBean>();
     private boolean isRread = true;
-    private String actionString = null;
     private String pay_code = "alipay";
-    private String order_type = "2";
-    private String stotal_price;
+    private String order_type = "6";
+    private String out_trade_no;
+    private IWXAPI api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitleBarView(titlebar, "确认订单");
         ButterKnife.bind(this);
-        actionString = getIntent().getAction();
-        lesson_id = getIntent().getExtras().getString("lesson_id");
-        lesson_name = getIntent().getExtras().getString("lesson_name");
-        lesson_price = getIntent().getExtras().getString("lesson_price");
-        lesson_smeta = getIntent().getExtras().getString("lesson_smeta");
-        thumbVideoString = getIntent().getExtras().getString("videoPath");
-        dbManager = new DBManager(this);
         weixinBox.setOnCheckedChangeListener(this);
         alipayBox.setOnCheckedChangeListener(this);
         initData();
@@ -103,19 +95,19 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
         MemberSpeerBean bean = new MemberSpeerBean();
         bean.setMember_id("1001");
         bean.setMember_title("连续包月");
-        bean.setMember_price("¥ 16.88");
+        bean.setMember_price("16.88");
         MemberSpeerBean bean1 = new MemberSpeerBean();
         bean1.setMember_id("1002");
         bean1.setMember_title("月度VIP");
-        bean1.setMember_price("¥ 24.88");
+        bean1.setMember_price("24.88");
         MemberSpeerBean bean2 = new MemberSpeerBean();
         bean2.setMember_id("1003");
         bean2.setMember_title("季度VIP");
-        bean2.setMember_price("¥ 58.88");
+        bean2.setMember_price("58.88");
         MemberSpeerBean bean3 = new MemberSpeerBean();
         bean3.setMember_id("1004");
         bean3.setMember_title("年度VIP");
-        bean3.setMember_price("¥ 218.88");
+        bean3.setMember_price("218.88");
         memberSpeerBeanList.add(bean);
         memberSpeerBeanList.add(bean1);
         memberSpeerBeanList.add(bean2);
@@ -123,30 +115,33 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
         memberSpeerAdapter.setNewData(memberSpeerBeanList);
         memberSpeerAdapter.setOnItemClickListener((adapter, view, position) -> {
             boolean isFlag = memberSpeerBeanList.get(position).isFlag();
-            String member_id = memberSpeerBeanList.get(position).getMember_id();
+            String member_title = memberSpeerBeanList.get(position).getMember_title();
             String member_price = memberSpeerBeanList.get(position).getMember_price();
-            stotal_price = member_price;
             for (int i = 0; i < memberSpeerBeanList.size(); i++) {
                 if (isFlag) {
                     memberSpeerBeanList.get(i).setFlag(false);
-                    speerLessonMoney.setText("¥ " + lesson_price);
+                    payPriceString = "16.88";
+                    payNameString = "《连续包月》VIP服务费";
                 } else {
                     if (i == position) {
                         memberSpeerBeanList.get(i).setFlag(true);
                     } else {
                         memberSpeerBeanList.get(i).setFlag(false);
                     }
-                    speerLessonMoney.setText(member_price);
+                    payPriceString = member_price;
+                    payNameString = "《" + member_title + "》VIP服务费";
                 }
-                order_type = "6";
                 adapter.notifyDataSetChanged();
+                lessonTitle.setText(payNameString);
+                lessonPrice.setText("¥ " + payPriceString);
+                speerLessonMoney.setText("¥ " + payPriceString);
             }
 
         });
-        lessonTitle.setText(lesson_name);
-        lessonPrice.setText("¥ " + lesson_price);
-        stotal_price = lesson_price;
-        speerLessonMoney.setText("¥ " + stotal_price);
+        lessonTitle.setText(payNameString);
+        lessonPrice.setText("¥ " + payPriceString);
+        speerLessonMoney.setText("¥ " + payPriceString);
+        api = WXAPIFactory.createWXAPI(this, APP_ID);
     }
 
     private void initData() {
@@ -187,12 +182,13 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
             switch (msg.what) {
                 case 0:
                     prompDialog.showLoading("请等待");
-                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().cartLessonOrder(uidString, lesson_id, stotal_price, pay_code, order_type),
-                            new NetworkCallback<BaseData>() {
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().cartLessonOrder(uidString, "0", payPriceString, pay_code, order_type, payNameString),
+                            new NetworkCallback<GoodsOrderBaseBean>() {
                                 @Override
-                                public void onSuccess(BaseData data) {
+                                public void onSuccess(GoodsOrderBaseBean goodsOrderBaseBean) {
                                     prompDialog.dismiss();
                                     Toast.makeText(SpeerOrderOtherActivity.this, "您提交了订单，请等待系统确认", Toast.LENGTH_SHORT).show();
+                                    out_trade_no = goodsOrderBaseBean.getReferer().getOrder_sn();
                                     showPayDialog();
                                 }
 
@@ -203,6 +199,37 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
                                 }
                             });
 
+                    break;
+                case 1:
+                    float totalPrice = Float.valueOf(payPriceString) * 100f;
+                    String priceString = String.valueOf((int) totalPrice);
+                    prompDialog.showLoading("请等待");
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().WechatAppPaySign(uidString, out_trade_no, priceString, payNameString),
+                            new NetworkCallback<WechatPayBaseBean>() {
+                                @Override
+                                public void onSuccess(WechatPayBaseBean baseBean) {
+                                    prompDialog.dismiss();
+                                    Toast.makeText(SpeerOrderOtherActivity.this, "您正在发起支付，请稍后...", Toast.LENGTH_SHORT).show();
+                                    WechatPayBaseBean.WechatPayBean wechatPayBean = baseBean.getReferer();
+                                    PayReq req = new PayReq();
+                                    req.appId = wechatPayBean.getAppid();
+                                    req.partnerId = wechatPayBean.getPartnerid();
+                                    req.prepayId = wechatPayBean.getPrepayid();
+                                    req.nonceStr = wechatPayBean.getNoncestr();
+                                    req.timeStamp = wechatPayBean.getTimestamp();
+                                    req.packageValue = "Sign=WXPay";
+                                    req.sign = wechatPayBean.getSign();
+                                    req.extData = "app data"; // optional
+                                    // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                                    api.sendReq(req);
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    prompDialog.dismiss();
+                                    Toast.makeText(SpeerOrderOtherActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+                                }
+                            });
                     break;
                 default:
                     break;
@@ -224,38 +251,13 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if (order_type.equals("6")) {
-                    UserInfoUtils.setUserType("6", SpeerOrderOtherActivity.this);
-                } else {
-                    Set<String> set = UserInfoUtils.getAppUserOrder(SpeerOrderOtherActivity.this);
-                    if (set == null) {
-                        set = new HashSet<>();
-                    }
-                    set.add(lesson_id);
-                    UserInfoUtils.setAppUserOrder(set, SpeerOrderOtherActivity.this);
-                }
-                Intent videoIntent = new Intent(SpeerOrderOtherActivity.this, SPLessonVideosActivity.class);
-                videoIntent.putExtra("lesson_status", true);
-                videoIntent.putExtra("lesson_id", lesson_id);
-                videoIntent.putExtra("lesson_name", lesson_name);
-                videoIntent.putExtra("lesson_price", lesson_price);
-                videoIntent.putExtra("lesson_smeta", lesson_smeta);
-                videoIntent.putExtra("videoPath", thumbVideoString);
-                startActivity(videoIntent);
+                purchaseHandler.sendEmptyMessage(1);
             }
         });
         holderView.findViewById(R.id.morder_confirm_btn2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Intent videoIntent = new Intent(SpeerOrderOtherActivity.this, SPLessonVideosActivity.class);
-                videoIntent.putExtra("lesson_status", false);
-                videoIntent.putExtra("lesson_id", lesson_id);
-                videoIntent.putExtra("lesson_name", lesson_name);
-                videoIntent.putExtra("lesson_price", lesson_price);
-                videoIntent.putExtra("lesson_smeta", lesson_smeta);
-                videoIntent.putExtra("videoPath", thumbVideoString);
-                startActivity(videoIntent);
             }
         });
 
@@ -264,7 +266,7 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
 
     @Override
     public int getContentView() {
-        return R.layout.activity_speer_order;
+        return R.layout.activity_lessones_order;
     }
 
 
@@ -273,7 +275,7 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
         switch (view.getId()) {
             case R.id.speerProtoBtn:
                 Intent intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra("url", "file:///android_asset/webpage/memaiagree.html");
+                intent.putExtra("url", "file:///android_asset/webpage/speer_agree.html");
                 intent.putExtra("title", "《同行快线普通服务协议》");
                 startActivity(intent);
                 break;
@@ -293,27 +295,12 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
                     if (alipay) {
                         //支付宝支付
                         //拿到支付需要的基本参数
-                        if (actionString != null) {
-                            finish();
-                        } else {
-                            purchaseHandler.sendEmptyMessage(0);
-                        }
+                        purchaseHandler.sendEmptyMessage(0);
 
                     } else if (wechatpay) {
                         //立即支付
 
-                        if (actionString != null) {
-                            finish();
-                        } else {
-                            purchaseHandler.sendEmptyMessage(0);
-//                            Intent videoIntent = new Intent(SpeerOrderActivity.this, SPLessonVideosActivity.class);
-//                            videoIntent.putExtra("lesson_id", lesson_id);
-//                            videoIntent.putExtra("lesson_name", lesson_name);
-//                            videoIntent.putExtra("lesson_price", lesson_price);
-//                            videoIntent.putExtra("lesson_smeta", lesson_smeta);
-//                            videoIntent.putExtra("videoPath", thumbVideoString);
-//                            startActivity(videoIntent);
-                        }
+                        purchaseHandler.sendEmptyMessage(0);
 
                     }
 
@@ -321,6 +308,18 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
 
 
                 break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uidString = UserInfoUtils.getAppUserId(this);
+        boolean isWechatPay = UserInfoUtils.getWechatInfoData(this);
+        if (isWechatPay) {
+            UserInfoUtils.setUserType("6", SpeerOrderOtherActivity.this);
+            UserInfoUtils.setWechatInfoData(false, this);
+            finish();
         }
     }
 

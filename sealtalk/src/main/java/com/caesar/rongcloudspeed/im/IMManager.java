@@ -731,11 +731,11 @@ public class IMManager {
         // 个人名片
         RongExtensionManager.getInstance().registerExtensionModule(createContactCardExtensionModule());
         // 语音输入
-        RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
+//        RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
         // 小视频
-        RongExtensionManager.getInstance().registerExtensionModule(new CaesarSightExtensionModule());
+//        RongExtensionManager.getInstance().registerExtensionModule(new CaesarSightExtensionModule());
 
-        RongExtensionManager.getInstance().registerExtensionModule(new CustomerExtensionModule());
+//        RongExtensionManager.getInstance().registerExtensionModule(new CustomerExtensionModule());
 
     }
 

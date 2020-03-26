@@ -55,11 +55,11 @@ public class MainDiscoveryFragment extends BaseFragment {
 
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
-        findView(R.id.btn_start_chat, true);
-        findView(R.id.btn_create_group, true);
-        findView(R.id.btn_add_friends, true);
-        findView(R.id.btn_scan, true);
-        findView(R.id.btn_search, true);
+        findView(R.id.my_discovery_chat, true);
+        findView(R.id.my_discovery_group, true);
+        findView(R.id.my_discovery_friend, true);
+        findView(R.id.my_discovery_scan, true);
+        findView(R.id.my_discovery_search, true);
         findView(R.id.discovery_ll_chat_room_1, true);
         findView(R.id.discovery_ll_chat_room_2, true);
         findView(R.id.discovery_ll_chat_room_3, true);
@@ -104,23 +104,23 @@ public class MainDiscoveryFragment extends BaseFragment {
     @Override
     protected void onClick(View v, int id) {
         switch (id) {
-            case R.id.btn_start_chat:
+            case R.id.my_discovery_chat:
                 Intent intent = new Intent(getActivity(), SelectSingleFriendActivity.class);
                 startActivityForResult(intent, REQUEST_START_CHAT);
                 break;
-            case R.id.btn_create_group:
+            case R.id.my_discovery_group:
                 intent = new Intent(getActivity(), SelectCreateGroupActivity.class);
                 startActivityForResult(intent, REQUEST_START_GROUP);
                 break;
-            case R.id.btn_add_friends:
+            case R.id.my_discovery_friend:
                 intent = new Intent(getActivity(), AddFriendActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.btn_scan:
+            case R.id.my_discovery_scan:
                 intent = new Intent(getActivity(), ScanActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.btn_search:
+            case R.id.my_discovery_search:
                 intent = new Intent(getActivity(), SealSearchActivity.class);
                 startActivity(intent);
                 break;

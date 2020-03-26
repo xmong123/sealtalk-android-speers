@@ -36,10 +36,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.caesar.rongcloudspeed.quick.QiniuLabConfig.ADVERT_SERVICE_VIDEO;
 
 public class SPLessonVideosActivity extends MultiStatusActivity {
 
@@ -71,12 +76,13 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
     private String userType = "2";
     private List<LinearLayout> linearLayouts = new ArrayList<LinearLayout>();
     private List<TextView> textViews = new ArrayList<TextView>();
+    private String advertVideoUrl;
+    private String[] advertVideoArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-//        this.initLayout();
         userType = UserInfoUtils.getUserType(this);
         lesson_id = getIntent().getExtras().getString("lesson_id");
         lesson_status = getIntent().getExtras().getBoolean("lesson_status");
@@ -104,6 +110,10 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
 //        Glide.with(this).load(thumbVideoString+"?vframe/jpg/offset/1").into(convenientBanner);
         uidString = UserInfoUtils.getAppUserId(this);
+        Set<String> set = UserInfoUtils.getAdvertVideoList(this);
+        if (set != null && set.size() > 0) {
+            advertVideoArray = set.toArray(new String[set.size()]);
+        }
         lessonHeadView = getLayoutInflater().inflate(R.layout.left_lesson_videos_header, (ViewGroup) lesson_videos_recyclerView.getParent(), false);
         lesson_selected_contact_container = (LinearLayout) lessonHeadView.findViewById(R.id.lesson_selected_contact_container);
         mInflater = LayoutInflater.from(this);
@@ -111,9 +121,6 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
             linearLayouts = new ArrayList<LinearLayout>();
             textViews = new ArrayList<TextView>();
             for (int i = 0; i < videoArray.length(); i++) {
-                //InputStream is = getAssets().open(galleryDirectoryName + "/" + imageName);
-                //final Bitmap bitmap = BitmapFactory.decodeStream(is);
-
                 View view = mInflater.inflate(R.layout.activity_index_gallery_item,
                         lesson_selected_contact_container, false);
                 LinearLayout layout = (LinearLayout) view.findViewById(R.id.id_index_gallery_item_layout);
@@ -175,8 +182,14 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
                     TbsVideo.openVideo(SPLessonVideosActivity.this, lessonVideoString);
                 }
             } else {
+                if (advertVideoArray != null && advertVideoArray.length > 0) {
+                    int number = (int) (Math.random() * advertVideoArray.length);
+                    advertVideoUrl = advertVideoArray[number];
+                } else {
+                    advertVideoUrl = ADVERT_SERVICE_VIDEO;
+                }
                 Intent intent = new Intent(this, PLVideoViewActivity.class);
-                intent.putExtra("videoPath", "http://qiniu.500-china.com/banner/acc777cc-c689-46f2-859f-77caa425629a.mp4");
+                intent.putExtra("videoPath", advertVideoUrl);
                 intent.putExtra("lessonVideoString", lessonVideoString);
                 intent.putExtra("mediaCodec", AVOptions.MEDIA_CODEC_SW_DECODE);
                 intent.putExtra("liveStreaming", 1);

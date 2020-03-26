@@ -64,7 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:text="快线广告图片（必选）" />
+                    android:text="快线广告《图片》与《视频》，只可选择其中一项！（必选）"
+                    android:textColor="@color/light_red" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -102,7 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="视频内容一般不超过10秒，不超过10MB"
+                        android:text="视频内容一般不超过60秒，不超过50MB"
                         android:textColor="@color/red_dark" />
 
                     <RelativeLayout
@@ -224,9 +225,10 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/post_industy_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/post_industy_text"
                     android:layout_weight="1"
+                    android:minHeight="@dimen/titleBarHeight"
                     app:sDividerLineType="none"
                     app:sRightIconRes="@mipmap/arrow_right_red"
                     app:sRightTextString="请选择行业" />
@@ -254,8 +256,9 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/post_profession_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/post_profession_text"
+                    android:minHeight="@dimen/titleBarHeight"
                     app:sDividerLineType="none"
                     app:sRightIconRes="@mipmap/arrow_right_red"
                     app:sRightTextString="请选择专业" />
@@ -283,9 +286,10 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/post_soft_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/titleBarHeight"
+                    android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/post_soft_text"
                     android:layout_weight="1"
+                    android:minHeight="@dimen/titleBarHeight"
                     app:sDividerLineType="none"
                     app:sRightIconRes="@mipmap/arrow_right_red"
                     app:sRightTextString="请选择软件" />
@@ -336,15 +340,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
-                    android:layout_weight="1"
                     android:text="详细信息"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <EditText
                     android:id="@+id/post_edit_content"
-                    style="@style/autho_input_style2"
+                    style="@style/autho_input_style3"
                     android:layout_margin="2dp"
-                    android:layout_weight="1"
                     android:background="@color/white"
                     android:hint="请输入您发布广告的详细情况" />
 

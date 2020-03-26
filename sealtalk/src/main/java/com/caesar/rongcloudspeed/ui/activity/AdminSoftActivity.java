@@ -41,9 +41,9 @@ public class AdminSoftActivity extends TitleBaseActivity implements View.OnClick
 
     private void initView() {
         getTitleBar().setTitle("软件分类");
-        softIDString=getIntent().getStringExtra("softIDString");
+        softIDString = getIntent().getStringExtra("softIDString");
         adminIndustryRecyclerView = findViewById(R.id.adminindustry_recyclerView);
-        industryConfirmBtn=findViewById(R.id.industry_confirm);
+        industryConfirmBtn = findViewById(R.id.industry_confirm);
         adminIndustryAdapter = new BrandAdapter();
         adminIndustryAdapter.setChoiceMode(AbsRecycleAdapter.CHOICE_MODE_MULTIPLE);
         adminIndustryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,7 +58,7 @@ public class AdminSoftActivity extends TitleBaseActivity implements View.OnClick
                     @Override
                     public void onSuccess(AdminInBean adminInBean) {
                         adminIndustryArray = adminInBean.getReferer();
-                        AdminIndustryBean baseBean=new AdminIndustryBean(false,"0","全部软件","0");
+                        AdminIndustryBean baseBean = new AdminIndustryBean(false, "0", "全部软件", "0");
                         adminIndustryArray.add(baseBean);
                         adminIndustryAdapter.setData(adminIndustryArray);
                         adminIndustryRecyclerView.setAdapter(adminIndustryAdapter);
@@ -88,26 +88,33 @@ public class AdminSoftActivity extends TitleBaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.industry_confirm:
-                SparseBooleanArray mCheckStates=adminIndustryAdapter.getCheckedItemPositions();
-                if(mCheckStates.size()>0){
+                SparseBooleanArray mCheckStates = adminIndustryAdapter.getCheckedItemPositions();
+                if (mCheckStates.size() > 0) {
                     StringBuffer industryIDBuffer = new StringBuffer();
                     StringBuffer industryNameBuffer = new StringBuffer();
-                    for(int i=0;i<mCheckStates.size();i++){
-                        int key = mCheckStates.keyAt(i);
-                        String industryID=adminIndustryArray.get(key).getId();
-                        String industryName=adminIndustryArray.get(key).getName();
-                        industryIDBuffer.append(industryID+",");
-                        industryNameBuffer.append(industryName+",");
+                    for (int i = 0; i < mCheckStates.size(); i++) {
+                        if (mCheckStates.valueAt(i)) {
+                            int key = mCheckStates.keyAt(i);
+                            String industryID = adminIndustryArray.get(key).getId();
+                            String industryName = adminIndustryArray.get(key).getName();
+                            industryIDBuffer.append(industryID + ",");
+                            industryNameBuffer.append(industryName + ",");
+                        }
                     }
-                    industryIDBuffer.deleteCharAt(industryIDBuffer.length() - 1);
-                    industryNameBuffer.deleteCharAt(industryNameBuffer.length() - 1);
-                    String softIDString = industryIDBuffer.toString();
-                    String softNameString = industryNameBuffer.toString();
-                    getIntent().putExtra("softIDString",softIDString);
-                    getIntent().putExtra("softNameString",softNameString);
-                    setResult(RESULT_OK, getIntent());
-                    finish();
-                }else{
+                    if (industryIDBuffer.length() > 0) {
+                        industryIDBuffer.deleteCharAt(industryIDBuffer.length() - 1);
+                        industryNameBuffer.deleteCharAt(industryNameBuffer.length() - 1);
+                        String softIDString = industryIDBuffer.toString();
+                        String softNameString = industryNameBuffer.toString();
+                        getIntent().putExtra("softIDString", softIDString);
+                        getIntent().putExtra("softNameString", softNameString);
+                        setResult(RESULT_OK, getIntent());
+                        finish();
+                    } else {
+                        Toast.makeText(this, "请选择相关软件", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
                     Toast.makeText(this, "请选择相关软件", Toast.LENGTH_LONG).show();
                 }
                 break;

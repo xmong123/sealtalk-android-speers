@@ -201,8 +201,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
                         if (runnable != null) {
                             runnable.run();
                         }
-                        dialog.dismiss();
-                        dialog = null;
+                        if(dialog!=null){
+                            dialog.dismiss();
+                            dialog = null;
+                        }
                     }
                 }, 1000);
 

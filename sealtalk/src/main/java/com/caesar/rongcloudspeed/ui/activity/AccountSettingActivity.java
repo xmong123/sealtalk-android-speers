@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.ui.dialog.ClearCacheDialog;
 import com.caesar.rongcloudspeed.ui.dialog.CommonDialog;
+import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.caesar.rongcloudspeed.viewmodel.UserInfoViewModel;
 
 /**
@@ -81,7 +82,7 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
     }
 
     private void showExitDialog() {
-        CommonDialog.Builder  builder = new CommonDialog.Builder();
+        CommonDialog.Builder builder = new CommonDialog.Builder();
         builder.setContentMessage(getString(R.string.seal_mine_set_account_dialog_logout_message));
         builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
             @Override
@@ -89,6 +90,7 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
                 logout();
                 // 通知退出
                 sendLogoutNotify();
+                UserInfoUtils.clear(AccountSettingActivity.this );
                 Intent intent = new Intent(AccountSettingActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

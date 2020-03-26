@@ -93,20 +93,27 @@ public class AdminIndustryFragment extends BaseFragment implements OnRefreshList
     protected void onClick(View v, int id) {
         switch (id) {
             case R.id.nextIndustryStep:
-                SparseBooleanArray mCheckStates=adapter.getCheckedItemPositions();
-                if(mCheckStates.size()>0){
+                SparseBooleanArray mCheckStates = adapter.getCheckedItemPositions();
+                if (mCheckStates.size() > 0) {
                     StringBuffer stringBuffer = new StringBuffer();
-                    for(int i=0;i<mCheckStates.size();i++){
-                        int key = mCheckStates.keyAt(i);
-                        String industryID=adminIndustryArray.get(key).getId();
-                        stringBuffer.append(industryID+",");
+                    for (int i = 0; i < mCheckStates.size(); i++) {
+                        if (mCheckStates.valueAt(i)) {
+                            int key = mCheckStates.keyAt(i);
+                            String industryID = adminIndustryArray.get(key).getId();
+                            stringBuffer.append(industryID + ",");
+                        }
                     }
-                    stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                    String industryString = stringBuffer.toString();
-                    if(listener!=null){
-                        listener.onNextStep(industryString);
+                    if (stringBuffer.length() > 0) {
+                        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                        String industryString = stringBuffer.toString();
+                        if (listener != null) {
+                            listener.onNextStep(industryString);
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "请选择相关行业", Toast.LENGTH_LONG).show();
                     }
-                }else{
+
+                } else {
                     Toast.makeText(getActivity(), "请选择相关行业", Toast.LENGTH_LONG).show();
                 }
                 break;

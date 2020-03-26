@@ -3,7 +3,9 @@ package com.caesar.rongcloudspeed.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -20,7 +22,6 @@ import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.ui.fragment.SPSpeerLeftFragment;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.google.android.material.tabs.TabLayout;
-import com.tencent.smtt.sdk.TbsVideo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,10 +69,26 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
         lesson_smeta = getIntent().getExtras().getString("lesson_smeta");
         thumbVideoString = getIntent().getExtras().getString("videoPath");
         initTitleBarView(titlebar, "课程详情");
-//        Glide.with(this).load(thumbVideoString+"?vframe/jpg/offset/1").into(convenientBanner);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.container);
+        ImageButton button = new ImageButton(this);
+        button.setImageResource(R.drawable.action_colloect_like);
+        button.setBackgroundColor(0x00000000);
+        button.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        titlebar.setRightView(button);
+        button.setOnClickListener(view -> {
+            if(view.isSelected()){
+                button.setSelected(false);
+                button.setImageResource(R.drawable.product_unlike);
+            }else{
+                button.setSelected(true);
+                button.setImageResource(R.drawable.product_like);
+            }
+        });
         initView();
         uidString = UserInfoUtils.getAppUserId(this);
-        orderSet = UserInfoUtils.getAppUserOrder(this);
+        orderSet = UserInfoUtils.getAppUserLessones(this);
         String thumbString = null;
         try {
             JSONObject jsonSmeta = new JSONObject(lesson_smeta);
@@ -90,7 +107,10 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
             speerBtn.setText("进入课程");
             isBuy = true;
         } else {
-            if (orderSet != null && orderSet.size() > 0) {
+            if (lesson_price.startsWith("0.0")) {
+                speerBtn.setText("进入课程");
+                isBuy = true;
+            } else if (orderSet != null && orderSet.size() > 0) {
                 for (String str : orderSet) {
                     if (str.equals(lesson_id)) {
                         speerBtn.setText("进入课程");
@@ -105,6 +125,22 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
     protected void onResume() {
         super.onResume();
         userType = UserInfoUtils.getUserType(this);
+        if (userType.equals("6")) {
+            speerBtn.setText("进入课程");
+            isBuy = true;
+        } else {
+            if (lesson_price.startsWith("0.0")) {
+                speerBtn.setText("进入课程");
+                isBuy = true;
+            } else if (orderSet != null && orderSet.size() > 0) {
+                for (String str : orderSet) {
+                    if (str.equals(lesson_id)) {
+                        speerBtn.setText("进入课程");
+                        isBuy = true;
+                    }
+                }
+            }
+        }
     }
 
     private void initView() {
@@ -114,7 +150,7 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
         //tab的下划线颜色,默认是粉红色
         tabLayout.setSelectedTabIndicatorColor(colorprimary);
         tabLayout.setTabMode(MODE_FIXED);
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager(), 0) {
             @Override
             public Fragment getItem(int position) {
                 if (position == 0) {

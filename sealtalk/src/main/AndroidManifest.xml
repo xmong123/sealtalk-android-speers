@@ -1,56 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.caesar.rongcloudspeed">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI" />
-    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI" />
-
-    <!-- ⼩米 配置开始 < -->
+    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI" /> <!-- ⼩米 配置开始 < -->
     <permission
         android:name="com.caesar.rongcloudspeed.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.caesar.rongcloudspeed.permission.MIPUSH_RECEIVE" />
-    <!-- ⼩米 配置结束 < -->
+
+    <uses-permission android:name="com.caesar.rongcloudspeed.permission.MIPUSH_RECEIVE" /> <!-- ⼩米 配置结束 < -->
     <!-- GCM 配置开始 < -->
     <permission
         android:name="com.caesar.rongcloudspeed.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.caesar.rongcloudspeed.permission.C2D_MESSAGE" />
-    <!-- GCM 配置结束 < -->
+
+    <uses-permission android:name="com.caesar.rongcloudspeed.permission.C2D_MESSAGE" /> <!-- GCM 配置结束 < -->
     <!-- 华为 配置开始 < -->
-    <!--HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--HMS-SDK引导升级HMS功能，保存下载的升级包需要SD卡写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--检测网络状态-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--检测wifi状态-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--为了获取用户手机的IMEI，用来唯一的标识用户。-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <!--如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <!-- 华为 配置结束 < -->
-
+    <!-- HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- HMS-SDK引导升级HMS功能，保存下载的升级包需要SD卡写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测wifi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 为了获取用户手机的IMEI，用来唯一的标识用户。 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 华为 配置结束 < -->
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
     <!-- MeiZu 配置开始 < -->
-    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息-->
+    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息 -->
     <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+
     <permission
         android:name="com.caesar.rongcloudspeed.push.permission.MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.caesar.rongcloudspeed.push.permission.MESSAGE" />
-    <!-- 兼容 flyme3.0 配置权限-->
-    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
-    <!-- MeiZu 配置结束 < -->
 
-    <!-- OPPPO 权限配置-->
-    <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" />
-    <!-- OPPO 配置结束-->
-
+    <uses-permission android:name="com.caesar.rongcloudspeed.push.permission.MESSAGE" /> <!-- 兼容 flyme3.0 配置权限 -->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" /> <!-- MeiZu 配置结束 < -->
+    <!-- OPPPO 权限配置 -->
+    <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" /> <!-- OPPO 配置结束 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
 
     <application
         android:name=".SealApp"
@@ -60,6 +49,10 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".common.MyWeChatReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -68,6 +61,7 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -80,8 +74,7 @@
                     android:host="*"
                     android:scheme="sealtalk" />
             </intent-filter>
-        </activity>
-        <!--视频-->
+        </activity> <!-- 视频 -->
         <activity
             android:name="com.tencent.smtt.sdk.VideoActivity"
             android:alwaysRetainTaskState="true"
@@ -90,6 +83,7 @@
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="com.tencent.smtt.tbs.video.PLAY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -108,6 +102,7 @@
         <activity android:name=".ui.activity.SPLessonVideoActivity" />
         <activity android:name=".ui.activity.SPLessonVideosActivity" />
         <activity android:name=".ui.activity.SpeerOrderActivity" />
+        <activity android:name=".ui.activity.SpeerOrderOtherActivity" />
         <activity android:name=".ui.activity.SeekHelperOrderActivity" />
         <activity android:name=".ui.activity.SPSpeerDetailActivity" />
         <activity android:name=".ui.activity.AnimationPersonalActivity" />
@@ -120,7 +115,16 @@
         <activity android:name=".ui.activity.PersonalSeekListActivity" />
         <activity android:name=".ui.activity.PersonalAdvertListActivity" />
         <activity
+            android:name=".ui.activity.PersonalLessonListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PersonalWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.AddAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PersonalOrderListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AddressListActivity"
@@ -192,6 +196,18 @@
             android:name=".ui.activity.AdminSoftActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.IndustrySelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ProfessionSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AddPersonalInvoiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SoftSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.AdminMainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -199,6 +215,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.HomeMoreLessonListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.HomeMorePeopleListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MainActivity"
@@ -209,9 +228,9 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
@@ -219,16 +238,14 @@
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name="ui.activity.TestPushActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
@@ -236,25 +253,23 @@
                     android:pathPrefix="/push_message"
                     android:scheme="rong" />
             </intent-filter>
-        </activity>
-
-        <!--聚合会话列表-->
+        </activity> <!-- 聚合会话列表 -->
         <activity
             android:name=".ui.activity.SubConversationListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.caesar.rongcloudspeed"
                     android:path="/subconversationlist"
                     android:scheme="rong" />
             </intent-filter>
-        </activity>
-        <!--聚合会话列表-->
+        </activity> <!-- 聚合会话列表 -->
         <activity
             android:name=".ui.activity.NewFriendListActivity"
             android:screenOrientation="portrait"
@@ -292,16 +307,19 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.caesar.rongcloudspeed"
                     android:pathPrefix="/publicServiceProfile"
                     android:scheme="rong" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.caesar.rongcloudspeed"
                     android:pathPrefix="/publicServiceInfo"
@@ -319,8 +337,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PublicSeekActivity"
-            android:screenOrientation="portrait" />
-        <!-- 群组详情 -->
+            android:screenOrientation="portrait" /> <!-- 群组详情 -->
         <activity
             android:name=".ui.activity.SeekInvoiceOrderActivity"
             android:screenOrientation="portrait" />
@@ -332,7 +349,6 @@
             android:name=".circle.ui.PayCardCircleActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
-
         <activity
             android:name=".circle.ui.FriendCircle1Activity"
             android:label="@string/app_name"
@@ -346,17 +362,14 @@
         <activity
             android:name=".circle.ui.AddCircleTaskActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".circle.ui.MyAlbumActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".circle.ui.ImagePreviewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activity.AccountSettingActivity"
@@ -367,41 +380,38 @@
         <activity
             android:name=".ui.activity.AboutSealTalkActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.WebViewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.PrivateChatSettingActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.GroupDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.GroupMemberListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.GroupNoticeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.UserDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectSingleFriendActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectGroupMemberActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectFriendExcluedGroupActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PersonalAlbumSectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PersonalAlbumVideoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectForwardCreateChatActivity"
@@ -426,7 +436,6 @@
         <activity
             android:name=".ui.activity.UpdateGenderActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.CreateGroupActivity"
             android:screenOrientation="portrait" />
@@ -457,12 +466,10 @@
         <activity
             android:name=".ui.activity.QrCodeDisplayActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.QrCodeDisplayWindowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentNoTitleActivity" />
-
         <activity
             android:name=".ui.activity.SealPicturePagerActivity"
             android:screenOrientation="portrait"
@@ -476,7 +483,6 @@
         <activity
             android:name=".ui.activity.GroupManagementsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.GroupSetManagementsActivity"
             android:screenOrientation="portrait" />
@@ -509,32 +515,26 @@
             android:theme="@style/UpdateDialogStyle" />
         <activity
             android:name=".view.UpdateDialog"
-            android:theme="@style/UpdateDialogStyle" />
-        <!-- 请将CHANNAL改为app的发布渠道 < -->
+            android:theme="@style/UpdateDialogStyle" /> <!-- 请将CHANNAL改为app的发布渠道 < -->
         <meta-data
             android:name="InstallChannel"
-            android:value="CHANNAL" />
-
-        <!-- 高德地图-->
+            android:value="CHANNAL" /> <!-- 高德地图 -->
         <!--
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="替换你申请的高德地图 ApiKey" />
         -->
-
         <!--
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="替换您申请的 UMeng AppKey" />
         -->
-
         <!--
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="替换您申请的 UMeng Channel" />
         -->
-
-        <!-- push start-->
+        <!-- push start -->
         <receiver
             android:name=".push.SealNotificationReceiver"
             android:exported="true">
@@ -543,11 +543,7 @@
                 <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
-        </receiver>
-
-
-        <!--第三方的推送 权限 广播 和服务-->
-
+        </receiver> <!-- 第三方的推送 权限 广播 和服务 -->
         <!-- 小米 配置开始 < -->
         <service
             android:name="com.xiaomi.push.service.XMPushService"
@@ -558,21 +554,18 @@
             android:exported="true" />
         <service
             android:name="com.xiaomi.mipush.sdk.MessageHandleService"
-            android:enabled="true" />
-        <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
-
+            android:enabled="true" /> <!-- 注：此service必须在2.2.5版本以后（包括2.2.5版本）加入 -->
         <service
             android:name="com.xiaomi.push.service.XMJobService"
             android:enabled="true"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
-
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 注：此service必须在3.0.1版本以后（包括3.0.1版本）加入 -->
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -595,17 +588,14 @@
             <intent-filter>
                 <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
-        </receiver>
-        <!-- 小米 配置结束 < -->
-
-        <!-- HMS 配置开始-->
+        </receiver> <!-- 小米 配置结束 < -->
+        <!-- HMS 配置开始 -->
         <!--
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="替换为您申请的华为推送 AppId" />
         -->
-
-        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
+        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面 -->
         <activity
             android:name="com.huawei.hms.activity.BridgeActivity"
             android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
@@ -616,9 +606,7 @@
             <meta-data
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
-        </activity>
-
-        <!-- 解决华为移动服务升级问题的透明界面（必须声明）-->
+        </activity> <!-- 解决华为移动服务升级问题的透明界面（必须声明） -->
         <activity
             android:name="io.rong.push.platform.hms.common.HMSAgentActivity"
             android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
@@ -635,14 +623,10 @@
             android:name="com.huawei.hms.update.provider.UpdateProvider"
             android:authorities="com.caesar.rongcloudspeed.hms.update.provider"
             android:exported="false"
-            android:grantUriPermissions="true"></provider>
-
-
-        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
-
-
+            android:grantUriPermissions="true" /> <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
         <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
             <intent-filter>
+
                 <!-- 必须,用于接收token -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
                 <!-- 必须，用于接收消息 -->
@@ -659,9 +643,7 @@
                 <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
                 <action android:name="com.huawei.intent.action.PUSH" />
             </intent-filter>
-        </receiver>
-        <!-- HMS 配置结束-->
-
+        </receiver> <!-- HMS 配置结束 -->
         <!-- [START firebase_service] -->
         <!--
         <service
@@ -677,18 +659,17 @@
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
-         -->
+        -->
         <!-- [END firebase_service] -->
-
-
         <!-- MeiZu 配置开始 < -->
         <receiver android:name="io.rong.push.platform.meizu.MeiZuReceiver">
             <intent-filter>
+
                 <!-- 接收 push 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
                 <!-- 接收 register 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
-                <!-- 接收 unregister 消息-->
+                <!-- 接收 unregister 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
 
                 <!-- 兼容低版本 Flyme3 推送服务配置 -->
@@ -697,10 +678,7 @@
 
                 <category android:name="com.caesar.rongcloudspeed" />
             </intent-filter>
-        </receiver>
-        <!-- MeiZu 配置结束 < -->
-
-
+        </receiver> <!-- MeiZu 配置结束 < -->
         <!-- vivo 推送配置 开始 -->
         <service
             android:name="com.vivo.push.sdk.service.CommandClientService"
@@ -713,9 +691,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.activity.GroupReadReceiptDetailActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 微信 接收微信的请求及返回值 -->
+            android:screenOrientation="portrait" /> <!-- 微信 接收微信的请求及返回值 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -723,8 +699,13 @@
             android:launchMode="singleTask"
             android:taskAffinity="net.sourceforge.simcpux"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!--推送配置项-->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ui.activity.WechatPayActivity"
+            android:label="@string/app_name" /> <!-- 推送配置项 -->
         <!--
         <meta-data
             android:name="com.vivo.push.api_key"
@@ -732,37 +713,31 @@
         <meta-data
             android:name="com.vivo.push.app_id"
             android:value="您申请的 vivo 推送 AppId" />
-         -->
-
+        -->
         <!-- push 应用定义消息 receiver 声明 -->
         <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
             <intent-filter>
+
                 <!-- 接收 push 消息 -->
                 <action android:name="com.vivo.pushclient.action.RECEIVE" />
             </intent-filter>
-        </receiver>
-        <!-- vivo 推送配置 结束 -->
-
-        <!-- OPPO push 配置开始-->
+        </receiver> <!-- vivo 推送配置 结束 -->
+        <!-- OPPO push 配置开始 -->
         <service
             android:name="com.coloros.mcssdk.PushService"
             android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
             <intent-filter>
                 <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
             </intent-filter>
-        </service>
-        <!-- OPPO push 配置结束-->
-
-        <!--第三方推送的权限 广播 服务 配置结束-->
+        </service> <!-- OPPO push 配置结束 -->
+        <!-- 第三方推送的权限 广播 服务 配置结束 -->
         <!-- push end -->
-
         <!-- bugly 配置 APP ID -->
         <!--
         <meta-data
             android:name="BUGLY_APPID"
             android:value="您申请 BUGLY 的 AppId" />
         -->
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.caesar.rongcloudspeed.FileProvider"
