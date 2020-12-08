@@ -222,7 +222,7 @@ public class PublicGoodsActivity extends Activity implements View.OnClickListene
         photos_url=new String[pathList.size()];
         for(String fileName:pathList){
             Bitmap bitmap= BastiGallery.getimage( fileName );
-            //bitmap=drawCenterLable(PublicGoodsActivity.this,bitmap,"城库货源");
+            //bitmap=drawCenterLable(PublicGoodsActivity.this,bitmap,"同行快线");
             //byte[] img = BastiGallery.Bitmap2Bytes( bitmap );
             byte[] img=compressBitmap(bitmap,128);
             QiniuUtils.uploadImg( PublicGoodsActivity.this, img, QiniuUtils.createImageKey( UserInfoUtils.getPhone( PublicGoodsActivity.this ) ), new UpLoadImgCallback() {
@@ -304,9 +304,9 @@ public class PublicGoodsActivity extends Activity implements View.OnClickListene
                 .multiSelect( true )
                 // 确定按钮背景色
                 .btnBgColor( Color.TRANSPARENT )
-                .titleBgColor( ContextCompat.getColor( PublicGoodsActivity.this, R.color.main_color ) )
+                .titleBgColor( ContextCompat.getColor( PublicGoodsActivity.this, R.color.colorAccent ) )
                 // 使用沉浸式状态栏
-                .statusBarColor( ContextCompat.getColor( PublicGoodsActivity.this, R.color.main_color ) )
+                .statusBarColor( ContextCompat.getColor( PublicGoodsActivity.this, R.color.colorAccent ) )
                 // 返回图标ResId
                 .backResId( R.drawable.ic_arrow_back )
                 .title( "图片" )

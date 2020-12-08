@@ -3,6 +3,8 @@ package com.caesar.rongcloudspeed.ui.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
@@ -51,6 +53,7 @@ public class SealSearchActivity extends SealSearchBaseActivity implements TextWa
         searchGroupFragment = new SearchGroupFragment();
         searchGroupFragment.init(this);
         pushFragment(searchAllFragment);
+        findViewById(R.id.fl_content_layout).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -83,7 +86,6 @@ public class SealSearchActivity extends SealSearchBaseActivity implements TextWa
                     result.getConversation().getTargetId(),
                     searchConversationModel.getName());
         } else {
-
             searchMessageFragment = new SearchMessageFragment();
             searchMessageFragment.init(this,
                     searchConversationModel.getBean().getConversation().getTargetId(),

@@ -33,7 +33,7 @@ public class QiniuLabConfig {
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_AUTH_FLAG = 2;
     public final static String LOG_TAG = "QiniuLab";
-    public static final String TESTSERVER = "http://speer.500-china.com";
+    public static final String TESTSERVER = "http://thinkcmf.91bim.net";
     public final static String REMOTE_SERVICE_SERVER = "http://qiniu.500-china.com";
     public final static String ADVERT_SERVICE_VIDEO = "http://qiniu.500-china.com/banner/acc777cc-c689-46f2-859f-77caa425629a.mp4";
     //quick start

@@ -9,37 +9,35 @@
     <permission
         android:name="com.caesar.rongcloudspeed.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
-
     <uses-permission android:name="com.caesar.rongcloudspeed.permission.MIPUSH_RECEIVE" /> <!-- ⼩米 配置结束 < -->
-    <!-- GCM 配置开始 < -->
+    <!-- GCM 配置开始 <-->
     <permission
         android:name="com.caesar.rongcloudspeed.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.caesar.rongcloudspeed.permission.C2D_MESSAGE" /> <!-- GCM 配置结束 < -->
-    <!-- 华为 配置开始 < -->
+    <!-- 华为 配置开始 <-->
     <!-- HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- HMS-SDK引导升级HMS功能，保存下载的升级包需要SD卡写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 检测网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测wifi状态 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 为了获取用户手机的IMEI，用来唯一的标识用户。 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> &lt;!&ndash; 为了获取用户手机的IMEI，用来唯一的标识用户。 &ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" /> &lt;!&ndash; 如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 &ndash;&gt;-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 华为 配置结束 < -->
-    <uses-permission android:name="android.permission.READ_LOGS"
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <!-- MeiZu 配置开始 < -->
     <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息 -->
     <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
-
     <permission
         android:name="com.caesar.rongcloudspeed.push.permission.MESSAGE"
         android:protectionLevel="signature" />
-
     <uses-permission android:name="com.caesar.rongcloudspeed.push.permission.MESSAGE" /> <!-- 兼容 flyme3.0 配置权限 -->
     <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" /> <!-- MeiZu 配置结束 < -->
     <!-- OPPPO 权限配置 -->
     <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" /> <!-- OPPO 配置结束 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!--<uses-permission android:name="android.permission.READ_CONTACTS" />-->
 
     <application
         android:name=".SealApp"
@@ -52,7 +50,7 @@
         <receiver
             android:name=".common.MyWeChatReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -96,11 +94,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.VoteBaseActivity" />
         </activity>
+        <activity android:name=".ui.activity.ArticlePostsCommentsListActivity" />
+        <activity android:name=".ui.activity.SPLessonVideoDetailActivity" />
         <activity android:name=".ui.activity.SPShopDetailActivity" />
         <activity android:name=".ui.activity.SeekHelperDetailActivity" />
         <activity android:name=".ui.activity.SPLessonDetailActivity" />
         <activity android:name=".ui.activity.SPLessonVideoActivity" />
         <activity android:name=".ui.activity.SPLessonVideosActivity" />
+        <activity android:name=".ui.activity.SPLessonRxffmpegActivity" />
         <activity android:name=".ui.activity.SpeerOrderActivity" />
         <activity android:name=".ui.activity.SpeerOrderOtherActivity" />
         <activity android:name=".ui.activity.SeekHelperOrderActivity" />
@@ -115,6 +116,27 @@
         <activity android:name=".ui.activity.PersonalSeekListActivity" />
         <activity android:name=".ui.activity.PersonalAdvertListActivity" />
         <activity
+            android:name=".ui.activity.PersonnelApplyListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RecruitPostInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PostRecruitListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PersonnelDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RecruitPostDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RecruitPostMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RecruitCompanyMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.PersonalLessonListActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -125,6 +147,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PersonalOrderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PersonalOrdersListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PersonalLessonesListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AddressListActivity"
@@ -152,36 +180,6 @@
         <activity
             android:name=".player.PLVideoTextureActivity"
             android:theme="@style/AppThemeFullscreen" />
-        <activity
-            android:name=".caesar.CaesarTransPayActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/jrmf_dialog"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".caesar.CaesarPayTypeActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/jrmf_dialog"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".caesar.CaesarTransAccountActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".caesar.CaesarTransSuccActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".caesar.CaesarTransDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".caesar.CaesarSendGroupEnvelopesActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity
-            android:name=".caesar.CaesarSendSingleEnvelopesActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -282,6 +280,9 @@
             android:name=".ui.activity.SealSearchActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.SealOtherSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.SearchFriendActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -292,6 +293,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.GroupListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PublicCircleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PublicServiceActivity"
@@ -330,6 +334,12 @@
             android:name=".ui.activity.SectionMessageActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.SectionOnlyMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SectionOtherMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.PublicGoodsActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -345,6 +355,16 @@
             android:name=".circle.ui.FriendCircleActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".circle.ui.FriendTimeLineActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".circle.ui.SpeerTimeLineActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".circle.ui.PayCardCircleActivity"
             android:label="@string/app_name"
@@ -362,10 +382,25 @@
         <activity
             android:name=".circle.ui.AddCircleTaskActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".circle.ui.AddCircleImagesActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".circle.ui.MyAlbumActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".circle.ui.ImagePreviewActivity"
@@ -373,6 +408,21 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activity.AccountSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AccountSecurityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AccountCancellationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AccountRecruitMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AccountRecruitJobActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AccountRecruitEduActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ChangeLanguageActivity"
@@ -414,6 +464,9 @@
             android:name=".ui.activity.PersonalAlbumVideoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.CustomerDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.SelectForwardCreateChatActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -429,6 +482,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UpdateNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.LessonAdvertDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UpdateEmailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UpdateStAccountActivity"

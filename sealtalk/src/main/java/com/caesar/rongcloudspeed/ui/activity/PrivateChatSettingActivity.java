@@ -9,7 +9,9 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,9 +27,11 @@ import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.IntentExtra;
 import com.caesar.rongcloudspeed.db.model.FriendDetailInfo;
 import com.caesar.rongcloudspeed.db.model.FriendShipInfo;
+import com.caesar.rongcloudspeed.db.model.UserInfo;
 import com.caesar.rongcloudspeed.model.Resource;
 import com.caesar.rongcloudspeed.model.ScreenCaptureResult;
 import com.caesar.rongcloudspeed.model.Status;
+import com.caesar.rongcloudspeed.ui.dialog.SimpleInputDialog;
 import com.caesar.rongcloudspeed.ui.view.SealTitleBar;
 import com.caesar.rongcloudspeed.ui.view.SettingItemView;
 import com.caesar.rongcloudspeed.ui.widget.SelectableRoundedImageView;
@@ -36,6 +40,10 @@ import com.caesar.rongcloudspeed.utils.ImageLoaderUtils;
 import com.caesar.rongcloudspeed.utils.ToastUtils;
 import com.caesar.rongcloudspeed.viewmodel.PrivateChatSettingViewModel;
 import com.caesar.rongcloudspeed.utils.log.SLog;
+import com.caesar.rongcloudspeed.viewmodel.UserDetailViewModel;
+import com.caesar.rongcloudspeed.viewmodel.UserInfoViewModel;
+
+import io.rong.imkit.RongIM;
 import io.rong.imkit.utilities.PromptPopupDialog;
 import io.rong.imlib.model.Conversation;
 
@@ -44,6 +52,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     /**
      * 发起创建群组
      */
+    private UserDetailViewModel userDetailViewModel;
     private final int REQUEST_START_GROUP = 1000;
 
     private PrivateChatSettingViewModel privateChatSettingViewModel;
@@ -59,9 +68,10 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     private SelectableRoundedImageView portraitIv;
     private TextView nameTv;
     private boolean isScreenShotSivClicked = false;
-
+    private Button addFriendBtn;
     private final int REQUEST_CODE_PERMISSION = 114;
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+    private UserInfo myUserInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -142,6 +152,9 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
                 }
             }
         });
+        // 添加好友
+        addFriendBtn = findViewById(R.id.profile_btn_detail_add_friend);
+        addFriendBtn.setOnClickListener(this);
     }
 
     private boolean requestReadPermissions() {
@@ -149,14 +162,32 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     }
 
     private void initViewModel() {
+        userDetailViewModel = ViewModelProviders.of(this, new UserDetailViewModel.Factory(getApplication(), targetId)).get(UserDetailViewModel.class);
         privateChatSettingViewModel = ViewModelProviders.of(this, new PrivateChatSettingViewModel.Factory(getApplication(), targetId, conversationType)).get(PrivateChatSettingViewModel.class);
         privateChatSettingViewModel.getFriendInfo().observe(this, friendShipInfoResource -> {
             FriendShipInfo data = friendShipInfoResource.data;
-            if (data == null) return;
+            if (data == null){
+                userDetailViewModel.getUserInfo().observe(this, resource -> {
+                    if (resource.data != null) { //在删除好友时不进行好友信息的刷新，防止删除成功时画面会刷新再关闭
+                        UserInfo userInfo=resource.data;
+                        // 设置备注名
+                        nameTv.setText(userInfo.getName());
+                        name = userInfo.getName();
+                        ImageLoaderUtils.displayUserPortraitImage(userInfo.getPortraitUri(), portraitIv);
+                        // 自己时不显示添加好友
+                        if (userInfo.getId().equals(RongIM.getInstance().getCurrentUserId())) {
+                            addFriendBtn.setVisibility(View.GONE);
+                        } else {
+                            addFriendBtn.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+                return;
+            }
 
-            String displayName = data.getDisplayName();
+
             FriendDetailInfo user = data.getUser();
-
+            String displayName = data.getDisplayName();
             // 设置备注名
             if (!TextUtils.isEmpty(displayName)) {
                 nameTv.setText(displayName);
@@ -242,6 +273,16 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
                 }
             }
         });
+        // 获取自己的信息
+        UserInfoViewModel userInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
+        userInfoViewModel.getUserInfo().observe(this, new Observer<Resource<UserInfo>>() {
+            @Override
+            public void onChanged(Resource<UserInfo> resource) {
+                if (resource.data != null) {
+                    myUserInfo = resource.data;
+                }
+            }
+        });
     }
 
     private void initData() {
@@ -260,8 +301,33 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
             case R.id.profile_iv_add_member:
                 addOtherMemberToGroup();
                 break;
+            case R.id.profile_btn_detail_add_friend:
+                showAddFriendDialog();
+                break;
             default:
         }
+    }
+
+    /**
+     * 显示添加好友对话框
+     */
+    private void showAddFriendDialog() {
+        SimpleInputDialog dialog = new SimpleInputDialog();
+        dialog.setInputHint(getString(R.string.profile_add_friend_hint));
+        dialog.setInputDialogListener(new SimpleInputDialog.InputDialogListener() {
+            @Override
+            public boolean onConfirmClicked(EditText input) {
+                String inviteMsg = input.getText().toString();
+                // 如果邀请信息为空则使用默认邀请语
+                if (TextUtils.isEmpty(inviteMsg) && myUserInfo != null) {
+                    // 当有附带群组名时显示来自哪个群组，没有时仅带自己的昵称
+                    inviteMsg = getString(R.string.profile_invite_friend_description_format, myUserInfo.getName());
+                }
+                userDetailViewModel.inviteFriend(inviteMsg);
+                return true;
+            }
+        });
+        dialog.show(getSupportFragmentManager(), null);
     }
 
     /**

@@ -45,13 +45,14 @@ public class MessageSectionAdapter extends BaseSectionQuickAdapter<MySectionEnti
     protected void convert(BaseViewHolder helper, MySectionEntity item) {
         PostsArticleBaseBean baseBean = (PostsArticleBaseBean) item.t;
         helper.setText(R.id.extension_title, "\u3000\u3000\u3000" + baseBean.getPost_title());
-        if (baseBean.getPost_type().equals("2")) {
-            helper.setText(R.id.extension_tag,"课程");
-            helper.setBackgroundColor(R.id.extension_tag, 0xffe54141);
-        } else if (baseBean.getPost_type().equals("3")) {
-            helper.setText(R.id.extension_tag,"求助");
-            helper.setBackgroundColor(R.id.extension_tag, 0xffe54141);
+        if (!baseBean.getTerm_id().equals("46")) {
+            if (baseBean.getTerm_id().equals("43")) {
+                helper.setText(R.id.extension_tag, "求助");
+                helper.setBackgroundColor(R.id.extension_tag, 0xffe54141);
+            } else {
+                helper.setText(R.id.extension_tag, "课程");
+                helper.setBackgroundColor(R.id.extension_tag, 0xff808000);
+            }
         }
-
     }
 }

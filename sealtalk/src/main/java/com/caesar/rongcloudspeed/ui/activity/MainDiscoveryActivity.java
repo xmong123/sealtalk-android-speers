@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.caesar.rongcloudspeed.R;
+import com.caesar.rongcloudspeed.circle.ui.AddCircleImagesActivity;
 import com.caesar.rongcloudspeed.circle.ui.AddCircleTaskActivity;
 import com.caesar.rongcloudspeed.quick.QuickStartVideoExampleActivity;
 import com.caesar.rongcloudspeed.ui.BaseActivity;
@@ -41,7 +42,7 @@ public class MainDiscoveryActivity extends BaseActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.btn_public_02:
-                intent = new Intent(this, AddCircleTaskActivity.class);
+                intent = new Intent(this, PublicCircleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_public_03:

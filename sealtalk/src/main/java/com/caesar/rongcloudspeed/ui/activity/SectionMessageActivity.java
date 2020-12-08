@@ -105,18 +105,24 @@ public class SectionMessageActivity extends MultiStatusActivity implements OnRef
                         startActivity(intent);
                     } else if (position == 3) {
                         String seekID = headerItem2.getObject_id();
+                        String rongID = headerItem2.getRongid();
+                        String userNiceName = headerItem2.getUser_nicename();
                         String seekTitle = headerItem2.getPost_title();
                         String seekPrice = headerItem2.getPost_price();
                         String seekContent = headerItem2.getPost_excerpt();
                         String seekDate = headerItem2.getPost_date();
                         String photos_urls = headerItem2.getPhotos_urls();
+                        String post_author = headerItem2.getPost_author();
                         Intent intent = new Intent(SectionMessageActivity.this, SeekHelperDetailActivity.class);
                         intent.putExtra("seek_id", seekID);
+                        intent.putExtra("rong_id", rongID);
+                        intent.putExtra("user_nicename", userNiceName);
                         intent.putExtra("seek_title", seekTitle);
                         intent.putExtra("seek_date", seekDate);
                         intent.putExtra("seek_price", seekPrice);
                         intent.putExtra("seek_content", seekContent);
                         intent.putExtra("photos_urls", photos_urls);
+                        intent.putExtra("post_author", post_author);
                         startActivity(intent);
                     }
 //                    Toast.makeText(SectionMessageActivity.this, mySection.t.getPost_title(), Toast.LENGTH_LONG).show();

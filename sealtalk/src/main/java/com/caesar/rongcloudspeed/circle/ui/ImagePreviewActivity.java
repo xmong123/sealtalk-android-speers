@@ -48,7 +48,6 @@ public class ImagePreviewActivity extends BaseActivity {
         }
         L.l("imageurl", imageUrl);
         vinImg = findViewById(R.id.vin_img);
-
         ImageLoader.setImage(vinImg, 800, 640, imageUrl);
     }
 

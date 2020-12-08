@@ -25,7 +25,6 @@
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_marginTop="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_4"
-            android:background="@color/line"
             android:src="@drawable/votebase" />
 
         <TextView
@@ -57,6 +56,7 @@
                     android:textSize="@dimen/sp_12" />
 
                 <RatingBar
+                    android:rating="4.5"
                     android:id="@+id/ratingBarStyleIndicator"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"

@@ -23,6 +23,33 @@ public class PostsArticleBaseBean extends BaseData {
     private String post_avatar;
     private String post_keywords;
     private String post_type;
+    private String avatar;
+    private String user_nicename;
+    private String rongid;
+
+    public String getRongid() {
+        return rongid;
+    }
+
+    public void setRongid(String rongid) {
+        this.rongid = rongid;
+    }
+
+    public String getUser_nicename() {
+        return user_nicename;
+    }
+
+    public void setUser_nicename(String user_nicename) {
+        this.user_nicename = user_nicename;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getPost_type() {
         return post_type;

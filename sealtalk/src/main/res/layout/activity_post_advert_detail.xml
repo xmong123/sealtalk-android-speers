@@ -73,22 +73,22 @@
 
                     <ImageView
                         android:id="@+id/post_advert_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dp_240"
+                        android:layout_height="@dimen/dp_240"
                         android:layout_margin="10dp"
                         android:src="@drawable/addphoto" />
 
                     <ImageView
                         android:id="@+id/post_advert_del"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/layoutMargin32dp"
+                        android:layout_height="@dimen/layoutMargin32dp"
                         android:layout_alignTop="@id/post_advert_image"
                         android:layout_alignRight="@id/post_advert_image"
                         android:paddingLeft="10dp"
                         android:paddingBottom="10dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_delete_menu"
-                        android:visibility="invisible" />
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -98,12 +98,12 @@
                     android:layout_marginTop="@dimen/block_vertical_margin"
                     android:layout_marginBottom="@dimen/block_vertical_margin"
                     android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="视频内容一般不超过60秒，不超过50MB"
+                        android:text="视频内容一般不超过30秒，不超过20MB"
                         android:textColor="@color/red_dark" />
 
                     <RelativeLayout
@@ -354,24 +354,26 @@
 
             <View
                 style="@style/solide1dp"
+                android:layout_height="@dimen/layoutMargin32dp"
                 android:background="@color/white" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_4"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/post_commit_btn"
-                    style="@style/main_btn_style2"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:text="立即发布" />
-
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_4"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/post_commit_btn"
+            style="@style/main_btn_style2"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:text="立即发布" />
+
+    </LinearLayout>
 
 </LinearLayout>

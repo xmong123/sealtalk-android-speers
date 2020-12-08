@@ -2,39 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants">
 
     <RelativeLayout
-        android:layout_width="110dip"
-        android:layout_height="110dip"
-        android:background="#E8E8E8"
-        android:layout_centerInParent="true">
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/dp_2"
+        android:background="#E8E8E8">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_photo"
-            android:layout_width="110dip"
-            android:layout_height="110dip"
-            android:layout_marginTop="4dip"/>
+            android:layout_width="120dp"
+            android:layout_height="120dp" />
 
         <ImageView
             android:id="@+id/iv_photo1"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
+            android:layout_width="@dimen/dimen64"
+            android:layout_height="@dimen/dimen64"
             android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:layout_marginTop="4dip" />
+            android:visibility="gone" />
 
 
         <CheckBox
             android:id="@+id/iv_chosed"
+            style="@style/CustomCheckboxTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/iv_photo"
-            android:layout_marginTop="8dip"
-            android:layout_marginRight="8dip"
-            android:focusable="false"
-            style="@style/CustomCheckboxTheme"/>
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:focusable="false" />
 
     </RelativeLayout>
 

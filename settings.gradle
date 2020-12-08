@@ -1,1 +1,2 @@
-include ':sealtalk', ':contactcard', ':recognizer', ':pushpermission', ':circle_lib', ':library', ':photoPicker', ':citypicker',':picture_library',':ucrop'
+include ':sealtalk', ':contactcard', ':recognizer', ':pushpermission', ':circle_lib', ':library',
+        ':photoPicker', ':citypicker',':picture_library',':ucrop',':rxffmpeg', ':drawerlib'

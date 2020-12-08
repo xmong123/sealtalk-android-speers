@@ -17,6 +17,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import androidx.core.content.ContextCompat;
 
 import com.allen.library.SuperTextView;
 import com.caesar.rongcloudspeed.R;
+import com.caesar.rongcloudspeed.bean.BaiduTextBean;
 import com.caesar.rongcloudspeed.callback.UpLoadImgCallback;
 import com.caesar.rongcloudspeed.common.IntentExtra;
 import com.caesar.rongcloudspeed.common.NoScrollGridView;
@@ -37,6 +39,7 @@ import com.caesar.rongcloudspeed.network.NetworkResultUtils;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.caesar.rongcloudspeed.ui.adapter.NinePicturesAdapter;
 import com.caesar.rongcloudspeed.util.ToastUitl;
+import com.caesar.rongcloudspeed.util.ToastUtils;
 import com.caesar.rongcloudspeed.utils.ImageLoaderUtils;
 import com.caesar.rongcloudspeed.utils.QiniuUtils;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
@@ -55,7 +58,7 @@ import java.util.List;
 public class PublicSeekActivity extends Activity implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String TAG = "PublicGoodsActivity";
+    private static final String TAG = "PublicSeekActivity";
     private static final int REQUEST_CODE_SELECT_INDUSTRY = 1001;
     private static final int REQUEST_CODE_SELECT_PROFESSION = 1002;
     private static final int REQUEST_CODE_SELECT_SOFT = 1003;
@@ -84,7 +87,9 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
     private String industryIDString;
     private String professionIDString;
     private String softIDString;
-    private List<String> pathList = new ArrayList<>();
+    private List<String> pathStringList = new ArrayList<>();
+    private String baiduToken;
+    private ProgressDialog progressDialog;
 
     /**
      * 默认是发布出售
@@ -105,9 +110,10 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
         post_edit_mobile = (EditText) this.findViewById(R.id.post_edit_mobile);
         post_edit_content = (EditText) this.findViewById(R.id.post_edit_content);
         post_commit_btn = (Button) this.findViewById(R.id.post_commit_btn);
-        uidString = UserInfoUtils.getAppUserId(PublicSeekActivity.this);
-        phoneNumber = UserInfoUtils.getPhone(PublicSeekActivity.this);
-        ninePicturesAdapter = new NinePicturesAdapter(PublicSeekActivity.this, 9, new NinePicturesAdapter.OnClickAddListener() {
+        uidString = UserInfoUtils.getAppUserId(this);
+        baiduToken = UserInfoUtils.getBaiduToken(this);
+        phoneNumber = UserInfoUtils.getPhone(this);
+        ninePicturesAdapter = new NinePicturesAdapter(this, 9, new NinePicturesAdapter.OnClickAddListener() {
             @Override
             public void onClickAdd(int positin) {
                 choosePhoto();
@@ -126,6 +132,8 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
         post_industy_btn.setOnClickListener(this);
         post_profession_btn.setOnClickListener(this);
         post_soft_btn.setOnClickListener(this);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("正在处理，请稍后...");
     }
 
 
@@ -183,24 +191,18 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
                                     if (TextUtils.isEmpty(phoneNumber)) {
                                         ToastUitl.showToastWithImg(getString(R.string.circle_mobile_empty), R.drawable.ic_warm);
                                     } else {
+                                        hideInput();
                                         List<String> imageList = ninePicturesAdapter.getData();
-                                        pathList = new ArrayList<>();
+                                        pathStringList = new ArrayList<>();
                                         for (int i = 0; i < imageList.size(); i++) {
                                             String path = imageList.get(i);
-                                            if (path.length() > 5) {
-                                                pathList.add(path);
+                                            if (path.length() > 12) {
+                                                pathStringList.add(path);
                                             }
                                         }
-                                        if (pathList.size() > 0) {
-//                                            upLoadAllFeedBackImg(pathList);
-                                            Intent intent=new Intent(PublicSeekActivity.this,SeekHelperOrderActivity.class);
-                                            intent.putExtra("seek_name",postTitle);
-                                            intent.putExtra("seek_price","10");
-                                            intent.putExtra("seek_type","3");
-                                            intent.putExtra("industryIDString", industryIDString);
-                                            intent.putExtra("professionIDString", professionIDString);
-                                            intent.putExtra("softIDString", softIDString);
-                                            startActivityForResult(intent,REQUEST_CODE_SELECT_PAY);
+                                        if (pathStringList.size() > 0) {
+                                            progressDialog.show();
+                                            seekHandler.sendEmptyMessage(0);
                                         } else {
                                             ToastUitl.showToastWithImg(getString(R.string.circle_image_empty), R.drawable.ic_warm);
                                         }
@@ -218,14 +220,40 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
     }
 
     @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
+    Handler seekHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    final ProgressDialog pd = new ProgressDialog(PublicSeekActivity.this);
-                    pd.setMessage("正在处理，请稍后...");
-                    pd.show();
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitBaiduApi().getBaiduTextCheck(postTitle, baiduToken),
+                            new NetworkCallback<BaiduTextBean>() {
+                                @Override
+                                public void onSuccess(BaiduTextBean baiduTextBean) {
+                                    int conclusionType = baiduTextBean.getConclusionType();
+                                    if (conclusionType == 1) {
+                                        Intent intent = new Intent(PublicSeekActivity.this, SeekHelperOrderActivity.class);
+                                        intent.putExtra("seek_name", postTitle);
+                                        intent.putExtra("seek_price", "10");
+                                        intent.putExtra("seek_type", "3");
+                                        intent.putExtra("industryIDString", industryIDString);
+                                        intent.putExtra("professionIDString", professionIDString);
+                                        intent.putExtra("softIDString", softIDString);
+                                        startActivityForResult(intent, REQUEST_CODE_SELECT_PAY);
+                                    } else {
+                                        progressDialog.dismiss();
+                                        BaiduTextBean.BaiduTextData baiduTextData = baiduTextBean.getData().get(0);
+                                        ToastUitl.showToastWithImg(baiduTextData.getMsg(), R.drawable.ic_warm);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(PublicSeekActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    break;
+                case 1:
                     if (TextUtils.isEmpty(postPrice)) {
                         postPrice = "0.00";
                     }
@@ -240,7 +268,7 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
                                     } else {
                                         Toast.makeText(PublicSeekActivity.this, "信息发布失败，请稍后再试", Toast.LENGTH_SHORT).show();
                                     }
-                                    pd.dismiss();
+                                    progressDialog.dismiss();
                                     setResult(RESULT_OK, getIntent());
                                     finish();
                                 }
@@ -248,7 +276,7 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
                                 @Override
                                 public void onFailure(Throwable t) {
                                     Toast.makeText(PublicSeekActivity.this, "信息发布失败，请稍后再试", Toast.LENGTH_SHORT).show();
-                                    pd.dismiss();
+                                    progressDialog.dismiss();
                                 }
                             });
 
@@ -260,45 +288,40 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
     };
 
     private void upLoadAllFeedBackImg(List<String> pathList) {
-        final ProgressDialog pd = new ProgressDialog(PublicSeekActivity.this);
-        pd.setCanceledOnTouchOutside(false);
-        pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
             @Override
             public void onCancel(DialogInterface dialog) {
                 Log.d(TAG, "EMClient.getInstance().onCancel");
             }
         });
-        pd.setMessage("正在上传");
-        pd.show();
+        progressDialog.setMessage("正在上传");
+        progressDialog.show();
         QiniuUtils.getUploadManagerInstance();
         //已经上传过的不上传
-        final int[] count = {0};
         photos_url = new String[pathList.size()];
-        for (String fileName : pathList) {
+        for (int i = 0; i < pathList.size(); i++) {
+            String fileName = pathList.get(i);
             Bitmap bitmap = BastiGallery.getimage(fileName);
-            //bitmap=drawCenterLable(PublicGoodsActivity.this,bitmap,"城库货源");
+            //bitmap=drawCenterLable(PublicGoodsActivity.this,bitmap,"同行快线");
             //byte[] img = BastiGallery.Bitmap2Bytes( bitmap );
             byte[] img = compressBitmap(bitmap, 128);
-            QiniuUtils.uploadImg(PublicSeekActivity.this, img, QiniuUtils.createImageKey(UserInfoUtils.getPhone(PublicSeekActivity.this)), new UpLoadImgCallback() {
+            int finalI = i;
+            QiniuUtils.uploadImg(PublicSeekActivity.this, img, QiniuUtils.createImageKey(phoneNumber), new UpLoadImgCallback() {
                 @Override
                 public void onSuccess(String imgUrl) {
-                    photos_url[count[0]] = imgUrl;
-                    count[0]++;
+                    photos_url[finalI] = imgUrl;
                     Log.e("111111111111", "imgUrl = " + imgUrl);
-                    if (count[0] == pathList.size()) {
-                        pd.dismiss();
-                        handler.sendEmptyMessage(0);
+                    if (finalI == pathList.size()-1) {
+                        progressDialog.dismiss();
+                        seekHandler.sendEmptyMessage(1);
                     }
                 }
 
                 @Override
                 public void onFailure() {
-                    count[0]++;
-                    if (count[0] == pathList.size()) {
-                        pd.dismiss();
-                        handler.sendEmptyMessage(0);
-                    }
+                    ToastUtils.showShortToast("第" + finalI + "图片上传失败，请重试");
                 }
             });
         }
@@ -351,6 +374,17 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
     }
 
     /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View v = getWindow().peekDecorView();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
+
+    /**
      * 开启图片选择器
      */
     private void choosePhoto() {
@@ -359,9 +393,9 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
                 .multiSelect(true)
                 // 确定按钮背景色
                 .btnBgColor(Color.TRANSPARENT)
-                .titleBgColor(ContextCompat.getColor(PublicSeekActivity.this, R.color.main_color))
+                .titleBgColor(ContextCompat.getColor(PublicSeekActivity.this, R.color.colorAccent))
                 // 使用沉浸式状态栏
-                .statusBarColor(ContextCompat.getColor(PublicSeekActivity.this, R.color.main_color))
+                .statusBarColor(ContextCompat.getColor(PublicSeekActivity.this, R.color.colorAccent))
                 // 返回图标ResId
                 .backResId(R.drawable.ic_arrow_back)
                 .title("图片")
@@ -385,9 +419,9 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == REQUEST_CODE) {
-                List<String> pathList = data.getStringArrayListExtra(ImgSelActivity.INTENT_RESULT);
+                List<String> resultList = data.getStringArrayListExtra(ImgSelActivity.INTENT_RESULT);
                 if (ninePicturesAdapter != null) {
-                    ninePicturesAdapter.addAll(pathList);
+                    ninePicturesAdapter.addAll(resultList);
                 }
             } else if (requestCode == REQUEST_CODE_SELECT_INDUSTRY) {
                 industryIDString = data.getStringExtra("industryIDString");
@@ -398,9 +432,9 @@ public class PublicSeekActivity extends Activity implements View.OnClickListener
             } else if (requestCode == REQUEST_CODE_SELECT_SOFT) {
                 softIDString = data.getStringExtra("softIDString");
                 post_soft_btn.setRightString(data.getStringExtra("softNameString"));
-            }else if (requestCode == REQUEST_CODE_SELECT_PAY) {
-                if (pathList.size() > 0) {
-                    upLoadAllFeedBackImg(pathList);
+            } else if (requestCode == REQUEST_CODE_SELECT_PAY) {
+                if (pathStringList.size() > 0) {
+                    upLoadAllFeedBackImg(pathStringList);
                 }
 
             }

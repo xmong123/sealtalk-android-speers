@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin4dp"
+    android:elevation="@dimen/elevation8dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/card_radius"
+    tools:targetApi="lollipop">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin4dp">
+
+        <ImageView
+            android:id="@+id/personnel_recruit_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/margin4dp"
+            android:src="@mipmap/user_avatar" />
+
+        <TextView
+            android:id="@+id/personnel_recruit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin4dp"
+            android:layout_toEndOf="@+id/personnel_recruit_avatar"
+            android:text="同业者"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/mainText14sp" />
+
+        <ImageView
+            android:layout_width="@dimen/layoutMargin16dp"
+            android:layout_height="@dimen/layoutMargin16dp"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:layout_toEndOf="@+id/personnel_recruit_name"
+            android:src="@mipmap/recruit_auth" />
+
+        <TextView
+            android:id="@+id/personnel_recruit_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/personnel_recruit_name"
+            android:layout_margin="@dimen/margin4dp"
+            android:layout_toEndOf="@+id/personnel_recruit_avatar"
+            android:text="期望职位:工业建筑文案"
+            android:textColor="@color/black"
+            android:textSize="@dimen/mainText14sp" />
+
+        <TextView
+            android:id="@+id/personnel_recruit_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/margin4dp"
+            android:text="全日制本科"
+            android:textColor="@color/black"
+            android:textSize="@dimen/mainText14sp" />
+
+        <TextView
+            android:id="@+id/personnel_recruit_experience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/personnel_recruit_name"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/margin4dp"
+            android:text="8年工作经验"
+            android:textColor="@color/black"
+            android:textSize="@dimen/mainText14sp" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -8,6 +8,8 @@ public class CircleHeaderItem extends BaseBean implements Serializable {
 
     private String object_id;
     private String post_author;
+    private String rongid;
+    private String user_nicename;
     private String post_title;
     private String photos_urls;
     private String post_like;
@@ -18,6 +20,22 @@ public class CircleHeaderItem extends BaseBean implements Serializable {
     private String post_price;
     private String post_excerpt;
     private String post_source;
+
+    public String getUser_nicename() {
+        return user_nicename;
+    }
+
+    public void setUser_nicename(String user_nicename) {
+        this.user_nicename = user_nicename;
+    }
+
+    public String getRongid() {
+        return rongid;
+    }
+
+    public void setRongid(String rongid) {
+        this.rongid = rongid;
+    }
 
     public String getPost_source() {
         return post_source;

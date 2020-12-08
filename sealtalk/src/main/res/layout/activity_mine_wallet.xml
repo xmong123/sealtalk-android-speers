@@ -137,13 +137,15 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:id="@+id/walletContainer"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/walletRecyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/layoutMargin16dp"
             android:layout_weight="1"
-            android:orientation="vertical" />
+            android:background="@color/user_fragment_list_bg"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     </LinearLayout>
 
 

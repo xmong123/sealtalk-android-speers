@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.LogUtils;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.adapter.UserAdvertPlayerAdapter;
+import com.caesar.rongcloudspeed.adapter.UserOrderListAdapter;
+import com.caesar.rongcloudspeed.bean.GoodsOrderBean;
 import com.caesar.rongcloudspeed.bean.HomeSeekListBean;
 import com.caesar.rongcloudspeed.bean.PostsSeekBaseBean;
+import com.caesar.rongcloudspeed.bean.UserOrderListBean;
 import com.caesar.rongcloudspeed.manager.RetrofitManager;
 import com.caesar.rongcloudspeed.oberver.CommonObserver;
 import com.caesar.rongcloudspeed.rxlife.RxFragment;
@@ -43,11 +46,10 @@ public class PersonalOrdersFragment extends RxFragment implements OnRefreshListe
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.userseek_recyclerview)
     RecyclerView userSeekRecyclerview;
-    private String cid = "42";
     private String tag = "1";
     private String uidString;
-    private UserAdvertPlayerAdapter userAdvertAdapter;
-    private List<PostsSeekBaseBean> advertList = new ArrayList<PostsSeekBaseBean>();
+    private UserOrderListAdapter orderListAdapter;
+    private List<GoodsOrderBean> personalOrderList = new ArrayList<GoodsOrderBean>();
     private View notDataView;
     private View errorView;
 
@@ -86,42 +88,41 @@ public class PersonalOrdersFragment extends RxFragment implements OnRefreshListe
     }
 
     private void loadSeekData() {
-        RetrofitManager.create().indexAvertkListJson(uidString, cid, tag)
+        RetrofitManager.create().getUserOrderJson(uidString, tag)
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(this.<HomeSeekListBean>bindToLifecycle())
-                .subscribe(new CommonObserver<HomeSeekListBean>(refreshLayout) {
+                .compose(this.<UserOrderListBean>bindToLifecycle())
+                .subscribe(new CommonObserver<UserOrderListBean>(refreshLayout) {
                     @Override
-                    public void onSuccess(HomeSeekListBean value) {
+                    public void onSuccess(UserOrderListBean value) {
                         if (value.getCode() == CODE_SUCC) {
-                            advertList = value.getReferer();
-                            if (advertList.size() > 0) {
-                                userAdvertAdapter.setNewData(advertList);
+                            personalOrderList = value.getReferer();
+                            if (personalOrderList.size() > 0) {
+                                orderListAdapter.setNewData(personalOrderList);
                             } else {
-                                userAdvertAdapter.setEmptyView(notDataView);
+                                orderListAdapter.setEmptyView(notDataView);
                             }
                         } else {
-                            userAdvertAdapter.setEmptyView(notDataView);
+                            orderListAdapter.setEmptyView(notDataView);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        userAdvertAdapter.setEmptyView(errorView);
+                        orderListAdapter.setEmptyView(errorView);
                         Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
     private void initAnimationPostsAdapter() {
-        userAdvertAdapter = new UserAdvertPlayerAdapter(getActivity(), advertList, tag);
-        userAdvertAdapter.setNotDoAnimationCount(3);
+        orderListAdapter = new UserOrderListAdapter(getActivity(), personalOrderList);
         userSeekRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        userAdvertAdapter.setEmptyView(R.layout.custom_loading_view, (ViewGroup) userSeekRecyclerview.getParent());
-        userSeekRecyclerview.setAdapter(userAdvertAdapter);
+        orderListAdapter.setEmptyView(R.layout.custom_loading_view, (ViewGroup) userSeekRecyclerview.getParent());
+        userSeekRecyclerview.setAdapter(orderListAdapter);
         notDataView = getLayoutInflater().inflate(R.layout.custom_empty_view, (ViewGroup) userSeekRecyclerview.getParent(), false);
         errorView = getLayoutInflater().inflate(R.layout.custom_error_view, (ViewGroup) userSeekRecyclerview.getParent(), false);
-        userAdvertAdapter.loadMoreEnd();
+        orderListAdapter.loadMoreEnd();
     }
 
     @Override

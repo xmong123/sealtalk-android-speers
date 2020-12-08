@@ -10,6 +10,12 @@ public class Constant {
      */
     public static int CODE_SUCC = 101;
 
+    public static String grant_type = "client_credentials";
+
+    public static String client_id = "PX73CC5WBBzPu4198Fb0MXrq";
+
+    public static String client_secret = "PzCedZ2g1XyVVC39SuCYnY9LVgbGuKGb";
+
     public static String IMAGE_PATH = "http://qiniu.500-china.com/";
 
     public static String THINKCMF_PATH = "http://qiniu.500-china.com/";

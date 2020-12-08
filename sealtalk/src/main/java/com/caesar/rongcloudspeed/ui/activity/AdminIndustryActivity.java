@@ -1,6 +1,5 @@
 package com.caesar.rongcloudspeed.ui.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -8,19 +7,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.adapter.AbsRecycleAdapter;
-import com.caesar.rongcloudspeed.adapter.AdminIndustryAdapter;
-import com.caesar.rongcloudspeed.adapter.AnimationProAdapter;
 import com.caesar.rongcloudspeed.bean.AdminInBean;
 import com.caesar.rongcloudspeed.bean.AdminIndustryBean;
-import com.caesar.rongcloudspeed.bean.LessonCateBean;
-import com.caesar.rongcloudspeed.bean.LessonCategoryBean;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
@@ -48,6 +41,15 @@ public class AdminIndustryActivity extends TitleBaseActivity implements View.OnC
 
     private void initView() {
         getTitleBar().setTitle("行业分类");
+        getTitleBar().setOnBtnRightClickListener("全选", view -> {
+            for (int i = 0; i < adminIndustryArray.size(); i++) {
+                AdminIndustryBean bean = adminIndustryArray.get(i);
+                if (!bean.isChecked()) {
+                    adminIndustryAdapter.setItemChecked(i, true);
+                }
+            }
+
+        });
         industryIDString = getIntent().getStringExtra("industryIDString");
         adminIndustryRecyclerView = findViewById(R.id.adminindustry_recyclerView);
         industryConfirmBtn = findViewById(R.id.industry_confirm);
@@ -65,8 +67,6 @@ public class AdminIndustryActivity extends TitleBaseActivity implements View.OnC
                     @Override
                     public void onSuccess(AdminInBean adminInBean) {
                         adminIndustryArray = adminInBean.getReferer();
-                        AdminIndustryBean baseBean = new AdminIndustryBean(false, "0", "全部行业", "0");
-                        adminIndustryArray.add(baseBean);
                         adminIndustryAdapter.setData(adminIndustryArray);
                         adminIndustryRecyclerView.setAdapter(adminIndustryAdapter);
                         if (industryIDString != null) {

@@ -46,7 +46,7 @@ public class CustomerPlugin implements IPluginModule {
 
     @Override
     public Drawable obtainDrawable(Context context) {
-        return context.getResources().getDrawable(R.drawable.jrmf_selector_transfer_account);
+        return context.getResources().getDrawable(R.drawable.border_white);
     }
 
     @Override

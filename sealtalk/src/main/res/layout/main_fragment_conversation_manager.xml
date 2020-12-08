@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="城库推广" />
+                    android:text="同行推广" />
 
             </com.google.android.material.tabs.TabLayout>
 

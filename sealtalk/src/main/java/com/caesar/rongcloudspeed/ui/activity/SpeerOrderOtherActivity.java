@@ -189,7 +189,8 @@ public class SpeerOrderOtherActivity extends MultiStatusActivity implements Comp
                                     prompDialog.dismiss();
                                     Toast.makeText(SpeerOrderOtherActivity.this, "您提交了订单，请等待系统确认", Toast.LENGTH_SHORT).show();
                                     out_trade_no = goodsOrderBaseBean.getReferer().getOrder_sn();
-                                    showPayDialog();
+//                                    showPayDialog();
+                                    purchaseHandler.sendEmptyMessage(1);
                                 }
 
                                 @Override

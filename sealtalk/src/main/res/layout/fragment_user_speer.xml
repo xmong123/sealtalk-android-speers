@@ -64,7 +64,7 @@
                             android:layout_height="wrap_content"
                             android:text="戴老师"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/bigText16sp" />
+                            android:textSize="@dimen/mainText14sp" />
 
                         <TextView
                             android:id="@+id/teleTv"

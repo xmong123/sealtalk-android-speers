@@ -76,6 +76,14 @@
                     android:textColor="@color/colorAccent"
                     android:visibility="invisible" />
 
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/lessonPlayerImageView"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_centerInParent="true"
+                    android:src="@android:drawable/ic_media_play" />
+
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView

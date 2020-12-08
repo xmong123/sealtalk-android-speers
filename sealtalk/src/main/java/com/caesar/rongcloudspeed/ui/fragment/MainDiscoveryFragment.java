@@ -55,11 +55,9 @@ public class MainDiscoveryFragment extends BaseFragment {
 
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
-        findView(R.id.my_discovery_chat, true);
         findView(R.id.my_discovery_group, true);
         findView(R.id.my_discovery_friend, true);
         findView(R.id.my_discovery_scan, true);
-        findView(R.id.my_discovery_search, true);
         findView(R.id.discovery_ll_chat_room_1, true);
         findView(R.id.discovery_ll_chat_room_2, true);
         findView(R.id.discovery_ll_chat_room_3, true);
@@ -104,12 +102,8 @@ public class MainDiscoveryFragment extends BaseFragment {
     @Override
     protected void onClick(View v, int id) {
         switch (id) {
-            case R.id.my_discovery_chat:
-                Intent intent = new Intent(getActivity(), SelectSingleFriendActivity.class);
-                startActivityForResult(intent, REQUEST_START_CHAT);
-                break;
             case R.id.my_discovery_group:
-                intent = new Intent(getActivity(), SelectCreateGroupActivity.class);
+                Intent intent = new Intent(getActivity(), SelectCreateGroupActivity.class);
                 startActivityForResult(intent, REQUEST_START_GROUP);
                 break;
             case R.id.my_discovery_friend:
@@ -118,10 +112,6 @@ public class MainDiscoveryFragment extends BaseFragment {
                 break;
             case R.id.my_discovery_scan:
                 intent = new Intent(getActivity(), ScanActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.my_discovery_search:
-                intent = new Intent(getActivity(), SealSearchActivity.class);
                 startActivity(intent);
                 break;
             case R.id.discovery_ll_chat_room_1:

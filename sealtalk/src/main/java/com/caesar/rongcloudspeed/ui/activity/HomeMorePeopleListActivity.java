@@ -5,22 +5,18 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.caesar.rongcloudspeed.R;
-import com.caesar.rongcloudspeed.adapter.RecommendManAdapter;
+import com.caesar.rongcloudspeed.adapter.RecommendListAdapter;
 import com.caesar.rongcloudspeed.bean.AppPeopleBaseBean;
-import com.caesar.rongcloudspeed.bean.HomeDataBean;
-import com.caesar.rongcloudspeed.bean.PostsArticleBaseBean;
-import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
-import com.caesar.rongcloudspeed.ui.adapter.LessonAdapter;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.tencent.smtt.sdk.TbsVideo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +25,7 @@ import io.rong.imkit.RongIM;
 
 public class HomeMorePeopleListActivity extends TitleBaseActivity implements OnRefreshListener {
     private RecyclerView peopleMoreRecyclerView;
-    private RecommendManAdapter peopleMoreAdapter;
+    private RecommendListAdapter recommendListAdapter;
     private List<AppPeopleBaseBean.PeopleDataBean> peopleMoreArray = new ArrayList<AppPeopleBaseBean.PeopleDataBean>();
     private String uidString;
 
@@ -48,15 +44,15 @@ public class HomeMorePeopleListActivity extends TitleBaseActivity implements OnR
     private void initView() {
         getTitleBar().setTitle("推荐好友");
         peopleMoreRecyclerView = findViewById(R.id.lessonMoreRecyclerView);
-        peopleMoreAdapter = new RecommendManAdapter(this, peopleMoreArray);
-        peopleMoreAdapter.openLoadAnimation();
-        peopleMoreAdapter.setNotDoAnimationCount(4);
-        peopleMoreAdapter.setOnItemClickListener((adapter, view, position) -> {
+        recommendListAdapter = new RecommendListAdapter(this, peopleMoreArray);
+        recommendListAdapter.openLoadAnimation();
+        recommendListAdapter.setNotDoAnimationCount(4);
+        recommendListAdapter.setOnItemClickListener((adapter, view, position) -> {
             AppPeopleBaseBean.PeopleDataBean peopleDataBean = peopleMoreArray.get(position);
             RongIM.getInstance().startPrivateChat(this, peopleDataBean.getRongid(), peopleDataBean.getUser_login());
         });
-        peopleMoreRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        peopleMoreRecyclerView.setAdapter(peopleMoreAdapter);
+        peopleMoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        peopleMoreRecyclerView.setAdapter(recommendListAdapter);
     }
 
 
@@ -70,7 +66,7 @@ public class HomeMorePeopleListActivity extends TitleBaseActivity implements OnR
                     @Override
                     public void onSuccess(AppPeopleBaseBean peopleBaseBean) {
                         peopleMoreArray = peopleBaseBean.getReferer();
-                        peopleMoreAdapter.setNewData(peopleMoreArray);
+                        recommendListAdapter.setNewData(peopleMoreArray);
                         dismissLoadingDialog();
                     }
 

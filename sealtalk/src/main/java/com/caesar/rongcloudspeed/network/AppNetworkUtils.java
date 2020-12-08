@@ -18,6 +18,11 @@ public class AppNetworkUtils extends NetworkUtils {
         return initRetrofitApi(new ApiConfig().getServer(), Api.class);
     }
 
+    //生成api
+    public static Api initRetrofitBaiduApi() {
+        return initRetrofitApi(new ApiConfig().getBaiduServer(), Api.class);
+    }
+
     //生成包含Headers的api
     public static Api initHeadersRetrofitApi(Context context) {
         Map<String, String> headersMap = new HashMap<>();

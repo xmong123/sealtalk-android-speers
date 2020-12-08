@@ -4,12 +4,21 @@ public class UserSumUrl {
 
     private String id;
     private String uuid;
+    private String rongid;
     private String user_login;
     private String user_nicename;
     private String avatar;
     private String user_sum;
     private String mobile;
     private String coin;
+
+    public String getRongid() {
+        return rongid;
+    }
+
+    public void setRongid(String rongid) {
+        this.rongid = rongid;
+    }
 
     public String getOrder() {
         return order;

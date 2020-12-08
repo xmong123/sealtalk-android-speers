@@ -1,0 +1,195 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/recruit_post_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin16dp"
+            android:gravity="center"
+            android:text="招聘公司"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/sp_18" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/quota_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/recruit_company_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/titleBarHeight"
+                android:layout_marginTop="@dimen/layoutMargin16dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="招聘信息"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mainText14sp" />
+
+            <TextView
+                android:id="@+id/recruit_post_salary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/titleBarHeight"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="3000~4000元/月"
+                android:textColor="@color/white"
+                android:textSize="@dimen/titleTextSize16sp" />
+
+            <TextView
+                android:id="@+id/recruit_post_grade"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/titleBarHeight"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="全日制本科学历｜无锡市｜8年工作经验｜招聘2人"
+                android:textColor="@color/white"
+                android:textSize="@dimen/subMainText" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/recruit_post_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layoutMargin16dp"
+                    android:text="发布：2020年8月21日"
+                    android:textSize="@dimen/subMainText" />
+
+                <TextView
+                    android:id="@+id/recruit_post_hits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/layoutMargin16dp"
+                    android:text="浏览：11人"
+                    android:textSize="@dimen/subMainText" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutMargin8dp"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/layoutMargin8dp"
+                    android:layout_marginEnd="@dimen/layoutMargin8dp"
+                    android:background="@color/graye3" />
+
+                <TextView
+                    android:id="@+id/recruit_post_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:text="地址:无锡市-全境"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/mainText14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/layoutMargin8dp"
+                    android:layout_marginEnd="@dimen/layoutMargin8dp"
+                    android:background="@color/graye3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutMargin8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:text="职位简介"
+                    android:textSize="@dimen/bigText16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/recruit_post_expert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:text="职位简介"
+                    android:textSize="@dimen/mainText14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/recruit_post_connect"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/recruit_post_server"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_2"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:text="联系雇主"
+                android:textColor="@color/white"
+                android:textSize="@dimen/bigText16sp" />
+
+            <Button
+                android:id="@+id/recruit_post_apply"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_2"
+                android:layout_weight="1"
+                android:background="@color/colorAccentPicker"
+                android:text="申请职位"
+                android:textColor="@color/white"
+                android:textSize="@dimen/bigText16sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/recruit_post_connect"
+            android:layout_width="@dimen/layoutMargin32dp"
+            android:layout_height="@dimen/layoutMargin32dp"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:src="@mipmap/sale_dc_server" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

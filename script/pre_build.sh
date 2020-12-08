@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  Created by qixinbing on 2019/3/7.
-#  Copyright (c) 2019 RongCloud. All rights reserved.
+#  Copyright (c) 2019 91BIM. All rights reserved.
 
 #本脚本用于开发进行本地打包测试
 

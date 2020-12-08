@@ -18,7 +18,6 @@ import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.caesar.rongcloudspeed.ui.activity.TranslateFriendActivity;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
-import com.jrmf360.rylib.JrmfClient;
 
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.IntentExtra;
@@ -155,7 +154,7 @@ public class MainMeFragment extends BaseFragment {
 
                 break;
             case R.id.siv_my_wallet:
-                JrmfClient.intentWallet(getActivity());
+
                 break;
             case R.id.siv_feedback:
                 CSCustomServiceInfo.Builder builder = new CSCustomServiceInfo.Builder();

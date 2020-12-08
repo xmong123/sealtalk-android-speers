@@ -9,8 +9,9 @@
         android:layout_width="100dip"
         android:layout_height="100dip"
         android:layout_centerInParent="true"
-        fresco:viewAspectRatio="1"
+        android:layout_margin="@dimen/margin4dp"
+        fresco:placeholderImage="@drawable/img_add_img"
         fresco:placeholderImageScaleType="fitCenter"
-        fresco:placeholderImage="@drawable/img_add_img"/>
+        fresco:viewAspectRatio="1" />
 
 </RelativeLayout>

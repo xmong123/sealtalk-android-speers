@@ -26,7 +26,6 @@
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_marginTop="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_4"
-            android:background="@color/line"
             android:src="@drawable/votebook" />
 
         <ImageView

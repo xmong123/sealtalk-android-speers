@@ -5,29 +5,48 @@ import com.caesar.rongcloudspeed.bean.AddressBean;
 import com.caesar.rongcloudspeed.bean.AddressDefaultBean;
 import com.caesar.rongcloudspeed.bean.AdminInBean;
 import com.caesar.rongcloudspeed.bean.AppAdvertVideoBean;
+import com.caesar.rongcloudspeed.bean.AppLessonAdvertBean;
 import com.caesar.rongcloudspeed.bean.AppPeopleBaseBean;
+import com.caesar.rongcloudspeed.bean.BaiduTextBean;
+import com.caesar.rongcloudspeed.bean.BaiduTokenBean;
 import com.caesar.rongcloudspeed.bean.CommonResonseBean;
+import com.caesar.rongcloudspeed.bean.CompanyBaseBean;
 import com.caesar.rongcloudspeed.bean.GoodsCateBean;
 import com.caesar.rongcloudspeed.bean.GoodsListBaseBean;
 import com.caesar.rongcloudspeed.bean.GoodsListCartBean;
 import com.caesar.rongcloudspeed.bean.GoodsOrderBaseBean;
+import com.caesar.rongcloudspeed.bean.HomeArticleCommentsBean;
+import com.caesar.rongcloudspeed.bean.HomeDataBaseBean;
 import com.caesar.rongcloudspeed.bean.HomeDataBean;
+import com.caesar.rongcloudspeed.bean.HomeDataLessonBean;
+import com.caesar.rongcloudspeed.bean.HomeDataOtherBean;
 import com.caesar.rongcloudspeed.bean.HomeDataUserBean;
+import com.caesar.rongcloudspeed.bean.HomeLessonesBaseBean;
 import com.caesar.rongcloudspeed.bean.HomeMainDataBean;
 import com.caesar.rongcloudspeed.bean.HomeSeekListBean;
 import com.caesar.rongcloudspeed.bean.LessonCateBean;
 import com.caesar.rongcloudspeed.bean.NavCategoryBean;
 import com.caesar.rongcloudspeed.bean.PersonCenterBean;
+import com.caesar.rongcloudspeed.bean.PersonalCountData;
 import com.caesar.rongcloudspeed.bean.PersonalInvoiceBean;
 import com.caesar.rongcloudspeed.bean.PersonalMessageBean;
+import com.caesar.rongcloudspeed.bean.PersonalPayListData;
 import com.caesar.rongcloudspeed.bean.PersonalTagBean;
+import com.caesar.rongcloudspeed.bean.PersonnelRecruitsBean;
+import com.caesar.rongcloudspeed.bean.QiniuBaseBean;
 import com.caesar.rongcloudspeed.bean.QiniuBean;
+import com.caesar.rongcloudspeed.bean.RecruitApplyBaseBean;
+import com.caesar.rongcloudspeed.bean.RecruitJobBaseBean;
+import com.caesar.rongcloudspeed.bean.RecruitWorkBaseBean;
+import com.caesar.rongcloudspeed.bean.SectionLessonBaseBean;
+import com.caesar.rongcloudspeed.bean.SectionLessonResonseBean;
 import com.caesar.rongcloudspeed.bean.SectionMessageDataBean;
 import com.caesar.rongcloudspeed.bean.SectionPersonalAlbumDataBean;
 import com.caesar.rongcloudspeed.bean.UserLessonOrderListBean;
 import com.caesar.rongcloudspeed.bean.UserListAddressBean;
 import com.caesar.rongcloudspeed.bean.UserOrderBean;
 import com.caesar.rongcloudspeed.bean.UserOrderListBean;
+import com.caesar.rongcloudspeed.bean.UserRecruitMessageBean;
 import com.caesar.rongcloudspeed.bean.WechatPayBaseBean;
 import com.caesar.rongcloudspeed.bean.WechatPayCommonBean;
 import com.caesar.rongcloudspeed.data.BaseData;
@@ -35,6 +54,7 @@ import com.caesar.rongcloudspeed.data.Qiniu;
 import com.caesar.rongcloudspeed.data.result.CircleHeaderResult;
 import com.caesar.rongcloudspeed.data.result.CircleItemResult;
 import com.caesar.rongcloudspeed.data.result.CircleItemResult1;
+import com.caesar.rongcloudspeed.data.result.CommentsListData;
 import com.caesar.rongcloudspeed.data.result.SmsCode;
 import com.caesar.rongcloudspeed.data.result.TargetNumberData;
 import com.caesar.rongcloudspeed.data.result.TransferDetailResult;
@@ -137,6 +157,27 @@ public interface Api {
     @POST("index.php?g=portal&m=list&a=indexjson&page=1")
     Call<HomeDataBean> fetchVoteListDatas(@Field("cid") String catid);
 
+
+    /*获取首页课程视频列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=indexjson&page=1")
+    Call<HomeDataLessonBean> fetchHomeLessonLists(@Field("cid") String catid);
+
+    /*获取视频课程列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=indexJsonWithQuery&page=1")
+    Call<HomeDataBaseBean> fetchVoteListDatasWithTag(@Field("cid") String catid, @Field("query") String query);
+
+    /*获取视频课程列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=indexjson&page=1")
+    Call<HomeDataBean> fetchVoteListDataForPage(@Field("cid") String catid, @Field("page") String page);
+
+    /*获取视频课程列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=index_home_json&page=1")
+    Call<HomeDataBean> fetchHomeListDatas(@Field("cid") String catid);
+
     /*获取视频书籍分类列表*/
     @FormUrlEncoded
     @POST("index.php?g=goods&m=list&a=nav_index_json&page=1")
@@ -150,12 +191,12 @@ public interface Api {
     /*获取视频课程列表*/
     @FormUrlEncoded
     @POST("index.php?g=portal&m=list&a=indexjson&page=1")
-    Call<HomeDataBean> fetchVoteListDataLimit(@Field("cid") String catid,@Field("limit") String limit);
+    Call<HomeDataBean> fetchVoteListDataLimit(@Field("cid") String catid, @Field("limit") String limit);
 
     /*加入购物车*/
     @FormUrlEncoded
     @POST("index.php?g=goods&m=cart&a=ajaxAddCart")
-    Call<BaseData> ajaxAddCart(@Field("userid") String userid,@Field("goods_id") String goods_id,@Field("goods_num") String goods_num);
+    Call<BaseData> ajaxAddCart(@Field("userid") String userid, @Field("goods_id") String goods_id, @Field("goods_num") String goods_num);
 
     /*购买APP课程*/
     @FormUrlEncoded
@@ -165,7 +206,7 @@ public interface Api {
     /*求助支付订单*/
     @FormUrlEncoded
     @POST("index.php?g=goods&m=cart&a=cart_lesson_order")
-    Call<GoodsOrderBaseBean> cartSeekOrder(@Field("user_id") String user_id,@Field("lesson_id") String lesson_id,@Field("stotal_price") String stotal_price,@Field("pay_code") String pay_code,@Field("order_type") String order_type, @Field("user_note") String user_note);
+    Call<GoodsOrderBaseBean> cartSeekOrder(@Field("user_id") String user_id, @Field("lesson_id") String lesson_id, @Field("stotal_price") String stotal_price, @Field("pay_code") String pay_code, @Field("order_type") String order_type, @Field("user_note") String user_note);
 
     /*获取购物车清单*/
     @FormUrlEncoded
@@ -180,7 +221,7 @@ public interface Api {
     /*修改购物车选中*/
     @FormUrlEncoded
     @POST("index.php?g=goods&m=cart&a=updateCartJsonChecked")
-    Call<GoodsListCartBean> ajaxUpdateCartChecked(@Field("cart_id") String cart_id,@Field("selected") String selected);
+    Call<GoodsListCartBean> ajaxUpdateCartChecked(@Field("cart_id") String cart_id, @Field("selected") String selected);
 
     /*删除购物车清单*/
     @FormUrlEncoded
@@ -227,10 +268,20 @@ public interface Api {
     @POST("index.php?g=portal&m=article&a=post_comment_json")
     Call<BaseData> updateComment(@Field("uid") String uid, @Field("post_id") String postid, @Field("full_name") String full_name, @Field("content") String content);
 
+    /*获取某一篇文章的评论*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=article&a=index_comment_list")
+    Call<CommentsListData> getCommentsForArticle(@Field("post_id") String postid);
+
     /*点赞同行圈*/
     @FormUrlEncoded
     @POST("index.php?g=portal&m=article&a=do_like_json")
     Call<BaseData> updateSupport(@Field("userid") String uid, @Field("postid") String postid);
+
+    /*点赞同行圈*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=article&a=cancel_like_json")
+    Call<BaseData> cancelSupport(@Field("userid") String uid, @Field("postid") String postid);
 
     /*投票*/
     @FormUrlEncoded
@@ -266,7 +317,8 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("index.php?g=portal&m=article&a=add_post_json")
-    Call<BaseData> AddPostCircleArticle(@Field("userID") String username, @Field("tid") String termId, @Field("post[post_title]") String post_title,@Field("post[post_price]") String post_price, @Field("post[post_mobile]") String post_mobile, @Field("photos_url[]") String[] photos_url, @Field("post[post_excerpt]") String post_content, @Field("post[industry_id]") String industry_id, @Field("post[profession_id]") String profession_id, @Field("post[soft_id]") String soft_id);
+    Call<BaseData> AddPostCircleArticle(@Field("userID") String username, @Field("tid") String termId, @Field("post[post_title]") String post_title, @Field("post[post_price]") String post_price, @Field("post[post_mobile]") String post_mobile,
+                                        @Field("photos_url[]") String[] photos_url, @Field("post[post_excerpt]") String post_content, @Field("post[industry_id]") String industry_id, @Field("post[profession_id]") String profession_id, @Field("post[soft_id]") String soft_id);
 
     /*获取系统消息*/
     @FormUrlEncoded
@@ -297,7 +349,7 @@ public interface Api {
     /*发布投票视频*/
     @FormUrlEncoded
     @POST("index.php?g=portal&m=article&a=add_post_json")
-    Call<BaseData> addVoteArticle(@Field("userID") String uid, @Field("tid") String term, @Field("post[post_type]") String post_type, @Field("post[post_title]") String post_title,@Field("post[post_excerpt]") String post_excerpt, @Field("smeta[thumb]") String videoUrl);
+    Call<BaseData> addVoteArticle(@Field("userID") String uid, @Field("tid") String term, @Field("post[post_type]") String post_type, @Field("post[post_title]") String post_title, @Field("post[post_excerpt]") String post_excerpt, @Field("smeta[thumb]") String videoUrl);
 
     /*二维码付款交易请求*/
     //@FormUrlEncoded
@@ -362,6 +414,12 @@ public interface Api {
     @POST("index.php?g=user&m=public&a=get_userid_forRID")
     Call<UserSumResult> getUserRIDInfo(@Field("userRID") String userRID);
 
+    /*获取好友个人资料请求*/
+    //@FormUrlEncoded
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=get_user_forID")
+    Call<UserSumResult> getUserDeatilInfo(@Field("userID") String userID);
+
     /*获取个人交易记录表*/
     //@FormUrlEncoded
     @FormUrlEncoded
@@ -372,12 +430,27 @@ public interface Api {
     //@FormUrlEncoded
     @FormUrlEncoded
     @POST("index.php?g=user&m=public&a=get_user_paydetail")
-    Call<TransferDetailResult> getTransferPayDetailData(@Field("userID") String userID,@Field("payid") String payid);
+    Call<TransferDetailResult> getTransferPayDetailData(@Field("userID") String userID, @Field("payid") String payid);
 
     /*修改同行快线用户昵称*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=index&a=do_avatar_json")
     Call<BaseData> updatenickname(@Field("userid") String userid, @Field("user_nicename") String nicename, @Field("imgurl") String imgurl);
+
+    /*修改同行快线用户邮件*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=updateUserEmail")
+    Call<BaseData> updateEmail(@Field("userid") String userid, @Field("user_email") String user_email);
+
+    /*发送用户简历到邮箱*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=SendRecruitEmail")
+    Call<BaseData> SendRecruitEmail(@Field("userid") String userid, @Field("recruit_id") String recruit_id);
+
+    /*发送用户简历到邮箱*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=testPhpWordMail")
+    Call<BaseData> testPhpWordMail(@Field("userid") String userid, @Field("recruit_id") String recruit_id);
 
     /*修改同行快线用户支付密码*/
     @FormUrlEncoded
@@ -399,11 +472,7 @@ public interface Api {
     @POST("index.php?g=user&m=index&a=get_user_info")
     Call<UserDataInfoResult> getUserDataInfo(@Field("user_id") String user_id);
 
-    /*更新用户个人资料*/
-    @FormUrlEncoded
-    @POST("index.php?g=user&m=index&a=edit_user_info")
-    Call<BaseData> edituserinfo(@Field("user_id") String user_id,@Field("real_name") String real_name,@Field("user_idnumber") String user_idnumber,@Field("user_address") String user_address,@Field("user_friend") String user_friend,@Field("friend_mobile") String friend_mobile,@Field("user_cardphoto") String user_cardphoto);
-
+    /*获取用户个人资料*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=index&a=getPersonalMessage")
     Observable<PersonalMessageBean> personal_center(@Field("user_id") String user_id);
@@ -440,19 +509,19 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("index.php?g=User&m=index&a=set_user_taglist")
-    Observable<CommonResonseBean> setPersonalTagData(@Field("user_id") String user_id,@Field("user_industry") String industryIDString,@Field("user_profession") String professionIDString,@Field("user_soft") String softIDString);
+    Observable<CommonResonseBean> setPersonalTagData(@Field("user_id") String user_id, @Field("user_industry") String industryIDString, @Field("user_profession") String professionIDString, @Field("user_soft") String softIDString);
 
     @FormUrlEncoded
     @POST("index.php?g=portal&m=list&a=indexUserSeekJson")
-    Observable<HomeSeekListBean> indexUserSeekJson(@Field("cid") String cid,@Field("userid") String userid);
+    Observable<HomeSeekListBean> indexUserSeekJson(@Field("cid") String cid, @Field("userid") String userid);
 
     @FormUrlEncoded
     @POST("index.php?g=portal&m=list&a=indexSeekListJson")
-    Observable<HomeSeekListBean> indexSeekListJson(@Field("userid") String userid,@Field("cid") String cid,@Field("condition") String condition);
+    Observable<HomeSeekListBean> indexSeekListJson(@Field("userid") String userid, @Field("cid") String cid, @Field("condition") String condition);
 
     @FormUrlEncoded
     @POST("index.php?g=portal&m=list&a=indexSeekListJson")
-    Observable<HomeSeekListBean> indexAvertkListJson(@Field("userid") String userid,@Field("cid") String cid,@Field("tag") String tag);
+    Observable<HomeSeekListBean> indexAvertkListJson(@Field("userid") String userid, @Field("cid") String cid, @Field("tag") String tag);
 
     /*获取用户增值税资质资料*/
     @FormUrlEncoded
@@ -462,7 +531,8 @@ public interface Api {
     /*获取用户增值税资质资料*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=index&a=edit_user_invoice")
-    Observable<CommonResonseBean> editUserInvoiceData(@Field("user_id") String user_id,@Field("invoice_name") String invoice_name,@Field("invoice_identifi") String invoice_identifi,@Field("invoice_address") String user_address,@Field("invoice_phone") String user_friend,@Field("invoice_bank") String invoice_bank,@Field("invoice_account") String invoice_account);
+    Observable<CommonResonseBean> editUserInvoiceData(@Field("user_id") String user_id, @Field("invoice_name") String invoice_name, @Field("invoice_identifi") String invoice_identifi,
+                                                      @Field("invoice_address") String user_address, @Field("invoice_phone") String user_friend, @Field("invoice_bank") String invoice_bank, @Field("invoice_account") String invoice_account);
 
     /*获取APP支付签名资质*/
     @FormUrlEncoded
@@ -477,12 +547,17 @@ public interface Api {
     /*获取用户订单列表*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=index&a=myorderjson")
-    Observable<UserOrderListBean> getUserOrderJson(@Field("user_id") String user_id,@Field("order_type") String order_type);
+    Observable<UserOrderListBean> getUserOrderJson(@Field("user_id") String user_id, @Field("order_status") String order_status);
 
-    /*获取用户订单列表*/
+    /*获取开机广告列表*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=index&a=getAppAdvertVideo")
     Call<AppAdvertVideoBean> getAppAdvertVideo(@Field("user_id") String user_id);
+
+    /*获取课程广告列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=getAppAdvertLesson")
+    Call<AppLessonAdvertBean> getAppAdvertLesson(@Field("user_id") String user_id);
 
     /*获取推荐用户*/
     @FormUrlEncoded
@@ -490,16 +565,192 @@ public interface Api {
     Call<AppPeopleBaseBean> getAppRecommendMan(@Field("user_id") String user_id);
 
     @FormUrlEncoded
-    @POST("index.php?g=user&m=public&a=do_favorite_json")
+    @POST("index.php?g=user&m=index&a=do_favorite_json")
     Observable<CommonResonseBean> DoFavorite(@Field("uid") String uid, @Field("title") String title, @Field("table") String table, @Field("object_id") String id);
 
     @FormUrlEncoded
-    @POST("index.php?g=user&m=public&a=do_favorite_json")
+    @POST("index.php?g=user&m=index&a=do_favorite_json")
     Observable<CommonResonseBean> DoFavoriteMobile(@Field("uid") String uid, @Field("title") String title, @Field("table") String table, @Field("object_id") String id, @Field("description") String description);
 
     /*获取用户购买课程列表*/
     @FormUrlEncoded
     @POST("index.php?g=user&m=index&a=getUserOrderLesson")
     Observable<UserLessonOrderListBean> getUserOrderLesson(@Field("user_id") String user_id, @Field("order_type") String order_type);
+
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=indexUserFavouriteJson")
+    Observable<HomeDataUserBean> indexUserFavouriteJson(@Field("userid") String userid);
+
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=personalInfoData")
+    Observable<PersonalCountData> personalInfoData(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=get_user_paylist")
+    Observable<PersonalPayListData> get_user_paylist(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=index_lesson_json")
+    Observable<SectionLessonResonseBean> index_lesson_json(@Field("cid") String cid);
+
+    /*获取视频课程列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=index_lesson_json")
+    Call<SectionLessonBaseBean> getIndexLessonData(@Field("cid") String catid);
+
+    /*获取视频课程列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=index_recommand_lesson")
+    Call<HomeDataBaseBean> getRecommandLessonData(@Field("cid") String catid);
+
+    /*获取视频课程列表*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=index_recommand_lesson")
+    Call<HomeLessonesBaseBean> getRecommandLessonVideoData(@Field("cid") String catid);
+
+    /*用户永久注销账户申请*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=index&a=cancellation_post_json")
+    Call<BaseData> userCancellation(@Field("user_id") String user_id);
+
+    /*获取百度AI接口token*/
+    @FormUrlEncoded
+    @POST("oauth/2.0/token")
+    Call<BaiduTokenBean> getBaiduToken(@Field("grant_type") String grant_type, @Field("client_id") String client_id, @Field("client_secret") String client_secret);
+
+    /*获取百度AI接口文本检测*/
+    @FormUrlEncoded
+    @POST("rest/2.0/solution/v1/text_censor/v2/user_defined")
+    Call<BaiduTextBean> getBaiduTextCheck(@Field("text") String text, @Field("access_token") String access_token);
+
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=list&a=indexJsonByQuery")
+    Observable<HomeDataUserBean> HomeDataQueryByPage(@Field("cid") String cid, @Field("query") String query, @Field("rule") String rule, @Field("category") String category, @Field("region") String region, @Field("page") String page);
+
+    @GET("index.php")
+    Observable<HomeDataOtherBean> HomeData(@Query("g") String group, @Query("m") String model, @Query("a") String action, @Query("cid") String cid);
+
+    /*获取同行快线简历*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=get_user_recruit")
+    Observable<UserRecruitMessageBean> LoadPersonalRecruitData(@Field("user_id") String user_id);
+
+    /*提交简历*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=add_user_recruit")
+    Call<BaseData> addUserRecruit(@Field("user_id") String user_id, @Field("recruit_name") String recruit_name, @Field("recruit_avatar") String recruit_avatar, @Field("recruit_sex") String recruit_sex, @Field("recruit_birthday") String recruit_birthday, @Field("recruit_age") String recruit_age,@Field("recruit_mobile") String recruit_mobile,
+                                  @Field("recruit_email") String recruit_email,@Field("recruit_natives") String recruit_natives, @Field("recruit_native") String recruit_native, @Field("recruit_nation") String recruit_nation, @Field("recruit_marry") String recruit_marry, @Field("recruit_show") String recruit_show);
+
+    /*提交简历*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=update_user_recruit")
+    Call<BaseData> updateUserRecruit(@Field("recruit_id") String recruit_id, @Field("recruit_name") String recruit_name, @Field("recruit_avatar") String recruit_avatar, @Field("recruit_sex") String recruit_sex, @Field("recruit_birthday") String recruit_birthday, @Field("recruit_age") String recruit_age,@Field("recruit_mobile") String recruit_mobile,
+                                     @Field("recruit_email") String recruit_email, @Field("recruit_natives") String recruit_natives,@Field("recruit_native") String recruit_native, @Field("recruit_nation") String recruit_nation, @Field("recruit_marry") String recruit_marry, @Field("recruit_show") String recruit_show);
+
+
+    /*提交简历*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=set_user_recruit")
+    Call<BaseData> updateUserRecruitJob(@Field("user_id") String user_id, @Field("recruit_job") String recruit_job, @Field("recruit_place") String recruit_place, @Field("recruit_salary") String recruit_salary, @Field("recruit_workingyears") String recruit_workingyears, @Field("recruit_experience") String recruit_experience);
+
+    /*提交简历*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=public&a=set_user_recruit")
+    Call<BaseData> updateUserRecruitEducare(@Field("user_id") String user_id, @Field("recruit_grade") String recruit_grade, @Field("recruit_major") String recruit_major, @Field("recruit_school") String recruit_school, @Field("recruit_education") String recruit_education, @Field("recruit_expert1") String recruit_expert1);
+
+    /*获取推荐人才简历*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=list&a=get_personnel_recruits")
+    Observable<PersonnelRecruitsBean> getRecommandPersonnelist(@Field("recruit_salary") String recruit_salary, @Field("recruit_grade") String recruit_grade, @Field("recruit_place") String recruit_place);
+
+    /*获取公司信息*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=company&a=getCompany")
+    Observable<CompanyBaseBean> getRecruitCompany(@Field("company_id") String company_id);
+
+    /*创建公司信息*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=company&a=addCompany")
+    Call<BaseData> addRecruitCompany(@Field("user_id") String user_id, @Field("company_name") String company_name, @Field("company_nature") String company_nature,
+                                     @Field("company_size") String company_size, @Field("company_licence") String company_licence, @Field("company_address") String company_address,
+                                     @Field("company_contact") String company_contact, @Field("company_phone") String company_phone);
+
+
+    /*创建公司信息*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=company&a=editCompany")
+    Observable<CommonResonseBean> editRecruitCompany(@Field("company_id") String company_id, @Field("user_id") String user_id, @Field("company_name") String company_name, @Field("company_nature") String company_nature,
+                                                     @Field("company_size") String company_size, @Field("company_licence") String company_licence, @Field("company_address") String company_address,
+                                                     @Field("company_contact") String company_contact, @Field("company_phone") String company_phone);
+
+    /*发布职位招聘信息
+    * `post_id` mediumint(8) unsigned NOT NULL COMMENT '职位ID',
+  `post_author` varchar(64) CHARACTER SET utf8 NOT NULL COMMENT '职位者关联ID',
+  `post_title` text CHARACTER SET utf8 NOT NULL COMMENT '求职标题',
+  `post_date` datetime NOT NULL DEFAULT '2000-01-01 00:00:00' COMMENT '职位发布日期',
+  `post_area_code` int(11) unsigned NOT NULL COMMENT '职位发布地区编码',
+  `post_area_name` varchar(64) NOT NULL COMMENT '职位发布地区名称',
+  `post_salary` smallint(2) NOT NULL COMMENT '职位发布薪资',
+  `post_grade` smallint(2) NOT NULL COMMENT '职位发布学历',
+  `post_mobile` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT '职位发布手机号',
+  `post_tag` smallint(2) unsigned NOT NULL COMMENT '职位发布手机号',
+  `post_level` smallint(2) NOT NULL COMMENT '职位级别',
+  `post_status` smallint(2) NOT NULL COMMENT '职位状态'
+    * */
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=RecruitPost&a=addRecruitPost")
+    Call<BaseData> addRecruitPost(@Field("post_author") String post_author, @Field("post_title") String post_title, @Field("post_area_code") String post_area_code, @Field("post_area_name") String post_area_name,
+                                  @Field("post_salary") String post_salary, @Field("post_grade") String post_grade, @Field("post_level") String post_level, @Field("post_mobile") String post_mobile, @Field("post_excerpt") String post_excerpt);
+
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=RecruitPost&a=editRecruitPost")
+    Call<BaseData> editRecruitPost(@Field("post_id") String post_id, @Field("post_title") String post_title, @Field("post_area_code") String post_area_code, @Field("post_area_name") String post_area_name,
+                                  @Field("post_salary") String post_salary, @Field("post_grade") String post_grade, @Field("post_level") String post_level, @Field("post_mobile") String post_mobile, @Field("post_excerpt") String post_excerpt);
+
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=RecruitPost&a=getRecruitPostList")
+    Observable<RecruitJobBaseBean> getRecruitPostList(@Field("post_salary") String post_salary, @Field("post_grade") String post_grade, @Field("post_area_code") String post_area_code);
+
+    /*获取推荐用户*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=list&a=getPersonnelPostList")
+    Call<RecruitWorkBaseBean> getRecruitPostLists(@Field("user_id") String user_id);
+
+    /*申请职位*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=list&a=applyRecruitPost")
+    Call<BaseData> applyRecruitPost(@Field("user_id") String user_id,@Field("post_id") String post_id);
+
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=RecruitPost&a=getUserRecruitList")
+    Observable<RecruitJobBaseBean> getUserRecruitList(@Field("user_id") String user_id);
+
+    /*获取推荐人才简历*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=list&a=getApplyRecruits")
+    Observable<RecruitApplyBaseBean> getApplyRecruitList(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("index.php?g=comment&m=comment&a=post_comment_json")
+    Observable<HomeArticleCommentsBean> PostArticleComment(@Field("uid") String uid, @Field("post_id") String post_id, @Field("full_name") String full_name, @Field("content") String content);
+
+    /*点赞文章*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=postsfollow&a=post_follow_json")
+    Observable<CommonResonseBean> postFollowAction(@Field("userid") String userid,@Field("postid") String postid);
+
+    /*取消文章点赞*/
+    @FormUrlEncoded
+    @POST("index.php?g=user&m=postsfollow&a=cancel_follow_json")
+    Observable<CommonResonseBean> cancelFollowAction(@Field("userid") String userid,@Field("postid") String postid);
+
+    @FormUrlEncoded
+    @POST("index.php?g=comment&m=comment&a=index_comment_list")
+    Observable<HomeArticleCommentsBean> IndexArticleComment(@Field("post_id") String post_id);
+
+    /*获取七牛云token*/
+    @FormUrlEncoded
+    @POST("index.php?g=portal&m=index&a=get_QiniuAuthJSON")
+    Call<QiniuBaseBean> getQiniuToken(@Field("userid") String userid);
 
 }

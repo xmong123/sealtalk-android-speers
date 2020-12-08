@@ -115,7 +115,7 @@ public class VoteBase1Activity extends BaseActivity {
 //                Bundle bundle = new Bundle();
                 String postID=postsArticleBaseBean.getObject_id();
 //                String cid=postsArticleBaseBean.getTerm_id();
-//                String webString="http://speer.500-china.com/index.php?g=&m=article&a=index&id="+postID+"&cid="+cid;
+//                String webString="http://thinkcmf.91bim.net/index.php?g=&m=article&a=index&id="+postID+"&cid="+cid;
 //                bundle.putString("url", webString);
 //                bundle.putString("title" , postsArticleBaseBean.getPost_title());
 //                bundle.putString("postID" , postID);

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.fragment.PersonalRecruitDetailFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sCenterTextSize="@dimen/sp_18"
+                app:sCenterTextString="基本信息"
+                app:sDividerLineType="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_userfino_item_height"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="头像"
+                app:sRightIconRes="@mipmap/user_avatar" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="姓名"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="性别"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="出生日期"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="手机号码"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="求职状态"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="工作年份"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert7"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="居住地"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert8"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="邮箱"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert9"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="期望薪资（月薪）"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert10"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="户籍"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert11"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="民族"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert12"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="婚姻状况"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_base_supert13"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="学历"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <Button
+                android:id="@+id/post_recruit_btn"
+                style="@style/main_btn_style2"
+                android:layout_margin="@dimen/dp_2"
+                android:text="保存" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

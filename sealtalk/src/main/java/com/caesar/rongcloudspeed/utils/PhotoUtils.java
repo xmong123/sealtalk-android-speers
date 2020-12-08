@@ -166,8 +166,7 @@ public class PhotoUtils {
     private Uri buildUri(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Uri uri = FileProvider.getUriForFile(RongContext.getInstance(),
-                    activity.getPackageName()
-                            + activity.getResources().getString(R.string.updatefun_provider_file_authorities)
+                    activity.getResources().getString(R.string.updatefun_provider_file_authorities)
                     , new File(Environment.getExternalStorageDirectory().getPath() + File.separator + CROP_FILE_NAME));
             return uri;
         } else {

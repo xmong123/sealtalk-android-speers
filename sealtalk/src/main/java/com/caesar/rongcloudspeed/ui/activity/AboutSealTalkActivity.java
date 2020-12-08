@@ -43,7 +43,6 @@ public class AboutSealTalkActivity extends TitleBaseActivity implements View.OnC
      */
     private void initView() {
         getTitleBar().setTitle(R.string.seal_main_mine_about);
-
         findViewById(R.id.siv_update_log).setOnClickListener(this);
         findViewById(R.id.siv_func_introduce).setOnClickListener(this);
         findViewById(R.id.siv_rongcloud_web).setOnClickListener(this);

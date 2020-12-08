@@ -40,7 +40,7 @@ public class LessonAdapter extends BaseQuickAdapter<PostsArticleBaseBean, BaseVi
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (thumbString != null &&!thumbString.startsWith("http://")) {
+        if (thumbString != null &&!thumbString.startsWith("http")) {
             thumbString = Constant.THINKCMF_PATH + thumbString;
         }
         if (thumbString != null && thumbString.length() > 32) {

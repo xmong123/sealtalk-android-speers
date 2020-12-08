@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backImage="@mipmap/back"
-            app:msg="我&#8197;的&#8197;广&#8197;告" />
+            app:msg="我&#8197;的&#8197;订&#8197;单" />
 
         <!--@drawable/shop_title_text_bg-->
         <FrameLayout
@@ -40,13 +40,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="图&#8194;文&#8194;求&#8194;助" />
+                    android:text="未&#8194;付&#8194;订&#8194;单" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="视&#8194;频&#8194;广&#8194;告" />
+                    android:text="已&#8194;付&#8194;订&#8194;单" />
 
             </com.google.android.material.tabs.TabLayout>
 

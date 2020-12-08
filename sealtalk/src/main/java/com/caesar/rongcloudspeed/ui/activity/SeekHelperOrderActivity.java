@@ -98,7 +98,7 @@ public class SeekHelperOrderActivity extends MultiStatusActivity implements Comp
     private String industryIDString;
     private String professionIDString;
     private String softIDString;
-    private int targetNumber = 1;
+//    private int targetNumber = 1;
     private float totalPrice = 10.00f;
     private IWXAPI api;
     private String out_trade_no;
@@ -123,11 +123,12 @@ public class SeekHelperOrderActivity extends MultiStatusActivity implements Comp
         seekPriceText.setText("支付费用, 共计: ¥ " + seek_price);
         if (order_type.equals("4")) {
             seekTagText.setText("广告");
+            totalPrice=100.0f;
             seekMessageText.setVisibility(View.VISIBLE);
-            seekContentText.setVisibility(View.VISIBLE);
+            seekContentText.setVisibility(View.GONE);
             seekNumberText.setVisibility(View.VISIBLE);
             seekTroduceText.setText("发布广告费用说明：");
-            seekMessageText.setText("广告信息发布费用为人民币0.05元/人/次。");
+            seekMessageText.setText("广告信息发布费用为人民币100元/次。");
             seek_layout.setVisibility(View.GONE);
             advert_layout.setVisibility(View.VISIBLE);
             purchaseHandler.sendEmptyMessage(0);
@@ -171,8 +172,6 @@ public class SeekHelperOrderActivity extends MultiStatusActivity implements Comp
     Handler purchaseHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            String priceString = String.valueOf(totalPrice);
-            String wechatString = String.valueOf((int) (totalPrice * 100));
             switch (msg.what) {
                 case 0:
                     prompDialog.showLoading("正在查询");
@@ -182,9 +181,9 @@ public class SeekHelperOrderActivity extends MultiStatusActivity implements Comp
                                 public void onSuccess(TargetNumberData baseData) {
                                     prompDialog.dismiss();
                                     if (NetworkResultUtils.isSuccess(baseData)) {
-                                        targetNumber = Integer.parseInt(baseData.getReferer());
+//                                        targetNumber = Integer.parseInt(baseData.getReferer());
                                         seekNumberText.setText("潜在用户数量：" + baseData.getReferer() + "人");
-                                        totalPrice += targetNumber * 0.05f;
+//                                        totalPrice += targetNumber * 0.05f;
                                         seekPriceText.setText("支付费用, 共计: ¥ " + totalPrice);
                                         speerSeekMoney.setText("¥" + totalPrice);
                                     }
@@ -199,6 +198,7 @@ public class SeekHelperOrderActivity extends MultiStatusActivity implements Comp
                     break;
                 case 1:
                     prompDialog.showLoading("请等待");
+                    String priceString = String.valueOf(totalPrice);
                     NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().cartSeekOrder(uidString, "1", priceString, pay_code, order_type, seek_name),
                             new NetworkCallback<GoodsOrderBaseBean>() {
                                 @Override
@@ -206,7 +206,12 @@ public class SeekHelperOrderActivity extends MultiStatusActivity implements Comp
                                     prompDialog.dismiss();
                                     Toast.makeText(SeekHelperOrderActivity.this, "您提交了订单，请等待系统确认", Toast.LENGTH_SHORT).show();
                                     out_trade_no = goodsOrderBaseBean.getReferer().getOrder_sn();
-                                    showPayDialog();
+//                                    showPayDialog();
+                                    if (wechatpay) {
+                                        purchaseHandler.sendEmptyMessage(2);
+                                    } else {
+                                        purchaseHandler.sendEmptyMessage(3);
+                                    }
                                 }
 
                                 @Override
@@ -219,6 +224,7 @@ public class SeekHelperOrderActivity extends MultiStatusActivity implements Comp
                     break;
                 case 2:
                     prompDialog.showLoading("请等待");
+                    String wechatString = String.valueOf((int) (totalPrice * 100));
                     NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().WechatAppPaySign(uidString, out_trade_no, wechatString, seek_name),
                             new NetworkCallback<WechatPayBaseBean>() {
                                 @Override
@@ -249,6 +255,8 @@ public class SeekHelperOrderActivity extends MultiStatusActivity implements Comp
                 case 3:
                     if(uidString.equals("2")){
                         priceString="0.01";
+                    }else{
+                        priceString = String.valueOf(totalPrice);
                     }
                     final String orderInfo = OrderInfoUtil2_0.payV2TradeNoParam(out_trade_no,seek_name,priceString);
                     final Runnable payRunnable = () -> {

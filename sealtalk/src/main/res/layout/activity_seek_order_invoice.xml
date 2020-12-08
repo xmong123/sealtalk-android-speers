@@ -79,7 +79,7 @@
                         android:background="@drawable/btn_light_gray_shape"
                         android:gravity="center"
                         android:text="增值税发票"
-                        android:textColor="@color/gray" />
+                        android:textColor="@color/gray_color" />
                 </LinearLayout>
 
                 <TextView

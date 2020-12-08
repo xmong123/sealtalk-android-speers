@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.RecruitCompanyMessageActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_company_supert1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="单位名称"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_company_supert2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="单位性质"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_company_supert3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="单位规模"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_company_supert4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_userfino_item_height"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="营业执照"
+                app:sRightIconRes="@mipmap/recruits_company_license" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_company_supert5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="单位地址"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_company_supert6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="联系人"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_company_supert7"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="联系电话"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <Button
+                android:id="@+id/post_company_btn"
+                style="@style/main_btn_style2"
+                android:layout_marginStart="@dimen/dp_2"
+                android:layout_marginTop="@dimen/layoutMargin8dp"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/layoutMargin8dp"
+                android:text="保存" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

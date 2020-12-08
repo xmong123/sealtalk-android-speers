@@ -36,7 +36,7 @@ public class AnimationPostsAdapter extends BaseQuickAdapter<PostsArticleBaseBean
         helper.setText( R.id.post_text06, "规格：" + bean.getPost_title() );
         helper.setText( R.id.post_text07,  bean.getPost_date() );
         if (bean.getSelected().equals("1")) {
-            helper.setBackgroundRes(R.id.post_check_btn,R.drawable.icon_checked);
+            helper.setBackgroundRes(R.id.post_check_btn,R.drawable.icon_checkyes);
         } else {
             helper.setBackgroundRes(R.id.post_check_btn,R.drawable.icon_checkno);
         }

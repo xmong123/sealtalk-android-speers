@@ -40,7 +40,7 @@ public class LessonVideoAdapter extends BaseQuickAdapter<PostsArticleBaseBean, B
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (thumbString != null &&!thumbString.startsWith("http://")) {
+        if (thumbString != null &&!thumbString.startsWith("http")) {
             thumbString = Constant.THINKCMF_PATH + thumbString;
         }
         if (thumbString != null && thumbString.length() > 32) {

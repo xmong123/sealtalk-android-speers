@@ -315,6 +315,7 @@
     <dimen name="seal_main_item_margin_bottom">5dp</dimen>
     <dimen name="seal_main_item_tab_text_margin_top">2dp</dimen>
     <dimen name="seal_main_item_tab_text_size">12dp</dimen>
+    <dimen name="seal_login_fragment_login_btn_agree_size">13dp</dimen>
     <dimen name="seal_main_item_tab_read_proit_value">10dp</dimen>
     <dimen name="seal_main_item_tab_read_proit_margin_top">6dp</dimen>
     <dimen name="seal_main_item_tab_read_proit_margin_right">7dp</dimen>

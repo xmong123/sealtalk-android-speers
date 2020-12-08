@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -29,7 +30,7 @@ public class GroupListActivity extends TitleBaseActivity implements OnGroupItemC
     private static final String TAG = "GroupListActivity";
     private EditText editText;
     private SearchGroupByNameFragment searchGroupByNameFragment;
-    private FrameLayout groupListContainerFl;
+    private RelativeLayout groupListContainerFl;
     private TextView emptyTv;
 
     @Override

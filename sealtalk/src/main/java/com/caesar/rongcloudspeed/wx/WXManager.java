@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.caesar.rongcloudspeed.common.QRCodeConstant;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
@@ -105,6 +106,48 @@ public class WXManager {
         req.scene = SendMessageToWX.Req.WXSceneSession;
 
         //调用api接口，发送数据到微信
+        api.sendReq(req);
+    }
+
+    /**
+     * 分享简历
+     * @param rongid,lessonUrl
+     */
+    public void shareRecruitLink(String rongid) {
+
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = QRCodeConstant.BASE_URL+"user/index/userRecruitInfo/rongid/"+rongid;
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "同行快线-推荐简历";
+        msg.description = "同行快线简历中心,提供中英文简历,简历指导,帮你制作高分简历!涨薪就靠它!找到适合你的简历模板 和简历表格,制作属于你的个人简历.";
+        Bitmap thumb = BitmapFactory.decodeResource(context.getResources(), R.drawable.seal_app_logo);
+        msg.thumbData = WXUtils.bmpToByteArray(thumb, true);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction =  WXUtils.buildTransaction("webpage");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneSession;
+        api.sendReq(req);
+    }
+
+    /**
+     * 分享课程
+     * @param lessonName,lessonUrl
+     */
+    public void shareLessonLink(String lessonName) {
+
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = QRCodeConstant.BASE_URL;
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "同行快线-BIM专业课程推荐";
+        msg.description = lessonName;
+        Bitmap thumb = BitmapFactory.decodeResource(context.getResources(), R.drawable.seal_app_logo);
+        msg.thumbData = WXUtils.bmpToByteArray(thumb, true);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction =  WXUtils.buildTransaction("webpage");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneSession;
         api.sendReq(req);
     }
 

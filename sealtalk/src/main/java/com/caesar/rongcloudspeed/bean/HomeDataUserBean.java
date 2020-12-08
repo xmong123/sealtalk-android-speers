@@ -3,7 +3,7 @@ package com.caesar.rongcloudspeed.bean;
 import java.util.List;
 
 /**
- * Created by mac on 2018/4/5.
+ * Created by mac on 2018/4/5..
  */
 
 public class HomeDataUserBean extends CommonResonseBean {

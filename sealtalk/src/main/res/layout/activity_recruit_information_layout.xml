@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.RecruitPostInformationActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_information_supert1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="职位名称"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_information_supert2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="职位薪资"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_information_supert3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="职位地址"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_information_supert4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="职位学历"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_information_supert5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="工作年限"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_information_supert6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="联系电话"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <View
+                style="@style/solide8dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_margin="@dimen/dp_4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="详细信息"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/post_information_excerpt"
+                    style="@style/autho_input_style2"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:hint="请输入您招聘的真实情况，包括薪资，工作地点等" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/recruit_information_btn"
+                style="@style/main_btn_style2"
+                android:layout_marginStart="@dimen/dp_2"
+                android:layout_marginTop="@dimen/layoutMargin8dp"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/layoutMargin8dp"
+                android:text="保存" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

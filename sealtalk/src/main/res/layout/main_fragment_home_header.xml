@@ -22,7 +22,8 @@
                 android:layout_marginStart="14dp"
                 android:text="推荐好友"
                 android:textColor="@color/color_black_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/mainText14sp"
+                android:textStyle="italic" />
 
             <Button
                 android:id="@+id/people_moreBtn"
@@ -30,17 +31,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/layoutMargin8dp"
-                android:text="更多"
-                android:textColor="@color/color_black_text"
-                android:textSize="14sp" />
+                android:background="@color/seal_bg"
+                android:text="更多 >"
+                android:textColor="@color/customer_gray"
+                android:textSize="@dimen/mainText14sp" />
 
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/peopleRecyclerView"
             android:layout_width="match_parent"
+            android:layout_height="148dp"
             android:layout_margin="@dimen/margin4dp"
-            android:layout_height="145dp"
             android:background="@color/white" />
     </LinearLayout>
 
@@ -62,7 +64,8 @@
                 android:layout_marginStart="14dp"
                 android:text="推荐课程"
                 android:textColor="@color/color_black_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/mainText14sp"
+                android:textStyle="italic" />
 
             <Button
                 android:id="@+id/lesson_moreBtn"
@@ -70,9 +73,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/layoutMargin8dp"
-                android:text="更多"
-                android:textColor="@color/color_black_text"
-                android:textSize="14sp" />
+                android:background="@color/seal_bg"
+                android:text="更多 >"
+                android:textColor="@color/customer_gray"
+                android:textSize="@dimen/mainText14sp" />
 
         </RelativeLayout>
 

@@ -4,6 +4,7 @@
     <string name="title_activity_main">MainActivity</string>
     <!-- login-->
     <string name="seal_login_text_new_user">NewUser</string>
+    <string name="seal_login_text_agree">Agreement</string>
     <string name="seal_login_text_forget_password">ForgetPassword</string>
     <string name="seal_login_text_login">Login</string>
     <string name="seal_login_countries_and_regions">Countries/Region</string>
@@ -17,6 +18,7 @@
     <string name="seal_login_confirm_password">ConfirmPassword</string>
     <string name="product_buy_now">BUY NOW</string>
     <string name="toast_person_unlogin">LOGIN NOW</string>
+    <string name="network_err">Network Error</string>
 
     <string name="seal_login_toast_name_is_null">Nickname input cannot be empty</string>
     <string name="seal_login_toast_name_contain_spaces">Nickname cannot contain spaces</string>
@@ -82,8 +84,15 @@
         <item>Session</item>
         <item>Contact</item>
         <item>Discovery</item>
-        <item>BOOK</item>
+        <item>Recruit</item>
         <item>Mine</item>
+    </string-array>
+
+    <string-array name="search_name">
+        <item>Peer Lessones</item>
+        <item>TimeLine</item>
+        <item>Recruit and Employ</item>
+        <item>Peer Seek</item>
     </string-array>
 
     <string-array name="tab_name">
@@ -221,6 +230,7 @@
     <string name="seal_userinfo_item_user_portrait">User Portrait</string>
     <string name="seal_userinfo_item_user_money">用户余额</string>
     <string name="seal_mine_set_account_change_password">Change Password</string>
+    <string name="seal_mine_set_account_change_security">安全中心</string>
     <string name="seal_mine_set_account_change_paypassword">支付密码修改</string>
     <string name="seal_mine_set_account_privacy">Security and Privacy</string>
     <string name="seal_mine_set_account_new_message_show">New Message Notification</string>

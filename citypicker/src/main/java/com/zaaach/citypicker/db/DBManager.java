@@ -241,6 +241,25 @@ public class DBManager {
         return areaName;
     }
 
+    public String getAreaNames(final String id) {
+        String proName = "省份";
+        String cityName = "城市";
+        String areaParentID = "110000";
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
+        Cursor cursor = db.rawQuery("select * from " + NEW_TABLE_NAME + " where "
+                + COLUMN_AREA_ID + " = ?", new String[]{id});
+        while (cursor.moveToNext()) {
+            cityName = cursor.getString(cursor.getColumnIndex(COLUMN_AREA_NAME));
+            areaParentID = cursor.getString(cursor.getColumnIndex(COLUMN_AREA_PARENT_ID));
+        }
+        Cursor cursor1 = db.rawQuery("select " + COLUMN_AREA_NAME + " from " + NEW_TABLE_NAME + " where "
+                + COLUMN_AREA_ID + " = ?", new String[]{areaParentID});
+        while (cursor1.moveToNext()) {
+            proName = cursor1.getString(cursor1.getColumnIndex(COLUMN_AREA_NAME));
+        }
+        return proName+"-"+cityName;
+    }
+
     public List<City> searchCity(final String keyword) {
         String sql = "select * from " + TABLE_NAME + " where "
                 + COLUMN_C_NAME + " like ? " + "or "

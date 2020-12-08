@@ -36,7 +36,7 @@ public class AnimationPersonalFavouriteActivity extends MultiStatusActivity impl
     @BindView(R.id.recyclerview_anomation1)
     RecyclerView recyclerview_anomation1;
     private String cid = "3";
-    private String titleString = "城库货源出售关注";
+    private String titleString = "同行快线出售关注";
     private AnimationAdapter2 animationAdapter2;
     private String uidString;
     private String type = "indexPersonalFavoriteJson";

@@ -58,6 +58,7 @@
                     android:textSize="@dimen/sp_12" />
 
                 <RatingBar
+                    android:rating="3.5"
                     android:id="@+id/ratingBarStyleIndicator"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"

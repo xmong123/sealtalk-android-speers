@@ -5,6 +5,8 @@ import java.util.List;
 
 import io.rong.contactcard.message.ContactMessage;
 import io.rong.contactcard.message.ContactMessageItemProvider;
+import io.rong.contactcard.message.ContactSeekInfo;
+import io.rong.contactcard.message.ContactSeekItemProvider;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
@@ -16,6 +18,8 @@ import io.rong.imlib.model.Message;
 public class ContactCardExtensionModule implements IExtensionModule {
 
     private IContactCardClickListener iContactCardClickListener;
+
+    private ISeekCardClickListener iSeekCardClickListener;
 
     public ContactCardExtensionModule() {
     }
@@ -37,7 +41,9 @@ public class ContactCardExtensionModule implements IExtensionModule {
     @Override
     public void onInit(String appKey) {
         RongIM.registerMessageType(ContactMessage.class); //注册名片消息
+        RongIM.registerMessageType(ContactSeekInfo.class); //同行求助消息
         RongIM.registerMessageTemplate(new ContactMessageItemProvider(iContactCardClickListener));
+        RongIM.registerMessageTemplate(new ContactSeekItemProvider(iSeekCardClickListener));
     }
 
     @Override

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.AccountRecruitJobActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_job_supert"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="职能"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_job_supert1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="工作地点"
+                app:sRightIconRes="@mipmap/arrow_right_red"
+                app:sRightTextString="不限" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_job_supert2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="期望薪资"
+                app:sRightIconRes="@mipmap/arrow_right_red"
+                app:sRightTextString="面议" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_job_supert3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="工作经验"
+                app:sRightIconRes="@mipmap/arrow_right_red"
+                app:sRightTextString="2年工作经验" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin10dp"
+                android:text="职业经历:" />
+
+            <EditText
+                android:id="@+id/recruit_job_excerpt"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:maxLines="5"
+                android:layout_margin="@dimen/dp_2"
+                android:background="@color/white"
+                android:hint="您真实的职业经历，包括薪资，工作地点等（20～50字最佳）"
+                android:padding="@dimen/layoutMargin8dp"
+                android:textSize="@dimen/mainText14sp" />
+
+            <Button
+                android:id="@+id/post_job_btn"
+                style="@style/main_btn_style2"
+                android:layout_marginStart="@dimen/dp_2"
+                android:layout_marginTop="@dimen/layoutMargin8dp"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/layoutMargin8dp"
+                android:text="保存" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

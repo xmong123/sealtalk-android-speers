@@ -1,5 +1,5 @@
 # SealTalk-Android
-Android 应用 SealTalk 由 融云 RongCloud 出品。
+Android 应用 SealTalk 由 融云 91BIM 出品。
 
 ## 特别注意
 SealTalk 自从 1.3.14 版本起，CallLib 模块引用的音视频引擎已替换成 RTC 3.0，与之前的版本不互通。详细内容请参考官网的

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/margin4dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/recommend_avatar"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/m_img1" />
+
+        <TextView
+            android:id="@+id/recommend_nicename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_toEndOf="@+id/recommend_avatar"
+            android:singleLine="true"
+            android:text="BIM专业技术支持"
+            android:textColor="@color/txt_color" />
+
+        <TextView
+            android:id="@+id/recommend_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recommend_nicename"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:layout_toEndOf="@+id/recommend_avatar"
+            android:background="@color/orange"
+            android:paddingStart="@dimen/dp_4"
+            android:paddingTop="@dimen/dp_1"
+            android:paddingEnd="@dimen/dp_4"
+            android:paddingBottom="@dimen/dp_1"
+            android:singleLine="true"
+            android:text="专家"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:layout_toEndOf="@+id/recommend_avatar"
+            android:singleLine="true"
+            android:text="来自同行推荐"
+            android:textColor="@color/gray_color"
+            android:textSize="@dimen/sp_12" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -93,7 +93,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/seal_mine_about_power_margin_bottom"
         android:gravity="bottom"
-        android:text="Powered by RongCloud"
+        android:text="Powered by 91BIM"
         android:textColor="@color/seal_mine_about_power_text"
         android:textSize="@dimen/seal_mine_about_power_text_size" />
 </LinearLayout>

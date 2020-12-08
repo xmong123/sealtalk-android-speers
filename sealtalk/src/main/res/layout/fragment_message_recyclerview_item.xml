@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layoutMargin8dp"
             android:lineSpacingExtra="@dimen/margin4dp"
-            android:text="\u3000\u3000\u3000同业快线是一款主打建筑行业的课程视频播放软件App，已经审核通过"
+            android:text="\u3000\u3000\u3000同行快线是一款主打建筑行业的课程视频播放软件App，已经审核通过"
             android:textSize="@dimen/layoutMargin16dp" />
 
         <TextView

@@ -1,5 +1,7 @@
 package com.caesar.rongcloudspeed.ui.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,25 +14,32 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProviders;
+
 import com.allen.library.SuperTextView;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
+import com.caesar.rongcloudspeed.bean.HomeDataUserBean;
+import com.caesar.rongcloudspeed.bean.PersonalCountData;
 import com.caesar.rongcloudspeed.bean.PersonalMessageBean;
 import com.caesar.rongcloudspeed.common.IntentExtra;
 import com.caesar.rongcloudspeed.model.qrcode.QrCodeDisplayType;
 import com.caesar.rongcloudspeed.ui.activity.AccountSettingActivity;
 import com.caesar.rongcloudspeed.ui.activity.AnimationPersonalTagActivity;
+import com.caesar.rongcloudspeed.ui.activity.CustomerDataActivity;
 import com.caesar.rongcloudspeed.ui.activity.MyAccountActivity;
 import com.caesar.rongcloudspeed.ui.activity.PersonalAdvertListActivity;
 import com.caesar.rongcloudspeed.ui.activity.PersonalAlbumSectionActivity;
 import com.caesar.rongcloudspeed.ui.activity.PersonalAlbumVideoActivity;
-import com.caesar.rongcloudspeed.ui.activity.PersonalOrderListActivity;
+import com.caesar.rongcloudspeed.ui.activity.PersonalOrdersListActivity;
 import com.caesar.rongcloudspeed.ui.activity.PersonalSeekListActivity;
-import com.caesar.rongcloudspeed.ui.activity.PersonalLessonListActivity;
+import com.caesar.rongcloudspeed.ui.activity.PersonalLessonesListActivity;
 import com.caesar.rongcloudspeed.ui.activity.PersonalWalletActivity;
 import com.caesar.rongcloudspeed.ui.activity.QrCodeDisplayActivity;
+import com.caesar.rongcloudspeed.ui.activity.WebViewActivity;
 import com.caesar.rongcloudspeed.ui.dialog.CommonDialog;
-import com.caesar.rongcloudspeed.utils.ToastUtils;
+import com.caesar.rongcloudspeed.viewmodel.UserInfoViewModel;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -60,6 +69,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.rong.imkit.RongIM;
+
+import static com.caesar.rongcloudspeed.constants.Constant.CODE_SUCC;
 
 /**
  *
@@ -114,6 +125,7 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
     private String moneyString = "0";
     private String lessonCounString = "0";
     private String orderCountString = "0";
+    private UserInfoViewModel userInfoViewModel;
 
     public UserFragment() {
         // Required empty public constructor
@@ -135,6 +147,7 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        userInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
     }
 
     @Override
@@ -169,7 +182,9 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.userHeaderImage, R.id.siv_setting_qrcode, R.id.userHeaderLayout, R.id.myOrderStv, R.id.myInviteCodeStv, R.id.settingStv, R.id.aboutMeStv, R.id.helpStv, R.id.user_tip_layout01, R.id.user_tip_layout02, R.id.user_tip_layout03, R.id.personalMoney, R.id.personalLesson, R.id.volumeStv, R.id.logoutStv})
+    @OnClick({R.id.userHeaderImage, R.id.siv_setting_qrcode, R.id.userHeaderLayout, R.id.myOrderStv, R.id.myInviteCodeStv,
+            R.id.settingStv, R.id.aboutMeStv, R.id.helpStv, R.id.user_tip_layout01, R.id.user_tip_layout02, R.id.user_tip_layout03,
+            R.id.personalMoney, R.id.personalLesson, R.id.volumeStv, R.id.btn_agree_text2, R.id.btn_agree_text4, R.id.logoutStv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.userHeaderImage:
@@ -204,19 +219,25 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
                 startActivity(new Intent(getActivity(), PersonalAlbumSectionActivity.class));
                 break;
             case R.id.helpStv:
-                //我的视频
-                startActivity(new Intent(getActivity(), PersonalAlbumVideoActivity.class));
+                //我的视频PersonalAlbumVideoActivity|客服
+                startActivity(new Intent(getActivity(), CustomerDataActivity.class));
                 break;
             case R.id.user_tip_layout01://我的钱包PersonalWalletActivity
                 startActivity(new Intent(getActivity(), PersonalWalletActivity.class));
                 break;
             case R.id.user_tip_layout02://我的课程
-                startActivity(new Intent(getActivity(), PersonalLessonListActivity.class));
+                startActivity(new Intent(getActivity(), PersonalLessonesListActivity.class));
                 break;
             case R.id.user_tip_layout03://我的订单
-                startActivity(new Intent(getActivity(), PersonalOrderListActivity.class));
+                startActivity(new Intent(getActivity(), PersonalOrdersListActivity.class));
                 break;
             case R.id.volumeStv:
+                break;
+            case R.id.btn_agree_text2:
+                showServerDialog();
+                break;
+            case R.id.btn_agree_text4:
+                showPrivateDialog();
                 break;
             case R.id.logoutStv:
 //                    startActivity(new Intent(getActivity(), AccountSettingActivity.class));
@@ -242,16 +263,74 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
             if (userAvatarString.length() > 32 && !userAvatarString.startsWith("avatar")) {
                 Glide.with(UserFragment.this).load(userAvatarString).into(userHeaderImage);
             }
+            RetrofitManager.create().personalInfoData(uidString)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose(this.<PersonalCountData>bindToLifecycle())
+                    .subscribe(new CommonObserver<PersonalCountData>(refreshLayout) {
+                        @Override
+                        public void onSuccess(PersonalCountData personalCountData) {
+                            if (personalCountData.getCode() == CODE_SUCC) {
+                                PersonalCountData.CountDta countDta = personalCountData.getReferer();
+                                personalLesson.setText(countDta.getLesson_count());
+                                personalOrder.setText(countDta.getOrder_count());
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                        }
+                    });
+            moneyString = UserInfoUtils.getUserSum(getActivity());
+            personalMoney.setText(moneyString);
         }
-        orderSet = UserInfoUtils.getAppUserLessones(getActivity());
-        moneyString = UserInfoUtils.getUserSum(getActivity());
-        orderCountString = UserInfoUtils.getAppUserOrderSum(getActivity());
-        if(orderSet!=null&&orderSet.size()>0){
-            lessonCounString=String.valueOf(orderSet.size());
-        }
-        personalMoney.setText(moneyString);
-        personalLesson.setText(lessonCounString);
-        personalOrder.setText(orderCountString);
+
+    }
+
+    //我们需要收集你的设备信息、操作日志等个人信息。
+    private void showServerDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setIcon(R.mipmap.ic_launcher).setTitle("服务协议")
+                .setMessage("请你务必审慎阅读、充分理解《服务协议》各条款．包括但不限于：为了向你提供即时诵讯、内容分享等服务").setPositiveButton("查看详细", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //ToDo: 你想做的事情
+                        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                        intent.putExtra("url", "file:///android_asset/webpage/memaiagree.html");
+                        intent.putExtra("title", "《服务协议》");
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //ToDo: 你想做的事情
+//                        Toast.makeText(getActivity(), "关闭按钮", Toast.LENGTH_LONG).show();
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+
+    //我们需要收集你的设备信息、操作日志等个人信息。
+    private void showPrivateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setIcon(R.mipmap.ic_launcher).setTitle("隐私政策")
+                .setMessage("请你务必审慎阅读、充分理解《隐私政策》各条款．我们需要收集你的设备信息、操作日志等个人信息。").setPositiveButton("查看详细", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //ToDo: 你想做的事情
+                        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                        intent.putExtra("url", "file:///android_asset/webpage/memaifree.html");
+                        intent.putExtra("title", "《隐私政策》");
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //ToDo: 你想做的事情
+//                        Toast.makeText(getActivity(), "关闭按钮", Toast.LENGTH_LONG).show();
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
     private void showExitDialog() {
@@ -291,6 +370,9 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                if (userInfoViewModel != null) {
+                    userInfoViewModel.logout();
+                }
                 UserInfoUtils.clear(getActivity());
                 Intent intent = new Intent("com.rong.im.action.logout");
                 getActivity().sendBroadcast(intent);
@@ -316,17 +398,17 @@ public class UserFragment extends RxFragment implements OnRefreshListener {
                     @Override
                     public void onSuccess(PersonalMessageBean personalMessageBean) {
                         if (personalMessageBean.getCode() == Constant.CODE_SUCC) {
-                            PersonalMessageBean.PersonalMessageData messageData=personalMessageBean.getReferer();
+                            PersonalMessageBean.PersonalMessageData messageData = personalMessageBean.getReferer();
                             String avatarString = messageData.getAvatar();
-                            if (avatarString != null && !avatarString.startsWith("http://")) {
+                            if (avatarString != null && !(avatarString.startsWith("http://") || avatarString.startsWith("https://"))) {
                                 avatarString = Constant.THINKCMF_PATH + avatarString;
                             }
                             Glide.with(UserFragment.this).load(avatarString).into(userHeaderImage);
-                            String orderCount=messageData.getOrderCount();
-                            String userSumString=messageData.getUser_sum();
-                            String lessonCount=messageData.getLessonCount();
-                            UserInfoUtils.setUserSum(userSumString,getActivity());
-                            UserInfoUtils.setAppUserOrderSum(orderCount,getActivity());
+                            String orderCount = messageData.getOrderCount();
+                            String userSumString = messageData.getUser_sum();
+                            String lessonCount = messageData.getLessonCount();
+                            UserInfoUtils.setUserSum(userSumString, getActivity());
+                            UserInfoUtils.setAppUserOrderSum(orderCount, getActivity());
                             personalMoney.setText(userSumString);
                             personalLesson.setText(lessonCount);
                             personalOrder.setText(orderCount);

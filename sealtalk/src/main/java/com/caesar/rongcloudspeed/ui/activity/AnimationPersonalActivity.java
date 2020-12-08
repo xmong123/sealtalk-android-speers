@@ -30,7 +30,7 @@ public class AnimationPersonalActivity extends MultiStatusActivity {
     @BindView(R.id.recyclerview_anomation1)
     RecyclerView recyclerview_anomation1;
     private String cid="5";
-    private String titleString="城库交易资讯";
+    private String titleString="同行交易资讯";
     private AnimationAdapter1 animationAdapter1;
     private String uidString;
     private String type="indexPersonalFavoriteJson";

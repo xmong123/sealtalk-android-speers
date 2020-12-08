@@ -20,6 +20,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.caesar.rongcloudspeed.R;
+import com.luck.picture.lib.photoview.PhotoView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -141,7 +142,7 @@ public class ImagePagerActivity extends Activity{
         public Object instantiateItem(ViewGroup container, final int position) {
             View view = inflater.inflate(R.layout.item_pager_image, container, false);
             if(view != null){
-                final ImageView imageView = (ImageView) view.findViewById(R.id.image);
+                final PhotoView imageView = (PhotoView) view.findViewById(R.id.image);
                 //预览imageView
                 final ImageView smallImageView = new ImageView(context);
                 FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(imageSize.getWidth(), imageSize.getHeight());

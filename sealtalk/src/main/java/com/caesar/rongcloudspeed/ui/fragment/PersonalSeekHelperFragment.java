@@ -102,11 +102,14 @@ public class PersonalSeekHelperFragment extends RxFragment implements OnRefreshL
                                     PostsSeekBaseBean postsArticleBaseBean = value.getReferer().get(position);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("seek_id", postsArticleBaseBean.getObject_id());
+                                    bundle.putString("rong_id", postsArticleBaseBean.getRongid());
+                                    bundle.putString("user_nicename", postsArticleBaseBean.getUser_nicename());
                                     bundle.putString("seek_title", postsArticleBaseBean.getPost_title());
                                     bundle.putString("seek_date", postsArticleBaseBean.getPost_date());
                                     bundle.putString("seek_price", postsArticleBaseBean.getPost_price());
                                     bundle.putString("seek_content", postsArticleBaseBean.getPost_excerpt());
                                     bundle.putString("photos_urls", postsArticleBaseBean.getPhotos_urls());
+                                    bundle.putString("post_author", postsArticleBaseBean.getPost_author());
                                     ActivityUtils.startActivity(bundle, SeekHelperDetailActivity.class);
                                 }
                             });

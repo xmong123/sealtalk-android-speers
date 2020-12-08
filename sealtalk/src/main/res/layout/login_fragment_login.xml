@@ -106,4 +106,60 @@
         android:textColor="@color/white"
         android:textSize="@dimen/seal_login_fragment_login_btn_text_size" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_login_fragment_login_btn_margin_left"
+        android:layout_marginTop="@dimen/seal_login_fragment_login_btn_margin_top"
+        android:layout_marginRight="@dimen/seal_login_fragment_login_btn_margin_right">
+
+        <LinearLayout
+            android:id="@+id/btn_agree_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@+id/agree_checkbox"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btn_agree_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点击登录即同意"
+                android:textColor="@color/white"
+                android:textSize="@dimen/seal_login_fragment_login_btn_agree_size" />
+
+            <TextView
+                android:id="@+id/btn_agree_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《服务协议》"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/seal_login_fragment_login_btn_agree_size" />
+
+            <TextView
+                android:id="@+id/btn_agree_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="和"
+                android:textColor="@color/white"
+                android:textSize="@dimen/seal_login_fragment_login_btn_agree_size" />
+
+            <TextView
+                android:id="@+id/btn_agree_text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《隐私政策》"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/seal_login_fragment_login_btn_agree_size" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/agree_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
 </LinearLayout>

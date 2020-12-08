@@ -15,7 +15,7 @@ public class AppPeopleBaseBean extends BaseData {
      * code : 101
      * quota_present : 0.00
      * info : [{}]
-     * **/
+     **/
 
     private String state;
     private String status;
@@ -54,13 +54,14 @@ public class AppPeopleBaseBean extends BaseData {
         this.url = url;
     }
 
-    public static  class PeopleDataBean  {
+    public static class PeopleDataBean {
         private String id;
         private String rongid;
         private String user_login;
         private String user_nicename;
         private String avatar;
         private String mobile;
+        private String user_type;
 
         public String getId() {
             return id;
@@ -80,6 +81,14 @@ public class AppPeopleBaseBean extends BaseData {
 
         public String getUser_login() {
             return user_login;
+        }
+
+        public String getUser_type() {
+            return user_type;
+        }
+
+        public void setUser_type(String user_type) {
+            this.user_type = user_type;
         }
 
         public void setUser_login(String user_login) {

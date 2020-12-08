@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/item_bg"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tweetName1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layoutMargin8dp"
+                android:layout_toStartOf="@+id/tweetName2"
+                android:paddingLeft="@dimen/layoutMargin8dp"
+                android:paddingRight="@dimen/margin4dp"
+                android:text="出售特种钢材出售出售特种钢材"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tweetName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/dp_4"
+                android:background="@drawable/btn_shape"
+                android:paddingLeft="8dp"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingRight="8dp"
+                android:paddingBottom="@dimen/dp_4"
+                android:text="联系他"
+                android:textColor="@color/white_text_color"
+                android:textSize="@dimen/sp_12" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tweetText1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingRight="@dimen/dp_4"
+                android:text="单价：1400元/吨" />
+
+            <TextView
+                android:id="@+id/tweetText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingRight="@dimen/dp_4"
+                android:text="地点：山西临汾市" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tweetText3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingRight="@dimen/dp_4"
+                android:text="数量：2000.00吨" />
+
+            <TextView
+                android:id="@+id/tweetText4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingRight="@dimen/dp_4"
+                android:text="批次：TXS042650" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tweetText5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingRight="@dimen/dp_4"
+                android:text="日期：2分钟前" />
+
+            <TextView
+                android:id="@+id/tweetText6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingRight="@dimen/dp_4"
+                android:text="提货：自提" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tweetText7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingRight="@dimen/dp_4"
+                android:text="货物描述：上海同鑫042出售炭黑" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

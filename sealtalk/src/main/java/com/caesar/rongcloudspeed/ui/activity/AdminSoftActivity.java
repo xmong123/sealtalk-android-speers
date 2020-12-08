@@ -41,6 +41,15 @@ public class AdminSoftActivity extends TitleBaseActivity implements View.OnClick
 
     private void initView() {
         getTitleBar().setTitle("软件分类");
+        getTitleBar().setOnBtnRightClickListener("全选", view -> {
+            for (int i = 0; i < adminIndustryArray.size(); i++) {
+                AdminIndustryBean bean = adminIndustryArray.get(i);
+                if (!bean.isChecked()) {
+                    adminIndustryAdapter.setItemChecked(i, true);
+                }
+            }
+
+        });
         softIDString = getIntent().getStringExtra("softIDString");
         adminIndustryRecyclerView = findViewById(R.id.adminindustry_recyclerView);
         industryConfirmBtn = findViewById(R.id.industry_confirm);
@@ -58,8 +67,6 @@ public class AdminSoftActivity extends TitleBaseActivity implements View.OnClick
                     @Override
                     public void onSuccess(AdminInBean adminInBean) {
                         adminIndustryArray = adminInBean.getReferer();
-                        AdminIndustryBean baseBean = new AdminIndustryBean(false, "0", "全部软件", "0");
-                        adminIndustryArray.add(baseBean);
                         adminIndustryAdapter.setData(adminIndustryArray);
                         adminIndustryRecyclerView.setAdapter(adminIndustryAdapter);
                         if (softIDString != null) {

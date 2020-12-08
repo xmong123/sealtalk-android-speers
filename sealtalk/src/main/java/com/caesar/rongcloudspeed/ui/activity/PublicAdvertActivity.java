@@ -32,8 +32,12 @@ import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.caesar.rongcloudspeed.R;
+import com.caesar.rongcloudspeed.bean.BaiduTextBean;
+import com.caesar.rongcloudspeed.bean.QiniuBaseBean;
+import com.caesar.rongcloudspeed.bean.QiniuBean;
 import com.caesar.rongcloudspeed.callback.UpLoadImgCallback;
 import com.caesar.rongcloudspeed.config.Config;
+import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.data.BaseData;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
@@ -56,6 +60,7 @@ import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.luck.picture.lib.style.PictureCropParameterStyle;
 import com.luck.picture.lib.style.PictureParameterStyle;
 import com.luck.picture.lib.style.PictureWindowAnimationStyle;
+import com.luck.picture.lib.tools.SdkVersionUtils;
 import com.luck.picture.lib.tools.ToastUtils;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
@@ -90,7 +95,7 @@ import static com.caesar.rongcloudspeed.utils.ToastUtils.showToast;
 public class PublicAdvertActivity extends Activity implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String TAG = "PublicAdvertActivity";
+    private static final String TAG = "PublicAdvertActivityLog";
     private static final int REQUEST_CODE_SELECT_INDUSTRY = 1001;
     private static final int REQUEST_CODE_SELECT_PROFESSION = 1002;
     private static final int REQUEST_CODE_SELECT_SOFT = 1003;
@@ -139,6 +144,7 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
     private String industryIDString;
     private String professionIDString;
     private String softIDString;
+    private String baiduToken;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -155,7 +161,6 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                 .findViewById(R.id.advert_video_upload_file_length_textview);
         this.uploadPercentageTextView = (TextView) this
                 .findViewById(R.id.advert_video_upload_percentage_textview);
-        this.uploadStatusLayout.setVisibility(LinearLayout.INVISIBLE);
         post_title_text = (TextView) this.findViewById(R.id.post_title_text);
         post_edit_title = (EditText) this.findViewById(R.id.post_edit_title);
         post_advert_del = (ImageView) this.findViewById(R.id.post_advert_del);
@@ -168,8 +173,9 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
         post_edit_mobile = (EditText) this.findViewById(R.id.post_edit_mobile);
         post_edit_content = (EditText) this.findViewById(R.id.post_edit_content);
         post_commit_btn = (Button) this.findViewById(R.id.post_commit_btn);
-        uidString = UserInfoUtils.getAppUserId(PublicAdvertActivity.this);
-        phoneNumber = UserInfoUtils.getPhone(PublicAdvertActivity.this);
+        uidString = UserInfoUtils.getAppUserId(this);
+        baiduToken = UserInfoUtils.getBaiduToken(this);
+        phoneNumber = UserInfoUtils.getPhone(this);
         if (uidString.equals("0")) {
             post_edit_mobile.setText("");
         } else {
@@ -311,10 +317,14 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                 softIDString = data.getStringExtra("softIDString");
                 post_soft_btn.setRightString(data.getStringExtra("softNameString"));
             } else if (requestCode == REQUEST_CODE_SELECT_PAY) {
-                if (localMedia.equals("image/jpeg")) {
-                    purchaseHandler.sendEmptyMessage(0);
-                } else if (localMedia.getMimeType().equals("video/mp4")) {
-                    purchaseHandler.sendEmptyMessage(2);
+                String mimeType = data.getStringExtra("mimeType");
+                if (mimeType.equals("image")) {
+                    String photos_url = data.getStringExtra("photos_url");
+                    images = new String[]{photos_url};
+                    purchaseHandler.sendEmptyMessage(1);
+                } else if (mimeType.equals("video")) {
+                    thumbVideoString = data.getStringExtra("thumb_video");
+                    purchaseHandler.sendEmptyMessage(3);
                 }
                 showProgressBar(true, R.string.upload);
             }
@@ -343,7 +353,7 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                             .minSelectNum(1)// 最小选择数量
                             .maxVideoSelectNum(1) // 视频最大选择数量，如果没有单独设置的需求则可以不设置，同用maxSelectNum字段
                             //.minVideoSelectNum(1)// 视频最小选择数量，如果没有单独设置的需求则可以不设置，同用minSelectNum字段
-                            .imageSpanCount(4)// 每行显示个数
+                            .imageSpanCount(3)// 每行显示个数
                             .isReturnEmpty(false)// 未选择数据时点击按钮是否可以返回
                             //.isAndroidQTransform(false)// 是否需要处理Android Q 拷贝至应用沙盒的操作，只针对compress(false); && enableCrop(false);有效,默认处理
                             .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)// 设置相册Activity方向，不设置默认使用系统
@@ -411,13 +421,17 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                         Log.i(TAG, "是否开启原图:" + media.isOriginal());
                                         Log.i(TAG, "原图路径:" + media.getOriginalPath());
                                         Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
-                                        Log.d(TAG, "文件时长:" + String.valueOf(media.getDuration()));
+                                        Log.d(TAG, "文件时长:" + media.getDuration());
                                         Log.d(TAG, "文件类型:" + media.getMimeType());
                                         localMedia = media;
                                         if (media.getMimeType().equals("image/jpeg")) {
-                                            uploadStatusLayout.setVisibility(LinearLayout.INVISIBLE);
-                                        } else if (media.getMimeType().equals("video/mp4")) {
                                             uploadStatusLayout.setVisibility(LinearLayout.VISIBLE);
+                                        } else if (media.getMimeType().equals("video/mp4")) {
+                                            if (media.getSize() <= 20 * 1024 * 1024 && media.getDuration() <= 30 * 1000) {
+                                                uploadStatusLayout.setVisibility(LinearLayout.VISIBLE);
+                                            } else {
+                                                uploadStatusLayout.setVisibility(LinearLayout.VISIBLE);
+                                            }
                                         }
                                         Object imageModel = media.getPath().startsWith("content://") && !media.isCut() && !media.isCompressed() ? Uri.parse(media.getPath())
                                                 : media.getPath();
@@ -429,9 +443,9 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                                 .into(post_advert_image);
                                         post_advert_del.setVisibility(View.VISIBLE);
                                         post_advert_del.setOnClickListener(view -> {
-                                            post_advert_image.setImageResource(R.drawable.addphoto);
                                             localMedia = null;
                                             post_advert_del.setVisibility(View.INVISIBLE);
+                                            post_advert_image.setImageResource(R.drawable.addphoto);
                                         });
                                     }
                                 }
@@ -489,18 +503,18 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                         if (TextUtils.isEmpty(phoneNumber)) {
                             ToastUitl.showToastWithImg(getString(R.string.circle_mobile_empty), R.drawable.ic_warm);
                         } else {
-                            if (TextUtils.isEmpty(industryIDString)||TextUtils.isEmpty(professionIDString)||TextUtils.isEmpty(softIDString)) {
+                            if (TextUtils.isEmpty(industryIDString) || TextUtils.isEmpty(professionIDString) || TextUtils.isEmpty(softIDString)) {
                                 ToastUitl.showToastWithImg("广告分类不能为空", R.drawable.ic_warm);
                             } else {
                                 if (localMedia != null) {
-                                    Intent intent = new Intent(PublicAdvertActivity.this, SeekHelperOrderActivity.class);
-                                    intent.putExtra("seek_name", postTitle);
-                                    intent.putExtra("seek_price", "10");
-                                    intent.putExtra("seek_type", "4");
-                                    intent.putExtra("industryIDString", industryIDString);
-                                    intent.putExtra("professionIDString", professionIDString);
-                                    intent.putExtra("softIDString", softIDString);
-                                    startActivityForResult(intent, REQUEST_CODE_SELECT_PAY);
+                                    if (localMedia.getMimeType().startsWith("video")) {
+                                        if (!(localMedia.getSize() <= 20 * 1024 * 1024 && localMedia.getDuration() <= 30 * 1000)) {
+                                            ToastUitl.showToastWithImg("视频内容一般不超过30秒，不超过20MB", R.drawable.ic_warm);
+                                            return;
+                                        }
+                                    }
+                                    mProgressDialog.show();
+                                    purchaseHandler.sendEmptyMessage(4);
 //                                showProgressBar(true, R.string.upload);
                                 } else {
                                     ToastUitl.showToastWithImg(getString(R.string.circle_image_empty), R.drawable.ic_warm);
@@ -522,13 +536,25 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    byte[] img = BastiGallery.Bitmap2Bytes(BastiGallery.getimage(localMedia.getPath()));
+                    boolean isAndroidQ = SdkVersionUtils.checkedAndroid_Q();
+                    byte[] img = BastiGallery.Bitmap2Bytes(BastiGallery.getimage(isAndroidQ?localMedia.getAndroidQToPath():localMedia.getPath()));
                     //已经上传过的不上传
                     QiniuUtils.uploadImg(PublicAdvertActivity.this, img, QiniuUtils.createImageKey(phoneNumber), new UpLoadImgCallback() {
                         @Override
                         public void onSuccess(String imgUrl) {
-                            images = new String[]{imgUrl};
-                            purchaseHandler.sendEmptyMessage(1);
+//                            images = new String[]{imgUrl};
+                            showProgressBar(false);
+                            Intent intent = new Intent(PublicAdvertActivity.this, SeekHelperOrderActivity.class);
+                            intent.putExtra("seek_name", postTitle);
+                            intent.putExtra("seek_price", "100");
+                            intent.putExtra("seek_type", "4");
+                            intent.putExtra("mimeType", "image");
+                            intent.putExtra("photos_url", imgUrl);
+                            intent.putExtra("industryIDString", industryIDString);
+                            intent.putExtra("professionIDString", professionIDString);
+                            intent.putExtra("softIDString", softIDString);
+                            startActivityForResult(intent, REQUEST_CODE_SELECT_PAY);
+//                            purchaseHandler.sendEmptyMessage(1);
                         }
 
                         @Override
@@ -539,6 +565,9 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                     });
                     break;
                 case 1:
+                    if (TextUtils.isEmpty(postContent)) {
+                        postContent = postTitle;
+                    }
                     NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().AddPostCartArticle(uidString, "42", postTitle, phoneNumber, images, postContent),
                             new NetworkCallback<BaseData>() {
                                 @Override
@@ -546,6 +575,7 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                     showProgressBar(false);
                                     if (NetworkResultUtils.isSuccess(baseData)) {
                                         Toast.makeText(PublicAdvertActivity.this, "上传成功", Toast.LENGTH_LONG).show();
+                                        finish();
                                     } else {
                                         Toast.makeText(PublicAdvertActivity.this, "上传失败", Toast.LENGTH_LONG).show();
                                     }
@@ -559,25 +589,21 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                             });
                     break;
                 case 2:
-                    final OkHttpClient httpClient = new OkHttpClient();
-                    Request req = new Request.Builder().url(QiniuLabConfig.makeUrl(
-                            QiniuLabConfig.TESTSERVER,
-                            QiniuLabConfig.QUICK_START_VIDEO_DEMO_PATH)).method("GET", null).build();
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().getQiniuToken(uidString),
+                            new NetworkCallback<QiniuBaseBean>() {
+                                @Override
+                                public void onSuccess(QiniuBaseBean qiniuBaseBean) {
+                                    if (qiniuBaseBean.getCode() == Constant.CODE_SUCC) {
+                                        String uploadToken = qiniuBaseBean.getReferer();
+                                        uploadData(uploadToken, QiniuLabConfig.REMOTE_SERVICE_SERVER);
+                                    }
+                                }
 
-                    Response resp = null;
-                    try {
-                        resp = httpClient.newCall(req).execute();
-                        JSONObject jsonObject = new JSONObject(resp.body().string());
-                        String uploadToken = jsonObject.getString("url");
-                        uploadData(uploadToken, QiniuLabConfig.REMOTE_SERVICE_SERVER);
-                    } catch (Exception e) {
-                        showProgressBar(false);
-                        AsyncRun.run(() -> showToast(R.string.qiniu_get_upload_token_failed));
-                    } finally {
-                        if (resp != null) {
-                            resp.body().close();
-                        }
-                    }
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    Toast.makeText(PublicAdvertActivity.this, R.string.qiniu_get_upload_token_failed, Toast.LENGTH_LONG).show();
+                                }
+                            });
                     break;
                 case 3:
                     NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().AddPostAdvertType(uidString, "42", postTitle, phoneNumber, thumbVideoString, postContent, "4"),
@@ -587,6 +613,7 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                     showProgressBar(false);
                                     if (NetworkResultUtils.isSuccess(baseData)) {
                                         Toast.makeText(PublicAdvertActivity.this, "信息发布成功", Toast.LENGTH_SHORT).show();
+                                        finish();
                                     } else {
                                         Toast.makeText(PublicAdvertActivity.this, "信息发布失败，请稍后再试", Toast.LENGTH_SHORT).show();
                                     }
@@ -599,6 +626,41 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                 }
                             });
 
+                    break;
+                case 4:
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitBaiduApi().getBaiduTextCheck(postTitle, baiduToken),
+                            new NetworkCallback<BaiduTextBean>() {
+                                @Override
+                                public void onSuccess(BaiduTextBean baiduTextBean) {
+                                    int conclusionType = baiduTextBean.getConclusionType();
+                                    if (conclusionType == 1) {
+                                        if (localMedia.getMimeType().startsWith("image")) {
+                                            purchaseHandler.sendEmptyMessage(0);
+                                        } else if (localMedia.getMimeType().startsWith("video")) {
+                                            purchaseHandler.sendEmptyMessage(2);
+                                        }
+//                                        Intent intent = new Intent(PublicAdvertActivity.this, SeekHelperOrderActivity.class);
+//                                        intent.putExtra("seek_name", postTitle);
+//                                        intent.putExtra("seek_price", "100");
+//                                        intent.putExtra("seek_type", "4");
+//                                        intent.putExtra("industryIDString", industryIDString);
+//                                        intent.putExtra("professionIDString", professionIDString);
+//                                        intent.putExtra("softIDString", softIDString);
+//                                        startActivityForResult(intent, REQUEST_CODE_SELECT_PAY);
+//                                        purchaseHandler.sendEmptyMessage(0);
+                                    } else {
+                                        mProgressDialog.dismiss();
+                                        BaiduTextBean.BaiduTextData baiduTextData = baiduTextBean.getData().get(0);
+                                        ToastUitl.showToastWithImg(baiduTextData.getMsg(), R.drawable.ic_warm);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    mProgressDialog.dismiss();
+                                    Toast.makeText(PublicAdvertActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                     break;
                 default:
 
@@ -613,9 +675,8 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    final ProgressDialog pd = new ProgressDialog(PublicAdvertActivity.this);
-                    pd.setMessage("正在处理，请稍后...");
-                    pd.show();
+                    mProgressDialog.setMessage("正在处理，请稍后...");
+                    mProgressDialog.show();
                     NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().AddPostCartArticle(uidString, "42", postTitle, phoneNumber, thumbVideoString, postContent),
                             new NetworkCallback<BaseData>() {
                                 @Override
@@ -627,7 +688,7 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                     } else {
                                         Toast.makeText(PublicAdvertActivity.this, "信息发布失败，请稍后再试", Toast.LENGTH_SHORT).show();
                                     }
-                                    pd.dismiss();
+                                    mProgressDialog.dismiss();
                                     setResult(RESULT_OK, getIntent());
                                     finish();
                                 }
@@ -635,7 +696,7 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                 @Override
                                 public void onFailure(Throwable t) {
                                     Toast.makeText(PublicAdvertActivity.this, "信息发布失败，请稍后再试", Toast.LENGTH_SHORT).show();
-                                    pd.dismiss();
+                                    mProgressDialog.dismiss();
                                 }
                             });
 
@@ -647,17 +708,16 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
     };
 
     private void upLoadAllFeedBackImg(String pathString) {
-        final ProgressDialog pd = new ProgressDialog(PublicAdvertActivity.this);
-        pd.setCanceledOnTouchOutside(false);
-        pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
             @Override
             public void onCancel(DialogInterface dialog) {
                 Log.d(TAG, "upLoadAllFeedBackImg.onCancel");
             }
         });
-        pd.setMessage("正在上传");
-        pd.show();
+        mProgressDialog.setMessage("正在上传");
+        mProgressDialog.show();
         Bitmap bitmap = BastiGallery.getimage(pathString);
         byte[] img = compressBitmap(bitmap, 128);
         QiniuUtils.uploadImg(PublicAdvertActivity.this, img, QiniuUtils.createImageKey(UserInfoUtils.getPhone(PublicAdvertActivity.this)), new UpLoadImgCallback() {
@@ -665,13 +725,13 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
             public void onSuccess(String imgUrl) {
 
                 Log.e("111111111111", "imgUrl = " + imgUrl);
-                pd.dismiss();
+                mProgressDialog.dismiss();
                 handler.sendEmptyMessage(0);
             }
 
             @Override
             public void onFailure() {
-                pd.dismiss();
+                mProgressDialog.dismiss();
             }
         });
 
@@ -783,8 +843,8 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                     .build();
             this.uploadManager = new UploadManager(config);
         }
-
-        File uploadFile = new File(localMedia.getPath());
+        boolean isAndroidQ = SdkVersionUtils.checkedAndroid_Q();
+        File uploadFile = new File(isAndroidQ ? localMedia.getAndroidQToPath() : localMedia.getPath());
         UploadOptions uploadOptions = new UploadOptions(null, null, false,
                 new UpProgressHandler() {
                     @Override
@@ -820,7 +880,7 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                             @Override
                             public void run() {
                                 uploadStatusLayout
-                                        .setVisibility(LinearLayout.INVISIBLE);
+                                        .setVisibility(LinearLayout.VISIBLE);
                                 uploadProgressBar.setProgress(0);
                             }
                         });
@@ -835,17 +895,31 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                     @Override
                                     public void run() {
                                         Log.d(TAG, "hash:" + persistentId);
-                                        showToast("videoUrl:" + videoUrl, Toast.LENGTH_LONG);
+                                        Log.d(TAG, "videoUrl:" + videoUrl);
+
+                                        showToast(R.string.qiniu_upload_success, Toast.LENGTH_LONG);
                                     }
                                 });
+                                showProgressBar(false);
                                 thumbVideoString = videoUrl;
-                                purchaseHandler.sendEmptyMessage(3);
+                                Intent intent = new Intent(PublicAdvertActivity.this, SeekHelperOrderActivity.class);
+                                intent.putExtra("seek_name", postTitle);
+                                intent.putExtra("seek_price", "100");
+                                intent.putExtra("seek_type", "4");
+                                intent.putExtra("mimeType", "video");
+                                intent.putExtra("thumb_video", videoUrl);
+                                intent.putExtra("industryIDString", industryIDString);
+                                intent.putExtra("professionIDString", professionIDString);
+                                intent.putExtra("softIDString", softIDString);
+                                startActivityForResult(intent, REQUEST_CODE_SELECT_PAY);
+//                                purchaseHandler.sendEmptyMessage(3);
                             } catch (JSONException e) {
                                 Toast.makeText(
                                         getContext(),
                                         getContext().getString(R.string.qiniu_upload_file_response_parse_error),
                                         Toast.LENGTH_LONG).show();
                                 Log.e(QiniuLabConfig.LOG_TAG, e.getMessage());
+                                showProgressBar(false);
                             }
                         } else {
                             Toast.makeText(
@@ -853,6 +927,7 @@ public class PublicAdvertActivity extends Activity implements View.OnClickListen
                                     getContext().getString(R.string.qiniu_upload_file_failed),
                                     Toast.LENGTH_LONG).show();
                             Log.e(QiniuLabConfig.LOG_TAG, respInfo.toString());
+                            showProgressBar(false);
                         }
                     }
 

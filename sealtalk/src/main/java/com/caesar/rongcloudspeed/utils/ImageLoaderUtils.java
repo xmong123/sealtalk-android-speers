@@ -120,7 +120,7 @@ public class ImageLoaderUtils {
         }
 //        Glide.with(context).load(url)
 //                .diskCacheStrategy( DiskCacheStrategy.ALL)
-//                .error(R.drawable.toux2)
+//                .error(R.drawable.error)
 //                .centerCrop().transform(new GlideRoundTransformUtil(context)).into(imageView);
     }
     public static void displayRound(Context context, ImageView imageView, int resId) {
@@ -129,7 +129,7 @@ public class ImageLoaderUtils {
         }
 //        Glide.with(context).load(resId)
 //                .diskCacheStrategy( DiskCacheStrategy.ALL)
-//                .error(R.drawable.toux2)
+//                .error(R.drawable.error)
 //                .centerCrop().transform(new GlideRoundTransformUtil(context)).into(imageView);
     }
 }

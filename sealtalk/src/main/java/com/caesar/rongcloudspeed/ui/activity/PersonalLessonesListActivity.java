@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.BaseShopActivity;
 import com.caesar.rongcloudspeed.ui.fragment.PersonalAdvertFragment;
+import com.caesar.rongcloudspeed.ui.fragment.PersonalCareLessonesFragment;
+import com.caesar.rongcloudspeed.ui.fragment.PersonalLessonesFragment;
 import com.caesar.rongcloudspeed.view.TranspanentTitleBar;
 import com.google.android.material.tabs.TabLayout;
 
@@ -51,10 +53,10 @@ public class PersonalLessonesListActivity extends BaseShopActivity implements Vi
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                if(position==0){
-                    seekHelperFragment= PersonalAdvertFragment.newInstance(position+1,"42");
-                }else{
-                    seekHelperFragment= PersonalAdvertFragment.newInstance(position+1,"42");
+                if (position == 0) {
+                    seekHelperFragment = PersonalCareLessonesFragment.newInstance(position, "42");
+                } else {
+                    seekHelperFragment = PersonalLessonesFragment.newInstance(position, "42");
                 }
                 return seekHelperFragment;
             }
@@ -63,7 +65,14 @@ public class PersonalLessonesListActivity extends BaseShopActivity implements Vi
             public int getCount() {
                 return 2;
             }
-            
+
+            public CharSequence getPageTitle(int position) {
+                if (position == 0) {
+                    return "关 注 课 程";
+                } else {
+                    return "已 购 课 程";
+                }
+            }
         });
         tabLayout.setupWithViewPager(viewPager);
     }

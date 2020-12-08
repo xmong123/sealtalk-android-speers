@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
@@ -17,10 +18,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.caesar.rongcloudspeed.R;
+import com.caesar.rongcloudspeed.bean.CommonResonseBean;
 import com.caesar.rongcloudspeed.common.MultiStatusActivity;
 import com.caesar.rongcloudspeed.constants.Constant;
+import com.caesar.rongcloudspeed.manager.RetrofitManager;
+import com.caesar.rongcloudspeed.network.Api;
+import com.caesar.rongcloudspeed.oberver.CommonObserver;
 import com.caesar.rongcloudspeed.ui.fragment.SPSpeerLeftFragment;
+import com.caesar.rongcloudspeed.ui.fragment.SPSpeerRightFragment;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
+import com.caesar.rongcloudspeed.wx.WXManager;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONException;
@@ -31,7 +38,10 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
+import static com.caesar.rongcloudspeed.ui.activity.PublicSeekActivity.CODE_SUCC;
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
 public class SPLessonDetailActivity extends MultiStatusActivity {
@@ -70,21 +80,57 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
         thumbVideoString = getIntent().getExtras().getString("videoPath");
         initTitleBarView(titlebar, "课程详情");
         LinearLayout layout = (LinearLayout) findViewById(R.id.container);
-        ImageButton button = new ImageButton(this);
-        button.setImageResource(R.drawable.action_colloect_like);
-        button.setBackgroundColor(0x00000000);
-        button.setLayoutParams(new ViewGroup.LayoutParams(
+        LinearLayout rightView=new LinearLayout(this);
+        rightView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
-        titlebar.setRightView(button);
-        button.setOnClickListener(view -> {
+        ImageButton likeButton = new ImageButton(this);
+        ImageButton shareButton = new ImageButton(this);
+        likeButton.setImageResource(R.drawable.action_colloect_like);
+        shareButton.setImageResource(R.drawable.action_shared_like);
+        likeButton.setBackgroundColor(0x00000000);
+        shareButton.setBackgroundColor(0x00000000);
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        likeButton.setLayoutParams(params);
+        shareButton.setLayoutParams(params);
+        rightView.setPadding(16,16,16,16);
+        likeButton.setPadding(16,16,16,16);
+        shareButton.setPadding(16,16,16,16);
+        rightView.addView(shareButton);
+        rightView.addView(likeButton);
+        titlebar.setRightView(rightView);
+        likeButton.setOnClickListener(view -> {
             if(view.isSelected()){
-                button.setSelected(false);
-                button.setImageResource(R.drawable.product_unlike);
+                likeButton.setSelected(false);
+                likeButton.setImageResource(R.drawable.product_unlike);
             }else{
-                button.setSelected(true);
-                button.setImageResource(R.drawable.product_like);
+                RetrofitManager.getInstance().create(Api.class).DoFavoriteMobile(uidString, lesson_name, "posts", lesson_id,lesson_smeta)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new CommonObserver<CommonResonseBean>() {
+                            @Override
+                            public void onSuccess(CommonResonseBean value) {
+                                if (value.getCode() == CODE_SUCC) {
+                                    Toast.makeText(SPLessonDetailActivity.this, "您已成功收藏" + lesson_name, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SPLessonDetailActivity.this, "您已收藏过" + lesson_name, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                super.onError(e);
+                                Toast.makeText(SPLessonDetailActivity.this, R.string.network_error, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                likeButton.setSelected(true);
+                likeButton.setImageResource(R.drawable.product_like);
             }
+        });
+        shareButton.setOnClickListener(view -> {
+            WXManager.getInstance().shareLessonLink(lesson_name);
         });
         initView();
         uidString = UserInfoUtils.getAppUserId(this);
@@ -156,7 +202,7 @@ public class SPLessonDetailActivity extends MultiStatusActivity {
                 if (position == 0) {
                     fragment = new SPSpeerLeftFragment();
                 } else {
-                    fragment = new SPSpeerLeftFragment();
+                    fragment = new SPSpeerRightFragment();
                 }
                 return fragment;
             }

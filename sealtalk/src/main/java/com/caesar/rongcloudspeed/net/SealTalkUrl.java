@@ -64,7 +64,7 @@ public class SealTalkUrl {
     public static final String GROUP_SET_NOTICE_STATUS = "/group/agree";
 
     public static final String GROUP_CLEAR_NOTICE = "/group/clear_notice";
-
+    //所有好友关系列表
     public static final String GET_FRIEND_ALL = "/friendship/all";
 
     public static final String GET_BLACK_LIST = "/user/blacklist";
@@ -80,7 +80,7 @@ public class SealTalkUrl {
     public static final String SET_GENDER = "/user/set_gender";
 
     public static final String SET_PORTRAIT = "/user/set_portrait_uri";
-
+    //同意添加好友关系
     public static final String ARGEE_FRIENDS = "/friendship/agree";
 
     public static final String INGORE_FRIENDS = "/friendship/ignore";

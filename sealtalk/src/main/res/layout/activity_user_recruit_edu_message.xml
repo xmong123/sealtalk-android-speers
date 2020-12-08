@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.AccountRecruitMessageActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_edu_supert"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="学历"
+                app:sRightTextString="高职高中及以下"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_edu_supert1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sRightTextString="BIM工程设计"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="专业"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/recruit_edu_supert2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commonBangHeight"
+                android:layout_margin="@dimen/dp_2"
+                android:visibility="visible"
+                app:sRightTextString="BIM环球院校"
+                app:sDividerLineType="bottom"
+                app:sLeftTextString="毕业学校"
+                app:sRightIconRes="@mipmap/arrow_right_red" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin10dp"
+                android:text="教育培训经历:" />
+
+            <EditText
+                android:id="@+id/recruit_edu_excerpt"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:maxLines="5"
+                android:layout_margin="@dimen/dp_2"
+                android:background="@color/white"
+                android:hint="教育培训经历，学业时间，毕业院校等（20～50字最佳）"
+                android:padding="@dimen/layoutMargin8dp"
+                android:textSize="@dimen/mainText14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin10dp"
+                android:text="自我评价:" />
+
+            <EditText
+                android:id="@+id/recruit_self_excerpt"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:maxLines="10"
+                android:layout_margin="@dimen/dp_2"
+                android:background="@color/white"
+                android:hint="请给予您对自我积极健康客观真实的评价（20～50字最佳）"
+                android:padding="@dimen/layoutMargin8dp"
+                android:textSize="@dimen/mainText14sp" />
+
+            <Button
+                android:id="@+id/post_edu_btn"
+                style="@style/main_btn_style2"
+                android:layout_marginStart="@dimen/dp_2"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:layout_marginTop="@dimen/layoutMargin8dp"
+                android:layout_marginBottom="@dimen/layoutMargin8dp"
+                android:text="保存" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

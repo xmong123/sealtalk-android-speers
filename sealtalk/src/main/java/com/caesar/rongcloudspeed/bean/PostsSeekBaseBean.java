@@ -21,10 +21,28 @@ public class PostsSeekBaseBean extends BaseData {
     private String term_id;
     private String object_id;
     private String post_author;
+    private String rongid;
+    private String user_nicename;
     private String post_authorname;
     private String post_avatar;
     private String post_keywords;
     private String post_type;
+
+    public String getRongid() {
+        return rongid;
+    }
+
+    public void setRongid(String rongid) {
+        this.rongid = rongid;
+    }
+
+    public String getUser_nicename() {
+        return user_nicename;
+    }
+
+    public void setUser_nicename(String user_nicename) {
+        this.user_nicename = user_nicename;
+    }
 
     public String getPost_type() {
         return post_type;

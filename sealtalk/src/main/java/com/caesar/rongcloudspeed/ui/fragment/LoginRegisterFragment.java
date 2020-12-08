@@ -29,8 +29,6 @@ import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkResultUtils;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
-import com.caesar.rongcloudspeed.ui.activity.AdminMainActivity;
-import com.caesar.rongcloudspeed.ui.activity.LoginActivity;
 import com.caesar.rongcloudspeed.ui.activity.SelectCountryActivity;
 import com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText;
 import com.caesar.rongcloudspeed.utils.AccountValidatorUtil;
@@ -193,7 +191,7 @@ public class LoginRegisterFragment extends BaseFragment {
 
                                             listener.onRegisterSuccess(phone,  countryCode, countryName);
                                         }
-//                                        startActivityForResult(new Intent(getActivity(), AdminMainActivity.class),REQUEST_CODE_SELECT_CATEGORY);
+//
                                     }else{
                                         dismissLoadingDialog();
                                         Toast.makeText(getActivity(), baseData.getInfo(), Toast.LENGTH_LONG).show();
@@ -269,7 +267,7 @@ public class LoginRegisterFragment extends BaseFragment {
                             @Override
                             public void onSuccess(SmsCode baseData) {
                                 msgCode=baseData.getCodemsg().trim();
-                                codeEdit.setText(baseData.getCodemsg().trim());
+//                                codeEdit.setText(baseData.getCodemsg().trim());
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {

@@ -1,10 +1,7 @@
 package com.caesar.rongcloudspeed.extension;
 
 import com.caesar.rongcloudspeed.extend.CaesarRedPacketMessage;
-import com.caesar.rongcloudspeed.extend.CaesarRedPacketMessageProvider;
-import com.caesar.rongcloudspeed.extend.CaesarRedPacketOpenMessageProvider;
 import com.caesar.rongcloudspeed.extend.CaesarRedPacketOpenedMessage;
-import com.caesar.rongcloudspeed.extend.CaesarTransferAccountMessageProvider;
 import com.caesar.rongcloudspeed.extend.CaesarTransferAccountsMessage;
 
 import java.util.ArrayList;
@@ -26,9 +23,6 @@ public class CustomerExtensionModule extends StickerExtensionModule {
         RongIM.registerMessageType(CaesarRedPacketMessage.class);
         RongIM.registerMessageType(CaesarRedPacketOpenedMessage.class);
         RongIM.registerMessageType(CaesarTransferAccountsMessage.class);
-        RongIM.registerMessageTemplate(new CaesarRedPacketMessageProvider());
-        RongIM.registerMessageTemplate(new CaesarRedPacketOpenMessageProvider());
-        RongIM.registerMessageTemplate(new CaesarTransferAccountMessageProvider());
         EventBus.getDefault().register(this);
     }
 
@@ -55,16 +49,6 @@ public class CustomerExtensionModule extends StickerExtensionModule {
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModules = new ArrayList<>();
-
-        if (conversationType == Conversation.ConversationType.PRIVATE) {
-            CaesarRedSingleEnvelopePlugin redSingleEnvelopePlugin = new CaesarRedSingleEnvelopePlugin();
-            CaesarTransferAccountPlugin transferPlugin = new CaesarTransferAccountPlugin();
-//            pluginModules.add(redSingleEnvelopePlugin);
-            pluginModules.add(transferPlugin);
-        }else if (conversationType == Conversation.ConversationType.GROUP) {
-            CaesarRedGroupEnvelopePlugin redGroupEnvelopePlugin = new CaesarRedGroupEnvelopePlugin();
-//            pluginModules.add(redGroupEnvelopePlugin);
-        }
         return pluginModules;
     }
 

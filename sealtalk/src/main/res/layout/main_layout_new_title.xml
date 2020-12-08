@@ -6,19 +6,14 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_friend_circle"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:text="同行圈"
-        android:textColor="@color/color_black_text"
-        android:textSize="14sp" />
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/seal_ic_et_bim_circle" />
 
     <View
-        android:visibility="invisible"
         android:id="@+id/btn_search_view"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -26,27 +21,24 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:background="@drawable/btn_light_gray_shape" />
+        android:background="@drawable/btn_light_gray_shape"
+        android:visibility="invisible" />
 
     <ImageButton
-        android:visibility="invisible"
         android:id="@+id/btn_search"
         android:layout_width="@dimen/adaptive_44dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"
         android:background="@null"
-        android:src="@drawable/seal_ic_et_search" />
+        android:src="@drawable/seal_ic_et_search"
+        android:visibility="visible" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_friend_create"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="2dp"
-        android:text="发布"
-        android:textColor="@color/color_black_text"
-        android:textSize="14sp" />
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/seal_ic_et_add_circle" />
 
 </LinearLayout>
 

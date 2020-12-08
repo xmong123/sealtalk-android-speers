@@ -18,7 +18,7 @@ import com.caesar.rongcloudspeed.R;
 
 /**
  * Created by AMing on 15/11/2.
- * Company RongCloud
+ * Company 91BIM
  */
 @SuppressLint("AppCompatCustomView")
 public class ClearWriteEditText extends EditText implements View.OnFocusChangeListener , TextWatcher {

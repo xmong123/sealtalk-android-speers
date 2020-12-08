@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.caesar.rongcloudspeed.ui.activity.SeekHelperDetailActivity">
+    tools:context="com.caesar.rongcloudspeed.ui.activity.SeekHelperDetailActivity"
+    tools:ignore="ObsoleteLayoutParam">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/seek_scrollView"
@@ -23,7 +24,7 @@
             <com.bigkoo.convenientbanner.ConvenientBanner
                 android:id="@+id/seek_convenientBanner"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="280dp"
                 app:canLoop="true" />
 
             <LinearLayout
@@ -92,18 +93,18 @@
                     android:id="@+id/seek_title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Revit幕墙设计"
                     android:layout_marginBottom="@dimen/layoutMargin8dp"
+                    android:text="Revit幕墙设计"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/sp_16" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin4dp"
                     android:layout_marginBottom="@dimen/margin4dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/seek_tag1"
@@ -187,6 +188,7 @@
                 android:background="@color/user_fragment_list_bg" />
 
             <RelativeLayout
+                android:id="@+id/seek_help_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin4dp">
@@ -234,7 +236,7 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/margin4dp"
                     android:layout_toStartOf="@+id/detail_image11"
-                    android:text="北京市" />
+                    android:text="同行求助" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_20"
@@ -249,7 +251,15 @@
 
             </RelativeLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/seekHelperRecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seek_help_layout"
+                android:layout_marginBottom="@dimen/dp_60"
+                android:background="@color/user_fragment_list_bg" />
         </LinearLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

@@ -2,7 +2,7 @@
 
 #  SealClass Build
 #
-#  Copyright (c) 2019 RongCloud. All rights reserved.
+#  Copyright (c) 2019 91BIM. All rights reserved.
 
 # 该脚本原则上由 Jenkins 编译触发，如果想本地编译，请通过 pre_build.sh 触发本脚本
 

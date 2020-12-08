@@ -1,6 +1,7 @@
 package com.yiw.circledemo.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,18 +10,25 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 
+import androidx.annotation.RequiresPermission;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -77,6 +85,7 @@ public class BastiGallery {
                             Uri photoURI = FileProvider.getUriForFile(context,
                                     "com.caesar.rongcloudspeed.FileProvider",
                                     photoFile);
+                            mCurrentPhotoUri = photoURI;
                             //迷之bug
                             // @url http://stackoverflow.com/questions/33650632/fileprovider-not-working-with-camera/33652695#33652695
                             List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
@@ -96,9 +105,15 @@ public class BastiGallery {
     }
 
     static String mCurrentPhotoPath;
+    static Uri mCurrentPhotoUri;
 
     public static String getmCurrentPhotoPath() {
+        //mCurrentPhotoPath=amendRotatePhoto(mCurrentPhotoPath,false);
         return mCurrentPhotoPath;
+    }
+
+    public static Uri getmCurrentPhotoUri() {
+        return mCurrentPhotoUri;
     }
 
     private static File createImageFile(Context context) throws IOException {
@@ -143,7 +158,67 @@ public class BastiGallery {
         return baos.toByteArray();
     }
 
+    /**
+     * 获取照片属性中的旋转角度
+     *
+     * @param path 图片的绝对路径
+     * @return 照片属性中的旋转角度
+     */
+    @RequiresPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public static int getOrientationRotate(String path) {
+        int degree = 0;
+        try {
+            // 从指定路径下读取图片，并获取其Exif信息
+            ExifInterface exifInterface = new ExifInterface(path);
+            // 获取图片的旋转信息
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+
+    /**
+     * 根据角度值旋转Bitmap
+     *
+     * @param bitmap
+     * @param degree
+     * @return
+     */
+    private static Bitmap rotateBitmapByDegree(Bitmap bitmap, int degree) {
+
+        // 根据旋转角度，得到旋转矩阵
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+
+        // 将原始图片按照旋转矩阵进行旋转，得到新的图片
+        Bitmap result = null;
+        try {
+            result = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            result = bitmap;
+        }
+
+        if (bitmap != result) {
+            bitmap.recycle();
+        }
+        return result;
+    }
+
     public static Bitmap getimage(String srcPath) {
+
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
@@ -170,7 +245,9 @@ public class BastiGallery {
         return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
     }
 
+    @SuppressLint("MissingPermission")
     public static Bitmap getimage(String srcPath, int compress) {
+        int degree = getOrientationRotate(srcPath);
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
@@ -194,6 +271,9 @@ public class BastiGallery {
         newOpts.inSampleSize = be;//设置缩放比例
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        if (degree != 0) {
+            bitmap = rotaingImageView(degree, bitmap);
+        }
         return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
     }
 
@@ -260,5 +340,205 @@ public class BastiGallery {
             }
         }
         return "";*/
+    }
+
+    /**
+     * 处理旋转后的图片
+     * 默认不压缩
+     *
+     * @param originpath    原图路径
+     * @param isReplaceFile 是否替换之前的文件 true 替换 false 不替换 默认保存位置
+     * @return 返回修复完毕后的图片路径
+     */
+    public static String amendRotatePhoto(String originpath, boolean isReplaceFile) {
+        return amendRotatePhoto(originpath, false, isReplaceFile);
+    }
+
+    /**
+     * 处理旋转后的图片
+     * 默认不压缩
+     * 默认替换原图路径下保存
+     *
+     * @param originpath
+     * @return
+     */
+    public static String amendRotatePhoto(String originpath) {
+        return amendRotatePhoto(originpath, false, true);
+    }
+
+    /**
+     * 处理旋转后的图片
+     *
+     * @param originpath    原图路径
+     * @param isCompress    是否压缩
+     * @param isReplaceFile 是否替换之前的文件 true 替换 false 不替换 默认保存位置
+     * @return 返回修复完毕后的图片路径
+     */
+    public static String amendRotatePhoto(String originpath, boolean isCompress, boolean isReplaceFile) {
+
+        if (TextUtils.isEmpty(originpath)) return originpath;
+
+        // 取得图片旋转角度
+        int angle = readPictureDegree(originpath);
+
+        //是否压缩
+        Bitmap bmp = null;
+        if (isCompress) {
+            // 把原图压缩后得到Bitmap对象
+            bmp = getCompressPhoto(originpath);
+        }
+
+        if (bmp != null) {
+            //处理旋转
+            Bitmap bitmap = null;
+            if (angle != 0) {
+                // 修复图片被旋转的角度
+                bitmap = rotaingImageView(angle, bmp);
+            }
+            if (bitmap != null) {
+
+            }
+            // 保存修复后的图片并返回保存后的图片路径
+            return savePhotoToSD(bitmap, originpath, isReplaceFile);
+        } else {
+            Bitmap localBitmap = getLocalBitmap(originpath);
+            if (localBitmap == null) return originpath;
+            //处理旋转
+            Bitmap bitmap = null;
+            if (angle != 0) {
+                // 修复图片被旋转的角度
+                bitmap = rotaingImageView(angle, localBitmap);
+            }
+            if (bitmap != null) {
+                return savePhotoToSD(bitmap, originpath, isReplaceFile);
+            } else {
+                return originpath;
+            }
+        }
+    }
+
+    /**
+     * 读取照片旋转角度
+     *
+     * @param path 照片路径
+     * @return 角度
+     */
+    public static int readPictureDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+
+    /* 旋转图片
+     *
+     * @param angle  被旋转角度
+     * @param bitmap 图片对象
+     * @return 旋转后的图片
+     */
+    public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
+        Bitmap returnBm = null;
+        // 根据旋转角度，生成旋转矩阵
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        try {
+            // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
+            returnBm = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        } catch (OutOfMemoryError e) {
+        }
+        if (returnBm == null) {
+            returnBm = bitmap;
+        }
+        if (bitmap != returnBm) {
+            bitmap.recycle();
+        }
+        return returnBm;
+    }
+
+    /**
+     * 保存Bitmap图片在SD卡中
+     * 如果没有SD卡则存在手机中
+     *
+     * @param mbitmap       需要保存的Bitmap图片
+     * @param originpath    文件的原路径
+     * @param isReplaceFile 是否替换原文件
+     * @return 保存成功时返回图片的路径，失败时返回null
+     */
+    public static String savePhotoToSD(Bitmap mbitmap, String originpath, boolean isReplaceFile) {
+        FileOutputStream outStream = null;
+        String fileName = "";
+        if (mbitmap == null) return originpath;
+        if (isReplaceFile) {
+            fileName = mCurrentPhotoPath;
+        } else {
+            if (TextUtils.isEmpty(originpath)) return originpath;
+            fileName = originpath;
+        }
+        try {
+            outStream = new FileOutputStream(fileName);
+            // 把数据写入文件，100表示不压缩
+            mbitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+            return fileName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (outStream != null) {
+                    // 记得要关闭流！
+                    outStream.close();
+                }
+                if (mbitmap != null) {
+                    mbitmap.recycle();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static Bitmap getCompressPhoto(String path) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = false;
+        options.inSampleSize = 10; // 图片的大小设置为原来的十分之一
+        Bitmap bmp = BitmapFactory.decodeFile(path, options);
+        options = null;
+        return bmp;
+    }
+
+    private static Bitmap getLocalBitmap(String path) {
+        Bitmap bitmap = null;
+        try {
+            FileInputStream fis = new FileInputStream(path);
+            bitmap = BitmapFactory.decodeStream(fis);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+            /* try catch  可以解决OOM后出现的崩溃，然后采取相应的解决措施，如缩小图片，较少内存使用
+             * 但这不是解决OOM的根本方法，因为这个地方是压缩骆驼的最后一颗稻草，
+             * 解决方法是dump内存，找到内存异常原因。*/
+        } catch (OutOfMemoryError error) {
+            if (bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+                bitmap = null;
+            }
+            System.gc();
+        }
+        return bitmap;
     }
 }

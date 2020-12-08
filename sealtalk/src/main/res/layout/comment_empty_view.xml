@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layoutMargin8dp"
+            android:layout_marginEnd="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/layoutMargin4dp"
+            android:orientation="horizontal">
+
+            <com.allen.library.CircleImageView
+                android:id="@+id/author_avatar"
+                android:layout_width="@dimen/layoutMargin32dp"
+                android:layout_height="@dimen/layoutMargin32dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/author_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="文章作者 · 30分钟前" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layoutMargin8dp"
+            android:layout_marginEnd="@dimen/layoutMargin8dp"
+            android:layout_marginBottom="@dimen/layoutMargin8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginStart="36dp"
+                android:layout_marginEnd="@dimen/layoutMargin8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:hint="这篇文章对你有帮助吗？在评论区留下你的困惑或你的见解，大家一起来交流吧！" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:orientation="horizontal">
+
+            <com.allen.library.CircleImageView
+                android:id="@+id/user_avatar"
+                android:layout_width="@dimen/layoutMargin32dp"
+                android:layout_height="@dimen/layoutMargin32dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/user_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layoutMargin32dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/layoutMargin8dp"
+                android:background="@color/user_fragment_list_bg"
+                android:drawableStart="@drawable/ic_edit"
+                android:gravity="center_vertical"
+                android:hint="评论区的热闹你不参与下？"
+                android:paddingStart="@dimen/layoutMargin8dp"
+                android:textSize="@dimen/mainText14sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/empty_view" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

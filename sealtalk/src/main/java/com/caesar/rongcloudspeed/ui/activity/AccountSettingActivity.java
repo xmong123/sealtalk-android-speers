@@ -30,7 +30,7 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
 
     private void initView() {
         getTitleBar().setTitle(R.string.seal_main_mine_set_account);
-
+        findViewById(R.id.siv_reset_security).setOnClickListener(this);
         findViewById(R.id.siv_reset_password).setOnClickListener(this);
         findViewById(R.id.siv_reset_paypassword).setOnClickListener(this);
         findViewById(R.id.siv_privacy).setOnClickListener(this);
@@ -42,6 +42,10 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.siv_reset_security:
+                // 修改密码
+                startActivity(new Intent(this, AccountSecurityActivity.class));
+                break;
             case R.id.siv_reset_password:
                 // 修改密码
                 startActivity(new Intent(this, UpdatePasswordActivity.class));
@@ -57,7 +61,6 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
             case R.id.siv_show_new_msg:
                 //新消息通知
                 startActivity(new Intent(this, NewMessageRemindActivity.class));
-
                 break;
             case R.id.siv_clear_cache:
                 //清理缓存
@@ -90,7 +93,7 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
                 logout();
                 // 通知退出
                 sendLogoutNotify();
-                UserInfoUtils.clear(AccountSettingActivity.this );
+                UserInfoUtils.clear(AccountSettingActivity.this);
                 Intent intent = new Intent(AccountSettingActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

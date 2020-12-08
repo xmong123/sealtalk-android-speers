@@ -218,7 +218,7 @@ public class LoginFindPasswordFragment extends BaseFragment{
                             @Override
                             public void onSuccess(SmsCode baseData) {
                                 msgCode=baseData.getCodemsg().trim();
-                                codeEdit.setText(baseData.getCodemsg().trim());
+//                                codeEdit.setText(baseData.getCodemsg().trim());
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {

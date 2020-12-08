@@ -22,15 +22,16 @@
             android:background="@drawable/rc_ed_public_service_search_selector"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="发布视频标题"
+            android:hint="视频标题"
             android:maxLength="20"
-            android:maxLines="1" />
+            android:maxLines="3" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText
             android:id="@+id/vote_post_excerpt"
@@ -39,7 +40,7 @@
             android:background="@drawable/rc_ed_public_service_search_selector"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="发布视频详细描述介绍"
+            android:hint="视频详细描述介绍"
             android:maxLength="20"
             android:maxLines="3" />
     </LinearLayout>
@@ -111,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/block_vertical_margin"
-            android:text="视频内容一般不超过30秒，不超过15MB"
+            android:text="视频内容一般不超过30秒，不超过20MB"
             android:textColor="@color/red_dark" />
 
         <RelativeLayout

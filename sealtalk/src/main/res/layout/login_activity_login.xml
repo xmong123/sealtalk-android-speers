@@ -60,7 +60,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Powered by RongCloud"
+        android:text="Powered by 91BIM"
         android:textSize="@dimen/seal_login_rongcloud_text_size"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

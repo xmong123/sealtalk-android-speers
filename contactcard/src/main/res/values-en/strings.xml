@@ -2,6 +2,7 @@
 <resources>
     <!-- plugins -->
     <string name="rc_plugins_contact">Contact Card</string>
+    <string name="rc_plugins_seekinfo">Seek Info</string>
     <string name="rc_send">Send</string>
     <string name="rc_send_to">Send to:</string>
     <string name="rc_message_to_friend">Leave a message</string>

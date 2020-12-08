@@ -38,6 +38,7 @@ public class SearchAllFragment extends SearchBaseFragment {
         if (!TextUtils.isEmpty(initSearch)) {
             search(initSearch);
         }
+
         return view;
     }
 

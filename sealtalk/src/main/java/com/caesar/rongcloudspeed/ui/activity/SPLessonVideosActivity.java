@@ -3,12 +3,14 @@ package com.caesar.rongcloudspeed.ui.activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,8 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
 
     @BindView(R.id.lessonPosterImageView)
     ImageView lessonPosterImageView;
+    @BindView(R.id.lessonPlayerImageView)
+    ImageView lessonPlayerImageView;
     @BindView(R.id.lesson_video_title)
     TextView lesson_video_title;
     @BindView(R.id.detail_text_tag)
@@ -67,6 +71,7 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
     private String uidString;
     private View lessonHeadView;
     private LinearLayout lesson_selected_contact_container;
+    private RelativeLayout discussesLayout;
     private LayoutInflater mInflater;
     private Button lesson_more_btn;
     private MoreLessonesAdapter moreLessonesAdapter;
@@ -116,6 +121,13 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
         }
         lessonHeadView = getLayoutInflater().inflate(R.layout.left_lesson_videos_header, (ViewGroup) lesson_videos_recyclerView.getParent(), false);
         lesson_selected_contact_container = (LinearLayout) lessonHeadView.findViewById(R.id.lesson_selected_contact_container);
+        discussesLayout = (RelativeLayout) lessonHeadView.findViewById(R.id.discussesLayout);
+
+        discussesLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ArticlePostsCommentsListActivity.class);
+            intent.putExtra("postID", lesson_id);
+            startActivity(intent);
+        });
         mInflater = LayoutInflater.from(this);
         if (videoArray != null && videoArray.length() > 0) {
             linearLayouts = new ArrayList<LinearLayout>();
@@ -133,6 +145,7 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
                     JSONObject photoObj = videoArray.getJSONObject(finalI);
                     urlString = photoObj.getString("url");
                     altString = photoObj.getString("alt");
+                    //Log.d("urlString==>",urlString);
                     if (!urlString.startsWith("http://")) {
                         urlString = Constant.THINKCMF_PATH + urlString;
                     }
@@ -144,6 +157,7 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
                     txt.setEnabled(false);
                     layout.setEnabled(false);
                     lessonVideoString = urlString;
+                    lessonPlayerImageView.setVisibility(View.VISIBLE);
                     Glide.with(SPLessonVideosActivity.this).load(lessonVideoString + "?vframe/jpg/offset/1").into(lessonPosterImageView);
                 }
                 String finalUrlString = urlString;
@@ -156,6 +170,7 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
                         layouts.setEnabled(finalI != j);
                     }
                     lessonVideoString = finalUrlString;
+                    lessonPlayerImageView.setVisibility(View.VISIBLE);
                     Glide.with(SPLessonVideosActivity.this).load(finalUrlString + "?vframe/jpg/offset/1").into(lessonPosterImageView);
                     lesson_video_title.setText(finalAltString);
                     ToastUtils.showToast(finalAltString, Toast.LENGTH_LONG);
@@ -179,9 +194,47 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
         lessonPosterImageView.setOnClickListener(view -> {
             if (userType.equals("6")) {
                 if (TbsVideo.canUseTbsPlayer(SPLessonVideosActivity.this)) {
+                    lessonPlayerImageView.setVisibility(View.INVISIBLE);
                     TbsVideo.openVideo(SPLessonVideosActivity.this, lessonVideoString);
                 }
             } else {
+                lessonPlayerImageView.setVisibility(View.INVISIBLE);
+                if (advertVideoArray != null && advertVideoArray.length > 0) {
+                    int number = (int) (Math.random() * advertVideoArray.length);
+                    advertVideoUrl = advertVideoArray[number];
+                } else {
+                    advertVideoUrl = ADVERT_SERVICE_VIDEO;
+                }
+                Intent intent = new Intent(this, PLVideoViewActivity.class);
+                intent.putExtra("videoPath", advertVideoUrl);
+                intent.putExtra("lessonVideoString", lessonVideoString);
+                intent.putExtra("mediaCodec", AVOptions.MEDIA_CODEC_SW_DECODE);
+                intent.putExtra("liveStreaming", 1);
+                intent.putExtra("cache", false);
+                intent.putExtra("loop", false);
+                intent.putExtra("video-data-callback", false);
+                intent.putExtra("audio-data-callback", false);
+                intent.putExtra("disable-log", false);
+                intent.putExtra("lesson_id", lesson_id);
+                intent.putExtra("lesson_name", lesson_name);
+                intent.putExtra("lesson_price", lesson_price);
+                intent.putExtra("lesson_smeta", lesson_smeta);
+                startActivity(intent);
+            }
+
+        });
+
+        lessonPlayerImageView.setOnClickListener(view -> {
+            if (userType.equals("6")) {
+                if (TbsVideo.canUseTbsPlayer(SPLessonVideosActivity.this)) {
+                    lessonPlayerImageView.setVisibility(View.INVISIBLE);
+                    //Log.d("lessonVideoString==>",lessonVideoString);
+                    lessonVideoString=lessonVideoString.replaceAll(" ", "%20");
+                    //Log.d("lessonVideoString==>",lessonVideoString);
+                    TbsVideo.openVideo(SPLessonVideosActivity.this, lessonVideoString);
+                }
+            } else {
+                lessonPlayerImageView.setVisibility(View.INVISIBLE);
                 if (advertVideoArray != null && advertVideoArray.length > 0) {
                     int number = (int) (Math.random() * advertVideoArray.length);
                     advertVideoUrl = advertVideoArray[number];
@@ -210,7 +263,6 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
         moreLessonesAdapter = new MoreLessonesAdapter(this, dataArray);
         moreLessonesAdapter.openLoadAnimation();
         moreLessonesAdapter.setNotDoAnimationCount(4);
-//        lessonRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         moreLessonesAdapter.setOnItemClickListener((adapter, view, position) -> {
             PostsArticleBaseBean postsArticleBaseBean = dataArray.get(position);
             String lessonID = postsArticleBaseBean.getObject_id();
@@ -259,10 +311,11 @@ public class SPLessonVideosActivity extends MultiStatusActivity {
             detail_text_tag.setText("VIP会员");
             detail_text_tag.setVisibility(View.VISIBLE);
         }
+        lessonPlayerImageView.setVisibility(View.VISIBLE);
     }
 
     private void loadMoreLessonesData() {
-//        showLoadingDialog("");
+//        showLoadingDialog("ic_media_play");
         NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().fetchVoteListDatas("4"),
                 new NetworkCallback<HomeDataBean>() {
                     @Override

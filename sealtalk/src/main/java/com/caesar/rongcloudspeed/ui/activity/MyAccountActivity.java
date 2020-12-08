@@ -37,20 +37,33 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
     private UserInfoItemView userInfoUiv;
     private SettingItemView nicknameSiv;
     private SettingItemView phonenumberSiv;
+    private SettingItemView useremailSiv;
     private SettingItemView sAccountSiv;
     private SettingItemView genderSiv;
     private UserInfoViewModel userInfoViewModel;
     private boolean isCanSetStAccount;
+    private String uidString, nicename,emailString;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
-
+        uidString = UserInfoUtils.getAppUserId(MyAccountActivity.this);
+        nicename = UserInfoUtils.getNickName(MyAccountActivity.this);
+        emailString = UserInfoUtils.getUserEmail(MyAccountActivity.this);
         initView();
         initViewModel();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uidString = UserInfoUtils.getAppUserId(MyAccountActivity.this);
+        nicename = UserInfoUtils.getNickName(MyAccountActivity.this);
+        emailString = UserInfoUtils.getUserEmail(MyAccountActivity.this);
+        nicknameSiv.setValue(nicename);
+        useremailSiv.setValue(emailString);
+    }
 
     /**
      * 初始化布局
@@ -64,8 +77,12 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
         sAccountSiv = findViewById(R.id.siv_saccount);
         sAccountSiv.setOnClickListener(this);
         phonenumberSiv = findViewById(R.id.siv_phonenumber);
+        useremailSiv = findViewById(R.id.siv_useremail);
+        useremailSiv.setOnClickListener(this);
         genderSiv = findViewById(R.id.siv_gender);
         genderSiv.setOnClickListener(this);
+        nicknameSiv.setValue(nicename);
+        useremailSiv.setValue(emailString);
     }
 
 
@@ -109,18 +126,17 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
             @Override
             public void onChanged(Resource<Result> resource) {
                 if (resource.status == Status.SUCCESS) {
-                    String userid= UserInfoUtils.getAppUserId(MyAccountActivity.this);
-                    String nicename= UserInfoUtils.getNickName(MyAccountActivity.this);
-                    String imgurl= String.valueOf(resource.data.getResult());
-                    Log.d("resource.data:",imgurl);
+
+                    String imgurl = String.valueOf(resource.data.getResult());
+                    Log.d("resource.data:", imgurl);
                     UserInfoUtils.setAppUserUrl(imgurl, MyAccountActivity.this);
-                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updatenickname(userid,nicename,imgurl),
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updatenickname(uidString, nicename, imgurl),
                             new NetworkCallback<BaseData>() {
                                 @Override
                                 public void onSuccess(BaseData baseData) {
-                                    if(baseData.getCode()==CODE_SUCC){
+                                    if (baseData.getCode() == CODE_SUCC) {
                                         showToast(R.string.profile_update_synchro_success);
-                                    }else{
+                                    } else {
                                         showToast(baseData.getInfo());
                                     }
 
@@ -156,8 +172,12 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
                     startActivity(intentSt);
                 }
                 break;
+            case R.id.siv_useremail:
+                Intent intentEm = new Intent(this, UpdateEmailActivity.class);
+                startActivity(intentEm);
+                break;
             case R.id.siv_gender:
-                Intent intentGender = new Intent(this,UpdateGenderActivity.class);
+                Intent intentGender = new Intent(this, UpdateGenderActivity.class);
                 startActivity(intentGender);
                 break;
             default:

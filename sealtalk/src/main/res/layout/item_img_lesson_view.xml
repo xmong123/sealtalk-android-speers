@@ -26,7 +26,6 @@
             android:layout_marginTop="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_4"
             android:layout_weight="8"
-            android:background="@color/line"
             android:scaleType="centerCrop"
             android:src="@drawable/votebase1" />
 

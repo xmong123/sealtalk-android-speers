@@ -113,6 +113,7 @@ public class AddCircleTaskActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
+                    hideInput();
                     showProgressBar(Config.upload);
                     images = new String[holderImgList.size()];
                     for (int i = 0; i < holderImgList.size(); i++) {

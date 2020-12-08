@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.fragment.PersonalRecruitFourFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layoutMargin32dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/recruit_text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/seal_login_find_password_btn_margin_left"
+            android:layout_marginTop="@dimen/seal_login_find_password_btn_margin_top"
+            android:layout_marginRight="@dimen/seal_login_find_password_btn_margin_right"
+            android:background="@drawable/seal_login_btn_selector"
+            android:text="添加单位信息"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/recruit_text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/seal_login_find_password_btn_margin_left"
+            android:layout_marginTop="@dimen/seal_login_find_password_btn_margin_top"
+            android:layout_marginRight="@dimen/seal_login_find_password_btn_margin_right"
+            android:background="@drawable/seal_login_btn_selector"
+            android:text="添加招聘职位(可多次添加)"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/recruit_text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/seal_login_find_password_btn_margin_left"
+            android:layout_marginTop="@dimen/seal_login_find_password_btn_margin_top"
+            android:layout_marginRight="@dimen/seal_login_find_password_btn_margin_right"
+            android:background="@drawable/seal_login_btn_selector"
+            android:text="查看招聘启事"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/recruit_text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/seal_login_find_password_btn_margin_left"
+            android:layout_marginTop="@dimen/seal_login_find_password_btn_margin_top"
+            android:layout_marginRight="@dimen/seal_login_find_password_btn_margin_right"
+            android:background="@drawable/seal_login_btn_selector"
+            android:text="查看求职简历"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -20,6 +20,7 @@
             android:layout_marginTop="@dimen/layoutMargin8dp"
             android:text="建筑信息模型"
             android:textColor="@color/textColorPrimary"
+            android:textIsSelectable="true"
             android:textSize="@dimen/dp_20" />
 
         <RelativeLayout
@@ -42,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/ratingTitle"
                 android:isIndicator="true"
-                android:max="5" />
+                android:max="5"
+                android:rating="4.5" />
 
         </RelativeLayout>
 
@@ -55,18 +57,6 @@
             android:textColor="@color/moneyTextColor"
             android:textSize="@dimen/bigText16sp" />
 
-
-        <TextView
-            android:id="@+id/lessonContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin8dp"
-            android:layout_marginBottom="@dimen/layoutMargin8dp"
-            android:maxLines="12"
-            android:text="课程简介：\n建筑信息模型（Building Information Modeling）是建筑学、工程学及土木工程的新工具。建筑信息模型或建筑资讯模型一词由Autodesk所创的。"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="@dimen/mainText14sp" />
-
         <TextView
             android:id="@+id/lessonTeacher"
             android:layout_width="wrap_content"
@@ -74,14 +64,81 @@
             android:layout_marginTop="@dimen/layoutMargin8dp"
             android:layout_marginBottom="@dimen/layoutMargin8dp"
             android:maxLines="5"
-            android:text="讲师简介：\n于老师，BIM机电专业学者"
+            android:text="讲师简介：于老师，BIM机电专业学者"
             android:textColor="@color/textColorPrimary"
+            android:textIsSelectable="true"
             android:textSize="@dimen/mainText14sp" />
+
+        <com.ms.square.android.expandabletextview.ExpandableTextView
+            android:id="@+id/expand_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            expandableTextView:animDuration="200"
+            expandableTextView:maxCollapsedLines="2">
+
+            <TextView
+                android:id="@id/expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4dp"
+                android:textColor="#666666"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/mainText14sp" />
+
+            <ImageButton
+                android:id="@id/expand_collapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:background="@android:color/transparent"
+                android:padding="@dimen/margin4dp" />
+        </com.ms.square.android.expandabletextview.ExpandableTextView>
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/user_fragment_list_bg" />
+
+    <RelativeLayout
+        android:id="@+id/advLessonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/margin4dp">
+
+        <TextView
+            android:id="@+id/avTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:layout_toStartOf="@+id/avImageView"
+            android:text="沃尔玛88购物节，不来后悔一整年～@沃尔玛#..."
+            android:textColor="@color/textColorPrimary" />
+
+        <TextView
+            android:id="@+id/avTagText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:text="广告\u3000沃尔玛"
+            android:textSize="@dimen/callkit_dimen_size_12" />
+
+        <ImageView
+            android:id="@+id/avImageView"
+            android:layout_width="115dp"
+            android:layout_height="64dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/layoutMargin8dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/m_img1" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
         android:background="@color/user_fragment_list_bg" />
 
 </LinearLayout>

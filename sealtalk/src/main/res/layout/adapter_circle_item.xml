@@ -47,6 +47,7 @@
                     android:singleLine="true"
                     android:text="分享了一个连接"
                     android:textColor="@color/color_aeaeae"
+                    android:textIsSelectable="true"
                     android:textSize="14sp" />
 
                 <View
@@ -63,7 +64,7 @@
                     android:paddingStart="@dimen/layoutMargin8dp"
                     android:paddingEnd="@dimen/layoutMargin8dp"
                     android:singleLine="true"
-                    android:text="求助"
+                    android:text="广告"
                     android:textColor="@color/light_red"
                     android:textSize="14sp"
                     android:visibility="invisible" />
@@ -77,6 +78,7 @@
                 android:paddingTop="5dip"
                 android:paddingBottom="5dip"
                 android:textColor="@color/color_232323"
+                android:textIsSelectable="true"
                 android:textSize="14sp" />
             <!-- 不同的地方 -->
             <ViewStub

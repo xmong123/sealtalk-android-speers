@@ -31,10 +31,11 @@
             android:id="@+id/seekHelperName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4"
-            android:layout_toRightOf="@+id/seekHelperImg"
             android:layout_marginStart="@dimen/margin4dp"
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_marginEnd="@dimen/dp_4"
+            android:layout_toRightOf="@+id/seekHelperImg"
+            android:maxLines="2"
             android:text="【求助】特种钢材出售" />
 
         <TextView
@@ -42,10 +43,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/seekHelperName"
-            android:layout_marginTop="4dp"
-            android:layout_toRightOf="@+id/seekHelperImg"
             android:layout_marginStart="@dimen/layoutMargin8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="@dimen/dp_4"
+            android:layout_toRightOf="@+id/seekHelperImg"
             android:text="全国-所有地区  |  2020年" />
 
         <TextView
@@ -53,10 +54,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/seekHelperText"
-            android:layout_marginTop="4dp"
-            android:layout_toRightOf="@+id/seekHelperImg"
             android:layout_marginStart="@dimen/layoutMargin8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="@dimen/dp_4"
+            android:layout_toRightOf="@+id/seekHelperImg"
             android:text="面议"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/sp_18" />
@@ -74,7 +75,6 @@
             android:textSize="@dimen/sp_12" />
 
         <TextView
-            android:visibility="invisible"
             android:id="@+id/seekHelperSquare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,6 +87,7 @@
             android:background="@drawable/conbtn_bg"
             android:padding="4dp"
             android:text="联系客服"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"
+            android:visibility="invisible" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

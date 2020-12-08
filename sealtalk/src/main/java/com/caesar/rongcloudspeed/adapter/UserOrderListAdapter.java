@@ -35,15 +35,21 @@ public class UserOrderListAdapter extends BaseQuickAdapter<GoodsOrderBean, BaseV
     protected void convert(BaseViewHolder helper, GoodsOrderBean bean) {
         String orderType = bean.getOrder_type();
         if (orderType.equals("2")) {
-            helper.setText(R.id.user_order_item_tag, "同 业\n课 程");
+            helper.setText(R.id.user_order_item_tag, "同 行\n课 程");
+            helper.setTextColor(R.id.user_order_item_tag, Color.parseColor("#D9E7F7"));
+            helper.setBackgroundRes(R.id.user_order_item_tag, R.drawable.btn_shape_normal);
         } else if (orderType.equals("3")) {
-            helper.setText(R.id.user_order_item_tag, "同 业\n求 助");
+            helper.setText(R.id.user_order_item_tag, "同 行\n求 助");
+            helper.setTextColor(R.id.user_order_item_tag, Color.parseColor("#000000"));
+            helper.setBackgroundRes(R.id.user_order_item_tag, R.drawable.btn_shape_normal);
         } else if (orderType.equals("4")) {
-            helper.setText(R.id.user_order_item_tag, "同 业\n广 告");
+            helper.setText(R.id.user_order_item_tag, "同 行\n广 告");
+            helper.setTextColor(R.id.user_order_item_tag, Color.parseColor("#f15353"));
+            helper.setBackgroundRes(R.id.user_order_item_tag, R.drawable.btn_shape_normal);
         } else if (orderType.equals("6")) {
-            helper.setText(R.id.user_order_item_tag, "同 业\n会 员");
+            helper.setText(R.id.user_order_item_tag, "同 行\n会 员");
             helper.setTextColor(R.id.user_order_item_tag, Color.parseColor("#FFE384"));
-            helper.setBackgroundColor(R.id.user_order_item_tag, Color.parseColor("#000000"));
+            helper.setBackgroundRes(R.id.user_order_item_tag, R.drawable.btn_shape_black);
         }
         helper.setText(R.id.user_order_item_title, bean.getUser_note());
         helper.setText(R.id.user_order_item_price, "¥" + bean.getOrder_amount());

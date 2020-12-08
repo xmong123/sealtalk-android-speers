@@ -4,10 +4,10 @@
     android:layout_height="80dp"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/layoutMargin16dp"
     android:paddingLeft="@dimen/layoutMargin16dp"
+    android:paddingTop="@dimen/layoutMargin16dp"
     android:paddingRight="@dimen/layoutMargin16dp"
-    android:paddingTop="@dimen/layoutMargin16dp">
+    android:paddingBottom="@dimen/layoutMargin16dp">
 
     <LinearLayout
         android:id="@+id/user_tip_layout01"
@@ -22,17 +22,17 @@
             android:layout_height="wrap_content"
             android:text="我的钱包"
             android:textColor="@color/textColorDark"
-            android:textSize="@dimen/mainText14sp" />
+            android:textSize="@dimen/layoutMargin16dp" />
 
 
         <TextView
             android:id="@+id/personalMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/layoutMargin6dp"
             android:text="0"
             android:textColor="@color/textColorPrimary"
-            android:textSize="@dimen/bigText16sp" />
+            android:textSize="@dimen/dp_18" />
     </LinearLayout>
 
 
@@ -50,17 +50,17 @@
             android:layout_height="wrap_content"
             android:text="我的课程"
             android:textColor="@color/textColorDark"
-            android:textSize="@dimen/mainText14sp" />
+            android:textSize="@dimen/layoutMargin16dp" />
 
 
         <TextView
             android:id="@+id/personalLesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/layoutMargin6dp"
             android:text="0"
             android:textColor="@color/textColorPrimary"
-            android:textSize="@dimen/bigText16sp" />
+            android:textSize="@dimen/dp_18" />
     </LinearLayout>
 
     <LinearLayout
@@ -77,17 +77,17 @@
             android:layout_height="wrap_content"
             android:text="我的订单"
             android:textColor="@color/textColorDark"
-            android:textSize="@dimen/mainText14sp" />
+            android:textSize="@dimen/layoutMargin16dp" />
 
 
         <TextView
             android:id="@+id/personalOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin8dp"
+            android:layout_marginTop="@dimen/layoutMargin6dp"
             android:text="0"
             android:textColor="@color/textColorPrimary"
-            android:textSize="@dimen/bigText16sp" />
+            android:textSize="@dimen/dp_18" />
     </LinearLayout>
 
     <View
@@ -104,6 +104,6 @@
         android:gravity="center"
         android:text="设置"
         android:textColor="@color/white"
-        android:textSize="@dimen/mainText14sp" />
+        android:textSize="@dimen/layoutMargin16dp" />
 
 </LinearLayout>

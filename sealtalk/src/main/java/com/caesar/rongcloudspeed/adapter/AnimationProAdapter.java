@@ -1,23 +1,23 @@
 package com.caesar.rongcloudspeed.adapter;
 
 import com.caesar.rongcloudspeed.R;
-import com.caesar.rongcloudspeed.bean.LessonCategoryBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zaaach.citypicker.model.ProCityBean;
 
 import java.util.List;
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
  */
-public class AnimationProAdapter extends BaseQuickAdapter<LessonCategoryBean, BaseViewHolder> {
+public class AnimationProAdapter extends BaseQuickAdapter<ProCityBean, BaseViewHolder> {
 
-    public AnimationProAdapter(List<LessonCategoryBean> dataList) {
+    public AnimationProAdapter(List<ProCityBean> dataList) {
         super(R.layout.fragment_pro_recyclerview_item, dataList);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, LessonCategoryBean proCityBean) {
+    protected void convert(BaseViewHolder helper, ProCityBean proCityBean) {
         helper.setText(R.id.proTitle, proCityBean.getName());
         if(proCityBean.isFlag()){
             helper.setBackgroundColor(R.id.pro_item_root, 0xFFFFFFFF);

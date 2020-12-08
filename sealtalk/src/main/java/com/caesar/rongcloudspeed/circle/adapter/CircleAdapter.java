@@ -69,7 +69,7 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
     private static final int ITEM_VIEW_TYPE_URL = 2;
     private static final int ITEM_VIEW_TYPE_VIDEO = 3;
     private static final int ITEM_VIEW_TYPE_ADVERT = 4;
-    String userid = "1";
+    private String userid = "1";
 
     private static final String ITEM_TYPE_IMAGE = "1";
     private static final String ITEM_TYPE_URL = "2";
@@ -378,24 +378,6 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
                 } else {
                     holder.multiImageView.setVisibility(View.GONE);
                 }
-//                if (circleItem.getTerm_id().equals("43")) {
-//                    holder.tagTipTv.setText("求助");
-//                    holder.tagTipTv.setVisibility(View.VISIBLE);
-//                    holder.tagTipTv.setTextColor(mContext.getResources().getColor(R.color.light_red));
-//                    holder.tagTipTv.setBackground(mContext.getResources().getDrawable(R.drawable.border_light_red));
-//                } else if (circleItem.getTerm_id().equals("42")) {
-//                    holder.tagTipTv.setText("广告");
-//                    holder.tagTipTv.setVisibility(View.VISIBLE);
-//                    if(authorID.equals(userid)){
-//                        holder.tagTipTv.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
-//                        holder.tagTipTv.setBackground(mContext.getResources().getDrawable(R.drawable.border_color_accent));
-//                    }else{
-//                        holder.tagTipTv.setTextColor(mContext.getResources().getColor(R.color.light_red));
-//                        holder.tagTipTv.setBackground(mContext.getResources().getDrawable(R.drawable.border_light_red));
-//                    }
-//                } else {
-//                    holder.tagTipTv.setVisibility(View.INVISIBLE);
-//                }
                 break;
             case ITEM_VIEW_TYPE_ADVERT:// 处理广告
                 photos = circleItem.getPhotos_urls();
@@ -589,6 +571,7 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
 
     @Override
     public void update2DeleteFavort(int circlePosition, String userName) {
+        cancelSupport(getDatas().get(circlePosition).getObject_id());
         List<FavoriteItem> items = getDatas().get(circlePosition).getPost_likes();
         for (int i = 0; i < items.size(); i++) {
             if (userName.equals(items.get(i).getFull_name())) {
@@ -625,12 +608,12 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
     }
 
     private void updateComment(String postid, String comment) {
-        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updateComment(UserInfoUtils.getAppUserId(mContext),
+        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updateComment(userid,
                 postid, UserInfoUtils.getNickName(mContext), comment),
                 new NetworkCallback<BaseData>() {
                     @Override
                     public void onSuccess(BaseData circleItemResult) {
-
+                        Toast.makeText(mContext, "评论成功", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -641,11 +624,26 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
     }
 
     private void updateSupport(String postid) {
-        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updateSupport(UserInfoUtils.getAppUserId(mContext), postid),
+        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().updateSupport(userid, postid),
                 new NetworkCallback<BaseData>() {
                     @Override
                     public void onSuccess(BaseData circleItemResult) {
+                        Toast.makeText(mContext, "点赞成功", Toast.LENGTH_LONG).show();
+                    }
 
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Toast.makeText(mContext, "网络异常", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private void cancelSupport(String postid) {
+        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().cancelSupport(userid, postid),
+                new NetworkCallback<BaseData>() {
+                    @Override
+                    public void onSuccess(BaseData circleItemResult) {
+                        Toast.makeText(mContext, "取消点赞", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -656,11 +654,11 @@ public class CircleAdapter extends BaseAdapter implements ICircleViewUpdate {
     }
 
     private void deleteSupport(String postid) {
-        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().deleteSupport(UserInfoUtils.getAppUserId(mContext), postid),
+        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().deleteSupport(userid, postid),
                 new NetworkCallback<BaseData>() {
                     @Override
                     public void onSuccess(BaseData circleItemResult) {
-
+                        Toast.makeText(mContext, "成功删除", Toast.LENGTH_LONG).show();
                     }
 
                     @Override

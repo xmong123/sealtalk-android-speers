@@ -7,6 +7,7 @@ public class UserInfo {
     private String id;
     private String user_login;
     private String user_nicename;
+    private String user_email;
     private String avatar;
     private String birthday;
     private String mobile;
@@ -17,6 +18,14 @@ public class UserInfo {
     private String user_soft;
     private String user_type;
     private List<UserOrder> user_orders;
+
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
+    }
 
     public String getOrderCount() {
         return orderCount;

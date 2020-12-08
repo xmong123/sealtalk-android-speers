@@ -175,7 +175,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     private AlertDialog.Builder builder;
     public void onShowVIPDialog(final Context context,int icon) {
         builder = new AlertDialog.Builder(context).setIcon(icon).setTitle("认证会员提示")
-                .setMessage("您还不是认证城库会员，清联系客服（13815067320）后进行操作").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setMessage("您还不是认证同行会员，清联系客服（13815067320）后进行操作").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //ToDo: 你想做的事情

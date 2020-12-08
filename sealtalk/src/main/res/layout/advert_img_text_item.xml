@@ -52,7 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:layout_margin="@dimen/margin4dp"
-                android:background="@color/line"
                 android:scaleType="centerCrop"
                 android:src="@drawable/votebase1" />
 

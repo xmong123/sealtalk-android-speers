@@ -1,7 +1,9 @@
 package com.caesar.rongcloudspeed.ui.activity;
 
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -9,7 +11,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -28,10 +32,13 @@ import java.util.Set;
 
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.bean.AppAdvertVideoBean;
-import com.caesar.rongcloudspeed.bean.WechatPayBaseBean;
-import com.caesar.rongcloudspeed.circle.ui.FriendCircleActivity;
+import com.caesar.rongcloudspeed.bean.AppLessonAdvertBean;
+import com.caesar.rongcloudspeed.bean.BaiduTokenBean;
+import com.caesar.rongcloudspeed.bean.LessonAdvBean;
+import com.caesar.rongcloudspeed.circle.ui.FriendTimeLineActivity;
 import com.caesar.rongcloudspeed.common.IntentExtra;
 import com.caesar.rongcloudspeed.db.model.FriendShipInfo;
+import com.caesar.rongcloudspeed.implement.MainTabItemListener;
 import com.caesar.rongcloudspeed.model.Resource;
 import com.caesar.rongcloudspeed.model.Status;
 import com.caesar.rongcloudspeed.model.VersionInfo;
@@ -42,11 +49,12 @@ import com.caesar.rongcloudspeed.runtimepermissions.PermissionsManager;
 import com.caesar.rongcloudspeed.runtimepermissions.PermissionsResultAction;
 import com.caesar.rongcloudspeed.ui.BaseActivity;
 import com.caesar.rongcloudspeed.ui.dialog.MorePopWindow;
-import com.caesar.rongcloudspeed.ui.fragment.HomeSpeerLessonFragment;
+import com.caesar.rongcloudspeed.ui.fragment.HomeLessonArticleFragment;
 import com.caesar.rongcloudspeed.ui.fragment.LessonsVideoFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainConversationListFragment;
+import com.caesar.rongcloudspeed.ui.fragment.MainHomeArticleFragment;
 import com.caesar.rongcloudspeed.ui.fragment.MainNpmTalkFragment;
-import com.caesar.rongcloudspeed.ui.fragment.MainSealTalkFragment;
+import com.caesar.rongcloudspeed.ui.fragment.OrderFragment;
 import com.caesar.rongcloudspeed.ui.fragment.UserFragment;
 import com.caesar.rongcloudspeed.ui.view.MainBottomTabGroupView;
 import com.caesar.rongcloudspeed.ui.view.MainBottomTabItem;
@@ -60,16 +68,22 @@ import com.caesar.rongcloudspeed.utils.log.SLog;
 
 import com.caesar.rongcloudspeed.utils.UpdateFunGO;
 import com.caesar.rongcloudspeed.config.UpdateKey;
+import com.google.gson.Gson;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
+
+import org.json.JSONArray;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 
 import static com.caesar.rongcloudspeed.constants.Constant.CODE_SUCC;
+import static com.caesar.rongcloudspeed.constants.Constant.client_id;
+import static com.caesar.rongcloudspeed.constants.Constant.client_secret;
+import static com.caesar.rongcloudspeed.constants.Constant.grant_type;
 
-public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWindowItemClickListener {
+public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWindowItemClickListener, MainTabItemListener {
     public static final String PARAMS_TAB_INDEX = "tab_index";
     private static final int REQUEST_START_CHAT = 0;
     private static final int REQUEST_START_GROUP = 1;
@@ -100,9 +114,13 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
          */
         CHAT(2),
         /**
+         * 人才
+         */
+        RECRUIT(3),
+        /**
          * 我的
          */
-        ME(3);
+        ME(4);
 
         private int value;
 
@@ -131,6 +149,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             R.drawable.seal_tab_contact_list_selector,
             R.drawable.seal_tab_find_selector,
             R.drawable.seal_tab_chat_selector,
+            R.drawable.seal_tab_recruit_selector,
             R.drawable.seal_tab_me_selector
     };
 
@@ -149,11 +168,12 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         initView();
         initViewModel();
         requestPerssion();
-        UpdateKey.API_TOKEN = "ad90d5c3fd0d206b411b8c93e3a21979";
-        UpdateKey.APP_ID = "5da6db92b2eb461dfc773c60";
         UpdateFunGO.init(this);
         uidString = UserInfoUtils.getAppUserId(this);
-        advertVideoHandler.sendEmptyMessageDelayed(0, 2000);
+        advertVideoHandler.sendEmptyMessageDelayed(0, 1000);
+        advertVideoHandler.sendEmptyMessageDelayed(1, 2000);
+        advertVideoHandler.sendEmptyMessageDelayed(2, 2000);
+        advertVideoHandler.sendEmptyMessageDelayed(3, 3000);
     }
 
     @SuppressLint("HandlerLeak")
@@ -162,6 +182,12 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
+                    String userIndustry = UserInfoUtils.getUserIndustry(MainActivity.this);
+                    if (userIndustry.equals("0")) {
+                        startActivityForResult(new Intent(MainActivity.this, AdminMainActivity.class), REQUEST_CODE_SELECT_CATEGORY);
+                    }
+                    break;
+                case 1:
                     NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().getAppAdvertVideo(uidString),
                             new NetworkCallback<AppAdvertVideoBean>() {
                                 @Override
@@ -177,6 +203,42 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
                                         }
                                         UserInfoUtils.setAdvertVideoList(set,MainActivity.this);
                                     }
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+
+                                }
+                            });
+
+                    break;
+                case 2:
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().getAppAdvertLesson(uidString),
+                            new NetworkCallback<AppLessonAdvertBean>() {
+                                @Override
+                                public void onSuccess(AppLessonAdvertBean appLessonAdvertBean) {
+                                    if (appLessonAdvertBean.getCode() == CODE_SUCC) {
+                                        List<LessonAdvBean> lessonAdvBeanList = appLessonAdvertBean.getReferer();
+                                        Gson gson = new Gson();
+                                        String jsonApp = gson.toJson(lessonAdvBeanList);
+                                        UserInfoUtils.setAdvertLessonList(jsonApp,MainActivity.this);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+
+                                }
+                            });
+
+                    break;
+                case 3:
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitBaiduApi().getBaiduToken(grant_type,client_id,client_secret),
+                            new NetworkCallback<BaiduTokenBean>() {
+                                @Override
+                                public void onSuccess(BaiduTokenBean baiduTokenBean) {
+                                    String access_token=baiduTokenBean.getAccess_token();
+                                    UserInfoUtils.setBaiduToken(access_token,MainActivity.this);
                                 }
 
                                 @Override
@@ -239,12 +301,12 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         PermissionsManager.getInstance().requestAllManifestPermissionsIfNecessary(this, new PermissionsResultAction() {
             @Override
             public void onGranted() {
-//				Toast.makeText(FriendCircleActivity.this, "All permissions have been granted", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(MainActivity.this, "All permissions have been granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onDenied(String permission) {
-                //Toast.makeText(FriendCircleActivity.this, "Permission " + permission + " has been denied", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Permission " + permission + " has been denied", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -260,7 +322,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         findViewById(R.id.btn_friend_circle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FriendCircleActivity.class);
+                Intent intent = new Intent(MainActivity.this, FriendTimeLineActivity.class);
                 startActivity(intent);
             }
         });
@@ -274,15 +336,15 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             }
         });
 
-        // title MainDiscoveryActivity
-//        findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, SealSearchActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
+//         title MainDiscoveryActivity
+        findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SealSearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
 //        findViewById(R.id.btn_more).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -310,7 +372,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
     private void initTabs() {
         // 初始化 tab
         List<TabItem> items = new ArrayList<>();
-        String[] stringArray = getResources().getStringArray(R.array.tab_name);
+        String[] stringArray = getResources().getStringArray(R.array.tab_names);
 //        String[] stringArray = getResources().getStringArray(R.array.tab_names);
         for (Tab tab : Tab.values()) {
             TabItem tabItem = new TabItem();
@@ -366,9 +428,10 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
      * fragments.add(new BookStoreHomeFragment());
      */
     private void initFragmentViewPager() {
-        fragments.add(new HomeSpeerLessonFragment());
+        fragments.add(MainHomeArticleFragment.newInstance(this));
         fragments.add(new LessonsVideoFragment());
         fragments.add(new MainNpmTalkFragment());
+        fragments.add(new OrderFragment());
         fragments.add(new UserFragment());
 
         // ViewPager 的 Adpater
@@ -463,11 +526,6 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
                                 friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName());
             }
         });
-
-        String userIndustry = UserInfoUtils.getUserIndustry(this);
-        if (userIndustry.equals("0")) {
-            startActivityForResult(new Intent(this, AdminMainActivity.class), REQUEST_CODE_SELECT_CATEGORY);
-        }
     }
 
 
@@ -502,6 +560,68 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
 
 
     }
+
+    /**
+     * 判断AccessibilityService服务是否已经启动
+     *
+     * @param context
+     * @param name
+     * @return
+     */
+    public static boolean isStartAccessibilityService(Context context, String name) {
+        AccessibilityManager am = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+        List<AccessibilityServiceInfo> serviceInfos = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC);
+        for (AccessibilityServiceInfo info : serviceInfos) {
+            String id = info.getId();
+            Log.d("allService -->", id);
+            if (id.contains(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onMainTabItemListener(int position) {
+        vpFragmentContainer.setCurrentItem(position);
+    }
+
+    @Override
+    // 设置回退
+    // 覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            exit();
+        }
+        return false;
+    }
+
+    public void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            finish();
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }
+    }
+
+    private boolean isExit;
+    @SuppressLint("HandlerLeak")
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            super.handleMessage(msg);
+            isExit = false;
+        }
+
+    };
 
 
     /**

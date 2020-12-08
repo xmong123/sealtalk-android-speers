@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caesar.rongcloudspeed.ui.activity.SeekHelperDetailActivity"
+    tools:ignore="ObsoleteLayoutParam">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/seek_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/lesson_adv_image"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:src="@mipmap/m_img1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-16dp"
+                android:background="@drawable/shop_title_text_bg"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/layoutMargin16dp"
+                android:paddingTop="@dimen/layoutMargin16dp"
+                android:paddingRight="@dimen/layoutMargin16dp">
+
+                <TextView
+                    android:id="@+id/lesson_adv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layoutMargin8dp"
+                    android:text="同行快线课程广告标题"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/sp_18" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4dp"
+                    android:layout_marginBottom="@dimen/margin4dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/layoutMargin8dp"
+                        android:background="@drawable/btn_shape_light"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="2dp"
+                        android:text="广告"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/dp_10" />
+
+                    <TextView
+                        android:id="@+id/lesson_adv_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/layoutMargin8dp"
+                        android:text="广告商家"
+                        android:textSize="@dimen/dp_10" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                style="@style/solide8dp"
+                android:background="@color/user_fragment_list_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/layoutMargin16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin4dp"
+                    android:layout_marginBottom="@dimen/margin4dp">
+
+                    <TextView
+                        android:id="@+id/lesson_adv_expert"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin4dp"
+                        android:lineSpacingExtra="@dimen/margin4dp"
+                        android:text="\u3000\u3000\u3000广告简介"
+                        android:textSize="@dimen/layoutMargin16dp" />
+
+                    <TextView
+                        android:id="@+id/seek_content_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin4dp"
+                        android:background="@color/colorAccent"
+                        android:paddingStart="@dimen/layoutMargin8dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="@dimen/layoutMargin8dp"
+                        android:paddingBottom="2dp"
+                        android:text="详情"
+                        android:textColor="@android:color/white" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                style="@style/solide1dp"
+                android:background="@color/user_fragment_list_bg" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

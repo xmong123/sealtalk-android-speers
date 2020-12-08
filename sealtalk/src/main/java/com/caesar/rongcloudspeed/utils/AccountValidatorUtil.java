@@ -15,9 +15,10 @@ public class AccountValidatorUtil {
 
     /**
      * 正则表达式：验证手机号
+     * public static final String REGEX_MOBILE = "^(1[3-9])\\d{9}$";
      */
-    public static final String REGEX_MOBILE = "^((17[0-9])|(19[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
-
+    public static final String REGEX_MOB = "^((17[0-9])|(19[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+    public static final String REGEX_MOBILE = "^(1[3-9])\\d{9}$";
     /**
      * 正则表达式：验证邮箱
      */

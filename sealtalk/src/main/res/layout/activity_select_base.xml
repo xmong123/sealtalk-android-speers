@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_content_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/fl_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layoutMargin32dp"
+            android:layout_marginTop="@dimen/layoutMargin32dp"
+            android:layout_marginEnd="@dimen/layoutMargin32dp"
+            android:gravity="center"
+            android:text="搜索指定内容" />
+
+        <LinearLayout
+            android:id="@+id/fl_content_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutMargin32dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fl_content_textview_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="同行课程"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/fl_content_textview_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="同行圈"
+                android:textColor="@color/colorAccent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fl_content_layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layoutMargin32dp"
+            android:layout_marginEnd="@dimen/layoutMargin32dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fl_content_textview_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="同行招聘"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/fl_content_textview_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="同行求助"
+                android:textColor="@color/colorAccent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

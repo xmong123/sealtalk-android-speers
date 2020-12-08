@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:clickable="false"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/item_bg"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/seal_bg">
+
+            <TextView
+                android:id="@+id/section_term_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="14dp"
+                android:text="推荐课程"
+                android:textColor="@color/color_black_text"
+                android:textSize="@dimen/bigText16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/section_more_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/layoutMargin8dp"
+                android:background="#00000000"
+                android:text="更多 >"
+                android:textColor="@color/customer_gray"
+                android:textSize="@dimen/mainText14sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/section_lesson_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/section_lesson_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="92dp"
+                    android:layout_marginLeft="@dimen/layoutMargin8dp"
+                    android:layout_marginTop="@dimen/layoutMargin8dp"
+                    android:layout_marginRight="@dimen/layoutMargin4dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/votebasecon" />
+
+                <TextView
+                    android:id="@+id/section_lesson_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_4"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="精品课程BIM教学精品课程BIM教学精品课程BIM教学精品课程BIM教学精品课程BIM教学"
+                    android:textSize="@dimen/mainText14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/section_lesson_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/section_lesson_image1"
+                    android:layout_width="match_parent"
+                    android:layout_height="92dp"
+                    android:layout_marginLeft="@dimen/layoutMargin4dp"
+                    android:layout_marginTop="@dimen/layoutMargin8dp"
+                    android:layout_marginRight="@dimen/layoutMargin8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/votebasecon" />
+
+                <TextView
+                    android:id="@+id/section_lesson_title1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_4"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="精品课程BIM教学精品课程BIM教学精品课程BIM教学精品课程BIM教学精品课程BIM教学"
+                    android:textSize="@dimen/mainText14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/section_lesson_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/section_lesson_image2"
+                    android:layout_width="match_parent"
+                    android:layout_height="92dp"
+                    android:layout_marginLeft="@dimen/layoutMargin8dp"
+                    android:layout_marginTop="@dimen/layoutMargin8dp"
+                    android:layout_marginRight="@dimen/layoutMargin4dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/votebasecon" />
+
+                <TextView
+                    android:id="@+id/section_lesson_title2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_4"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="精品课程BIM教学精品课程BIM教学精品课程BIM教学精品课程BIM教学精品课程BIM教学"
+                    android:textSize="@dimen/mainText14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/section_lesson_layout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/section_lesson_image3"
+                    android:layout_width="match_parent"
+                    android:layout_height="92dp"
+                    android:layout_marginLeft="@dimen/layoutMargin4dp"
+                    android:layout_marginTop="@dimen/layoutMargin8dp"
+                    android:layout_marginRight="@dimen/layoutMargin8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/votebasecon" />
+
+                <TextView
+                    android:id="@+id/section_lesson_title3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_4"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="精品课程BIM教学精品课程BIM教学精品课程BIM教学精品课程BIM教学精品课程BIM教学"
+                    android:textSize="@dimen/mainText14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

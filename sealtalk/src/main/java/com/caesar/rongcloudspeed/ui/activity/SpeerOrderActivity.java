@@ -160,7 +160,6 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
 
     @SuppressLint("HandlerLeak")
     Handler purchaseHandler = new Handler() {
-        String priceString = String.valueOf((int) totalPrice);
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -174,7 +173,12 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
                                     Toast.makeText(SpeerOrderActivity.this, "您提交了订单，请等待系统确认", Toast.LENGTH_SHORT).show();
                                     if (goodsOrderBaseBean.getCode() == CODE_SUCC) {
                                         out_trade_no = goodsOrderBaseBean.getReferer().getOrder_sn();
-                                        showPayDialog();
+//                                        showPayDialog();
+                                        if (wechatpay) {
+                                            purchaseHandler.sendEmptyMessage(1);
+                                        } else {
+                                            purchaseHandler.sendEmptyMessage(2);
+                                        }
                                     } else {
                                         Toast.makeText(SpeerOrderActivity.this, "网络繁忙,请稍侯再试...", Toast.LENGTH_LONG).show();
                                     }
@@ -192,6 +196,7 @@ public class SpeerOrderActivity extends MultiStatusActivity implements CompoundB
 
                 case 1:
                     prompDialog.showLoading("请等待");
+                    String priceString = String.valueOf((int) totalPrice);
                     NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().WechatAppPaySign(uidString, out_trade_no, priceString, lesson_name),
                             new NetworkCallback<WechatPayBaseBean>() {
                                 @Override

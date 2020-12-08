@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.BaseShopActivity;
-import com.caesar.rongcloudspeed.ui.fragment.PersonalAdvertFragment;
+import com.caesar.rongcloudspeed.ui.fragment.PersonalOrdersFragment;
 import com.caesar.rongcloudspeed.view.TranspanentTitleBar;
 import com.google.android.material.tabs.TabLayout;
 
@@ -52,9 +52,9 @@ public class PersonalOrdersListActivity extends BaseShopActivity implements View
             @Override
             public Fragment getItem(int position) {
                 if(position==0){
-                    seekHelperFragment= PersonalAdvertFragment.newInstance(position+1,"42");
+                    seekHelperFragment= PersonalOrdersFragment.newInstance(position,"42");
                 }else{
-                    seekHelperFragment= PersonalAdvertFragment.newInstance(position+1,"42");
+                    seekHelperFragment= PersonalOrdersFragment.newInstance(position,"42");
                 }
                 return seekHelperFragment;
             }
@@ -68,9 +68,9 @@ public class PersonalOrdersListActivity extends BaseShopActivity implements View
             @Override
             public CharSequence getPageTitle(int position) {
                 if (position == 0) {
-                    return "图 文 广 告";
+                    return "未 付 订 单";
                 } else {
-                    return "视 频 广 告";
+                    return "已 付 订 单";
                 }
             }
         });

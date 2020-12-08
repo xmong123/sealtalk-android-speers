@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <com.caesar.rongcloudspeed.circle.widgets.CircularImage
+            android:id="@+id/comment_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/margin4dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/m_img1" />
+
+        <TextView
+            android:id="@+id/comment_nicename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin4dp"
+            android:layout_toEndOf="@+id/comment_avatar"
+            android:singleLine="true"
+            android:text="BIM专业技术支持"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/mainText14sp" />
+
+        <TextView
+            android:id="@+id/comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/layoutMargin6dp"
+            android:singleLine="true"
+            android:text="2020-02-02"
+            android:textColor="@color/gray_color"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/comment_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/margin4dp"
+            android:layout_toEndOf="@+id/comment_avatar"
+            android:singleLine="true"
+            android:text="来自同行推荐"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/seal_bg" />
+</LinearLayout>

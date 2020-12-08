@@ -20,7 +20,6 @@
         android:orientation="vertical">
 
         <ImageView
-            android:background="@color/line"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_10"

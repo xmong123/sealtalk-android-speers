@@ -14,7 +14,7 @@
         android:id="@+id/album_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/layoutMargin8dp">
+        android:layout_margin="@dimen/margin4dp">
 
         <TextView
             android:id="@+id/user_order_item_tag"
@@ -28,7 +28,7 @@
             android:paddingTop="@dimen/margin4dp"
             android:paddingRight="@dimen/layoutMargin8dp"
             android:paddingBottom="@dimen/margin4dp"
-            android:text="同 业\n课 程"
+            android:text="同 行\n课 程"
             android:textColor="@color/home_light_color"
             android:textSize="@dimen/sp_20" />
 
@@ -39,10 +39,11 @@
             android:layout_margin="@dimen/margin4dp"
             android:layout_toStartOf="@+id/user_order_item_price"
             android:layout_toEndOf="@+id/user_order_item_tag"
-            android:maxLines="3"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="腾讯社交广告是腾讯公司核心广告业务核心|腾讯社交广告是腾讯公司核心广告业务核心"
             android:textColor="@color/textColorDark"
-            android:textSize="@dimen/bigText16sp"
-            android:text="腾讯社交广告是腾讯公司核心广告业务核心" />
+            android:textSize="@dimen/bigText16sp" />
 
         <TextView
             android:id="@+id/user_order_item_invoice"
@@ -51,8 +52,8 @@
             android:layout_above="@+id/user_order_item_sn"
             android:layout_margin="@dimen/dp_2"
             android:layout_toEndOf="@+id/user_order_item_tag"
-            android:textSize="@dimen/mainText14sp"
-            android:text="发票类型:增值税发票" />
+            android:text="发票类型:增值税发票"
+            android:textSize="@dimen/mainText14sp" />
 
         <TextView
             android:id="@+id/user_order_item_price"
@@ -61,9 +62,9 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/dp_2"
             android:singleLine="true"
+            android:text="¥10.00"
             android:textColor="@color/light_red"
-            android:textSize="@dimen/sp_18"
-            android:text="¥10.00" />
+            android:textSize="@dimen/sp_18" />
 
         <TextView
             android:id="@+id/user_order_item_sn"
@@ -72,9 +73,9 @@
             android:layout_below="@+id/user_order_item_tag"
             android:layout_margin="4dp"
             android:padding="5dp"
+            android:text="订单编号:202003141552588295"
             android:textColor="@color/color_gray_text"
-            android:textSize="@dimen/mainText14sp"
-            android:text="订单编号:202003141552588295" />
+            android:textSize="@dimen/mainText14sp" />
 
         <TextView
             android:id="@+id/user_order_item_time"
@@ -84,9 +85,9 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="4dp"
             android:padding="5dp"
+            android:text="2020-02-02"
             android:textColor="@color/color_gray_text"
-            android:textSize="@dimen/mainText14sp"
-            android:text="2020-02-02" />
+            android:textSize="@dimen/mainText14sp" />
 
     </RelativeLayout>
 

@@ -1,9 +1,12 @@
 package com.caesar.rongcloudspeed.quick;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.caesar.rongcloudspeed.bean.BaiduTextBean;
 import com.caesar.rongcloudspeed.callback.UpLoadImgCallback;
 import com.caesar.rongcloudspeed.circle.ui.AddCircleTaskActivity;
 import com.caesar.rongcloudspeed.data.BaseData;
@@ -28,7 +32,9 @@ import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.caesar.rongcloudspeed.player.Config;
 import com.caesar.rongcloudspeed.player.PLMediaPlayerActivity;
 import com.caesar.rongcloudspeed.ui.BaseActivity;
+import com.caesar.rongcloudspeed.ui.activity.PublicCircleActivity;
 import com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText;
+import com.caesar.rongcloudspeed.util.ToastUitl;
 import com.caesar.rongcloudspeed.utils.FileUtils;
 import com.caesar.rongcloudspeed.utils.QiniuUtils;
 import com.caesar.rongcloudspeed.utils.Tools;
@@ -86,6 +92,11 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
     private ClearWriteEditText votePostEdit;
     private ClearWriteEditText excerptPostEdit;
     private TextView quickStartVideoTip;
+    private String voteTitle;
+    private String excerptString;
+    private String uidString;
+    private String baiduToken;
+    private static final int VIDEO_LENGTH = 120;
 
     public QuickStartVideoExampleActivity() {
         this.context = this;
@@ -96,6 +107,8 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.quick_start_video_example_activity);
         this.initLayout();
+        uidString = UserInfoUtils.getAppUserId(this);
+        baiduToken = UserInfoUtils.getBaiduToken(this);
         this.uploadProgressBar = (ProgressBar) this
                 .findViewById(R.id.quick_start_video_upload_progressbar);
         this.uploadProgressBar.setMax(100);
@@ -183,10 +196,10 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                             uploadResultVideoView.setAVOptions(mAVOptions);
                             uploadResultVideoView.setVideoPath(uploadFilePath);
                             uploadResultVideoView.setOnPreparedListener(i -> {
-                                uploadFileDuration=uploadResultVideoView.getDuration();
+                                uploadFileDuration = uploadResultVideoView.getDuration();
                                 Log.i(TAG, "onVideoSizeChanged: time = " + uploadFileDuration);
                                 quickStartVideoTip.setVisibility(View.VISIBLE);
-                                quickStartVideoTip.setText("当前视频大小:"+Tools.formatSize(uploadFileLength)+"MB,时常"+uploadFileDuration/1000+"s");
+                                quickStartVideoTip.setText("当前视频大小:" + Tools.formatSize(uploadFileLength) + ",时常" + uploadFileDuration / 1000 + "s");
                                 uploadResultVideoView.start();
                             });
                         } catch (Exception e) {
@@ -243,9 +256,61 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
         });
     }
 
+    @SuppressLint("HandlerLeak")
+    Handler videoHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitBaiduApi().getBaiduTextCheck(voteTitle, baiduToken),
+                            new NetworkCallback<BaiduTextBean>() {
+                                @Override
+                                public void onSuccess(BaiduTextBean baiduTextBean) {
+                                    int conclusionType = baiduTextBean.getConclusionType();
+                                    if (conclusionType == 1) {
+                                        videoHandler.sendEmptyMessage(1);
+                                    } else {
+                                        dismissLoadingDialog();
+                                        BaiduTextBean.BaiduTextData baiduTextData = baiduTextBean.getData().get(0);
+                                        ToastUitl.showToastWithImg(baiduTextData.getMsg(), R.drawable.ic_warm);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    dismissLoadingDialog();
+                                    Toast.makeText(QuickStartVideoExampleActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    break;
+                case 1:
+                    NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().addVoteArticle(
+                            uidString, "44", "3", voteTitle, excerptString, postFilePath),
+                            new NetworkCallback<BaseData>() {
+                                @Override
+                                public void onSuccess(BaseData baseData) {
+                                    if (NetworkResultUtils.isSuccess(baseData)) {
+                                        dismissLoadingDialog(() -> showToast(R.string.qiniu_upload_success));
+                                    } else {
+                                        dismissLoadingDialog(() -> showToast(R.string.qiniu_upload_failed));
+                                    }
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    Toast.makeText(QuickStartVideoExampleActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    break;
+            }
+        }
+    };
+
     public void postArticle(View view) {
-        String voteTitle = votePostEdit.getText().toString().trim();
-        String excerptString = excerptPostEdit.getText().toString().trim();
+        voteTitle = votePostEdit.getText().toString().trim();
+        excerptString = excerptPostEdit.getText().toString().trim();
         if (TextUtils.isEmpty(voteTitle)) {
             showToast("投票标题不能为囧");
             votePostEdit.setShakeAnimation();
@@ -260,31 +325,14 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
                     "请先上传视频文件再发布",
                     Toast.LENGTH_SHORT).show();
         } else {
-            showLoadingDialog(R.string.seal_loading_dialog_logining);
-            NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().addVoteArticle(
-                    UserInfoUtils.getAppUserId(this), "44", "3", voteTitle, excerptString, this.postFilePath),
-                    new NetworkCallback<BaseData>() {
-                        @Override
-                        public void onSuccess(BaseData baseData) {
-                            if (NetworkResultUtils.isSuccess(baseData)) {
-                                dismissLoadingDialog(() -> showToast(R.string.qiniu_upload_success));
-                            } else {
-                                dismissLoadingDialog(() -> showToast(R.string.qiniu_upload_failed));
-                            }
-                            finish();
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-                            Toast.makeText(QuickStartVideoExampleActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            showLoadingDialog("");
+            videoHandler.sendEmptyMessage(0);
         }
     }
 
     public void uploadFile(View view) {
         if (this.uploadFilePath != null) {
-            if (uploadFileLength <= 15 * 1024*1024&&uploadFileDuration<=30 * 1000) {
+            if (uploadFileLength <= 20 * 1024 * 1024 && uploadFileDuration <= VIDEO_LENGTH * 1000) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -311,7 +359,7 @@ public class QuickStartVideoExampleActivity extends BaseActivity {
             } else {
                 Toast.makeText(
                         context,
-                        "视频内容一般不超过10秒，不超过10MB",
+                        "视频内容一般不超过120秒，不超过20MB",
                         Toast.LENGTH_SHORT).show();
             }
 

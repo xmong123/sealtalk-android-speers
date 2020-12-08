@@ -2,27 +2,33 @@ package com.caesar.rongcloudspeed.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.caesar.rongcloudspeed.R;
-import com.caesar.rongcloudspeed.adapter.RecommendManAdapter;
+import com.caesar.rongcloudspeed.adapter.RecommendListAdapter;
+import com.caesar.rongcloudspeed.adapter.RecommendItemAdapter;
 import com.caesar.rongcloudspeed.bean.AppPeopleBaseBean;
 import com.caesar.rongcloudspeed.bean.HomeDataBean;
 import com.caesar.rongcloudspeed.bean.PostsArticleBaseBean;
+import com.caesar.rongcloudspeed.common.IntentExtra;
 import com.caesar.rongcloudspeed.constants.Constant;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.caesar.rongcloudspeed.ui.activity.HomeMoreLessonListActivity;
 import com.caesar.rongcloudspeed.ui.activity.HomeMorePeopleListActivity;
+import com.caesar.rongcloudspeed.ui.activity.PrivateChatSettingActivity;
 import com.caesar.rongcloudspeed.ui.activity.SPLessonDetailActivity;
+import com.caesar.rongcloudspeed.ui.activity.UserDetailActivity;
 import com.caesar.rongcloudspeed.ui.adapter.BookAdapter;
 import com.caesar.rongcloudspeed.ui.adapter.LessonAdapter;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
@@ -42,14 +48,14 @@ public class HomeSpeerLessonFragment extends BaseFragment implements OnRefreshLi
     private RecyclerView homeRecyclerView;
     private RecyclerView peopleRecyclerView;
     private LessonAdapter lessonAdapter;
-    private RecommendManAdapter peopleAdapter;
+    private RecommendItemAdapter peopleAdapter;
     private View headView;
     private List<PostsArticleBaseBean> dataArray = new ArrayList<PostsArticleBaseBean>();
     private List<AppPeopleBaseBean.PeopleDataBean> peopleArray = new ArrayList<AppPeopleBaseBean.PeopleDataBean>();
     private Button people_moreBtn;
     private Button lesson_moreBtn;
     private String uidString;
-
+    private static String TAG = "HomeSpeerLessonFragment";
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_home_beta;
@@ -61,15 +67,24 @@ public class HomeSpeerLessonFragment extends BaseFragment implements OnRefreshLi
         headView = getLayoutInflater().inflate(R.layout.main_fragment_home_header, (ViewGroup) homeRecyclerView.getParent(), false);
         peopleRecyclerView = headView.findViewById(R.id.peopleRecyclerView);
 
-        peopleAdapter = new RecommendManAdapter(getActivity(), peopleArray);
-        peopleRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        peopleAdapter = new RecommendItemAdapter(getActivity(), peopleArray);
+        peopleRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         peopleRecyclerView.setAdapter(peopleAdapter);
 
         peopleAdapter.setOnItemClickListener((adapter, view, position) -> {
-            AppPeopleBaseBean.PeopleDataBean peopleDataBean=peopleArray.get(position);
+            AppPeopleBaseBean.PeopleDataBean peopleDataBean = peopleArray.get(position);
             RongIM.getInstance().startPrivateChat(getActivity(), peopleDataBean.getRongid(), peopleDataBean.getUser_login());
         });
-
+        peopleAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Log.d(TAG, "onItemChildClick: ");
+                AppPeopleBaseBean.PeopleDataBean peopleDataBean = peopleArray.get(position);
+                Intent intent = new Intent(getActivity(), UserDetailActivity.class);
+                intent.putExtra(IntentExtra.STR_TARGET_ID, peopleDataBean.getRongid());
+                startActivity(intent);
+            }
+        });
         people_moreBtn = headView.findViewById(R.id.people_moreBtn);
         lesson_moreBtn = headView.findViewById(R.id.lesson_moreBtn);
         people_moreBtn.setOnClickListener(this);

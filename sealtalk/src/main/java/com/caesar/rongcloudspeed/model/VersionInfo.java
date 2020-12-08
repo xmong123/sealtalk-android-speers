@@ -15,7 +15,7 @@ public class VersionInfo {
     private IOSVersion iOS;
     /**
      * version : 1.0.5
-     * url : http://downloads.rongcloud.cn/SealTalk_by_RongCloud_Android_v1_0_5.apk
+     * url : http://downloads.rongcloud.cn/SealTalk_by_91BIM_Android_v1_0_5.apk
      */
 
     private AndroidVersion Android;

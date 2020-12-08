@@ -14,6 +14,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.caesar.rongcloudspeed.R;
 import com.caesar.rongcloudspeed.common.ErrorCode;
 import com.caesar.rongcloudspeed.common.IntentExtra;
@@ -35,10 +38,9 @@ import com.caesar.rongcloudspeed.model.UserCacheInfo;
 import com.caesar.rongcloudspeed.network.AppNetworkUtils;
 import com.caesar.rongcloudspeed.network.NetworkResultUtils;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
-import com.caesar.rongcloudspeed.ui.activity.AdminMainActivity;
-import com.caesar.rongcloudspeed.ui.activity.LoginActivity;
 import com.caesar.rongcloudspeed.ui.activity.MainActivity;
 import com.caesar.rongcloudspeed.ui.activity.SelectCountryActivity;
+import com.caesar.rongcloudspeed.ui.activity.WebViewActivity;
 import com.caesar.rongcloudspeed.ui.widget.ClearWriteEditText;
 import com.caesar.rongcloudspeed.utils.AccountValidatorUtil;
 import com.caesar.rongcloudspeed.utils.UserInfoUtils;
@@ -55,6 +57,7 @@ public class LoginFragment extends BaseFragment {
     private static final int REQUEST_CODE_SELECT_COUNTRY = 1000;
     private ClearWriteEditText phoneNumberEdit;
     private ClearWriteEditText passwordEdit;
+    private CheckBox agree_checkbox;
     private TextView countryNameTv;
     private TextView countryCodeTv;
     private String phoneString;
@@ -72,11 +75,13 @@ public class LoginFragment extends BaseFragment {
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
         phoneNumberEdit = findView(R.id.cet_login_phone);
         passwordEdit = findView(R.id.cet_login_password);
+        agree_checkbox = findView(R.id.agree_checkbox);
         countryNameTv = findView(R.id.tv_country_name);
         countryCodeTv = findView(R.id.tv_country_code);
         findView(R.id.btn_login, true);
+        findView(R.id.btn_agree_text2, true);
+        findView(R.id.btn_agree_text4, true);
         findView(R.id.ll_country_select, true);
-
         phoneNumberEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -269,6 +274,10 @@ public class LoginFragment extends BaseFragment {
                     Toast.makeText(getActivity(), "手机格式错误", Toast.LENGTH_LONG).show();
                     return;
                 }
+                if (!agree_checkbox.isChecked()) {
+                    Toast.makeText(getActivity(), "请先阅读并同意《服务协议》和《隐私政策》", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String finalCountryCodeStr = countryCodeStr;
                 NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().login(phoneStr, passwordStr),
                         new NetworkCallback<UserInfoResult>() {
@@ -282,6 +291,7 @@ public class LoginFragment extends BaseFragment {
                                             UserInfoUtils.setAppUserId(userInfo.getId(), getActivity());
                                             UserInfoUtils.setUserName(userInfo.getUser_login(), getActivity());
                                             UserInfoUtils.setNikeName(userInfo.getUser_nicename(), getActivity());
+                                            UserInfoUtils.setUserEmail(userInfo.getUser_email(),getActivity());
                                             UserInfoUtils.setUserSum(userInfo.getUser_sum(), getActivity());
                                             UserInfoUtils.setUserType(userInfo.getUser_type(), getActivity());
                                             UserInfoUtils.setUserIndustry(userInfo.getUser_industry(), getActivity());
@@ -290,14 +300,14 @@ public class LoginFragment extends BaseFragment {
                                             UserInfoUtils.setPhone(userInfo.getMobile(), getActivity());
                                             UserInfoUtils.setPayPassWord(userInfo.getUser_paypass(), getActivity());
                                             UserInfoUtils.setAppUserUrl(userInfo.getAvatar(), getActivity());
-                                            UserInfoUtils.setAppUserOrderSum(userInfo.getOrderCount(),getActivity());
+                                            UserInfoUtils.setAppUserOrderSum(userInfo.getOrderCount(), getActivity());
                                             List<UserOrder> userOrderList = userInfo.getUser_orders();
                                             if (userOrderList != null && userOrderList.size() > 0) {
-                                                Set<String> set=new HashSet<>();
-                                                for(UserOrder order:userOrderList){
+                                                Set<String> set = new HashSet<>();
+                                                for (UserOrder order : userOrderList) {
                                                     set.add(order.getGoods_id());
                                                 }
-                                                UserInfoUtils.setAppUserLessones(set,getActivity());
+                                                UserInfoUtils.setAppUserLessones(set, getActivity());
                                             }
                                             phoneString = phoneStr;
                                             passwordString = passwordStr;
@@ -317,6 +327,20 @@ public class LoginFragment extends BaseFragment {
                             }
                         });
 
+                break;
+            case R.id.btn_agree_text2:
+                // 跳转区域选择界面
+                Bundle bundle = new Bundle();
+                bundle.putString("url", "file:///android_asset/webpage/memaiagree.html");
+                bundle.putString("title", "《服务协议》");
+                ActivityUtils.startActivity(bundle, WebViewActivity.class);
+                break;
+            case R.id.btn_agree_text4:
+                // 跳转区域选择界面
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("url", "file:///android_asset/webpage/memaifree.html");
+                bundle2.putString("title", "《隐私政策》");
+                ActivityUtils.startActivity(bundle2, WebViewActivity.class);
                 break;
             case R.id.ll_country_select:
                 // 跳转区域选择界面
@@ -382,18 +406,9 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void toMain(String userId) {
-        String userIndustry = UserInfoUtils.getUserIndustry(getActivity());
-//        if (userIndustry.equals("0")) {
-//            Intent intent = new Intent(getActivity(), AdminMainActivity.class);
-//            intent.putExtra(IntentExtra.USER_ID, userId);
-//            startActivity(intent);
-//            getActivity().finish();
-//        } else {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-//        }
-
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
 

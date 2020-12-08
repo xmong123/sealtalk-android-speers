@@ -3,7 +3,6 @@ package com.caesar.rongcloudspeed.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.caesar.rongcloudspeed.R;
-import com.caesar.rongcloudspeed.adapter.AnimationProAdapter;
+import com.caesar.rongcloudspeed.adapter.AnimationCategoryAdapter;
 import com.caesar.rongcloudspeed.bean.HomeDataBean;
 import com.caesar.rongcloudspeed.bean.LessonCateBean;
 import com.caesar.rongcloudspeed.bean.LessonCategoryBean;
@@ -22,8 +21,11 @@ import com.caesar.rongcloudspeed.network.NetworkCallback;
 import com.caesar.rongcloudspeed.network.NetworkUtils;
 import com.caesar.rongcloudspeed.ui.activity.SPLessonDetailActivity;
 import com.caesar.rongcloudspeed.ui.adapter.LessonVideoAdapter;
+import com.caesar.rongcloudspeed.utils.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -35,11 +37,15 @@ import java.util.List;
 public class LessonsVideoFragment extends BaseFragment implements OnRefreshListener {
     private RecyclerView menuRecyclerView;
     private RecyclerView lessonsRecyclerView;
-    private AnimationProAdapter proAdapter;
+    private AnimationCategoryAdapter proAdapter;
     private LessonVideoAdapter lessonAdapter;
+    private SmartRefreshLayout refreshLayout;
     private List<LessonCategoryBean> menuArray = new ArrayList<LessonCategoryBean>();
     private List<PostsArticleBaseBean> dataArray = new ArrayList<PostsArticleBaseBean>();
     private String catid = "4";
+    private int page = 0;
+    private boolean canLoadMore = false;
+    private int totalCount = 20;
     LessonCategoryBean categoryBean = new LessonCategoryBean(true, "4", "全部课程", "0");
 
     @Override
@@ -49,31 +55,36 @@ public class LessonsVideoFragment extends BaseFragment implements OnRefreshListe
 
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
+        refreshLayout = getActivity().findViewById(R.id.refreshLayout);
         menuRecyclerView = getActivity().findViewById(R.id.lessmenu_recyclerView);
         lessonsRecyclerView = getActivity().findViewById(R.id.lessons_recyclerView);
-//        headView = getLayoutInflater().inflate(R.layout.main_fragment_lessons_header, (ViewGroup) lessonsRecyclerView.getParent(), false);
-        proAdapter = new AnimationProAdapter(menuArray);
+        proAdapter = new AnimationCategoryAdapter(menuArray);
         menuRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        proAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                catid = menuArray.get(position).getTerm_id();
-                for (int i = 0; i < menuArray.size(); i++) {
-                    if (i == position) {
-                        menuArray.get(i).setFlag(true);
-                    } else {
-                        menuArray.get(i).setFlag(false);
-                    }
-                    adapter.notifyDataSetChanged();
+        proAdapter.setOnItemClickListener((adapter, view, position) -> {
+            catid = menuArray.get(position).getTerm_id();
+            for (int i = 0; i < menuArray.size(); i++) {
+                if (i == position) {
+                    menuArray.get(i).setFlag(true);
+                } else {
+                    menuArray.get(i).setFlag(false);
                 }
-                loadData();
+                adapter.notifyDataSetChanged();
             }
+            loadData();
         });
 
         lessonAdapter = new LessonVideoAdapter(getActivity(), dataArray);
         lessonAdapter.openLoadAnimation();
         lessonAdapter.setNotDoAnimationCount(4);
-
+        lessonAdapter.setOnLoadMoreListener(() -> {
+            if (canLoadMore) {
+                page = page + 1;
+                loadMoreData();
+            } else {
+                lessonAdapter.closeLoadAnimation();
+                ToastUtils.showToast("加载结束,当前分类一共" + totalCount + "个视频课程");
+            }
+        }, lessonsRecyclerView);
         lessonsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         lessonsRecyclerView.setHasFixedSize(true);
 
@@ -101,6 +112,7 @@ public class LessonsVideoFragment extends BaseFragment implements OnRefreshListe
         });
         menuRecyclerView.setAdapter(proAdapter);
         lessonsRecyclerView.setAdapter(lessonAdapter);
+        refreshLayout.setOnRefreshListener(this);
         loadMenuData();
         loadData();
     }
@@ -124,12 +136,18 @@ public class LessonsVideoFragment extends BaseFragment implements OnRefreshListe
     }
 
     private void loadData() {
+        canLoadMore = true;
         showLoadingDialog("");
         NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().fetchVoteListDatas(catid),
                 new NetworkCallback<HomeDataBean>() {
                     @Override
                     public void onSuccess(HomeDataBean homeDataBean) {
-                        dataArray = homeDataBean.getReferer().getPosts();
+                        List<PostsArticleBaseBean> articleBaseBeanList = homeDataBean.getReferer().getPosts();
+                        if (articleBaseBeanList.size() < 20) {
+                            canLoadMore = false;
+                            totalCount = articleBaseBeanList.size();
+                        }
+                        dataArray = articleBaseBeanList;
                         lessonAdapter.setNewData(dataArray);
                         dismissLoadingDialog();
                     }
@@ -142,6 +160,32 @@ public class LessonsVideoFragment extends BaseFragment implements OnRefreshListe
                 });
     }
 
+    private void loadMoreData() {
+        showLoadingDialog("");
+        NetworkUtils.fetchInfo(AppNetworkUtils.initRetrofitApi().fetchVoteListDataForPage(catid, String.valueOf(page)),
+                new NetworkCallback<HomeDataBean>() {
+                    @Override
+                    public void onSuccess(HomeDataBean homeDataBean) {
+                        List<PostsArticleBaseBean> articleBaseBeanList = homeDataBean.getReferer().getPosts();
+                        if (articleBaseBeanList.size() < 20) {
+                            canLoadMore = false;
+                            totalCount = (page + 1) * 20 + articleBaseBeanList.size();
+                        }
+                        dataArray.addAll(articleBaseBeanList);
+                        lessonAdapter.setNewData(dataArray);
+                        lessonAdapter.loadMoreEnd();
+                        dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        dismissLoadingDialog();
+                        lessonAdapter.loadMoreEnd();
+                        Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
     @Override
     protected void onInitViewModel() {
         super.onInitViewModel();
@@ -149,6 +193,7 @@ public class LessonsVideoFragment extends BaseFragment implements OnRefreshListe
 
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
+        page = 0;
         loadData();
     }
 }

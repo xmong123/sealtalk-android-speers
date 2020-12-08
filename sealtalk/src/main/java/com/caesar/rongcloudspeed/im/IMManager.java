@@ -10,9 +10,6 @@ import android.view.View;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.caesar.rongcloudspeed.extend.CaesarTransferAccountMessageProvider;
-import com.caesar.rongcloudspeed.extend.CaesarTransferAccountsMessage;
-import com.caesar.rongcloudspeed.extension.CaesarSightExtensionModule;
 import com.caesar.rongcloudspeed.extension.CustomerExtensionModule;
 import com.google.gson.Gson;
 
@@ -50,10 +47,11 @@ import com.caesar.rongcloudspeed.ui.activity.NewFriendListActivity;
 import com.caesar.rongcloudspeed.ui.activity.SealPicturePagerActivity;
 import com.caesar.rongcloudspeed.ui.activity.UserDetailActivity;
 import com.caesar.rongcloudspeed.utils.log.SLog;
-import com.jrmf360.rylib.modules.JrmfExtensionModule;
 
 import io.rong.contactcard.ContactCardExtensionModule;
 import io.rong.contactcard.IContactCardInfoProvider;
+import io.rong.contactcard.ISeekCardClickListener;
+import io.rong.contactcard.message.ContactSeekItemProvider;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongContext;
@@ -110,6 +108,8 @@ public class IMManager {
     private MutableLiveData<Boolean> kickedOffline = new MutableLiveData<>();
 
     private IMInfoProvider imInfoProvider;
+
+    private ISeekCardClickListener iSeekCardClickListener;
 
 
     private IMManager() {
@@ -715,12 +715,6 @@ public class IMManager {
         List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
         IExtensionModule defaultModule = null;
         if (moduleList != null) {
-            for (IExtensionModule module : moduleList) {
-                if (module instanceof JrmfExtensionModule) {
-                    defaultModule = module;
-                    break;
-                }
-            }
             if (defaultModule != null) {
                 RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
             }
@@ -735,7 +729,7 @@ public class IMManager {
         // 小视频
 //        RongExtensionManager.getInstance().registerExtensionModule(new CaesarSightExtensionModule());
 
-//        RongExtensionManager.getInstance().registerExtensionModule(new CustomerExtensionModule());
+        RongExtensionManager.getInstance().registerExtensionModule(new CustomerExtensionModule());
 
     }
 
@@ -761,7 +755,7 @@ public class IMManager {
         //RongIM.init(this);
 
         // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
-        RongIM.init(context, "cpj2xarlctncn", true);
+        RongIM.init(context, "uwd1c0sxu5iy1", true);
     }
 
     /**

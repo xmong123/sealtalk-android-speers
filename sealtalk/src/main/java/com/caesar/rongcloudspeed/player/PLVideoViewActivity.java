@@ -183,6 +183,7 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
             switch (requestCode) {
                 case REQUEST_MEMBER_VIP:
                     if (lessonVideoString != null && TbsVideo.canUseTbsPlayer(PLVideoViewActivity.this)) {
+                        lessonVideoString=lessonVideoString.replaceAll(" ", "%20");
                         TbsVideo.openVideo(PLVideoViewActivity.this, lessonVideoString);
                         finish();
                     }
@@ -336,6 +337,7 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
             }
             //finish();
             if (lessonVideoString != null && TbsVideo.canUseTbsPlayer(PLVideoViewActivity.this)) {
+                lessonVideoString=lessonVideoString.replaceAll(" ", "%20");
                 TbsVideo.openVideo(PLVideoViewActivity.this, lessonVideoString);
                 finish();
             }

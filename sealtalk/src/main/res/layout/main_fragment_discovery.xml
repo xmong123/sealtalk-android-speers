@@ -7,36 +7,14 @@
 
 
     <com.allen.library.SuperTextView
-        android:id="@+id/my_discovery_search"
+        android:id="@+id/my_discovery_scan"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commonBangHeight"
         android:paddingLeft="@dimen/layoutMargin16dp"
         android:paddingRight="@dimen/layoutMargin16dp"
         app:sDividerLineType="bottom"
-        app:sLeftIconRes="@drawable/seal_ic_pop_search"
-        app:sLeftTextString="搜索好友"
-        app:sRightIconRes="@mipmap/arrow_right_red" />
-
-    <com.allen.library.SuperTextView
-        android:id="@+id/my_discovery_chat"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/commonBangHeight"
-        android:paddingLeft="@dimen/layoutMargin16dp"
-        android:paddingRight="@dimen/layoutMargin16dp"
-        app:sDividerLineType="bottom"
-        app:sLeftIconRes="@drawable/seal_ic_pop_chat"
-        app:sLeftTextString="@string/seal_main_title_start_chat"
-        app:sRightIconRes="@mipmap/arrow_right_red" />
-
-    <com.allen.library.SuperTextView
-        android:id="@+id/my_discovery_group"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/commonBangHeight"
-        android:paddingLeft="@dimen/layoutMargin16dp"
-        android:paddingRight="@dimen/layoutMargin16dp"
-        app:sDividerLineType="bottom"
-        app:sLeftIconRes="@drawable/seal_ic_pop_group"
-        app:sLeftTextString="@string/seal_main_title_create_group"
+        app:sLeftIconRes="@drawable/seal_ic_pop_scaned"
+        app:sLeftTextString="@string/seal_main_title_scan"
         app:sRightIconRes="@mipmap/arrow_right_red" />
 
     <com.allen.library.SuperTextView
@@ -51,14 +29,14 @@
         app:sRightIconRes="@mipmap/arrow_right_red" />
 
     <com.allen.library.SuperTextView
-        android:id="@+id/my_discovery_scan"
+        android:id="@+id/my_discovery_group"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commonBangHeight"
         android:paddingLeft="@dimen/layoutMargin16dp"
         android:paddingRight="@dimen/layoutMargin16dp"
         app:sDividerLineType="bottom"
-        app:sLeftIconRes="@drawable/seal_ic_pop_scaned"
-        app:sLeftTextString="@string/seal_main_title_scan"
+        app:sLeftIconRes="@drawable/seal_ic_pop_group"
+        app:sLeftTextString="@string/seal_main_title_create_group"
         app:sRightIconRes="@mipmap/arrow_right_red" />
 
     <LinearLayout

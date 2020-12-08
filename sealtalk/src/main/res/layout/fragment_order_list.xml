@@ -1,0 +1,201 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.caesar.rongcloudspeed.ui.fragment.OrderListsFragment">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.classic.common.MultipleStatusView
+            android:id="@+id/multiple_status_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:emptyView="@layout/custom_empty_view"
+            app:errorView="@layout/custom_error_view"
+            app:loadingView="@layout/custom_loading_view"
+            app:noNetworkView="@layout/custom_no_network_view">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white_text_color"
+                app:elevation="0dp">
+
+                <LinearLayout
+                    android:id="@+id/appBarLayout_01"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp">
+
+                        <TextView
+                            android:id="@+id/search_btn_block"
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="@dimen/layoutMargin8dp"
+                            android:background="@drawable/edit_bg"
+                            android:gravity="center_vertical"
+                            android:padding="@dimen/dp_4"
+                            android:text="搜索" />
+
+                        <android.widget.SearchView
+                            android:id="@+id/android_searchView"
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:layout_marginLeft="@dimen/layoutMargin8dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="@dimen/layoutMargin8dp"
+                            android:layout_toLeftOf="@+id/search_btn_block"
+                            android:background="@drawable/edit_bg">
+
+                        </android.widget.SearchView>
+
+                        <TextView
+                            android:id="@+id/search_btn_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/layoutMargin8dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="@dimen/layoutMargin8dp"
+                            android:layout_toLeftOf="@+id/search_btn_block"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="40dp"
+                            android:text="请输入您所搜索的内容" />
+
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/toolBar"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/filter_layout_01"
+                            android:layout_width="0.0dip"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center_horizontal"
+                            android:paddingRight="5.0dip">
+
+                            <TextView
+                                android:id="@+id/filter_text_01"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:duplicateParentState="true"
+                                android:padding="8.0dip"
+                                android:text="薪资"
+                                android:textColor="@color/sub_title"
+                                android:textSize="13.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@+id/filter_text_01"
+                                android:src="@drawable/personal_icon_filter" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/filter_layout_02"
+                            android:layout_width="0.0dip"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center_horizontal"
+                            android:paddingRight="5.0dip">
+
+                            <TextView
+                                android:id="@+id/filter_text_02"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:duplicateParentState="true"
+                                android:padding="8.0dip"
+                                android:text="工作类型"
+                                android:textColor="@color/sub_title"
+                                android:textSize="13.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@+id/filter_text_02"
+                                android:src="@drawable/personal_icon_filter" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/filter_layout_03"
+                            android:layout_width="0.0dip"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center_horizontal"
+                            android:paddingRight="5.0dip">
+
+                            <TextView
+                                android:id="@+id/filter_text_03"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:duplicateParentState="true"
+                                android:padding="8.0dip"
+                                android:text="区域"
+                                android:textColor="@color/sub_title"
+                                android:textSize="13.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@+id/filter_text_03"
+                                android:src="@drawable/personal_icon_filter" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/appBarLayout"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingBottom="@dimen/dp_4" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/menu_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/appBarLayout"
+                android:background="@color/white"
+                android:visibility="gone" />
+
+        </com.classic.common.MultipleStatusView>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</FrameLayout>

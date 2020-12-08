@@ -9,6 +9,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
 import com.caesar.rongcloudspeed.manager.RetrofitManager;
+import com.caesar.rongcloudspeed.util.UtilsTool;
 import com.caesar.rongcloudspeed.utils.QiniuUtils;
 import com.caesar.rongcloudspeed.utils.ToastUtils;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -50,6 +51,7 @@ public class SealApp extends MultiDexApplication {
         // 初始化 bugly BUG 统计
 //        CrashReport.initCrashReport(getApplicationContext(), WXAPPID, false);
         Utils.init(this);
+        UtilsTool.init(this);
         ErrorCode.init(this);
 
         /*

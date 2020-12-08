@@ -6,7 +6,7 @@ public class QRCodeConstant {
     public final static boolean QR_VIBRATE_MODE = false;
 
 
-    public final static String BASE_URL = "http://web.sealtalk.im/download";
+    public final static String BASE_URL = "http://thinkcmf.91bim.net/";
 
     public final static String BASE_URL_QUERY_CONTENT = "key";
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.caesar.rongcloudspeed.circle.ui.FriendCircle1Activity">
 
     <com.yiw.circledemo.widget.EaseTitleBar
@@ -21,83 +22,18 @@
         android:paddingRight="12dip"
         android:src="@drawable/ease_mm_title_back" />
 
-
-    <ScrollView
+    <ListView
+        android:id="@+id/personalCircleLv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tittle"
-        android:background="@color/white">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/img_bg"
-                android:layout_width="wrap_content"
-                android:layout_height="160dip"
-                android:scaleType="fitXY"
-                android:src="@drawable/timg"
-                android:visibility="gone" />
-
-
-            <com.caesar.rongcloudspeed.widget.MyListView
-                android:id="@+id/circleLv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/img_bg"
-                android:background="@color/white"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@null"
-                android:dividerHeight="0px"
-                android:fadingEdge="none"
-                android:fadingEdgeLength="0dp"
-                android:focusable="true"
-                android:listSelector="@android:color/transparent"
-                android:transcriptMode="normal" />
-
-            <ImageView
-                android:id="@+id/photo"
-                android:layout_width="70dip"
-                android:layout_height="70dip"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="120dip"
-                android:layout_marginRight="20dip"
-                android:src="@drawable/ic_launcher"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/editTextBodyLl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="#f6f6f6"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                android:visibility="gone">
-
-                <EditText
-                    android:id="@+id/circleEt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="说点什么..." />
-
-                <TextView
-                    android:id="@+id/sendTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:background="@android:color/white"
-                    android:padding="8dp"
-                    android:text="发送"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </ScrollView>
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="0px"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:focusable="true"
+        android:listSelector="@android:color/transparent"
+        android:transcriptMode="normal" />
 
 </RelativeLayout>

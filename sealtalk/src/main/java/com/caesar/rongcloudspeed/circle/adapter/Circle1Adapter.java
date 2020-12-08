@@ -43,7 +43,7 @@ import java.util.List;
  * @Description: 圈子列表的adapter
  * @date 2015-12-28 上午09:37:23
  */
-public class Circle1Adapter extends BaseAdapter implements ICircleViewUpdate {
+public class Circle1Adapter extends BaseAdapter {
     private static final int ITEM_VIEW_TYPE_DEFAULT = 0;
     private static final int ITEM_VIEW_TYPE_URL = 1;
     private static final int ITEM_VIEW_TYPE_IMAGE = 2;
@@ -54,15 +54,8 @@ public class Circle1Adapter extends BaseAdapter implements ICircleViewUpdate {
     private static final int ITEM_VIEW_TYPE_COUNT = 3;
 
     private Context mContext;
-    private CirclePresenter mPresenter;
-    private CirclePublicCommentController mCirclePublicCommentController;
     private List<CircleItem1> datas = new ArrayList<CircleItem1>();
     private MultiImageView.OnItemClickListener l = null;
-
-    public void setCirclePublicCommentController(
-            CirclePublicCommentController mCirclePublicCommentController) {
-        this.mCirclePublicCommentController = mCirclePublicCommentController;
-    }
 
     public List<CircleItem1> getDatas() {
         return datas;
@@ -76,20 +69,10 @@ public class Circle1Adapter extends BaseAdapter implements ICircleViewUpdate {
 
     public Circle1Adapter(Context context) {
         mContext = context;
-        mPresenter = new CirclePresenter(this);
     }
 
     @Override
     public int getItemViewType(int position) {
-//        int itemType = ITEM_VIEW_TYPE_IMAGE;
-//        CircleItem1 item = datas.get(position);
-//        if (ITEM_TYPE_URL.equals(item.getType())) {
-//            itemType = ITEM_VIEW_TYPE_URL;
-//        } else if (ITEM_TYPE_IMAGE.equals(item.getType())) {
-//            itemType = ITEM_VIEW_TYPE_IMAGE;
-//        } else {
-//            itemType = ITEM_VIEW_TYPE_DEFAULT;
-//        }
         int itemType = ITEM_VIEW_TYPE_IMAGE;
         return itemType;
     }
@@ -182,18 +165,6 @@ public class Circle1Adapter extends BaseAdapter implements ICircleViewUpdate {
         holder.contentTv.setText(content);
         holder.contentTv.setVisibility(TextUtils.isEmpty(content) ? View.GONE : View.VISIBLE);
 
-//        if (DatasUtil.curUser.getId().equals(circleItem.getUser().getId())) {
-//            holder.deleteBtn.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.deleteBtn.setVisibility(View.GONE);
-//        }
-//        holder.deleteBtn.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //删除
-//                mPresenter.deleteCircle(circleId);
-//            }
-//        });
         holder.deleteBtn.setVisibility(View.INVISIBLE);
 
         holder.urlTipTv.setVisibility(View.GONE);
@@ -268,90 +239,6 @@ public class Circle1Adapter extends BaseAdapter implements ICircleViewUpdate {
         public FavoriteListAdapter favoriteListAdapter;
         public CommentAdapter bbsAdapter;
         public SnsPopupWindow snsPopupWindow;
-    }
-
-    private class PopupItemClickListener implements SnsPopupWindow.OnItemClickListener {
-        private String mFavorId;
-        //动态在列表中的位置
-        private int mCirclePosition;
-        private long mLasttime = 0;
-        private CircleItem1 mCircleItem1;
-
-        public PopupItemClickListener(int circlePosition, CircleItem1 circleItem, String favorId) {
-            this.mFavorId = favorId;
-            this.mCirclePosition = circlePosition;
-            this.mCircleItem1 = circleItem;
-        }
-
-        @Override
-        public void onItemClick(ActionItem actionitem, int position) {
-            switch (position) {
-                case 0://点赞、取消点赞
-                    if (System.currentTimeMillis() - mLasttime < 700)//防止快速点击操作
-                        return;
-                    mLasttime = System.currentTimeMillis();
-                    if ("赞".equals(actionitem.mTitle.toString())) {
-                        mPresenter.addFavorite(mCirclePosition);
-                    } else {//取消点赞
-                        mPresenter.deleteFavorite(mCirclePosition, mFavorId);
-                    }
-                    break;
-                case 1://发布评论
-                    if (mCirclePublicCommentController != null) {
-                        mCirclePublicCommentController.editTextBodyVisible(View.VISIBLE, mPresenter,
-                                mCirclePosition, TYPE_PUBLIC_COMMENT, UserInfoUtils.getUserName(mContext), 0);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    @Override
-    public void update2DeleteCircle(String circleId) {
-        for (int i = 0; i < datas.size(); i++) {
-            if (circleId.equals(datas.get(i).getObject_id())) {
-                getDatas().remove(i);
-                notifyDataSetChanged();
-                return;
-            }
-        }
-    }
-
-    @Override
-    public void update2AddFavorite(int circlePosition) {
-        String userName = UserInfoUtils.getUserName(mContext);
-        FavoriteItem item = DatasUtil.createCurUserFavortItem(userName);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void update2DeleteFavort(int circlePosition, String userName) {
-
-    }
-
-    @Override
-    public void update2AddComment(int circlePosition, int type, String username) {
-        CommentItem newItem = null;
-        String content = "";
-        if (mCirclePublicCommentController != null) {
-            content = mCirclePublicCommentController.getEditTextString();
-        }
-        if (type == TYPE_PUBLIC_COMMENT) {
-            newItem = DatasUtil.createPublicComment(content, username);
-        } else if (type == TYPE_REPLY_COMMENT) {
-            newItem = DatasUtil.createReplyComment(username, content);
-        }
-        notifyDataSetChanged();
-        if (mCirclePublicCommentController != null) {
-            mCirclePublicCommentController.clearEditText();
-        }
-    }
-
-    @Override
-    public void update2DeleteComment(int circlePosition, String commentId) {
-
     }
 
 }
